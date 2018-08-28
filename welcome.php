@@ -74,5 +74,17 @@ include('navbar.php');
 <a href="salesitemgroup.php"> <h1 class="text-left">Item Product Group</h1></a>
 </div>
 
+<div class="col-xs-6 col-md-4" >
+<a href="warehouse.php"> <h1 class="text-left">Warehouse Detail</h1></a>
+</div>
+
+<div class="col-xs-6 col-md-4" >
+<a href="uom.php"> <h1 class="text-left">UOM Form</h1></a>
+</div>
+
+<div class="col-xs-6 col-md-4" >
+<a href="user.php"> <h1 class="text-left">User Detail</h1></a>
+</div>
+
 <?php include('footer.php');?>
 </div>

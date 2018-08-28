@@ -19,7 +19,7 @@ include('navbar.php');
   	<div class="row">
   			
 	<div class="col-xs-6 col-sm-8 col-md-offset-4">
-		<h2 class="page-header text-center"><i class="fa fa-edit"></i>Unit of Measurement (UOM)</h2>
+		<h2 class="page-header text-center"><i class="fa fa-edit"></i>User's Profile</h2>
 		</div>
 
 	<div class="col-xs-6 col-sm-4">
@@ -36,20 +36,64 @@ include('navbar.php');
 </div></p>
 
 <div class="container">
-  <form id="frm">
+  <form id="sfrm">
 	
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="uname">UOM Name:</label>
+        <label for="usname">User Name:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="uname" name="uname" placeholder="Enter Unit of Measurement">
+        <input type="text" id="usname" name="usname" placeholder="Enter User Name" required>
       	</div>
     	</div>
 		</div>
 
     	<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="uspassword">Password:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="password" id="uspassword" name="uspassword" placeholder="Enter Password"required>
+      	</div>
+    	</div>
+		</div>
+    
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="ruspassword">Retype Password:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="password" id="ruspassword" name="ruspassword" placeholder="Retype Password"required>
+      	</div>
+    	</div>
+		</div>
+
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="usemail">User Email:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="email" size="50" id="usemail" name="usemail" placeholder="Enter Email"required>
+      	</div>
+    	</div>
+		</div>
+
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="ustype">User Type:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="number" min="1" max="2" id="ustype" name="ustype" placeholder="Enter User Type" required> *1 for admin and 2 for user
+      	</div>
+    	</div>
+		</div>
+
+		<div class="form-group">
     	<div class="row">
     	<div class="col-sx-12 col-md-3 col-md-offset-6">
     	<input type="hidden" id="id" name="id" value="0">
