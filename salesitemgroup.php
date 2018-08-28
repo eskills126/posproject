@@ -19,7 +19,7 @@ include('navbar.php');
   	<div class="row">
   			
 	<div class="col-xs-6 col-sm-8 col-md-offset-4">
-		<h2 class="page-header text-center"><i class="fa fa-edit"></i>Unit of Measurement (UOM)</h2>
+		<h2 class="page-header text-center"><i class="fa fa-edit"></i>Product Group</h2>
 		</div>
 
 	<div class="col-xs-6 col-sm-4">
@@ -36,15 +36,15 @@ include('navbar.php');
 </div></p>
 
 <div class="container">
-  <form id="frm">
+  <form id="sfrm">
 	
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="uname">UOM Name:</label>
+        <label for="igname">Item Group Name:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="uname" name="uname" placeholder="Enter Unit of Measurement">
+        <input type="text" id="igname" name="igname" placeholder="Enter Item Group">
       	</div>
     	</div>
 		</div>

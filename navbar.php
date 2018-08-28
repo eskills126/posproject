@@ -6,7 +6,7 @@
 </style>
 </head>
 <body class="">
-
+ 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->
@@ -29,25 +29,25 @@
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <!-- Dropdown Items -->
         <a class="dropdown-item" href="customers.php">Customers</a>
-        <a class="dropdown-item" href="#">Suppliers</a>
-        <a class="dropdown-item" href="#">Sales Items</a>
-        <a class="dropdown-item" href="#">Assets, Banks & Receivable</a>
-        <a class="dropdown-item" href="#">Liabilities & Payables</a>
-        <a class="dropdown-item" href="#">Expenses Accounts</a>
+        <a class="dropdown-item" href="suppliers.php">Suppliers</a>
+        <a class="dropdown-item" href="salesitem.php">Sales Items</a>
+        <a class="dropdown-item" href="assetform.php">Assets, Banks & Receivable</a>
+        <a class="dropdown-item" href="Liabform.php">Liabilities & Payables</a>
+        <a class="dropdown-item" href="ExpenseForm.php">Expenses Accounts</a>
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
 
-        <a class="dropdown-item" href="#">Sales Area/Territories</a>
-        <a class="dropdown-item" href="#">Sales Items Type</a>
-        <a class="dropdown-item" href="#">Sales Item Group</a>
+        <a class="dropdown-item" href="SalesArea.php">Sales Area/Territories</a>
+        <a class="dropdown-item" href="salesitemtype.php">Sales Items Type</a>
+        <a class="dropdown-item" href="salesitemgroup.php">Sales Item Group</a>
         <!--dropdown divider-->
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Warehouses</a>
+        <a class="dropdown-item" href="warehouse.php">Warehouses</a>
         <!--dropdown divider-->
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Unit of Measurement</a><!--dropdown divider-->
+        <a class="dropdown-item" href="uom.php">Unit of Measurement</a><!--dropdown divider-->
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Create User</a>
+        <a class="dropdown-item" href="user.php">Create User</a>
       </div>
 </li>
 <!--button-->
