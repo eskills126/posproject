@@ -63,7 +63,15 @@ include('navbar.php');
 </div>
 
 <div class="col-xs-6 col-md-4" >
-<a href="SalesArea.php"> <h1 class="text-left">Sales Form</h1></a>
+<a href="SalesArea.php"> <h1 class="text-left">Sales Area Form</h1></a>
+</div>
+
+<div class="col-xs-6 col-md-4" >
+<a href="salesitemtype.php"> <h1 class="text-left">Sales Item Type</h1></a>
+</div>
+
+<div class="col-xs-6 col-md-4" >
+<a href="salesitemgroup.php"> <h1 class="text-left">Item Product Group</h1></a>
 </div>
 
 <?php include('footer.php');?>
