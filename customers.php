@@ -44,7 +44,7 @@ include('navbar.php');
         <label for="cname">Customer Name:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="cname" name="cname" placeholder="Customer Name">
+        <input type="text" id="cname" name="cname" placeholder="Customer Name" required>
       	</div>
     	</div>
 		</div>
@@ -125,13 +125,13 @@ include('navbar.php');
 </p>
 <script>
 $(document).ready(function(){
-	$("#output").load("view.php");
+	$("#output").load("Masters_Customers/view.php");
 	$("#save").click(function() {
 		var id=$("#id").val();
 		
 	if (id==0){
 		$.ajax({
-			url:    "insert.php",
+			url:    "Masters_Customers/insert.php",
 			type:   "post",
 			data:   $("#frm").serialize(),
 
@@ -139,20 +139,20 @@ $(document).ready(function(){
 //alert(d); // After form complete disable this alert
 				
 		$("<tr></tr>").html(d).appendTo(".table");
-		$("#frm")[0].reset();
+		//$("#frm")[0].reset();
 		$("#id").val("0");
 			}
 
 		});
 	}else{
 			$.ajax({
-			url:    "update.php",
+			url:    "Masters_Customers/update.php",
 			type:   "post",
 			data:   $("#frm").serialize(),
 			success:function(d) {
 			
-		$("#output").load("view.php");
-		$("#frm")[0].reset();
+		$("#output").load("Masters_Customers/view.php");
+		//$("#frm")[0].reset();
 		$("#id").val("0");
 			}
 
@@ -165,7 +165,7 @@ $(document).ready(function(){
 		var del=$(this);
 		var id = $(this).attr("data-id");
 		$.ajax({
-			url:    "delete.php",
+			url:    "Masters_Customers/delete.php",
 			type:   "post",
 			data:   {id:id},
 			success:function() {
@@ -181,12 +181,18 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
-		var name = row.closest("tr").find("td:eq(0)").text();
-		$("#name").val(name);
-		var age = row.closest("tr").find("td:eq(1)").text();
-		$("#age").val(age);
-		var city = row.closest("tr").find("td:eq(2)").text();
-		$("#city").val(city);
+		var name = row.closest("tr").find("td:eq(1)").text();
+			$("#cname").val(name);
+		var address = row.closest("tr").find("td:eq(2)").text();
+		$("#caddress").val(address);
+		var contact = row.closest("tr").find("td:eq(3)").text();
+		$("#ccontact").val(contact);
+		var limit = row.closest("tr").find("td:eq(4)").text();
+		$("#climit").val(limit);
+		var opbal = row.closest("tr").find("td:eq(5)").text();
+		$("#copbal").val(opbal);
+		var area = row.closest("tr").find("td:eq(6)").text();
+		$("#carea").val(area);
 	});
 
 });	
