@@ -1,9 +1,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<meta charset="utf-8">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
-<!-----------------------added for date design---------------->
+<!-----------------------added for date design-------------
 	<link rel="stylesheet" type="text/css" href="Jquery_ui/jquery-ui.min.css">
-<!-----------------------above link added for date design---------------->
+---------------------above link added for date design---------------->
 
 
 
