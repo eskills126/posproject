@@ -17,16 +17,6 @@
   All rights reserved<br>
   annSoft Cell No. 0345-6344440, 0333-5575561
 </div>
-
-
-
-
-
-
-
-<script type="text/javascript" src="Jquery_ui/jquery.js"></script>
-<script type="text/javascript" src="Jquery_ui/jquery-ui.js"></script>
-<script type="text/javascript" src="Jquery_ui/jquery-ui.min.js"></script>
 </body>
 
 </html>

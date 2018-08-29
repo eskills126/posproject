@@ -2,13 +2,15 @@
 include('header.php');
 include_once("db_connect.php");
 ?>
-<title>Login Script with PHP and jQuery</title>
+<title>aanSoft</title>
 <script type="text/javascript" src="script/validation.min.js"></script>
 <script type="text/javascript" src="script/login.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
-<?php include('container.php');?>
-<div class="container">
-	<h2>Welcome To Login Script with PHP and jQuery</h2>		
+
+	<p><center> 
+	<h2>Welcome aanSoft</h2>
+	</p>
+	<br>		
 	<form class="form-login" method="post" id="login-form">
 		<h2 class="form-login-heading">User Log In Form</h2><hr />
 		<div id="error">
