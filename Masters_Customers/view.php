@@ -10,7 +10,7 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="java.js"></script>
-
+<!-----------This code segment is used to show data in Descending Order in Datatable------------->
 <script type="text/javascript">
 	$(document).ready(function() {
     $('.display').DataTable( {
@@ -18,9 +18,15 @@
     } );
 } );
 </script>
-
-
-
+<!---------The above code segment is used to show data in Descending Order in Datatable----------->
+<!---------This code segment is used to Confirm before Delete any Record----------->
+<script >
+	$(document).ready(function(){
+	$(".del").click(function(){
+		return confirm("Are You Sure, You Want To Delete");
+	});
+	}); </script>
+<!---------This code segment is used to Confirm before Delete any Record----------->
 
 </head>
 <body>
@@ -56,10 +62,8 @@ include '..\db_connect.php';
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
-				//echo "<tbody>";
-
-				echo "<tr>";
-				
+		
+	echo "<tr>";			
 echo "<td>{$row["CusId"]}</td>";
 echo "<td>{$row["CusName"]}</td>";
 echo "<td>{$row["CusAddress"]}</td>";
@@ -69,12 +73,11 @@ echo "<td>{$row["CusOpenBal"]}</td>";
 echo "<td>{$row["CusAreaName"]}</td>";
 echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
 echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";
-				echo "</tr>";
-			//	echo "</tbody>";
+	echo "</tr>";
+			
 			}
 		}
  	?>
-<tbody></tbody>
 <tfoot>
 				<tr>
 				<th>ID</th>
@@ -90,7 +93,5 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 </tfoot>
 		</table>
 
-
-
-		</body>
+</body>
 </html>

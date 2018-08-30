@@ -27,6 +27,8 @@ include 'db_connect.php';
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
+	
 </head>
 <body>
 
@@ -53,26 +55,28 @@ include 'db_connect.php';
 
 					<div class="form-group">
 							<label>Contact:</label>
-							<input type="text" name="ccontac" id="ccontact" placeholder="Enter Contact Number" class="form-control" >
+							<input type="text" name="ccontac" id="ccontact" placeholder="Enter Contact Number" class="form-control" required="" >
 						</div>
 					<div class="form-group">
 							<label>Credit Limit</label>
-							<input type="text" name="climit" id="climit" placeholder="Enter Credit Limit" class="form-control" >
+							<input type="text" name="climit" id="climit" placeholder="Enter Credit Limit" class="form-control" required="">
 						</div>
 
 						
 					<div class="form-group">
 							<label>Opening Balance</label>
-							<input type="text" name="copbal" id="copbal" placeholder="Enter Opening Balance" class="form-control" >
+							<input type="text" name="copbal" id="copbal" placeholder="Enter Opening Balance" class="form-control" required="">
 						</div>
 
 					<div class="form-group">
 							<label>Customer Area</label>
-							<input type="text" name="carea" id="carea" placeholder="Enter Customer Area" class="form-control" >
+							<input type="text" name="carea" id="carea" placeholder="Enter Customer Area" class="form-control" required="">
 						</div>
 					<div class="form-group">
-							<input type="hidden" id="id" name="id" value="0">
+													
 							<input type="button" class="btn btn-success" id="save" value="Add">
+							<input type="hidden" id="id" name="id" value="0" readonly="">
+							
 							</div>
 
 					</form>
@@ -84,6 +88,18 @@ include 'db_connect.php';
 		</div>
 			</div>
 			
+<script type="text/javascript">
+	$(document).ready(function(){
+
+inputs = $("form :input");
+$(inputs).keypress(function(e){
+	  if (e.keyCode == 13){
+		  inputs[inputs.index(this)+1].focus();
+	  }
+});
+
+});
+</script>
 
 <script>
 $(document).ready(function(){
@@ -101,6 +117,7 @@ $(document).ready(function(){
 			data: $("#frm").serialize(),
 			success:function(d) {
 		$("<tr ></tr>").html(d).insertAfter($("#DESC"));
+		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
 		//$("#examples").prepend($("<tr></tr>")).html(d);
 		//$("#examples").appendTo($("<tr></tr>")).html(d);
 		
@@ -175,7 +192,6 @@ $(document).on("click",".edit",function(){
 <script type="text/javascript" src="Jquery_ui/jquery.js"></script>
 <script type="text/javascript" src="Jquery_ui/jquery-ui.js"></script>
 <script type="text/javascript" src="Jquery_ui/jquery-ui.min.js"></script>
-
 
 </body>
 </html>
