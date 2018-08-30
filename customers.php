@@ -129,8 +129,8 @@ include('navbar.php');
     	<div class="col-25">
     	</div>
     	<div class="col-75">
-    	<input type="hidden" id="id" name="id" value="0">
     	<input type="button" class="btn btn-success" id="save" value="Save Detail">
+    	<input type="hidden" id="id" name="id" value="0">
     	</div>
     	</div>
     	</div>
