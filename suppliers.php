@@ -1,3 +1,17 @@
+<!--Asterik Input Red-->
+<style type="text/css" media="screen">
+.asterisk_input:after {
+content:" *"; 
+color: #e32;
+position: absolute; 
+margin: 0px 0px 0px -20px; 
+font-size: x-large; 
+padding: 0 5px 0 0; 
+}   
+</style>
+
+<!--Code for Login Detail-->
+
 <?php
 include('header.php'); 
 session_start();
@@ -10,9 +24,11 @@ $sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_se
 $resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
 $row = mysqli_fetch_assoc($resultset);
 
+//Code for Login Detail
+
 include('navbar.php');
 ?>
-<link rel="stylesheet" href="css/form.css">
+
 <div class="container-fluid">
 	<p>
 <!--	<div class="row"> -->
@@ -41,13 +57,15 @@ include('navbar.php');
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
+      
         <label for="sname">Supplier Name:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="sname" name="sname" placeholder="Enter Supplier Name">
+        <input type="text" id="sname" name="sname" placeholder="Enter Supplier Name" required><span class="asterisk_input"></span>
       	</div>
     	</div>
 		</div>
+
 
     	<div class="form-group">
     	<div class="row">
@@ -87,6 +105,7 @@ include('navbar.php');
     	<div class="col-sx-12 col-md-3 col-md-offset-6">
     	<input type="hidden" id="id" name="id" value="0">
     	<input type="submit" value="Save Details" id="save">
+    	</div>
     	</div>
     	</div>
 

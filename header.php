@@ -26,6 +26,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script style="text/javascript" res="navbar.js"></script>
+	<link rel="stylesheet" href="css/form.css">
 	
 	
 
