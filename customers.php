@@ -28,11 +28,11 @@ include('navbar.php');
 
 <div class="container-fluid">
 	<p>
-<!--	<div class="row"> -->
+		
   	<div class="row">
   			
 	<div class="col-xs-6 col-sm-8 col-md-offset-4">
-		<h2 class="page-header text-center"><i class="fa fa-edit"></i>- Customer's Profile -</h2>
+		<h2 class="page-header text-center"><i class="fa fa-edit"></i>Customer's Profile</h2>
 		</div>
 
 
