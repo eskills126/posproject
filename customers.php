@@ -1,7 +1,4 @@
 <!--Asterik Input Red-->
-
-
-
 <style type="text/css" media="screen">
 .asterisk_input:after {
 content:" *"; 
@@ -10,9 +7,8 @@ position: absolute;
 margin: 0px 0px 0px -20px; 
 font-size: x-large; 
 padding: 0 5px 0 0; 
-}   
+}
 </style>
-
 <!--Code for Login Detail-->
 <?php
 include('header.php'); 
@@ -132,8 +128,9 @@ include('navbar.php');
     	<div class="col-25">
     	</div>
     	<div class="col-75">
-    	<input type="button" class="btn btn-success" id="save" value="Save Detail">
+    	<input type="button" class="btn btn-success" id="save" value="Save Detail" >
     	<input type="hidden" id="id" name="id" value="0">
+    	<div id="msg"></div>
     	</div>
     	</div>
     	</div>
@@ -166,15 +163,17 @@ $(inputs).keypress(function(e){
 
 <script>
 $(document).ready(function(){
-	
 	$("#output").load("Masters_Customers/view.php");
-
 	$("#cname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
 		
-		if (id==0){
-		$.ajax({
+		if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" ){
+			alert("Please Add Required Fields Marked with Red * ");
+
+}
+	else if (id==0){
+	$.ajax({
 			 url:  "Masters_Customers/insert.php",
 			type:  "post",
 			data: $("#frm").serialize(),
