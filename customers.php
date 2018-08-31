@@ -1,4 +1,7 @@
 <!--Asterik Input Red-->
+
+
+
 <style type="text/css" media="screen">
 .asterisk_input:after {
 content:" *"; 
@@ -119,7 +122,7 @@ include('navbar.php');
         </div>
         <span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="text" id="carea" name="carea" placeholder="Enter Customer Area"required>
+        <input type="text" id="carea" name="carea" placeholder="Enter Customer Area" autocomplete="on">
         </div>
     	</div>
 		</div>
@@ -244,6 +247,19 @@ $(document).on("click",".edit",function(){
 
 });	
 </script>
+<!---------Code for AutoComplete Area---------->
+<script>
+	 $(function() {
+    
+     $("#carea").autocomplete({
+        source: "Masters_Customers/autocomplete_area.php",
+        minLength: 0,
+        select: function (event, ui){}
+    });                
+
+});
+</script>
+
 
 
 <?php include('footer.php'); ?>
