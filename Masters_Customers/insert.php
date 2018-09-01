@@ -8,7 +8,7 @@ include "..\db_connect.php";
 	$copbal=$_POST["copbal"];
 	$carea=$_POST["carea"];
 	
-$sql = "INSERT INTO customertbl(CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES('{$name}','{$address}','{$contact}',{$climit},{$copbal},'{$carea}')";
+$sql = "INSERT INTO customertbl(CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES('{$name}','{$address}','{$contact}','{$climit}',{$copbal},'{$carea}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

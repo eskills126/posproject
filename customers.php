@@ -167,18 +167,27 @@ $(document).ready(function(){
 	$("#cname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
-		
-		if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" ){
-			alert("Please Add Required Fields Marked with Red * ");
+		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
+		if ($("#cname").val()=="" ){
+			alert("Please Add Customer Name ");
+			$("#cname").focus();
 
-}
-	else if (id==0){
-	$.ajax({
+		}else if($("#copbal").val()=="" ){
+			alert("Please Add Opening Balance ");
+			$("#copbal").focus();
+		
+		}else if($("#carea").val()=="" ){
+			alert("Please Add Customer Area ");
+			$("#carea").focus();
+		
+		}else if (id==0){
+		$.ajax({
 			 url:  "Masters_Customers/insert.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
-		$("<tr ></tr>").html(d).insertAfter($("#DESC"));
+				$("#output").load("Masters_Customers/view.php");
+		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
 		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
 		//$("#examples").prepend($("<tr></tr>")).html(d);
 		//$("#examples").appendTo($("<tr></tr>")).html(d);

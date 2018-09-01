@@ -7,6 +7,6 @@
 	$copbal=$_POST["copbal"];
 	$carea=$_POST["carea"];
 
-	$sql = "update customertbl set CusName='$name',CusAddress='$address',CusContact='$contact',CusCreditLimit=$climit,CusOpenBal=$copbal,CusAreaName='$carea' where CusId = ".$_POST["id"];
+	$sql = "update customertbl set CusName='$name',CusAddress='$address',CusContact='$contact',CusCreditLimit='$climit',CusOpenBal=$copbal,CusAreaName='$carea' where CusId = ".$_POST["id"];
 	$conn->query($sql);
  ?>
