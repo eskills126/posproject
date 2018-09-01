@@ -5,7 +5,7 @@
     
 </style>
 </head>
-<body class="">
+<body>
  
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width:auto;white-space: nowrap;">
 
