@@ -16,7 +16,7 @@ include_once("db_connect.php");
 		<div id="error">
 		</div>
 		<div class="form-group">
-			<input type="email" class="form-control" placeholder="Email address" name="user_email" id="user_email" />
+			<input type="email" id="userid" class="form-control" placeholder="Email address" name="user_email" id="user_email" />
 			<span id="check-e"></span>
 		</div>
 		<div class="form-group">
@@ -31,4 +31,9 @@ include_once("db_connect.php");
 	</form>		
 		
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#userid").focus();
+	});
+</script>
 <?php include('footer.php');?>

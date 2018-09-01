@@ -35,8 +35,8 @@
 <?php 
 include '..\db_connect.php';
  ?>
- 
-<h4 class="page-header"><i class="fa fa-cog fa-spin fa-1x fa-fw"></i>Customer Deatils :<hr/></h4>
+
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Deatils :<hr/></h4>
 	<!--	<table class="table"> -->
 	<table id="examples" class="display" style="width:100%">
 			
