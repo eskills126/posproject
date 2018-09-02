@@ -85,7 +85,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="text" id="oqu" name="oqu" placeholder="Enter Opening Quantity in Units">
+        <input type="number" id="oqu" name="oqu" placeholder="Enter Opening Quantity in Units">
       	</div>
     	</div>
 		</div>
