@@ -136,6 +136,9 @@ include('navbar.php');
     	</div>
     	</div>
 
+    	<div class="form-group">
+    	<input type="hidden" id="temp" name="temp" autocomplete="on" style="width: 5%;">
+        </div>
 
 </form>
 </div>
@@ -161,7 +164,24 @@ $(inputs).keypress(function(e){
 
 });
 </script>
-
+<!-----------Temp Compare Value For Authentication----------->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#carea").on('keyup',function(){
+			var updatedname = $(this).val();
+			
+				$.ajax({
+					type: 'POST',
+					url: 'Masters_Customers/Tempdynamicupdate.php',
+					data:{carea:updatedname},
+					success:function(data){
+							$("#temp").val(data);
+					}
+				});
+			});
+		});
+</script>
+<!---------------------------------------------------->
 <script>
 $(document).ready(function(){
 	$("#output").load("Masters_Customers/view.php");
@@ -183,6 +203,10 @@ $(document).ready(function(){
 			alert("Please Add Customer Area ");
 			$("#carea").focus();
 		
+		}else if($("#temp").val()== 0 ){
+			alert("Please Select Customer Area Value From Dropdown List: ");
+			$("#carea").focus();
+		
 		}else if (id==0){
 		$.ajax({
 			 url:  "Masters_Customers/insert.php",
@@ -191,9 +215,7 @@ $(document).ready(function(){
 			success:function(d) {
 				$("#output").load("Masters_Customers/view.php");
 		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		
 		//$("#examples").html(d).appendTo("<tr></tr>");
-
 
 		$("#frm")[0].reset();
 		$("#cname").focus();
@@ -215,7 +237,6 @@ $(document).ready(function(){
 		$("#cname").focus();
 		$("#id").val("0");
 			}
-
 		});
 		}
 	});
@@ -230,7 +251,6 @@ $(document).ready(function(){
 				del.closest("tr").hide();
 
 			}
-
 		});
 	});
 // Update Query
