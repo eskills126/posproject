@@ -70,6 +70,7 @@ include('navbar.php');
       	<div class="col-25">
         <label for="uom">UOM Name:</label>
       	</div>
+      	<span class="asterisk_input"></span>
       	<div class="col-75">
         <input type="text" id="uom" name="uom" placeholder="Enter Unit of Measurement" autocomplete="on" style="width: 97%;">
         <a href="uom.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -82,6 +83,7 @@ include('navbar.php');
       	<div class="col-25">
         <label for="oqu">Opening Quantity Units:</label>
       	</div>
+      	<span class="asterisk_input"></span>
       	<div class="col-75">
         <input type="text" id="oqu" name="oqu" placeholder="Enter Opening Quantity in Units">
       	</div>
@@ -129,6 +131,7 @@ include('navbar.php');
       	<div class="col-25">
         <label for="itn">Item Group Name:</label>
         </div>
+        <span class="asterisk_input"></span>
       	<div class="col-75">
         <input type="text" id="itn" name="itn" placeholder="Enter Sales Item Group" autocomplete="on" style="width: 97%;">
         <a href="salesitemgroup.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -148,6 +151,12 @@ include('navbar.php');
     	</div>
     	</div>
 
+    	<div class="form-group">
+    	<input type="hidden" id="tempuom" name="tempuom" autocomplete="on" style="width: 5%;">
+    	</div>
+        <div class="form-group">
+    	<input type="hidden" id="tempitem" name="tempitem" autocomplete="on" style="width: 5%;"> 
+    	</div>
 
 </form>
 </div>
@@ -169,47 +178,91 @@ $(inputs).keypress(function(e){
 	  if (e.keyCode == 13){
 		  inputs[inputs.index(this)+1].focus();
 	  }
-});
-
-});
+}); });
 </script>
-
+<!-----------Temp Compare Value For Authentication----------->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#uom").on('keyup',function(){
+			var updatedname = $(this).val();
+			
+				$.ajax({
+					type: 'POST',
+					url: 'Masters_SalesItem/Tempdynamicupdate_uom.php',
+					data:{uom:updatedname},
+					success:function(data){
+							$("#tempuom").val(data);
+					}
+				});
+			});
+		});
+</script>
+<!---------------------------------------------------->
+<!-----------Temp Compare Value For Authentication----------->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#itn").on('keyup',function(){
+			var updatedname = $(this).val();
+			
+				$.ajax({
+					type: 'POST',
+					url: 'Masters_SalesItem/Tempdynamicupdate_itn.php',
+					data:{itn:updatedname},
+					success:function(data){
+							$("#tempitem").val(data);
+					}
+				});
+			});
+		});
+</script>
+<!---------------------------------------------------->
 <script>
 $(document).ready(function(){
-	$("#output").load("Masters_Customers/view.php");
-	$("#cname").focus();
+	$("#output").load("Masters_SalesItem/view.php");
+	$("#pname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
-		if ($("#cname").val()=="" ){
-			alert("Please Add Customer Name ");
-			$("#cname").focus();
+		if ($("#pname").val()=="" ){
+			alert("Please Add Product Name ");
+			$("#pname").focus();
 
-		}else if($("#copbal").val()=="" ){
-			alert("Please Add Opening Balance ");
-			$("#copbal").focus();
+		}else if($("#tempuom").val()== 0 ){
+			alert("Please Select UOM Name Value From Dropdown List: ");
+			$("#uom").focus();
 		
-		}else if($("#carea").val()=="" ){
-			alert("Please Add Customer Area ");
-			$("#carea").focus();
+		}else if($("#oqu").val()=="" ){
+			alert("Please Add Quantity ");
+			$("#oqu").focus();
+		
+		}else if($("#orat").val()=="" ){
+			alert("Please Add Opening Rate ");
+			$("#orat").focus();
+		
+		}else if($("#ob").val()=="" ){
+			alert("Please Add Opening Balance ");
+			$("#ob").focus();
+		
+		}else if($("#sr").val()=="" ){
+			alert("Please Add Opening Balance ");
+			$("#sr").focus();
+		
+		}else if($("#tempitem").val()== 0 ){
+			alert("Please Select Item Group Name Value From Dropdown List: ");
+			$("#itn").focus();
 		
 		}else if (id==0){
 		$.ajax({
-			 url:  "Masters_Customers/insert.php",
+			 url:  "Masters_SalesItem/insert.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
-				$("#output").load("Masters_Customers/view.php");
+				$("#output").load("Masters_SalesItem/view.php");
 		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
-		//$("#examples").prepend($("<tr></tr>")).html(d);
-		//$("#examples").appendTo($("<tr></tr>")).html(d);
-		
 		//$("#examples").html(d).appendTo("<tr></tr>");
 
-
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#pname").focus();
 		//$("#cname").val('');
 		
 		$("#id").val("0");
@@ -218,14 +271,14 @@ $(document).ready(function(){
 		});
 	}else{
 			$.ajax({
-			url:  "Masters_Customers/update.php",
+			url:  "Masters_SalesItem/update.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
 			
-		$("#output").load("Masters_Customers/view.php");
+		$("#output").load("Masters_SalesItem/view.php");
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#pname").focus();
 		$("#id").val("0");
 			}
 
@@ -236,7 +289,7 @@ $(document).ready(function(){
 		var del=$(this);
 		var id = $(this).attr("data-id");
 		$.ajax({
-			url:  "Masters_Customers/delete.php",
+			url:  "Masters_SalesItem/delete.php",
 			type:  "post",
 			data: {id:id},
 			success:function() {
@@ -253,34 +306,45 @@ $(document).on("click",".edit",function(){
 		$("#id").val(id);
 
 		var name = row.closest("tr").find("td:eq(1)").text();
-			$("#cname").val(name);
-		var address = row.closest("tr").find("td:eq(2)").text();
-		$("#caddress").val(address);
-		var contact = row.closest("tr").find("td:eq(3)").text();
-		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
-		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
-		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
-		$("#carea").val(area);
+			$("#pname").val(name);
+		var uom = row.closest("tr").find("td:eq(2)").text();
+		$("#uom").val(uom);
+		var oqu = row.closest("tr").find("td:eq(3)").text();
+		$("#oqu").val(oqu);
+		var orat = row.closest("tr").find("td:eq(4)").text();
+		$("#orat").val(orat);
+		var ob = row.closest("tr").find("td:eq(5)").text();
+		$("#ob").val(ob);
+		var sr = row.closest("tr").find("td:eq(6)").text();
+		$("#sr").val(sr);
+		var itn = row.closest("tr").find("td:eq(7)").text();
+		$("#itn").val(itn);
 	});
 
 });	
 </script>
-<!---------Code for AutoComplete Area---------->
+<!---------Code for AutoComplete UOM---------->
 <script>
 	 $(function() {
     
-     $("#carea").autocomplete({
-        source: "Masters_Customers/autocomplete_area.php",
+     $("#uom").autocomplete({
+        source: "Masters_SalesItem/autocomplete_uom.php",
         minLength: 0,
         select: function (event, ui){}
     });                
-
 });
 </script>
-
+<!---------Code for AutoComplete Sales Item Group Name---------->
+<script>
+	 $(function() {
+    
+     $("#itn").autocomplete({
+        source: "Masters_SalesItem/autocomplete_itemgroup.php",
+        minLength: 0,
+        select: function (event, ui){}
+    });                
+});
+</script>
 
 
 <?php include('footer.php'); ?>

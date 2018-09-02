@@ -60,12 +60,13 @@ include '..\db_connect.php';
 			<tr  id="DESC">
 				
 				<th>ID</th>
-				<th>Customer Name</th>
-				<th>Address</th>
-				<th>Contact</th>
-				<th>Credit Limit</th>
+				<th>Product Name</th>
+				<th>UOM Name</th>
+				<th>Opening Quantity Units</th>
+				<th>Opening Rates</th>
 				<th>Opening Balance</th>
-				<th>Customer Area</th>
+				<th>Sales Rate</th>
+				<th>Item Group Name</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -73,22 +74,23 @@ include '..\db_connect.php';
 		</thead>
 			
 	<?php 
-		$sql = "SELECT * FROM `customertbl` ORDER BY CusId DESC";
+		$sql = "SELECT * FROM `salesitemtbl` ";
 		$res = $conn->query($sql);
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";			
-echo "<td>{$row["CusId"]}</td>";
-echo "<td>{$row["CusName"]}</td>";
-echo "<td>{$row["CusAddress"]}</td>";
-echo "<td>{$row["CusContact"]}</td>";
-echo "<td>{$row["CusCreditLimit"]}</td>";
-echo "<td>{$row["CusOpenBal"]}</td>";
-echo "<td>{$row["CusAreaName"]}</td>";
-echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";
+echo "<td>{$row["ProId"]}</td>";
+echo "<td>{$row["ProName"]}</td>";
+echo "<td>{$row["ProUomName"]}</td>";
+echo "<td>{$row["ProOpenQtyUnit"]}</td>";
+echo "<td>{$row["ProOpenRate"]}</td>";
+echo "<td>{$row["ProOpenBal"]}</td>";
+echo "<td>{$row["ProSalesRate"]}</td>";
+echo "<td>{$row["ProItemGroupName"]}</td>";
+echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["ProId"]}'><i class='fa fa-edit'></i></td>";
+echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["ProId"]}'><i class='fa fa-trash'></i></td>";
 	echo "</tr>";
 			
 			}
@@ -97,12 +99,13 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 <tfoot>
 				<tr>
 				<th>ID</th>
-				<th>Customer Name</th>
-				<th>Address</th>
-				<th>Contact</th>
-				<th>Credit Limit</th>
+				<th>Product Name</th>
+				<th>UOM Name</th>
+				<th>Opening Quantity Units</th>
+				<th>Opening Rates</th>
 				<th>Opening Balance</th>
-				<th>Customer Area</th>
+				<th>Sales Rate</th>
+				<th>Item Group Name</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
