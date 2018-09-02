@@ -72,7 +72,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="password" id="upassword" name="upassword" placeholder="Enter Password" required>
+        <input type="password" id="upassword" name="upassword" placeholder="Enter Password" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;">
       	</div>
     	</div>
 		</div>
@@ -84,7 +84,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="password" id="rpassword" name="rpassword" placeholder="Retype Password" required>
+        <input type="password" id="rpassword" name="rpassword" placeholder="Retype Password" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;">
       	</div>
     	</div>
 		</div>
@@ -96,7 +96,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="email" size="60" id="uemail" name="uemail" placeholder="Enter Email" required>
+        <input type="email" size="60" id="uemail" name="uemail" placeholder="Enter Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;">
       	</div>
     	</div>
 		</div>
