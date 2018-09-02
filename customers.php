@@ -118,7 +118,7 @@ include('navbar.php');
         </div>
         <span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="text" size="5" id="carea" name="carea" placeholder="Enter Customer Area" autocomplete="on" style="width: 97%;">
+        <input type="text" id="carea" name="carea" placeholder="Enter Customer Area" autocomplete="on" style="width: 97%;">
         <a href="salesarea.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
         </div>
     	</div>

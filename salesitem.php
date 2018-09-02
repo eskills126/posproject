@@ -68,10 +68,11 @@ include('navbar.php');
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="saddress">Address:</label>
+        <label for="uom">UOM Name:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="saddress" name="saddress" placeholder="Enter Supplier's Address">
+        <input type="text" id="uom" name="uom" placeholder="Enter Unit of Measurement" autocomplete="on" style="width: 97%;">
+        <a href="uom.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
     	</div>
 		</div>
@@ -79,10 +80,10 @@ include('navbar.php');
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="scontact">Cotact:</label>
+        <label for="oqu">Opening Quantity Units:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="scontact" name="scontact" placeholder="Enter Suppliers's Contact">
+        <input type="text" id="oqu" name="oqu" placeholder="Enter Opening Quantity in Units">
       	</div>
     	</div>
 		</div>
@@ -90,11 +91,47 @@ include('navbar.php');
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="sopbal">Opening Balance:</label>
+        <label for="orat">Opening Rates:</label>
         </div>
         <span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="number" id="sopbal" name="sopbal" placeholder="Enter Opening Balance"required>
+        <input type="number" id="orat" name="orat" placeholder="Enter Opening Rates"required>
+        </div>
+    	</div>
+		</div>
+
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="ob">Opening Balance:</label>
+        </div>
+        <span class="asterisk_input"></span>
+      	<div class="col-75">
+        <input type="number" id="ob" name="ob" placeholder="Enter Opening Balance"required>
+        </div>
+    	</div>
+		</div>
+
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="sr">Sale Rate:</label>
+        </div>
+        <span class="asterisk_input"></span>
+      	<div class="col-75">
+        <input type="number" id="sr" name="sr" placeholder="Enter Sales Rate"required>
+        </div>
+    	</div>
+		</div>
+
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="itn">Item Group Name:</label>
+        </div>
+      	<div class="col-75">
+        <input type="text" id="itn" name="itn" placeholder="Enter Sales Item Group" autocomplete="on" style="width: 97%;">
+        <a href="salesitemgroup.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
         </div>
     	</div>
 		</div>
