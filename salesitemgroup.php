@@ -1,3 +1,15 @@
+<!--Asterik Input Red-->
+<style type="text/css" media="screen">
+.asterisk_input:after {
+content:" *"; 
+color: #e32;
+position: absolute; 
+margin: 0px 0px 0px -20px; 
+font-size: x-large; 
+padding: 0 5px 0 0; 
+}
+</style>
+<!--Code for Login Detail-->
 <?php
 include('header.php'); 
 session_start();
@@ -12,15 +24,16 @@ $row = mysqli_fetch_assoc($resultset);
 
 include('navbar.php');
 ?>
-<link rel="stylesheet" href="css/form.css">
+
 <div class="container-fluid">
 	<p>
-<!--	<div class="row"> -->
+		
   	<div class="row">
   			
 	<div class="col-xs-6 col-sm-8 col-md-offset-4">
 		<h2 class="page-header text-center"><i class="fa fa-edit"></i>Product Group</h2>
 		</div>
+
 
 	<div class="col-xs-6 col-sm-4">
 	<div class="dropdown" align="right"id="logininfo">
@@ -28,36 +41,44 @@ include('navbar.php');
     <i class="fa fa-user-circle fa-3x" aria-hidden="false">&nbsp</i>Welcome <?php echo $row['user']; ?>&nbsp;<span class="caret"></span>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="#"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
+    <a class="dropdown-item" href="#"><i class="fa fa-user" aria-hidden="true"></i>View Profile</a>
     <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp</i>Sign Out</a>
     </div>
   </div>  
  </div>
-</div></p>
+</div>
 
 <div class="container">
-  <form id="sfrm">
-	
+					
+<form id="frm" action="" method="post">
+
+
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
         <label for="igname">Item Group Name:</label>
       	</div>
+      	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="text" id="igname" name="igname" placeholder="Enter Item Group">
+        <input type="text" id="igname" name="igname" placeholder="Enter Item Group Name" required>
       	</div>
     	</div>
 		</div>
-
-    	<div class="form-group">
+		
+		<div class="form-group">
     	<div class="row">
-    	<div class="col-sx-12 col-md-3 col-md-offset-6">
+    	<div class="col-25">
+    	</div>
+    	<div class="col-75">
+    	<input type="button" class="btn btn-success" id="save" value="Save Detail">
     	<input type="hidden" id="id" name="id" value="0">
-    	<input type="submit" value="Save Details" id="save">
+    	<div id="msg"></div>
+    	</div>
     	</div>
     	</div>
 
-  </form>
+
+</form>
 </div>
 </div>
 
@@ -68,51 +89,85 @@ include('navbar.php');
 <div class="col-xs-6 col-sm-2"></div>
 </div>
 </p>
+			
+<script type="text/javascript">
+	$(document).ready(function(){
+
+inputs = $("form :input");
+$(inputs).keypress(function(e){
+	  if (e.keyCode == 13){
+		  inputs[inputs.index(this)+1].focus();
+	  }
+});
+
+});
+</script>
+
 <script>
 $(document).ready(function(){
-	$("#output").load("view.php");
+	$("#output").load("Masters_Customers/view.php");
+	$("#cname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
-		
-	if (id==0){
-		$.ajax({
-			url:    "insert.php",
-			type:   "post",
-			data:   $("#frm").serialize(),
+		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
+		if ($("#cname").val()=="" ){
+			alert("Please Add Customer Name ");
+			$("#cname").focus();
 
+		}else if($("#copbal").val()=="" ){
+			alert("Please Add Opening Balance ");
+			$("#copbal").focus();
+		
+		}else if($("#carea").val()=="" ){
+			alert("Please Add Customer Area ");
+			$("#carea").focus();
+		
+		}else if (id==0){
+		$.ajax({
+			 url:  "Masters_Customers/insert.php",
+			type:  "post",
+			data: $("#frm").serialize(),
 			success:function(d) {
-//alert(d); // After form complete disable this alert
-				
-		$("<tr></tr>").html(d).appendTo(".table");
+				$("#output").load("Masters_Customers/view.php");
+		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
+		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
+		//$("#examples").prepend($("<tr></tr>")).html(d);
+		//$("#examples").appendTo($("<tr></tr>")).html(d);
+		
+		//$("#examples").html(d).appendTo("<tr></tr>");
+
+
 		$("#frm")[0].reset();
+		$("#cname").focus();
+		//$("#cname").val('');
+		
 		$("#id").val("0");
 			}
 
 		});
 	}else{
 			$.ajax({
-			url:    "update.php",
-			type:   "post",
-			data:   $("#frm").serialize(),
+			url:  "Masters_Customers/update.php",
+			type:  "post",
+			data: $("#frm").serialize(),
 			success:function(d) {
 			
-		$("#output").load("view.php");
+		$("#output").load("Masters_Customers/view.php");
 		$("#frm")[0].reset();
+		$("#cname").focus();
 		$("#id").val("0");
 			}
 
 		});
-	
-	}
-
+		}
 	});
 	$(document).on("click",".del",function(){
 		var del=$(this);
 		var id = $(this).attr("data-id");
 		$.ajax({
-			url:    "delete.php",
-			type:   "post",
-			data:   {id:id},
+			url:  "Masters_Customers/delete.php",
+			type:  "post",
+			data: {id:id},
 			success:function() {
 				del.closest("tr").hide();
 
@@ -126,22 +181,38 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
-		var name = row.closest("tr").find("td:eq(0)").text();
-		$("#name").val(name);
-		var age = row.closest("tr").find("td:eq(1)").text();
-		$("#age").val(age);
-		var city = row.closest("tr").find("td:eq(2)").text();
-		$("#city").val(city);
+		var name = row.closest("tr").find("td:eq(1)").text();
+			$("#cname").val(name);
+		var address = row.closest("tr").find("td:eq(2)").text();
+		$("#caddress").val(address);
+		var contact = row.closest("tr").find("td:eq(3)").text();
+		$("#ccontact").val(contact);
+		var limit = row.closest("tr").find("td:eq(4)").text();
+		$("#climit").val(limit);
+		var opbal = row.closest("tr").find("td:eq(5)").text();
+		$("#copbal").val(opbal);
+		var area = row.closest("tr").find("td:eq(6)").text();
+		$("#carea").val(area);
 	});
 
 });	
+</script>
+<!---------Code for AutoComplete Area---------->
+<script>
+	 $(function() {
+    
+     $("#carea").autocomplete({
+        source: "Masters_Customers/autocomplete_area.php",
+        minLength: 0,
+        select: function (event, ui){}
+    });                
 
+});
 </script>
 
 
-<?php 
-include('footer.php');
-?>
+
+<?php include('footer.php'); ?>
 <p>
 	<br>
 	</p>
