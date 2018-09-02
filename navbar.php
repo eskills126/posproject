@@ -52,7 +52,7 @@
 </li>
 <!--button-->
 
-        <button class="btn btn-warning navbar-btn">Transactions>
+        <button class="btn navbar-btn "style="background-color: red;color:white">Transactions>
     </button>
     <!--static links-->
         
@@ -90,7 +90,7 @@
     </div>
   </li>
 
-    <button class="btn btn-warning navbar-btn">Reports>
+    <button class="btn navbar-btn"style="background-color: red;color:white">Reports>
     </button>
 
  <li class="nav-item dropdown active">
@@ -213,7 +213,7 @@
     </div>
 </li>
 
-<a href="welcome.php" class="btn btn-warning btn-work">DashBoard
+<a href="welcome.php" class="btn btn-work"style="background-color: red;color:white">DashBoard
     </a>
       </ul> 
 
