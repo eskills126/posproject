@@ -147,7 +147,7 @@ include('navbar.php');
 <div class="col-xs-6 col-sm-2"></div>
 </div>
 </p>
-			
+<!------This code is for Enter Index insted of TabIndex--------->
 <script type="text/javascript">
 	$(document).ready(function(){
 
@@ -169,7 +169,9 @@ $(document).ready(function(){
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
 		if ($("#cname").val()=="" ){
+			
 			alert("Please Add Customer Name ");
+			
 			$("#cname").focus();
 
 		}else if($("#copbal").val()=="" ){
@@ -188,9 +190,6 @@ $(document).ready(function(){
 			success:function(d) {
 				$("#output").load("Masters_Customers/view.php");
 		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
-		//$("#examples").prepend($("<tr></tr>")).html(d);
-		//$("#examples").appendTo($("<tr></tr>")).html(d);
 		
 		//$("#examples").html(d).appendTo("<tr></tr>");
 
