@@ -2,7 +2,9 @@
 <html>
 <head>
 	<title></title>
-
+<?php session_start();
+$var=$_SESSION['user_session'];
+ ?>
 
 <script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -17,17 +19,30 @@
     } );
 } );
 </script>
-<!---------The above code segment is used to show data in Descending Order in Datatable----------->
-<!---------This code segment is used to Confirm before Delete any Record----------->
+
+<!---------This code segment is used to Confirm If ADMIN before Deleting any Record----------->
+<!---------Only Admin can Delete Or Edit Records---------------------------------------------->
 <script >
 	$(document).ready(function(){
 	$(".del").click(function(){
-		return confirm("Are You Sure, You Want To Delete");
+		if ($("#abcd").val() != 2) {
+			alert("You are Not Admin");
+			return false;
+			}else{
+				return confirm("Are You Sure, You Want to Delete");
+			}
 	});
 	}); </script>
-<!---------This code segment is used to Confirm before Delete any Record----------->
 
-
+<script >
+	$(document).ready(function(){
+	$(".edit").click(function(){
+		if ($("#abcd").val() != 2) {
+			alert("You are Not Admin, You Con't Edit Any Records");
+			return false;
+			}
+	});
+	}); </script>	
 </head>
 <body>
 
@@ -93,6 +108,7 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 			</tr>
 </tfoot>
 		</table>
+		<input type="hidden" id="abcd" value="<?php echo $var; ?>" >
 
 </body>
 </html>
