@@ -177,7 +177,7 @@ $(document).ready(function(){
 			
 		$("#output").load("Masters_Suppliers/view.php");
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#sname").focus();
 		$("#id").val("0");
 			}
 
@@ -205,17 +205,13 @@ $(document).on("click",".edit",function(){
 		$("#id").val(id);
 
 		var name = row.closest("tr").find("td:eq(1)").text();
-			$("#cname").val(name);
+			$("#sname").val(name);
 		var address = row.closest("tr").find("td:eq(2)").text();
-		$("#caddress").val(address);
+		$("#saddress").val(address);
 		var contact = row.closest("tr").find("td:eq(3)").text();
-		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
-		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
-		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
-		$("#carea").val(area);
+		$("#scontact").val(contact);
+		var opbal = row.closest("tr").find("td:eq(4)").text();
+		$("#sopbal").val(opbal);
 	});
 
 });	
