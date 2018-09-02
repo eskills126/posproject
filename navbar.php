@@ -57,7 +57,7 @@
     <!--static links-->
         
     <li class="nav-item active">
-      <a class="nav-link" href="#">Purchases <span aria-hidden="true"></span></a>
+      <a class="nav-link" href="purchases.php">Purchases <span aria-hidden="true"></span></a>
     </li>
 
     <li class="nav-item active">
