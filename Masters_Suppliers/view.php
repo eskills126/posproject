@@ -51,21 +51,19 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Deatils :<hr/></h4>
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Supplier Deatils :<hr/></h4>
 	<!--	<table class="table"> -->
 	<table id="examples" class="display" style="width:100%">
 			
 				
 					<thead>
-			<tr  id="DESC">
-				
+			<!--<tr  id="DESC">  -->
+				<tr>
 				<th>ID</th>
-				<th>Customer Name</th>
+				<th>Supplier Name</th>
 				<th>Address</th>
 				<th>Contact</th>
-				<th>Credit Limit</th>
 				<th>Opening Balance</th>
-				<th>Customer Area</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -73,14 +71,14 @@ include '..\db_connect.php';
 		</thead>
 			
 	<?php 
-		$sql = "SELECT * FROM `customertbl` ORDER BY CusId DESC";
+		$sql = "SELECT * FROM `suptbl` ";
 		$res = $conn->query($sql);
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";			
-echo "<td>{$row["CusId"]}</td>";
+echo "<td>{$row["SupId"]}</td>";
 echo "<td>{$row["CusName"]}</td>";
 echo "<td>{$row["CusAddress"]}</td>";
 echo "<td>{$row["CusContact"]}</td>";
