@@ -61,12 +61,8 @@ include('navbar.php');
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="ino" name="ino" placeholder="Invoice No." required>
       	</div>
-    	</div>
-		</div>
-
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
         <label for="pdate">Date:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
@@ -83,21 +79,148 @@ include('navbar.php');
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="text" id="scode" name="scode" placeholder="Enter Supplier Code" required">
       	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="sname" name="sname" placeholder="Supplier Name">
+      	<input type="text"id="sname" name="sname" placeholder="Supplier Name"style="width: 95%;">
+        <a href="suppliers.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
-      	<div class="col-25 text-center">
+      	<div class="col-25" style="width:0.5%;"></div>
+      	<div class="col-25"style="width: 10%;">
       	<label for="sbal">Balance:</label>
       	</div>
       	<div class="col-25">
-      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance">
+      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;">
       	</div>
-      </div>
-      		
+      	</div>
+      	</div>
+    	 <!---Item Code row----->
+    	<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="icode">Item Code:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="text" id="icode" name="icode" placeholder="Enter Item Code" required">
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+      	<div class="col-60">
+      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;">
+        <a href="salesitem.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
+      	</div>
+      	</div>
+      	</div>
+		 <!---Warehouse row----->
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="wcode">Warehouse Code:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="text" id="wcode" name="wcode" placeholder="Enter Warhouse Code" required">
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+      	<div class="col-60">
+      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;">
+        <a href="warehouse.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
+      	</div>
+      	</div>
+      	</div>
+      <!---Quantity row----->
+      	<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="qty">Quantity:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="qty" name="qty" placeholder="Quantity" required>
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
+        <label for="sqty">Stock Quantity:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Stock Quantity">
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
+        <label for="grate">Gross Rate:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="grate" name="grate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Gross Rate">
       	</div>
     	</div>
 		</div>
 
+		<!---Gross Amount row----->
+      	<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="gamount">Gross Amount:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="gamount" name="gamount" placeholder="Gross Amount" required>
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
+        <label for="DisRate">Discount % Rate:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="DisRate" name="DisRate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount % Rate">
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
+        <label for="Dvalue">DiscountValue Rate:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="Dvalue" name="Dvalue" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount Value Rate">
+      	</div>
+    	</div>
+		</div>
+
+		<!---Discounted Rate----->
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="disdrate">Discounted Rate:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="disdrate" name="disdrate" placeholder="Discounted Rate" required>
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
+        <label for="Rate">Rate:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="Rate" name="Rate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Rate">
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+    	<div class="col-25">
+        <label for="amount">Amount:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="amount" name="amount" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Amount">
+      	</div>
+    	</div>
+		</div>
+
+		<!---Display ID row----->
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="did">Display ID:</label>
+      	</div>
+      	<div class="col-25"><span class="asterisk_input"></span>
+        <input type="text" id="did" name="did" placeholder="Enter Display Id" required">
+      	</div>
+      	<div class="col-25" style="width:0.5%;"></div>
+      	<div class="col-25"><label for="remarks">Remarks</label></div>
+      	<div class="col-75">
+      	<input type="text"id="remarks" name="remarks" placeholder="Remarks..." style="width: 91%;">
+      	</div>
+      	</div>
+      	</div>
+
+		<!----button row------>
 		<div class="form-group">
     	<div class="row">
     	<div class="col-25">
