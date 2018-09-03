@@ -2,11 +2,32 @@
    .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #bfc5cc;
     
-    
+   
+
 </style>
+<?php include_once 'header.php'; 
+
+$_SESSION['user_role'];
+$rights = $_SESSION['user_role'];
+?>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#admin").click(function(){
+
+      if($("#rights").val() == 1){
+      return true;
+    }  else{
+      alert("You Are Not Admin");
+      return false;
+    }
+    });
+    
+  });
+  
+</script>
 </head>
 <body>
- 
+  <input type="hidden" id="rights" value="<?php echo $rights; ?>" name="">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->

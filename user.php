@@ -280,6 +280,23 @@ $(document).on("click",".edit",function(){
 });	
 </script>
 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    //$("#admin").click(function(){
+
+      if($("#user_role").val() == 1){
+      return true;
+    }  else{
+      alert("You Are Not Admin");
+      
+      //return false;
+    }
+    });
+    
+  //});
+  
+</script>
 <!---------Code for AutoComplete Area--------------
 <script>
 	 $(function() {
@@ -294,6 +311,7 @@ $(document).on("click",".edit",function(){
 -------------------------------------------------->
 <input type="text" id="user_id" value="<?php echo $var; ?>" >
 <input type="text" id="user_role" value="<?php echo $var2; ?>" >
+
 
 <?php include('footer.php'); ?>
 <p>
