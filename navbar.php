@@ -47,7 +47,7 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="uom.php">Unit of Measurement</a><!--dropdown divider-->
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="user.php">Create User</a>
+        <a id="admin" class="dropdown-item" href="user.php">Create User</a>
       </div>
 </li>
 <!--button-->

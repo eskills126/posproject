@@ -44,18 +44,25 @@ input[type=submit]:hover {
 .col-25 {
     float: left;
     width: 15%;
-    margin-top: 6px;
+    margin-top: 3px;
 }
 
 .col-75 {
     float: left;
     width: 50%;
-    margin-top: 6px;
+    margin-top: 3px;
 }
 .col-60 {
     float: left;
     width: 40%;
-    margin-top: 6px;
+    margin-top: 3px;
+}
+
+.col-5 {
+    float: left;
+   
+   
+    background-color: white;
 }
 
 /* Clear floats after the columns */
