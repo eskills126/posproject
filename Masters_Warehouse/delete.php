@@ -1,6 +1,6 @@
 <?php 
 	include "..\db_connect.php";
-	$sql = "delete from customertbl where CusId = ".$_POST["id"];
+	$sql = "delete from wharehousetbl where WarehouseId = ".$_POST["id"];
 	$conn->query($sql);
  ?>
  

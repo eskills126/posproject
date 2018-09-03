@@ -60,11 +60,13 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="text" id="aname" name="aname" placeholder="Enter Area Name" required>
+        <input type="text" id="aname" name="aname" placeholder="Enter Area Name">
       	</div>
     	</div>
 		</div>
 		
+
+
 		<div class="form-group">
     	<div class="row">
     	<div class="col-25">
@@ -72,6 +74,8 @@ include('navbar.php');
     	<div class="col-75">
     	<input type="button" class="btn btn-success" id="save" value="Save Detail">
     	<input type="hidden" id="id" name="id" value="0">
+
+        <input type="" style="width: 0%; border-style:none;">
     	<div id="msg"></div>
     	</div>
     	</div>
@@ -105,30 +109,22 @@ $(inputs).keypress(function(e){
 
 <script>
 $(document).ready(function(){
-	$("#output").load("Masters_Customers/view.php");
-	$("#cname").focus();
+	$("#output").load("Masters_SalesArea/view.php");
+	$("#aname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
-		if ($("#cname").val()=="" ){
-			alert("Please Add Customer Name ");
-			$("#cname").focus();
+		if ($("#aname").val()=="" ){
+			alert("Please Add Area Name ");
+			$("#aname").focus();
 
-		}else if($("#copbal").val()=="" ){
-			alert("Please Add Opening Balance ");
-			$("#copbal").focus();
-		
-		}else if($("#carea").val()=="" ){
-			alert("Please Add Customer Area ");
-			$("#carea").focus();
-		
 		}else if (id==0){
 		$.ajax({
-			 url:  "Masters_Customers/insert.php",
+			 url:  "Masters_SalesArea/insert.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
-				$("#output").load("Masters_Customers/view.php");
+				$("#output").load("Masters_SalesArea/view.php");
 		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
 		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
 		//$("#examples").prepend($("<tr></tr>")).html(d);
@@ -138,7 +134,7 @@ $(document).ready(function(){
 
 
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#aname").focus();
 		//$("#cname").val('');
 		
 		$("#id").val("0");
@@ -147,14 +143,14 @@ $(document).ready(function(){
 		});
 	}else{
 			$.ajax({
-			url:  "Masters_Customers/update.php",
+			url:  "Masters_SalesArea/update.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
 			
-		$("#output").load("Masters_Customers/view.php");
+		$("#output").load("Masters_SalesArea/view.php");
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#aname").focus();
 		$("#id").val("0");
 			}
 
@@ -165,7 +161,7 @@ $(document).ready(function(){
 		var del=$(this);
 		var id = $(this).attr("data-id");
 		$.ajax({
-			url:  "Masters_Customers/delete.php",
+			url:  "Masters_SalesArea/delete.php",
 			type:  "post",
 			data: {id:id},
 			success:function() {
@@ -182,34 +178,24 @@ $(document).on("click",".edit",function(){
 		$("#id").val(id);
 
 		var name = row.closest("tr").find("td:eq(1)").text();
-			$("#cname").val(name);
-		var address = row.closest("tr").find("td:eq(2)").text();
-		$("#caddress").val(address);
-		var contact = row.closest("tr").find("td:eq(3)").text();
-		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
-		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
-		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
-		$("#carea").val(area);
+			$("#aname").val(name);
 	});
 
 });	
 </script>
-<!---------Code for AutoComplete Area---------->
+<!---------Code for AutoComplete Area------
 <script>
 	 $(function() {
     
      $("#carea").autocomplete({
-        source: "Masters_Customers/autocomplete_area.php",
+        source: "Masters_SalesArea/autocomplete_area.php",
         minLength: 0,
         select: function (event, ui){}
     });                
 
 });
 </script>
-
+------------------------------------------>
 
 
 <?php include('footer.php'); ?>

@@ -57,15 +57,10 @@ include '..\db_connect.php';
 			
 				
 					<thead>
-			<tr  id="DESC">
+			<tr>
 				
 				<th>ID</th>
-				<th>Customer Name</th>
-				<th>Address</th>
-				<th>Contact</th>
-				<th>Credit Limit</th>
-				<th>Opening Balance</th>
-				<th>Customer Area</th>
+				<th>Warehouse Name</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -73,22 +68,17 @@ include '..\db_connect.php';
 		</thead>
 			
 	<?php 
-		$sql = "SELECT * FROM `customertbl` ORDER BY CusId DESC";
+		$sql = "SELECT * FROM `wharehousetbl` ";
 		$res = $conn->query($sql);
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";			
-echo "<td>{$row["CusId"]}</td>";
-echo "<td>{$row["CusName"]}</td>";
-echo "<td>{$row["CusAddress"]}</td>";
-echo "<td>{$row["CusContact"]}</td>";
-echo "<td>{$row["CusCreditLimit"]}</td>";
-echo "<td>{$row["CusOpenBal"]}</td>";
-echo "<td>{$row["CusAreaName"]}</td>";
-echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";
+echo "<td>{$row["WarehouseId"]}</td>";
+echo "<td>{$row["WarehouseName"]}</td>";
+echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["WarehouseId"]}'><i class='fa fa-edit'></i></td>";
+echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["WarehouseId"]}'><i class='fa fa-trash'></i></td>";
 	echo "</tr>";
 			
 			}
@@ -97,12 +87,7 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 <tfoot>
 				<tr>
 				<th>ID</th>
-				<th>Customer Name</th>
-				<th>Address</th>
-				<th>Contact</th>
-				<th>Credit Limit</th>
-				<th>Opening Balance</th>
-				<th>Customer Area</th>
+				<th>Warehouse Name</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>

@@ -1,13 +1,11 @@
 <?php 
 	include "..\db_connect.php";
-	$name=$_POST["cname"];
-	$address=$_POST["caddress"];
-	$contact=$_POST["ccontac"];
-	$climit=$_POST["climit"];
-	$copbal=$_POST["copbal"];
-	$carea=$_POST["carea"];
+	$name=$_POST["lname"];
+	$address=$_POST["laddress"];
+	$contact=$_POST["lcontact"];
+	$ob=$_POST["ob"];
 
-	$sql = "update customertbl set CusName='$name',CusAddress='$address',CusContact='$contact',CusCreditLimit='$climit',CusOpenBal=$copbal,CusAreaName='$carea' where CusId = ".$_POST["id"];
+$sql = "update liabtbl set LiabTitle='$name',LiabAddress='$address',LiabContact='$contact',LiabOpenBal=$ob where LiabId = ".$_POST["id"];
 	$conn->query($sql);
  ?>
  

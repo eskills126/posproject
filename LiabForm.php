@@ -139,30 +139,26 @@ $(inputs).keypress(function(e){
 
 <script>
 $(document).ready(function(){
-	$("#output").load("Masters_Customers/view.php");
-	$("#cname").focus();
+	$("#output").load("Masters_Liab/view.php");
+	$("#lname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
-		if ($("#cname").val()=="" ){
-			alert("Please Add Customer Name ");
-			$("#cname").focus();
+		if ($("#lname").val()=="" ){
+			alert("Please Add Liability Name ");
+			$("#lname").focus();
 
-		}else if($("#copbal").val()=="" ){
+		}else if($("#ob").val()=="" ){
 			alert("Please Add Opening Balance ");
-			$("#copbal").focus();
-		
-		}else if($("#carea").val()=="" ){
-			alert("Please Add Customer Area ");
-			$("#carea").focus();
+			$("#ob").focus();
 		
 		}else if (id==0){
 		$.ajax({
-			 url:  "Masters_Customers/insert.php",
+			 url:  "Masters_Liab/insert.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
-				$("#output").load("Masters_Customers/view.php");
+				$("#output").load("Masters_Liab/view.php");
 		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
 		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
 		//$("#examples").prepend($("<tr></tr>")).html(d);
@@ -172,7 +168,7 @@ $(document).ready(function(){
 
 
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#lname").focus();
 		//$("#cname").val('');
 		
 		$("#id").val("0");
@@ -181,14 +177,14 @@ $(document).ready(function(){
 		});
 	}else{
 			$.ajax({
-			url:  "Masters_Customers/update.php",
+			url:  "Masters_Liab/update.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
 			
-		$("#output").load("Masters_Customers/view.php");
+		$("#output").load("Masters_Liab/view.php");
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#lname").focus();
 		$("#id").val("0");
 			}
 
@@ -199,7 +195,7 @@ $(document).ready(function(){
 		var del=$(this);
 		var id = $(this).attr("data-id");
 		$.ajax({
-			url:  "Masters_Customers/delete.php",
+			url:  "Masters_Liab/delete.php",
 			type:  "post",
 			data: {id:id},
 			success:function() {
@@ -216,22 +212,19 @@ $(document).on("click",".edit",function(){
 		$("#id").val(id);
 
 		var name = row.closest("tr").find("td:eq(1)").text();
-			$("#cname").val(name);
+			$("#lname").val(name);
 		var address = row.closest("tr").find("td:eq(2)").text();
-		$("#caddress").val(address);
+		$("#laddress").val(address);
 		var contact = row.closest("tr").find("td:eq(3)").text();
-		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
-		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
-		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
-		$("#carea").val(area);
+		$("#lcontact").val(contact);
+		var opbal = row.closest("tr").find("td:eq(4)").text();
+		$("#ob").val(opbal);
+		
 	});
 
 });	
 </script>
-<!---------Code for AutoComplete Area---------->
+<!---------Code for AutoComplete Area-----
 <script>
 	 $(function() {
     
@@ -243,7 +236,7 @@ $(document).on("click",".edit",function(){
 
 });
 </script>
-
+--------------------------------------->
 
 
 <?php include('footer.php'); ?>
