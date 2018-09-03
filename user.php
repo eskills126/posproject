@@ -9,10 +9,17 @@ font-size: x-large;
 padding: 0 5px 0 0; 
 }
 </style>
+
+
+<!--------Code for Session Compare-------->
+<?php session_start();
+$var=$_SESSION['user_session'];
+$var2=$_SESSION['user_role'];
+ ?>
 <!--Code for Login Detail-->
 <?php
 include('header.php'); 
-session_start();
+//session_start();
 if(!isset($_SESSION['user_session'])){
   header("Location: index.php");
 }
@@ -150,43 +157,72 @@ $(inputs).keypress(function(e){
 
 });
 </script>
+<!------------Function for Admin Rights----------------
+<script >
+	$(document).ready(function(){
+	$("#save").click(function(){
+		if ($("#user_role").val() != 1 ) {
+			alert("You are Not Admin");
+			return false;
+			}else{
+				return confirm("User / Admin added Successfully");
+			}
+	});
+	}); </script>
+------------------------------------------------------>
 
 <script>
 $(document).ready(function(){
-	$("#output").load("Masters_Customers/view.php");
-	$("#cname").focus();
+	$("#output").load("Masters_Users/view.php");
+	$("#uname").focus();
 	$("#save").click(function() {
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
-		if ($("#cname").val()=="" ){
-			alert("Please Add Customer Name ");
-			$("#cname").focus();
+		if ($("#uname").val()=="" ){
+			alert("Please Add User Name ");
+			$("#uname").focus();
 
-		}else if($("#copbal").val()=="" ){
-			alert("Please Add Opening Balance ");
-			$("#copbal").focus();
+		}else if($("#upassword").val()=="" ){
+			alert("Please Add User Password ");
+			$("#upassword").focus();
 		
-		}else if($("#carea").val()=="" ){
-			alert("Please Add Customer Area ");
-			$("#carea").focus();
+		}else if($("#rpassword").val()=="" ){
+			alert("Please Re-Type Password ");
+			$("#rpassword").focus();
 		
-		}else if (id==0){
+		}else if($("#uemail").val()=="" ){
+			alert("Please Add Valid E-Mail Address ");
+			$("#uemail").focus();
+		
+		}else if($("#utype").val()=="" ){
+			alert("Please Add User Type ");
+			$("#utype").focus();
+		
+		}else if($("#utype").val() != 1 && $("#utype").val() != 2 ){
+			alert("Please Type Value 1 For Admin OR 2 For User ");
+			$("#utype").focus();
+		
+		}else if($("#upassword").val() !=  $("#rpassword").val() ){
+			alert("Password Don't Match ");
+			$("#rpassword").focus();
+		
+		}else if(IsEmail (email)==false){
+                alert("No");
+                //$('#uemail').show();
+                return false;
+            }else if (id==0){
 		$.ajax({
-			 url:  "Masters_Customers/insert.php",
+			 url:  "Masters_Users/insert.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
-				$("#output").load("Masters_Customers/view.php");
+				$("#output").load("Masters_Users/view.php");
 		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		//$("<tr ></tr>").html(d).insertAfter($("#abc"));
-		//$("#examples").prepend($("<tr></tr>")).html(d);
-		//$("#examples").appendTo($("<tr></tr>")).html(d);
-		
 		//$("#examples").html(d).appendTo("<tr></tr>");
 
 
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#uname").focus();
 		//$("#cname").val('');
 		
 		$("#id").val("0");
@@ -195,14 +231,14 @@ $(document).ready(function(){
 		});
 	}else{
 			$.ajax({
-			url:  "Masters_Customers/update.php",
+			url:  "Masters_Users/update.php",
 			type:  "post",
 			data: $("#frm").serialize(),
 			success:function(d) {
 			
-		$("#output").load("Masters_Customers/view.php");
+		$("#output").load("Masters_Users/view.php");
 		$("#frm")[0].reset();
-		$("#cname").focus();
+		$("#uname").focus();
 		$("#id").val("0");
 			}
 
@@ -213,7 +249,7 @@ $(document).ready(function(){
 		var del=$(this);
 		var id = $(this).attr("data-id");
 		$.ajax({
-			url:  "Masters_Customers/delete.php",
+			url:  "Masters_Users/delete.php",
 			type:  "post",
 			data: {id:id},
 			success:function() {
@@ -230,35 +266,34 @@ $(document).on("click",".edit",function(){
 		$("#id").val(id);
 
 		var name = row.closest("tr").find("td:eq(1)").text();
-			$("#cname").val(name);
-		var address = row.closest("tr").find("td:eq(2)").text();
-		$("#caddress").val(address);
-		var contact = row.closest("tr").find("td:eq(3)").text();
-		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
-		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
-		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
-		$("#carea").val(area);
+			$("#uname").val(name);
+		var password = row.closest("tr").find("td:eq(2)").text();
+		$("#upassword").val(password);
+		var rpassword = row.closest("tr").find("td:eq(3)").text();
+		$("#rpassword").val(rpassword);
+		var email = row.closest("tr").find("td:eq(4)").text();
+		$("#uemail").val(email);
+		var type = row.closest("tr").find("td:eq(5)").text();
+		$("#utype").val(type);
 	});
 
 });	
 </script>
-<!---------Code for AutoComplete Area---------->
+
+<!---------Code for AutoComplete Area--------------
 <script>
 	 $(function() {
     
      $("#carea").autocomplete({
-        source: "Masters_Customers/autocomplete_area.php",
+        source: "Masters_Users/autocomplete_area.php",
         minLength: 0,
         select: function (event, ui){}
     });                
-
 });
 </script>
-
-
+-------------------------------------------------->
+<input type="text" id="user_id" value="<?php echo $var; ?>" >
+<input type="text" id="user_role" value="<?php echo $var2; ?>" >
 
 <?php include('footer.php'); ?>
 <p>

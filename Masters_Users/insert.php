@@ -1,25 +1,29 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
-	$name=$_POST["cname"];
-	$address=$_POST["caddress"];
-	$contact=$_POST["ccontac"];
-	$climit=$_POST["climit"];
-	$copbal=$_POST["copbal"];
-	$carea=$_POST["carea"];
+	$name=$_POST["uname"];
+	$password=$_POST["upassword"];
+	$rpassword=$_POST["rpassword"];
+	$email=$_POST["uemail"];
+	$type=$_POST["utype"];
 	
-$sql = "INSERT INTO customertbl(CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES('{$name}','{$address}','{$contact}','{$climit}',{$copbal},'{$carea}')";
+
+	
+
+	
+$sql = "INSERT INTO users(user,pass,retype_pass,email,user_role) VALUES('{$name}','{$password}','{$rpassword}','{$email}',{$type})";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;
 
 echo "<td>{$id}</td>";
 echo "<td>{$name}</td>";
-echo "<td>{$address}</td>";
-echo "<td>{$contact}</td>";
-echo "<td>{$climit}</td>";
-echo "<td>{$copbal}</td>";
-echo "<td>{$carea}</td>";
+echo "<td>{$password}</td>";
+echo "<td>{$rpassword}</td>";
+echo "<td>{$email}</td>";
+echo "<td>{$type}</td>";
+
+
 
 
 echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$id}'><i class='fa fa-edit'></i></td>";
