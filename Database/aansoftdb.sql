@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2018 at 01:01 PM
+-- Generation Time: Sep 03, 2018 at 06:22 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -54,11 +54,20 @@ CREATE TABLE `assettbl` (
   `AssTitle` varchar(250) NOT NULL,
   `AssAddress` varchar(250) NOT NULL,
   `AssContact` varchar(250) NOT NULL,
-  `AssOpenDr` int(50) NOT NULL,
-  `AssOpenCr` int(50) NOT NULL,
+  `AssOpenBal` int(50) NOT NULL,
   `AssAccType` int(50) NOT NULL,
   `AssType` int(50) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `assettbl`
+--
+
+INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpenBal`, `AssAccType`, `AssType`) VALUES
+(1, 'Mobile', 'Office', '03127867567', 9000, 0, 1),
+(2, 'AC', 'No Ac', '8799', 800, 0, 1),
+(3, 'Rate', 'no', '8999', 9000, 0, 1),
+(4, 'HBL', 'Grain Market', '0923457', 450000, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -88,7 +97,10 @@ INSERT INTO `customertbl` (`CusId`, `CusName`, `CusAddress`, `CusContact`, `CusC
 (37, 'Kamran', 'Kot Addu', '067452300', 0, 12000, 'Islamabad', 1, 2),
 (38, 'Ahmed', 'Raza', '03214354678', 700, 45000, 'Peshawar', 1, 2),
 (39, 'Kaleem', 'Machiwal', '06189007656', 3400, 23000, 'Karachi', 1, 2),
-(40, 'Parveen Shakar', 'Muslim Town', '03001234543', 0, 78000, 'Multan123', 1, 2);
+(40, 'Parveen Shakar', 'Muslim Town', '03001234543', 0, 78000, 'Multan123', 1, 2),
+(41, 'Khalid', '', '', 0, 90, 'Vehari123', 1, 2),
+(42, 'Imran', '', '', 0, 908898, 'Multan123', 1, 2),
+(43, 'Nadeem', 'Ahmed', '03136927555', 55, 5000, 'Islamabad', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -124,44 +136,12 @@ CREATE TABLE `liabtbl` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `producttbl`
---
-
-CREATE TABLE `producttbl` (
-  `ProId` int(50) NOT NULL,
-  `ProName` varchar(250) NOT NULL,
-  `ProUomName` int(50) NOT NULL,
-  `ProOpenQtyUnit` int(50) NOT NULL,
-  `ProOpenRate` int(50) NOT NULL,
-  `ProOpenDr` int(50) NOT NULL,
-  `ProOpenCr` int(50) NOT NULL,
-  `ProSalesRate` int(50) NOT NULL,
-  `ProItemGroupName` int(50) NOT NULL,
-  `ProductTypeName` int(50) NOT NULL,
-  `ProAccType` int(50) NOT NULL DEFAULT '3',
-  `ProType` int(50) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `producttypetbl`
 --
 
 CREATE TABLE `producttypetbl` (
   `ProductTypeId` int(50) NOT NULL,
   `ProductTypeName` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `progrouptbl`
---
-
-CREATE TABLE `progrouptbl` (
-  `ProGroupId` int(50) NOT NULL,
-  `ProGroupTitle` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -225,6 +205,58 @@ INSERT INTO `salareatbl` (`SalAreaId`, `SalAreaTitle`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `salesitemgrouptbl`
+--
+
+CREATE TABLE `salesitemgrouptbl` (
+  `ProGroupId` int(50) NOT NULL,
+  `ProGroupTitle` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `salesitemgrouptbl`
+--
+
+INSERT INTO `salesitemgrouptbl` (`ProGroupId`, `ProGroupTitle`) VALUES
+(1, 'GroupA'),
+(2, 'Group B');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salesitemtbl`
+--
+
+CREATE TABLE `salesitemtbl` (
+  `ProId` int(50) NOT NULL,
+  `ProName` varchar(250) NOT NULL,
+  `ProUomName` varchar(250) NOT NULL,
+  `ProOpenQtyUnit` int(50) NOT NULL,
+  `ProOpenRate` int(50) NOT NULL,
+  `ProOpenBal` int(50) NOT NULL,
+  `ProSalesRate` int(50) NOT NULL,
+  `ProItemGroupName` varchar(250) NOT NULL,
+  `ProductTypeName` int(50) DEFAULT NULL,
+  `ProAccType` int(50) NOT NULL DEFAULT '3',
+  `ProType` int(50) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `salesitemtbl`
+--
+
+INSERT INTO `salesitemtbl` (`ProId`, `ProName`, `ProUomName`, `ProOpenQtyUnit`, `ProOpenRate`, `ProOpenBal`, `ProSalesRate`, `ProItemGroupName`, `ProductTypeName`, `ProAccType`, `ProType`) VALUES
+(14, 'samsung', '1', 5, 5, 5, 2, '2', NULL, 3, 1),
+(16, 'Nadeem', 'Meters', 6, 12, 5, 200, 'Group B', NULL, 3, 1),
+(17, 'Chair', 'Kg', 5, 2, 1, 5, 'GroupA', NULL, 3, 1),
+(18, 'Khan', 'Meters', 6, 12, 12, 23, 'Group B', NULL, 3, 1),
+(20, 'sf', 'Kg', 56, 5, 5, 5, 'GroupA', NULL, 3, 1),
+(21, 'Botle', 'Liters', 5, 1200, 900, 2500, 'GroupA', NULL, 3, 1),
+(22, 'Keyboard', 'Kg', 5, 100, 100, 100, 'GroupA', NULL, 3, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `suptbl`
 --
 
@@ -233,8 +265,7 @@ CREATE TABLE `suptbl` (
   `SupName` varchar(250) NOT NULL,
   `SupAddress` varchar(250) NOT NULL,
   `SupContact` varchar(250) NOT NULL,
-  `SupOpenDr` int(50) NOT NULL,
-  `SupOpenCr` int(50) NOT NULL,
+  `SupOpenBal` int(50) NOT NULL,
   `SupAccType` int(50) NOT NULL DEFAULT '2',
   `SupLibType` int(50) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -243,9 +274,10 @@ CREATE TABLE `suptbl` (
 -- Dumping data for table `suptbl`
 --
 
-INSERT INTO `suptbl` (`SupId`, `SupName`, `SupAddress`, `SupContact`, `SupOpenDr`, `SupOpenCr`, `SupAccType`, `SupLibType`) VALUES
-(1, 'Dummy1', 'Dummy Address', '455', 0, 0, 2, 2),
-(2, 'Dummy 2', 'Dummy Address 2', '847', 0, 0, 2, 2);
+INSERT INTO `suptbl` (`SupId`, `SupName`, `SupAddress`, `SupContact`, `SupOpenBal`, `SupAccType`, `SupLibType`) VALUES
+(2, 'Dummy 2', 'Dummy Address 2', '847', 9800, 2, 2),
+(4, 'Amjad Hanif', 'Grid Station', '03115575561', 120008, 2, 2),
+(5, 'Naeem Ahmed', 'Karachi', '95000000000', 7800, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -257,6 +289,16 @@ CREATE TABLE `uomtbl` (
   `UomId` int(50) NOT NULL,
   `UomName` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `uomtbl`
+--
+
+INSERT INTO `uomtbl` (`UomId`, `UomName`) VALUES
+(1, 'Kg'),
+(2, 'Gb'),
+(3, 'Meters'),
+(4, 'Liters');
 
 -- --------------------------------------------------------
 
@@ -278,7 +320,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`uid`, `user`, `pass`, `email`, `profile_photo`) VALUES
 (2, 'Admin', '1234', 'abc@gmail.com', NULL),
-(3, 'Naeem', '1234', 'naeem@gmail.com', NULL);
+(3, 'Naeem', '1234', 'naeem@gmail.com', NULL),
+(4, 'User', '1234', 'user@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -331,26 +374,10 @@ ALTER TABLE `liabtbl`
   ADD KEY `LiabAccType` (`LiabAccType`);
 
 --
--- Indexes for table `producttbl`
---
-ALTER TABLE `producttbl`
-  ADD PRIMARY KEY (`ProId`),
-  ADD KEY `ProAccType` (`ProAccType`),
-  ADD KEY `ProItemGroupName` (`ProItemGroupName`),
-  ADD KEY `ProductTypeName` (`ProductTypeName`),
-  ADD KEY `ProUomName` (`ProUomName`);
-
---
 -- Indexes for table `producttypetbl`
 --
 ALTER TABLE `producttypetbl`
   ADD PRIMARY KEY (`ProductTypeId`);
-
---
--- Indexes for table `progrouptbl`
---
-ALTER TABLE `progrouptbl`
-  ADD PRIMARY KEY (`ProGroupId`);
 
 --
 -- Indexes for table `purchaseorderdetailtbl`
@@ -372,6 +399,22 @@ ALTER TABLE `purchaseordertbl`
 --
 ALTER TABLE `salareatbl`
   ADD PRIMARY KEY (`SalAreaId`);
+
+--
+-- Indexes for table `salesitemgrouptbl`
+--
+ALTER TABLE `salesitemgrouptbl`
+  ADD PRIMARY KEY (`ProGroupId`);
+
+--
+-- Indexes for table `salesitemtbl`
+--
+ALTER TABLE `salesitemtbl`
+  ADD PRIMARY KEY (`ProId`),
+  ADD KEY `ProAccType` (`ProAccType`),
+  ADD KEY `ProItemGroupName` (`ProItemGroupName`),
+  ADD KEY `ProductTypeName` (`ProductTypeName`),
+  ADD KEY `ProUomName` (`ProUomName`);
 
 --
 -- Indexes for table `suptbl`
@@ -414,13 +457,13 @@ ALTER TABLE `acctypetbl`
 -- AUTO_INCREMENT for table `assettbl`
 --
 ALTER TABLE `assettbl`
-  MODIFY `AssId` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `AssId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customertbl`
 --
 ALTER TABLE `customertbl`
-  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `exptbl`
@@ -435,22 +478,10 @@ ALTER TABLE `liabtbl`
   MODIFY `LiabId` int(50) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `producttbl`
---
-ALTER TABLE `producttbl`
-  MODIFY `ProId` int(50) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `producttypetbl`
 --
 ALTER TABLE `producttypetbl`
   MODIFY `ProductTypeId` int(50) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `progrouptbl`
---
-ALTER TABLE `progrouptbl`
-  MODIFY `ProGroupId` int(50) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchaseordertbl`
@@ -465,22 +496,34 @@ ALTER TABLE `salareatbl`
   MODIFY `SalAreaId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `salesitemgrouptbl`
+--
+ALTER TABLE `salesitemgrouptbl`
+  MODIFY `ProGroupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `salesitemtbl`
+--
+ALTER TABLE `salesitemtbl`
+  MODIFY `ProId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT for table `suptbl`
 --
 ALTER TABLE `suptbl`
-  MODIFY `SupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `SupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `uomtbl`
 --
 ALTER TABLE `uomtbl`
-  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `wharehousetbl`
@@ -491,12 +534,6 @@ ALTER TABLE `wharehousetbl`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `assettbl`
---
-ALTER TABLE `assettbl`
-  ADD CONSTRAINT `assettbl_ibfk_1` FOREIGN KEY (`AssAccType`) REFERENCES `acctypetbl` (`AccId`);
 
 --
 -- Constraints for table `customertbl`
@@ -517,22 +554,19 @@ ALTER TABLE `liabtbl`
   ADD CONSTRAINT `liabtbl_ibfk_1` FOREIGN KEY (`LiabAccType`) REFERENCES `acctypetbl` (`AccId`);
 
 --
--- Constraints for table `producttbl`
---
-ALTER TABLE `producttbl`
-  ADD CONSTRAINT `producttbl_ibfk_1` FOREIGN KEY (`ProAccType`) REFERENCES `acctypetbl` (`AccId`),
-  ADD CONSTRAINT `producttbl_ibfk_2` FOREIGN KEY (`ProductTypeName`) REFERENCES `producttypetbl` (`ProductTypeId`),
-  ADD CONSTRAINT `producttbl_ibfk_3` FOREIGN KEY (`ProItemGroupName`) REFERENCES `progrouptbl` (`ProGroupId`),
-  ADD CONSTRAINT `producttbl_ibfk_4` FOREIGN KEY (`ProUomName`) REFERENCES `uomtbl` (`UomId`);
-
---
 -- Constraints for table `purchaseorderdetailtbl`
 --
 ALTER TABLE `purchaseorderdetailtbl`
   ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_1` FOREIGN KEY (`PurOrderId`) REFERENCES `purchaseordertbl` (`PurOrderId`),
   ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_2` FOREIGN KEY (`PurSupCodeName`) REFERENCES `suptbl` (`SupId`),
-  ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_3` FOREIGN KEY (`PurItemName`) REFERENCES `producttbl` (`ProId`),
+  ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_3` FOREIGN KEY (`PurItemName`) REFERENCES `salesitemtbl` (`ProId`),
   ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_4` FOREIGN KEY (`PurWHName`) REFERENCES `wharehousetbl` (`WarehouseId`);
+
+--
+-- Constraints for table `salesitemtbl`
+--
+ALTER TABLE `salesitemtbl`
+  ADD CONSTRAINT `salesitemtbl_ibfk_1` FOREIGN KEY (`ProAccType`) REFERENCES `acctypetbl` (`AccId`);
 
 --
 -- Constraints for table `suptbl`

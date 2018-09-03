@@ -1,14 +1,13 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
-	$name=$_POST["cname"];
-	$address=$_POST["caddress"];
-	$contact=$_POST["ccontac"];
-	$climit=$_POST["climit"];
-	$copbal=$_POST["copbal"];
-	$carea=$_POST["carea"];
+	$name=$_POST["aname"];
+	$address=$_POST["aaddress"];
+	$contact=$_POST["acontact"];
+	$ob=$_POST["ob"];
+
 	
-$sql = "INSERT INTO customertbl(CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES('{$name}','{$address}','{$contact}','{$climit}',{$copbal},'{$carea}')";
+$sql = "INSERT INTO assettbl(AssTitle,AssAddress,AssContact,AssOpenBal) VALUES('{$name}','{$address}','{$contact}',{$ob})";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;
@@ -17,9 +16,8 @@ echo "<td>{$id}</td>";
 echo "<td>{$name}</td>";
 echo "<td>{$address}</td>";
 echo "<td>{$contact}</td>";
-echo "<td>{$climit}</td>";
-echo "<td>{$copbal}</td>";
-echo "<td>{$carea}</td>";
+echo "<td>{$ob}</td>";
+
 
 
 echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$id}'><i class='fa fa-edit'></i></td>";
