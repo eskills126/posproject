@@ -10,7 +10,6 @@ padding: 0 5px 0 0;
 }
 </style>
 
-
 <!--------Code for Session Compare-------->
 <?php session_start();
 $var=$_SESSION['user_session'];
@@ -206,11 +205,7 @@ $(document).ready(function(){
 			alert("Password Don't Match ");
 			$("#rpassword").focus();
 		
-		}else if(IsEmail (email)==false){
-                alert("No");
-                //$('#uemail').show();
-                return false;
-            }else if (id==0){
+		}else if (id==0){
 		$.ajax({
 			 url:  "Masters_Users/insert.php",
 			type:  "post",
@@ -297,6 +292,16 @@ $(document).on("click",".edit",function(){
   //});
   
 </script>
+<script type="text/javascript">
+	function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}
+</script>
+<!-------------------
+<?php // include_once 'header2.php'; ?>
+<script src="Masters_Users/validation.js"></script>
+-------------------->
 <!---------Code for AutoComplete Area--------------
 <script>
 	 $(function() {

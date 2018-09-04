@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2018 at 03:42 PM
+-- Generation Time: Sep 04, 2018 at 03:39 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -326,7 +326,8 @@ INSERT INTO `uomtbl` (`UomId`, `UomName`) VALUES
 (1, 'Kg'),
 (2, 'Gb'),
 (3, 'Meters'),
-(4, 'Liters');
+(4, 'Liters'),
+(5, 'CM');
 
 -- --------------------------------------------------------
 
@@ -338,18 +339,30 @@ CREATE TABLE `users` (
   `uid` int(11) NOT NULL,
   `user` varchar(255) DEFAULT NULL,
   `pass` varchar(100) DEFAULT NULL,
+  `retype_pass` varchar(250) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `profile_photo` varchar(200) DEFAULT NULL
+  `user_role` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`uid`, `user`, `pass`, `email`, `profile_photo`) VALUES
-(2, 'Admin', '1234', 'abc@gmail.com', NULL),
-(3, 'Naeem', '1234', 'naeem@gmail.com', NULL),
-(4, 'User', '1234', 'user@gmail.com', NULL);
+INSERT INTO `users` (`uid`, `user`, `pass`, `retype_pass`, `email`, `user_role`) VALUES
+(2, 'Admin', '1234', '', 'abc@gmail.com', 1),
+(3, 'Naeem', '1234', '', 'naeem@gmail.com', 2),
+(4, 'User', '1234', '1234', 'user@gmail.com', 2),
+(5, 'kasdfh', '9', '9', '9', 2),
+(6, 'hg', '999', '999', '2', 2),
+(7, 'uom', '456', '456', '456', 2),
+(9, 'teh', '5', '5', 'ghs', 2),
+(10, 'gh', '4', '4', '4', 2),
+(12, 'kjl', '4', '4', 'dfgh', 2),
+(13, 'kalemm', '4', '4', 'sdf', 2),
+(14, 'Naeem Ahmed', '789', '789', 'gmail@gmail.com', 2),
+(15, 'Ball', '4', '4', 'sdf@gmail.com', 2),
+(16, 'imran', '45', '45', 'asdf', 2),
+(17, 'kal', '4', '4', 'sf', 2);
 
 -- --------------------------------------------------------
 
@@ -553,13 +566,13 @@ ALTER TABLE `suptbl`
 -- AUTO_INCREMENT for table `uomtbl`
 --
 ALTER TABLE `uomtbl`
-  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `wharehousetbl`
