@@ -102,7 +102,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="email" size="60" id="uemail" name="uemail" placeholder="Enter Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;">
+        <input type="email" size="30" id="uemail" name="uemail" placeholder="Enter Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;"><span id="email_feedback"></span>
       	</div>
     	</div>
 		</div>
@@ -292,11 +292,25 @@ $(document).on("click",".edit",function(){
   //});
   
 </script>
-<script type="text/javascript">
-	function isEmail(email) {
-  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  return regex.test(email);
+
+<script>
+function validate_email(email){
+      $.post('Masters_Users/email.php',{uemail: email}, function(data){
+        $('#email_feedback').text(data);
+});
 }
+
+    $("#uemail").focusin(function(){
+      if ($('#uemail').val() === ''){
+        $('#email_feedback').text('Go on, enter a valid email address...'); 
+        }else{
+        validate_email($('#uemail').val() );
+	}
+    }).blur(function() {
+      $('#email_feedback').text('');
+    }).keyup(function(){
+      validate_email($('#uemail').val() );
+  });
 </script>
 <!-------------------
 <?php // include_once 'header2.php'; ?>
