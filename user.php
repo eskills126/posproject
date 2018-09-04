@@ -15,6 +15,14 @@ padding: 0 5px 0 0;
 $var=$_SESSION['user_session'];
 $var2=$_SESSION['user_role'];
  ?>
+<!--------code for admin rights-------->
+<!--if any user manually try to access the http://localhost/posproject/user.php to see the Passwords etc...---->
+<?php 
+	if ($var2 != 1) {
+	//return true;		
+	header("Location: welcome.php");
+	}
+ ?>
 <!--Code for Login Detail-->
 <?php
 include('header.php'); 
@@ -102,7 +110,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="email" size="30" id="uemail" name="uemail" placeholder="Enter Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;"><span id="email_feedback"></span>
+        <input type="email" size="30" id="uemail" name="uemail" placeholder="Enter Valid Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;"><span id="email_feedback"></span>
       	</div>
     	</div>
 		</div>
@@ -157,17 +165,8 @@ $(inputs).keypress(function(e){
 });
 </script>
 <!------------Function for Admin Rights----------------
-<script >
-	$(document).ready(function(){
-	$("#save").click(function(){
-		if ($("#user_role").val() != 1 ) {
-			alert("You are Not Admin");
-			return false;
-			}else{
-				return confirm("User / Admin added Successfully");
-			}
-	});
-	}); </script>
+
+
 ------------------------------------------------------>
 
 <script>
@@ -274,35 +273,29 @@ $(document).on("click",".edit",function(){
 
 });	
 </script>
-
-
-<script type="text/javascript">
+<!----------IF Admin then Access the User.php Page-----------
+<script>
   $(document).ready(function(){
-    //$("#admin").click(function(){
-
-      if($("#user_role").val() == 1){
-      return true;
-    }  else{
+    if($("#user_role").val() != 1){
+     // return true;
+   // }  else{
       alert("You Are Not Admin");
-      
       //return false;
     }
     });
-    
-  //});
-  
-</script>
-
+  </script>
+---------------------------------------------------------->
+<!------------E-Mail Validation Code---------------->
 <script>
 function validate_email(email){
       $.post('Masters_Users/email.php',{uemail: email}, function(data){
         $('#email_feedback').text(data);
 });
 }
-
     $("#uemail").focusin(function(){
-      if ($('#uemail').val() === ''){
-        $('#email_feedback').text('Go on, enter a valid email address...'); 
+
+      if ($('#uemail').val() === ""){
+        $('#email_feedback').text(''); 
         }else{
         validate_email($('#uemail').val() );
 	}
@@ -312,10 +305,6 @@ function validate_email(email){
       validate_email($('#uemail').val() );
   });
 </script>
-<!-------------------
-<?php // include_once 'header2.php'; ?>
-<script src="Masters_Users/validation.js"></script>
--------------------->
 <!---------Code for AutoComplete Area--------------
 <script>
 	 $(function() {
@@ -327,10 +316,10 @@ function validate_email(email){
     });                
 });
 </script>
--------------------------------------------------->
+-------------------------------------------------
 <input type="text" id="user_id" value="<?php echo $var; ?>" >
 <input type="text" id="user_role" value="<?php echo $var2; ?>" >
-
+--------------------------------------------------->
 
 <?php include('footer.php'); ?>
 <p>

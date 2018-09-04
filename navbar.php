@@ -5,29 +5,33 @@
    
 
 </style>
-<?php include_once 'header.php'; 
-
+<!----------IF Not Admin then Can't Access the User.php Page----------->
+<?php 
+include_once 'header.php'; 
 $_SESSION['user_role'];
 $rights = $_SESSION['user_role'];
 ?>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#admin").click(function(){
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#admin").click(function(){
 
-      if($("#rights").val() == 1){
-      return true;
-    }  else{
-      alert("You Are Not Admin");
-      return false;
+           if($("#rights").val() != 1){
+              //   return true;
+               // }  else{
+            alert("You Are Not Admin");
+            return false;
     }
     });
-    
-  });
-  
+});
 </script>
+<!------------------------------------------------------------------->
 </head>
 <body>
+  <!-------This input is used to store and Access the Value of $_SESSION['user_role'] ----------->
   <input type="hidden" id="rights" value="<?php echo $rights; ?>" name="">
+  <!----------------------------------------------------------------->
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->

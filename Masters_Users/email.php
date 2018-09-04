@@ -6,6 +6,7 @@ if (isset($_POST['uemail'])){
          echo 'Not Valid, Enter valid email address...';
          }else{
          echo 'Valid email address!';
+
 		}
 	}
 }
