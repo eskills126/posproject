@@ -51,8 +51,17 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Deatils :<hr/></h4>
+<details>
+		<summary>
+			<span>
+				<i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" style="color: blue;">&nbsp Edit</i> 
+				<i class="fa fa-recycle fa-2x" aria-hidden="true" style="color: red;">&nbsp Delete Data</i>
+			</span>
+		</summary>
+
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Details :<hr/></h4>
 	<!--	<table class="table"> -->
+	
 	<table id="examples" class="display" style="width:100%">
 			
 				
@@ -108,6 +117,8 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 			</tr>
 </tfoot>
 		</table>
+
+</details>
 		<input type="hidden" id="abcd" value="<?php echo $var; ?>" >
 
 </body>

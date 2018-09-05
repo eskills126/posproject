@@ -228,7 +228,7 @@ include('navbar.php');
     	<div class="col-25">
     	</div>
     	<div class="col-75">
-    	<input type="button" class="btn btn-success" id="save" value="Save Detail" >
+    	<input type="button" class="btn btn-success" id="save" value="Add Detail" >
     	<input type="hidden" id="id" name="id" value="0">
     	<div id="msg"></div>
     	</div>
@@ -242,12 +242,57 @@ include('navbar.php');
 </form>
 </div>
 
+<div class="container">
+<form id="frm" action="" method="post">
+
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="tqty">Total Quantity:</label>
+      	</div>
+      	<div class="col-25">
+      	<input type="text" id="tqty" name="tqty" placeholder="Total Quanity">
+      	</div>
+      	<div class="col-25" style="width:2%;"></div>
+      	<div class="col-25" style="width: 10%;">
+        <label for="bamt">Bill Amount:</label>
+      	</div>
+      	<div class="col-25">
+      	<input type="text" id="bamt" name="bamt" placeholder="Bill Amount">
+      	</div>
+      	<div class="col-25" style="width:2%;"></div>
+      	<div class="col-25" style="width: 12%;">
+        <label for="gamt">Gross Amount:</label>
+      	</div>
+      	<div class="col-25">
+      	<input type="text" id="gamt" name="gamt" placeholder="Gross Amount">
+      	</div>
+      	<div class="col-25" style="width:1%;"></div>
+      	<div class="col-25" style="width: 12%;">
+      	<input type="text" id="gamt" name="gamt" placeholder="Discount" style="width: 60%;">
+      	</div>
+      	</div>
+      	</div>
+
+		<!----button row------>
+		<div class="form-group">
+    	<div class="row">
+    	<div class="col-25"></div>
+    	<div class="col-25">
+    	<input type="button" class="btn btn-success" id="save" value="Save Record" >
+    	<input type="hidden" id="id" name="id" value="0">
+    	<div id="msg"></div>
+    	</div>
+    	</div>
+    	</div>
+ </form>
+</div>
+	
 <div class="row">
 <div class="col-xs-6 col-sm-1"></div>
 <div class="col-xs-6 col-sm-10 col-md-offset-4" id="output">
 </div>
 </div>
-
 
 <!------This code is for Enter Index insted of TabIndex--------->
 <script type="text/javascript">
@@ -385,51 +430,6 @@ $(document).on("click",".edit",function(){
 
 });
 </script>
-
-<div class="container">
-<form id="frm" action="" method="post">
-
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25" style="width: 12%;">
-        <label for="tqty">Total Quantity:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" id="tqty" name="tqty" placeholder="Total Quanity">
-      	</div>
-      	<div class="col-25" style="width:2%;"></div>
-      	<div class="col-25" style="width: 10%;">
-        <label for="bamt">Bill Amount:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" id="bamt" name="bamt" placeholder="Bill Amount">
-      	</div>
-      	<div class="col-25" style="width:2%;"></div>
-      	<div class="col-25" style="width: 12%;">
-        <label for="gamt">Gross Amount:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" id="gamt" name="gamt" placeholder="Gross Amount">
-      	</div>
-      	<div class="col-25" style="width:1%;"></div>
-      	<div class="col-25" style="width: 12%;">
-      	<input type="text" id="gamt" name="gamt" placeholder="Discount" style="width: 60%;">
-      	</div>
-      	</div>
-      	</div>
-
-		<!----button row------>
-		<div class="form-group">
-    	<div class="row">
-    	<div class="col-25">
-    	</div>
-    	<div class="col-25">
-    	<input type="button" class="btn btn-success" id="save" value="Save Detail" >
-    	<input type="hidden" id="id" name="id" value="0">
-    	<div id="msg"></div>
-    	</div>
-    	</div>
-    	</div>
 
 <?php include('footer.php'); ?>
 <p>
