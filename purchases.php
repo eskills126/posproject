@@ -9,6 +9,7 @@ font-size: x-large;
 padding: 0 5px 0 0; 
 }
 </style>
+
 <!--Code for Login Detail-->
 <?php
 include('header.php'); 
@@ -53,26 +54,48 @@ include('navbar.php');
 <div class="container">
 					
 <form id="frm" action="" method="post">
-
-
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
+  <!---------------------------------------------------------------->
+<?php  
+      $sql2 = "SELECT * FROM purchaseorderdetailtbl where PurOrderId=(SELECT max(PurOrderId) FROM purchaseorderdetailtbl) GROUP by PurOrderId";
+        $result = mysqli_query($conn,$sql2);
+        if (mysqli_num_rows($result) > 0) {   
+        while($row=mysqli_fetch_array($result)) {
+        ?>  
+        
+        <div class="form-group">
+          <div class="row">
+        <div class="col-25">
         <label for="ino">No:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="ino" name="ino" placeholder="Invoice No." required>
-      	</div>
+        </div>
+          <div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
+         $row['PurOrderId'] + 1;  ?>"  readonly>
+        </div>    
+        <?php 
+            }}else{
+            ?>
+            <div class="form-group">
+          <div class="row">
+        <div class="col-25">
+        <label for="ino">No:</label>
+        </div>
+          <div class="col-25"><span class="asterisk_input"></span>
+        <input type="number" id="ino" name="ino" placeholder="Invoice No." value="1" readonly>
+        </div>  
+            <?php 
+            }
+             ?> 
+     
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
         <label for="pdate">Date:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="date" id="pdate" name="pdate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;">
+        <input id="pdate" data-inputmask="'alias': 'date'" name="pdate" value="<?php echo date('d/m/Y'); ?>" style="border:2px solid #ccc; border-radius: 4px;height: 35px;">
       	</div>
     	</div>
 		</div>
-
+<!------------------------------------------------------------------->
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
@@ -430,7 +453,17 @@ $(document).on("click",".edit",function(){
 
 });
 </script>
+<!------------------
+<script>
+$("#pdate").datepicker({ dateFormat:'dd/mm/yy', showAnim: 'show' });
+ </script>
+------------>
 
+<!---------Code for Date(Formate) Masking---------->
+<script>
+  $("#pdate").inputmask();
+</script>
+<!------------------------------------------------->
 <?php include('footer.php'); ?>
 <p>
 <br>
