@@ -63,7 +63,7 @@ include('navbar.php');
 </div>
 
 <div class="container">
-					
+
 <form id="frm" action="" method="post">
 
 
@@ -110,7 +110,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="email" size="30" id="uemail" name="uemail" placeholder="Enter Valid Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;"><span id="email_feedback"></span>
+        <input type="email" size="30" id="uemail" name="uemail" placeholder="Enter Valid Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;"><span id="email_feedback"style="color:red;"></span>
       	</div>
     	</div>
 		</div>
@@ -289,7 +289,9 @@ $(document).on("click",".edit",function(){
 <script>
 function validate_email(email){
       $.post('Masters_Users/email.php',{uemail: email}, function(data){
-        $('#email_feedback').text(data);
+      	
+       $('#email_feedback').text(data);
+        
 });
 }
     $("#uemail").focusin(function(){
@@ -299,7 +301,8 @@ function validate_email(email){
         }else{
         validate_email($('#uemail').val() );
 	}
-    }).blur(function() {
+    })
+    .blur(function() {
       $('#email_feedback').text('');
     }).keyup(function(){
       validate_email($('#uemail').val() );

@@ -24,8 +24,9 @@ include_once("db_connect.php");
 		</div>
 		<hr />
 		<div class="form-group">
-			<button type="submit" class="btn btn-default" name="login_button" id="login_button">
-			<span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In
+			
+			<button type="submit" class="btn btn-default btn-lg" name="login_button" id="login_button">
+			<i class="fa fa-sign-in <span class="glyphicon glyphicon-log-in"></i>&nbspSign In
 			</button> 
 		</div> 
 	</form>		
