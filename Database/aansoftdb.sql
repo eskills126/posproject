@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2018 at 03:39 PM
+-- Generation Time: Sep 12, 2018 at 05:40 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -72,6 +72,58 @@ INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpe
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cashpaidtbl`
+--
+
+CREATE TABLE `cashpaidtbl` (
+  `cashid` int(11) NOT NULL,
+  `cashdate` date NOT NULL,
+  `payercode` int(50) NOT NULL,
+  `payername` varchar(250) NOT NULL,
+  `remarks` varchar(250) NOT NULL,
+  `amountpaid` int(50) NOT NULL,
+  `uname` varchar(250) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cashinhand` int(50) NOT NULL DEFAULT '5'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cashpaidtbl`
+--
+
+INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `timestamp`, `cashinhand`) VALUES
+(1, '2018-09-11', 5, 'Naeem', 'No Remarks', 1800, 'name', '2018-09-11 17:11:59', 5),
+(2, '2018-09-11', 2, 'Amjad hanif', 'yes i have', 600, 'amj', '2018-09-11 17:11:59', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cashreceivetbl`
+--
+
+CREATE TABLE `cashreceivetbl` (
+  `cashrid` int(50) NOT NULL,
+  `cashrdate` date NOT NULL,
+  `receivercode` int(50) NOT NULL,
+  `receivername` varchar(250) NOT NULL,
+  `remarks` varchar(250) NOT NULL,
+  `receiveamount` int(50) NOT NULL,
+  `uname` varchar(250) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cashinhandr` int(50) NOT NULL DEFAULT '5'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cashreceivetbl`
+--
+
+INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `timestamp`, `cashinhandr`) VALUES
+(1, '2018-09-11', 3, 'Asad', 'ok', 1200, 'abc', '2018-09-11 17:13:52', 5),
+(2, '2018-09-11', 1, 'Rehman', 'wao', 800, 'asd', '2018-09-11 17:13:52', 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customertbl`
 --
 
@@ -99,7 +151,8 @@ INSERT INTO `customertbl` (`CusId`, `CusName`, `CusAddress`, `CusContact`, `CusC
 (39, 'Kaleem', 'Machiwal', '06189007656', 3400, 23000, 'Karachi', 1, 2),
 (40, 'Parveen Shakar', 'Muslim Town', '03001234543', 0, 78000, 'Multan123', 1, 2),
 (41, 'Khalid', '', '', 0, 90, 'Vehari123', 1, 2),
-(42, 'Imran', '', '', 0, 908898, 'Multan123', 1, 2);
+(42, 'Add', 'a', '878', 78, 78, 'Multan123', 1, 2),
+(43, 'Minus', 'u', '5654', 90, -7800, 'Peshawar', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -122,6 +175,33 @@ INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpAccType`) VALUES
 (3, 'Free Exp', 8900, 1),
 (4, 'Hot and Coal', 500, 1),
 (5, 'Laptop', 500, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gttbl`
+--
+
+CREATE TABLE `gttbl` (
+  `gtid` int(50) NOT NULL,
+  `gtdate` date NOT NULL,
+  `drcode` int(50) NOT NULL,
+  `drname` varchar(250) NOT NULL,
+  `drremarks` varchar(250) NOT NULL,
+  `crcode` int(50) NOT NULL,
+  `crname` varchar(250) NOT NULL,
+  `crremarks` varchar(250) NOT NULL,
+  `cramount` int(50) NOT NULL,
+  `dramount` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `gttbl`
+--
+
+INSERT INTO `gttbl` (`gtid`, `gtdate`, `drcode`, `drname`, `drremarks`, `crcode`, `crname`, `crremarks`, `cramount`, `dramount`) VALUES
+(1, '2018-09-11', 1, 'computer', 'no remarks', 1, 'wao', 'wao', 600, 400),
+(2, '2018-09-11', 4, 'ghs', 'sdf', 1, 'safd', 'asdf', 400, 800);
 
 -- --------------------------------------------------------
 
@@ -156,9 +236,13 @@ INSERT INTO `liabtbl` (`LiabId`, `LiabTitle`, `LiabAddress`, `LiabContact`, `Lia
 
 CREATE TABLE `purchaseorderdetailtbl` (
   `PurOrderId` int(50) NOT NULL,
-  `PurSupCodeName` int(50) NOT NULL,
-  `PurItemName` int(50) NOT NULL,
-  `PurWHName` int(50) NOT NULL,
+  `PurDate` date NOT NULL,
+  `PurSupCode` int(50) NOT NULL,
+  `PurSupCodeName` varchar(250) NOT NULL,
+  `PurItemCode` int(50) NOT NULL,
+  `PurItemName` varchar(250) NOT NULL,
+  `PurWHCode` int(50) NOT NULL,
+  `PurWHName` varchar(250) NOT NULL,
   `PurQty` int(50) NOT NULL,
   `PurGrossRate` int(50) NOT NULL,
   `PurGrossAmount` int(50) NOT NULL,
@@ -168,9 +252,17 @@ CREATE TABLE `purchaseorderdetailtbl` (
   `PurDiscValueInRate` int(50) NOT NULL,
   `PurDiscRate` int(50) NOT NULL,
   `PurAmount` int(50) NOT NULL,
+  `DisplayID` int(50) NOT NULL,
   `PurRemarks` varchar(250) NOT NULL,
   `PurTransType` varchar(250) NOT NULL DEFAULT 'PT'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchaseorderdetailtbl`
+--
+
+INSERT INTO `purchaseorderdetailtbl` (`PurOrderId`, `PurDate`, `PurSupCode`, `PurSupCodeName`, `PurItemCode`, `PurItemName`, `PurWHCode`, `PurWHName`, `PurQty`, `PurGrossRate`, `PurGrossAmount`, `PurStockQty`, `PurSaleQty`, `PurDiscInPercent`, `PurDiscValueInRate`, `PurDiscRate`, `PurAmount`, `DisplayID`, `PurRemarks`, `PurTransType`) VALUES
+(1, '2018-09-12', 1, 'Naeem AHmed', 1, 'Laptop', 1, 'Warehouse', 7, 78, 67, 89, 90, 89, 7, 78, 98, 2, 'No Remarks', 'PT');
 
 -- --------------------------------------------------------
 
@@ -182,6 +274,14 @@ CREATE TABLE `purchaseordertbl` (
   `PurOrderId` int(50) NOT NULL,
   `PurOrderDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchaseordertbl`
+--
+
+INSERT INTO `purchaseordertbl` (`PurOrderId`, `PurOrderDate`) VALUES
+(1, '2018-09-09'),
+(2, '2018-09-09');
 
 -- --------------------------------------------------------
 
@@ -209,7 +309,7 @@ INSERT INTO `salareatbl` (`SalAreaId`, `SalAreaTitle`) VALUES
 (16, 'Blue'),
 (17, 'Green'),
 (18, 'Yellow and Green'),
-(19, 'Sky dark');
+(19, 'Sky Blue');
 
 -- --------------------------------------------------------
 
@@ -362,7 +462,9 @@ INSERT INTO `users` (`uid`, `user`, `pass`, `retype_pass`, `email`, `user_role`)
 (14, 'Naeem Ahmed', '789', '789', 'gmail@gmail.com', 2),
 (15, 'Ball', '4', '4', 'sdf@gmail.com', 2),
 (16, 'imran', '45', '45', 'asdf', 2),
-(17, 'kal', '4', '4', 'sf', 2);
+(17, 'kal', '4', '4', 'sf', 2),
+(18, 'alskdj', '8', '8', 'asfdj', 2),
+(19, 'asdj', '3', '3', 'sfs@', 2);
 
 -- --------------------------------------------------------
 
@@ -401,6 +503,18 @@ ALTER TABLE `assettbl`
   ADD KEY `AssAccType` (`AssAccType`);
 
 --
+-- Indexes for table `cashpaidtbl`
+--
+ALTER TABLE `cashpaidtbl`
+  ADD PRIMARY KEY (`cashid`);
+
+--
+-- Indexes for table `cashreceivetbl`
+--
+ALTER TABLE `cashreceivetbl`
+  ADD PRIMARY KEY (`cashrid`);
+
+--
 -- Indexes for table `customertbl`
 --
 ALTER TABLE `customertbl`
@@ -416,6 +530,12 @@ ALTER TABLE `exptbl`
   ADD KEY `ExpAccType` (`ExpAccType`);
 
 --
+-- Indexes for table `gttbl`
+--
+ALTER TABLE `gttbl`
+  ADD PRIMARY KEY (`gtid`);
+
+--
 -- Indexes for table `liabtbl`
 --
 ALTER TABLE `liabtbl`
@@ -427,9 +547,9 @@ ALTER TABLE `liabtbl`
 --
 ALTER TABLE `purchaseorderdetailtbl`
   ADD KEY `PurOrderId` (`PurOrderId`),
-  ADD KEY `PurSupCodeName` (`PurSupCodeName`),
-  ADD KEY `PurItemName` (`PurItemName`),
-  ADD KEY `PurWHName` (`PurWHName`);
+  ADD KEY `PurSupCodeName` (`PurSupCode`),
+  ADD KEY `PurItemName` (`PurItemCode`),
+  ADD KEY `PurWHName` (`PurWHCode`);
 
 --
 -- Indexes for table `purchaseordertbl`
@@ -512,7 +632,7 @@ ALTER TABLE `assettbl`
 -- AUTO_INCREMENT for table `customertbl`
 --
 ALTER TABLE `customertbl`
-  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `exptbl`
@@ -530,7 +650,7 @@ ALTER TABLE `liabtbl`
 -- AUTO_INCREMENT for table `purchaseordertbl`
 --
 ALTER TABLE `purchaseordertbl`
-  MODIFY `PurOrderId` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `PurOrderId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `salareatbl`
@@ -572,7 +692,7 @@ ALTER TABLE `uomtbl`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `wharehousetbl`
@@ -601,21 +721,6 @@ ALTER TABLE `exptbl`
 --
 ALTER TABLE `liabtbl`
   ADD CONSTRAINT `liabtbl_ibfk_1` FOREIGN KEY (`LiabAccType`) REFERENCES `acctypetbl` (`AccId`);
-
---
--- Constraints for table `purchaseorderdetailtbl`
---
-ALTER TABLE `purchaseorderdetailtbl`
-  ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_1` FOREIGN KEY (`PurOrderId`) REFERENCES `purchaseordertbl` (`PurOrderId`),
-  ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_2` FOREIGN KEY (`PurSupCodeName`) REFERENCES `suptbl` (`SupId`),
-  ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_3` FOREIGN KEY (`PurItemName`) REFERENCES `salesitemtbl` (`ProId`),
-  ADD CONSTRAINT `purchaseorderdetailtbl_ibfk_4` FOREIGN KEY (`PurWHName`) REFERENCES `wharehousetbl` (`WarehouseId`);
-
---
--- Constraints for table `salesitemtbl`
---
-ALTER TABLE `salesitemtbl`
-  ADD CONSTRAINT `salesitemtbl_ibfk_1` FOREIGN KEY (`ProAccType`) REFERENCES `acctypetbl` (`AccId`);
 
 --
 -- Constraints for table `suptbl`

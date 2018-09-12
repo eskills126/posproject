@@ -70,6 +70,7 @@ include('navbar.php');
           <div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
          $row['PurOrderId'] + 1;  ?>"  readonly>
+         <span id="error_id" class="text-danger"></span>
         </div>    
         <?php 
             }}else{
@@ -81,6 +82,7 @@ include('navbar.php');
         </div>
           <div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="ino" name="ino" placeholder="Invoice No." value="1" readonly>
+        <span id="error_id" class="text-danger"></span>
         </div>  
             <?php 
             }
@@ -92,21 +94,34 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input id="pdate" data-inputmask="'alias': 'date'" name="pdate" value="<?php echo date('d/m/Y'); ?>" style="border:2px solid #ccc; border-radius: 4px;height: 35px;">
+        <span id="error_date" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
-<!------------------------------------------------------------------->
-		<div class="form-group">
+<!--------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------->
+		
+
+
+
+
+
+
+    <div class="form-group">
     	<div class="row">
       	<div class="col-25">
         <label for="scode">Supplier Code:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="text" id="scode" name="scode" placeholder="Enter Supplier Code" required ">
+        <span id="error_scode" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
       	<input type="text"id="sname" name="sname" placeholder="Supplier Name"style="width: 95%;" readonly>
+        <span id="error_sname" class="text-danger"></span>
         <a href="suppliers.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
@@ -115,6 +130,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25">
       	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;" readonly>
+        <span id="error_sbal" class="text-danger"></span>
       	</div>
       	</div>
       	</div>
@@ -126,10 +142,12 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="text" id="icode" name="icode" placeholder="Enter Item Code" required">
+        <span id="error_icode" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
       	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;" readonly>
+        <span id="error_iname" class="text-danger"></span>
         <a href="salesitem.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	</div>
@@ -142,10 +160,12 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="text" id="wcode" name="wcode" placeholder="Enter Warhouse Code" required">
+        <span id="error_wcode" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
       	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;" readonly>
+        <span id="error_wname" class="text-danger"></span>
         <a href="warehouse.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	</div>
@@ -158,6 +178,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="qty" name="qty" placeholder="Quantity" required>
+        <span id="error_qty" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
@@ -165,6 +186,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Stock Quantity">
+        <span id="error_sqty" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
@@ -172,6 +194,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="grate" name="grate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Gross Rate">
+        <span id="error_grate" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
@@ -184,20 +207,23 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="gamount" name="gamount" placeholder="Gross Amount" required>
+        <span id="error_gamount" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
         <label for="DisRate">Discount % Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="DisRate" name="DisRate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount % Rate">
+        <input type="number" id="disrate" name="disRate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount % Rate">
+        <span id="error_disrate" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
         <label for="Dvalue">DiscountValue Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="Dvalue" name="Dvalue" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount Value Rate">
+        <input type="number" id="dvalue" name="dvalue" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount Value Rate">
+        <span id="error_dvalue" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
@@ -210,13 +236,15 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="disdrate" name="disdrate" placeholder="Discounted Rate" required>
+        <span id="error_disdrate" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
         <label for="Rate">Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="Rate" name="Rate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Rate">
+        <input type="number" id="rate" name="rate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Rate">
+        <span id="error_rate" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
@@ -224,6 +252,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="amount" name="amount" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Amount">
+        <span id="error_amount" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
@@ -236,11 +265,13 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="text" id="did" name="did" placeholder="Enter Display Id" required">
+        <span id="error_did" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-25"><label for="remarks">Remarks</label></div>
       	<div class="col-75">
       	<input type="text"id="remarks" name="remarks" placeholder="Remarks..." style="width: 91%;">
+        <span id="error_remarks" class="text-danger"></span>
       	</div>
       	</div>
       	</div>
@@ -368,13 +399,196 @@ $(inputs).keypress(function(e){
 
 });
 </script>
-<!------------------------------------------------>
+
+
+<!----------------------------------------------------------->
+<script>
+  $(document).ready(function(){
+$("#output").load("Transaction_purchases/view.php");
+$("#scode").focus();
+
+var count = 0;
+
+
+
+$('#save').click(function(){
+    var error_id = '';
+    var error_date = '';
+    var error_scode = '';
+    var error_sname = '';
+    var error_sbal = '';
+    var error_icode = '';
+    var error_iname = '';
+    var error_wcode = '';
+    var error_wname = '';
+    var error_qty = '';
+    var error_sqty = '';
+    var error_grate = '';
+    var error_gamount = '';
+    var error_disrate = '';
+    var error_dvalue = '';
+    var error_disdrate = '';
+    var error_rate = '';
+    var error_amount = '';
+    var error_remarks = '';
+    
+//-------------------------------------------------------------------
+    var ino = '';
+    var pdate = '';
+    var scode = '';
+    var sname = '';
+    var sbal = '';
+    var icode = '';
+    var iname = '';
+    var wcode = '';
+    var wname = '';
+    var qty = '';
+    var sqty = '';
+    var grate = '';
+    var gamount = '';
+    var disrate = '';
+    var dvalue = '';
+    var disdrate = '';
+    var rate = '';
+    var amount = '';
+    var remarks = '';
+        
+    if($('#ino').val() == '')
+    {
+      error_id = 'ID is required';
+      $('#error_id').text(error_id);
+      $('#ino').css('border-color', '#cc0000');
+      ino = '';
+      $('#ino').focus();
+    }
+    else
+    {
+      error_id = '';
+      $('#error_id').text(error_id);
+      $('#ino').css('border-color', 'green');
+      ino = $('#ino').val();
+    } 
+//------------------------------------------------------------
+if($('#pdate').val() == '')
+    {
+      error_date = 'Date is required';
+      $('#error_date').text(error_date);
+      $('#pdate').css('border-color', '#cc0000');
+      pdate = '';
+      $('#pdate').focus();
+    }
+    else
+    {
+      error_date = '';
+      $('#error_date').text(error_date);
+      $('#pdate').css('border-color', 'green');
+      pdate = $('#pdate').val();
+    } 
+//-----------------------------------------------------------
+
+
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!----------------------------------------------
 <script>
 $(document).ready(function(){
 	$("#output").load("Transaction_purchases/view.php");
 	$("#scode").focus();
-
-
 	$("#save").click(function() {
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
@@ -464,6 +678,7 @@ $(document).on("click",".edit",function(){
 
 });	
 </script>
+     --------------------------------------->
 <!---------Code for AutoComplete Suplier Name---------->
 <script>
 	 $(function() {
