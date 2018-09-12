@@ -102,11 +102,11 @@ include('navbar.php');
         <label for="scode">Supplier Code:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="scode" name="scode" placeholder="Enter Supplier Code" required">
+        <input type="text" id="scode" name="scode" placeholder="Enter Supplier Code" required ">
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="sname" name="sname" placeholder="Supplier Name"style="width: 95%;">
+      	<input type="text"id="sname" name="sname" placeholder="Supplier Name"style="width: 95%;" readonly>
         <a href="suppliers.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
@@ -114,7 +114,7 @@ include('navbar.php');
       	<label for="sbal">Balance:</label>
       	</div>
       	<div class="col-25">
-      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;">
+      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;" readonly>
       	</div>
       	</div>
       	</div>
@@ -129,7 +129,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;">
+      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;" readonly>
         <a href="salesitem.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	</div>
@@ -145,7 +145,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;">
+      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;" readonly>
         <a href="warehouse.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	</div>
@@ -264,6 +264,44 @@ include('navbar.php');
 
 </form>
 </div>
+<!--------------------To Show Temporary Record------------------------->
+<div>
+  <form method="post" id="user_form">
+        <div style="width:1400px;overflow-x: scroll;margin-left: 100px;">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered" id="user_data">
+            
+            <tr>
+              <th>ID</th>
+        <th>Date</th>
+        <th>Supplier Code</th>
+        <th>Supplier Name</th>
+        <th>Item Code</th>
+        <th>Item Name</th>
+        <th>Warehouse Code</th>
+        <th>Warehouse Name</th>
+        <th>Quantity</th>
+        <th>Stock Quantity</th>
+        <th>Gross Rate</th>
+        <th>Gross Amount</th>
+        <th>Discount %</th>
+        <th>Discount Value</th>
+        <th>Discount Rate</th>
+        <th>Rate</th>
+        <th>Amount</th>
+        <th>Display ID</th>
+        <th>Remarks</th>
+        <th>Edit</th>
+        <th>Delete</th>
+            </tr>
+          </table>
+        </div>
+        </div>
+       </form>
+     <br />
+</div>
+<!--------------------------------------------------------------->    
+
 
 <div class="container">
 <form id="frm" action="" method="post">
@@ -302,7 +340,7 @@ include('navbar.php');
     	<div class="row">
     	<div class="col-25"></div>
     	<div class="col-25">
-    	<input type="button" class="btn btn-success" id="save" value="Save Record" >
+    	<input type="button" id="insert" name="insert" class="btn btn-success" id="save" value="Save Record" >
     	<input type="hidden" id="id" name="id" value="0">
     	<div id="msg"></div>
     	</div>
@@ -317,7 +355,7 @@ include('navbar.php');
 </div>
 </div>
 
-<!------This code is for Enter Index insted of TabIndex--------->
+<!------This code is for Enter Index insted of TabIndex OK--------->
 <script type="text/javascript">
 	$(document).ready(function(){
 
@@ -330,28 +368,13 @@ $(inputs).keypress(function(e){
 
 });
 </script>
-<!-----------Temp Compare Value For Authentication----------->
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#carea").on('keyup',function(){
-			var updatedname = $(this).val();
-			
-				$.ajax({
-					type: 'POST',
-					url: 'Masters_Customers/Tempdynamicupdate.php',
-					data:{carea:updatedname},
-					success:function(data){
-							$("#temp").val(data);
-					}
-				});
-			});
-		});
-</script>
-<!---------------------------------------------------->
+<!------------------------------------------------>
 <script>
 $(document).ready(function(){
-	$("#output").load("Masters_Customers/view.php");
-	$("#cname").focus();
+	$("#output").load("Transaction_purchases/view.php");
+	$("#scode").focus();
+
+
 	$("#save").click(function() {
 		var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
@@ -441,23 +464,116 @@ $(document).on("click",".edit",function(){
 
 });	
 </script>
-<!---------Code for AutoComplete Area---------->
+<!---------Code for AutoComplete Suplier Name---------->
 <script>
 	 $(function() {
     
-     $("#carea").autocomplete({
-        source: "Masters_Customers/autocomplete_area.php",
+     $("#scode").autocomplete({
+        source: "Transaction_purchases/autocomplete_supplier.php",
         minLength: 0,
         select: function (event, ui){}
     });                
 
 });
 </script>
-<!------------------
+<!-----------Update Value in Balance OK ----------->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#scode").on('keyup',function(){
+      var suppliercode = $(this).val();
+      
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/Baldynamic.php',
+          data:{scode:suppliercode},
+          success:function(data){
+              $("#sbal").val(data);
+          }
+        });
+      });
+    });
+</script>
+<!---------------------------------------------------->
+<!-----------Update Value in Supplier Name OK ----------->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#scode").on('keyup',function(){
+      var suppliercode = $(this).val();
+      
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/supdynamic.php',
+          data:{scode:suppliercode},
+          success:function(data){
+              $("#sname").val(data);
+          }
+        });
+      });
+    });
+</script>
+<!---------------------------------------------------->
+<!----------Code for AutoComplete Item Name-------->
 <script>
-$("#pdate").datepicker({ dateFormat:'dd/mm/yy', showAnim: 'show' });
- </script>
------------->
+   $(function() {
+    
+     $("#icode").autocomplete({
+        source: "Transaction_purchases/autocomplete_item.php",
+        minLength: 0,
+        select: function (event, ui){}
+    });                
+
+});
+</script>
+<!-----------Update Value in Item Name OK ----------->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#icode").on('keyup',function(){
+      var suppliercode = $(this).val();
+      
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/itemdynamic.php',
+          data:{icode:suppliercode},
+          success:function(data){
+              $("#iname").val(data);
+          }
+        });
+      });
+    });
+</script>
+<!---------------------------------------------------->
+<!----------Code for AutoComplete Warehouse Name-------->
+<script>
+   $(function() {
+    
+     $("#wcode").autocomplete({
+        source: "Transaction_purchases/autocomplete_warehouse.php",
+        minLength: 0,
+        select: function (event, ui){}
+    });                
+
+});
+</script>
+<!-----------Update Value in Warehouse Name OK ----------->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#wcode").on('keyup',function(){
+      var suppliercode = $(this).val();
+      
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/whdynamic.php',
+          data:{wcode:suppliercode},
+          success:function(data){
+              $("#wname").val(data);
+          }
+        });
+      });
+    });
+</script>
+<!---------------------------------------------------->
+
+
 
 <!---------Code for Date(Formate) Masking---------->
 <script>

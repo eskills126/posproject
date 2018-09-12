@@ -51,21 +51,33 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Deatils :<hr/></h4>
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Purchase Details :<hr/></h4>
 	<!--	<table class="table"> -->
 	<table id="examples" class="display" style="width:100%">
 			
 				
 					<thead>
-			<tr  id="DESC">
+			<tr>
 				
 				<th>ID</th>
-				<th>Customer Name</th>
-				<th>Address</th>
-				<th>Contact</th>
-				<th>Credit Limit</th>
-				<th>Opening Balance</th>
-				<th>Customer Area</th>
+				<th>Date</th>
+				<th>Supplier Code</th>
+				<th>Supplier Name</th>
+				<th>Item Code</th>
+				<th>Item Name</th>
+				<th>Warehouse Code</th>
+				<th>Warehouse Name</th>
+				<th>Quantity</th>
+				<th>Stock Quantity</th>
+				<th>Gross Rate</th>
+				<th>Gross Amount</th>
+				<th>Discount %</th>
+				<th>Discount Value</th>
+				<th>Discount Rate</th>
+				<th>Rate</th>
+				<th>Amount</th>
+				<th>Display ID</th>
+				<th>Remarks</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -73,22 +85,36 @@ include '..\db_connect.php';
 		</thead>
 			
 	<?php 
-		$sql = "SELECT * FROM `customertbl` ORDER BY CusId DESC";
+		$sql = "SELECT * FROM `purchaseorderdetailtbl` ";
 		$res = $conn->query($sql);
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";			
-echo "<td>{$row["CusId"]}</td>";
-echo "<td>{$row["CusName"]}</td>";
-echo "<td>{$row["CusAddress"]}</td>";
-echo "<td>{$row["CusContact"]}</td>";
-echo "<td>{$row["CusCreditLimit"]}</td>";
-echo "<td>{$row["CusOpenBal"]}</td>";
-echo "<td>{$row["CusAreaName"]}</td>";
-echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";
+echo "<td>{$row["PurOrderId"]}</td>";
+echo "<td>{$row["PurDate"]}</td>";
+echo "<td>{$row["PurSupCode"]}</td>";
+echo "<td>{$row["PurSupCodeName"]}</td>";
+echo "<td>{$row["PurItemCode"]}</td>";
+echo "<td>{$row["PurItemName"]}</td>";
+echo "<td>{$row["PurWHCode"]}</td>";
+echo "<td>{$row["PurWHName"]}</td>";
+echo "<td>{$row["PurQty"]}</td>";
+echo "<td>{$row["PurGrossRate"]}</td>";
+echo "<td>{$row["PurGrossAmount"]}</td>";
+echo "<td>{$row["PurStockQty"]}</td>";
+echo "<td>{$row["PurSaleQty"]}</td>";
+echo "<td>{$row["PurDiscInPercent"]}</td>";
+echo "<td>{$row["PurDiscValueInRate"]}</td>";
+echo "<td>{$row["PurDiscRate"]}</td>";
+echo "<td>{$row["PurAmount"]}</td>";
+echo "<td>{$row["DisplayID"]}</td>";
+echo "<td>{$row["PurRemarks"]}</td>";
+
+
+echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["PurOrderId"]}'><i class='fa fa-edit'></i></td>";
+echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["PurOrderId"]}'><i class='fa fa-trash'></i></td>";
 	echo "</tr>";
 			
 			}
@@ -97,12 +123,24 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 <tfoot>
 				<tr>
 				<th>ID</th>
-				<th>Customer Name</th>
-				<th>Address</th>
-				<th>Contact</th>
-				<th>Credit Limit</th>
-				<th>Opening Balance</th>
-				<th>Customer Area</th>
+				<th>Date</th>
+				<th>Supplier Code</th>
+				<th>Supplier Name</th>
+				<th>Item Code</th>
+				<th>Item Name</th>
+				<th>Warehouse Code</th>
+				<th>Warehouse Name</th>
+				<th>Quantity</th>
+				<th>Stock Quantity</th>
+				<th>Gross Rate</th>
+				<th>Gross Amount</th>
+				<th>Discount %</th>
+				<th>Discount Value</th>
+				<th>Discount Rate</th>
+				<th>Rate</th>
+				<th>Amount</th>
+				<th>Display ID</th>
+				<th>Remarks</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>

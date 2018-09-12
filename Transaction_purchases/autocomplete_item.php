@@ -12,9 +12,9 @@ $db = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
    $searchTerm = $_GET['term'];
 
    //get matched data from table
-   $query = $conn->query("SELECT * FROM `salareatbl` WHERE SalAreaId LIKE  '%".$searchTerm."%' OR SalAreaTitle LIKE '%".$searchTerm."%'");
+   $query = $conn->query("SELECT * FROM `salesitemtbl` WHERE ProId LIKE  '%".$searchTerm."%' OR ProName LIKE '%".$searchTerm."%'");
    while ($row = $query->fetch_assoc()) {
-     $data[] = $row['SalAreaTitle'];
+     $data[] =$row['ProId'].'-'.$row['ProName'];
      //$data[] = $row['id'];
   }
    //return json data
