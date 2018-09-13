@@ -895,6 +895,8 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
     $('#grate').val(grate);
     $('#gamount').val(gamount);
     $('#disrate').val(disrate);
+    $('#dvalue').val(dvalue);
+    $('#disdrate').val(disdrate);
     $('#rate').val(rate);
     $('#amount').val(amount);
     $('#did').val(did);
