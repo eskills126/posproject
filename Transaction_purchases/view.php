@@ -68,6 +68,8 @@ include '..\db_connect.php';
 					<thead>
 			<tr>
 				
+				<th>Edit</th>
+				<th>Delete</th>
 				<th>ID</th>
 				<th>Date</th>
 				<th>Supplier Code</th>
@@ -87,8 +89,7 @@ include '..\db_connect.php';
 				<th>Amount</th>
 				<th>Display ID</th>
 				<th>Remarks</th>
-				<th>Edit</th>
-				<th>Delete</th>
+				
 			</tr>
 
 		</thead>
@@ -100,7 +101,9 @@ include '..\db_connect.php';
 			
 			while ($row=$res->fetch_assoc()) {
 		
-	echo "<tr>";			
+	echo "<tr>";
+	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["PurOrderId"]}'><i class='fa fa-edit'></i></td>";
+echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["PurOrderId"]}'><i class='fa fa-trash'></i></td>";			
 echo "<td>{$row["PurOrderId"]}</td>";
 echo "<td>{$row["PurDate"]}</td>";
 echo "<td>{$row["PurSupCode"]}</td>";
@@ -122,8 +125,7 @@ echo "<td>{$row["DisplayID"]}</td>";
 echo "<td>{$row["PurRemarks"]}</td>";
 
 
-echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["PurOrderId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["PurOrderId"]}'><i class='fa fa-trash'></i></td>";
+
 	echo "</tr>";
 			
 			}
@@ -131,6 +133,8 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
  	?>
 <tfoot>
 				<tr>
+				<th>Edit</th>
+				<th>Delete</th>
 				<th>ID</th>
 				<th>Date</th>
 				<th>Supplier Code</th>
@@ -150,8 +154,7 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 				<th>Amount</th>
 				<th>Display ID</th>
 				<th>Remarks</th>
-				<th>Edit</th>
-				<th>Delete</th>
+				
 			</tr>
 </tfoot>
 		</table>
