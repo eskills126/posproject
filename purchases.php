@@ -282,10 +282,10 @@ include('navbar.php');
     	<div class="col-25">
     	</div>
     	<div class="col-75">
-    	<input type="button" class="btn btn-success" id="save" value="Save" >
+    	<button type="button" name="save" id="save" class="btn btn-success">Save</button>
       <input type="text" name="row_id" id="hidden_row_id" />
     	<input type="hidden" id="id" name="id" value="0">
-    	<div id="msg"></div>
+    	
     	</div>
     	</div>
     	</div>
@@ -304,10 +304,11 @@ include('navbar.php');
           <table class="table table-striped table-bordered" id="user_data">
             
             <tr>
-              <th>ID</th>
+        <th>ID</th>
         <th>Date</th>
         <th>Supplier Code</th>
         <th>Supplier Name</th>
+        <th>Balance</th>
         <th>Item Code</th>
         <th>Item Name</th>
         <th>Warehouse Code</th>
@@ -372,7 +373,7 @@ include('navbar.php');
     	<div class="row">
     	<div class="col-25"></div>
     	<div class="col-25">
-    	<input type="button" id="insert" name="insert" class="btn btn-success" id="save" value="Save Record" >
+    	<input type="button" id="insert" name="insert" class="btn btn-success" value="Save Record" >
     	<input type="hidden" id="id" name="id" value="0">
     	<div id="msg"></div>
     	</div>
@@ -776,6 +777,7 @@ if($('#remarks').val() == '')
       $('#remarks').css('border-color', 'green');
       remarks = $('#remarks').val();
     }
+//-----------------------------------------------------------------------------
 
 if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' || error_sbal !='' || error_icode !='' || error_iname !='' || error_wcode !='' || error_wname !='' || error_qty !='' || error_sqty !='' || error_grate !='' || error_gamount !='' || error_disrate !='' || error_dvalue !='' || error_disdrate !='' || error_rate !='' || error_amount !='' || error_did !='' || error_remarks !='' )
     {
@@ -787,7 +789,7 @@ if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' ||
       {
         count = count + 1;
         output = '<tr id="row_'+count+'">';
-output += '<td>'+ino+' <input type="text" name="ino[]" id="ino'+count+'" class="ino" value="'+ino+'" /></td>';
+output += '<td>'+ino+' <input type="text" name="ino[]" id="ino'+count+'"  value="'+ino+'" /></td>';
 output += '<td>'+pdate+' <input type="text" name="pdate[]" id="pdate'+count+'" value="'+pdate+'" /></td>';
 output += '<td>'+scode+' <input type="text" name="scode[]" id="scode'+count+'" value="'+scode+'" /></td>';
 output += '<td>'+sname+' <input type="text" name="sname[]" id="sname'+count+'" value="'+sname+'" /></td>';
@@ -908,7 +910,7 @@ $(document).on('click', '#save', function(){
 
      {
     $("#frm")[0].reset();
-    $("#first_name").focus();
+    $("#scode").focus();
       
     }
     
