@@ -380,7 +380,8 @@ include('navbar.php');
     	</div>
  </form>
 </div>
-<div class="container">
+
+
 <div class="row">
 <div class="col-xs-6 col-sm-1"></div>
 <div class="col-xs-6 col-sm-10 col-md-offset-4" id="output">
@@ -1307,7 +1308,7 @@ $(document).on("click",".edit",function(){
 </script>
 <!------------------------------------------------->
 
-</div>
+
 <?php include('footer.php'); ?>
 <p>
 <br>

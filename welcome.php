@@ -14,6 +14,7 @@ include('navbar.php');
 ?>
 
 <div class="container-fluid">
+
   <p>
     
   <div class="row">
