@@ -73,7 +73,9 @@ include('navbar.php');
          <span id="error_id" class="text-danger"></span>
         </div>    
         <?php 
-            }}else{
+            }
+        }
+        else{
             ?>
             <div class="form-group">
           <div class="row">
@@ -295,11 +297,11 @@ include('navbar.php');
         </div>
 
 </form>
-</div>
+
 <!--------------------To Show Temporary Record------------------------->
-<div>
+
   <form method="post" id="user_form">
-        <div style="width:1400px;overflow-x: scroll;margin-left: 100px;">
+       
         <div class="table-responsive">
           <table class="table table-striped table-bordered" id="user_data">
             
@@ -329,13 +331,11 @@ include('navbar.php');
             </tr>
           </table>
         </div>
-        </div>
+        
        </form>
-     <br />
+   
 </div>
 <!--------------------------------------------------------------->    
-
-
 <div class="container">
 <form id="frm" action="" method="post">
 
@@ -381,12 +381,13 @@ include('navbar.php');
     	</div>
  </form>
 </div>
-	
+<div class="container">
 <div class="row">
 <div class="col-xs-6 col-sm-1"></div>
 <div class="col-xs-6 col-sm-10 col-md-offset-4" id="output">
 </div>
 </div>
+
 
 <!------This code is for Enter Index insted of TabIndex OK--------->
 <script type="text/javascript">
@@ -1307,6 +1308,8 @@ $(document).on("click",".edit",function(){
   $("#pdate").inputmask();
 </script>
 <!------------------------------------------------->
+
+</div>
 <?php include('footer.php'); ?>
 <p>
 <br>
