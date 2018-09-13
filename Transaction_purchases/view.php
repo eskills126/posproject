@@ -44,16 +44,17 @@ $var=$_SESSION['user_session'];
 	});
 	}); </script>	
 </head>
-<body>
+
 
 
 <?php 
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Purchase Details :<hr/></h4>
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Purchase Details:<hr/></h4>
 	<!--	<table class="table"> -->
-	<table id="examples" class="display" style="width:100%">
+<div class="container border">
+	<table id="examples" class="display">
 			
 				
 					<thead>
@@ -148,5 +149,5 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 		</table>
 		<input type="hidden" id="abcd" value="<?php echo $var; ?>" >
 
-</body>
+
 </html>
