@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if(!isset($_SESSION['user_session'])){
@@ -44,11 +45,17 @@ include('navbar.php');
     </div>		
   </p>
   </div>
+
 <link rel="stylesheet" href="css/DataGrid.css">
+
+
 
 <div class="container">
 <!-- Three columns -->
-
+<marquee behavior="alternate">
+<img src="images/tsale.png" alt="Avatar" style="width:150px; border-radius: 50%;">
+<img src="images/tpurchase.png" alt="Avatar" style="width:150px; border-radius: 50%;">
+</marquee>
 <div class="row">
  
     <div class="acolumn"></div>
