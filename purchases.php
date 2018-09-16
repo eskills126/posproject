@@ -285,7 +285,7 @@ include('navbar.php');
     	</div>
     	<div class="col-75">
     	<button type="button" name="save" id="save" class="btn btn-success">Save</button>
-      <input type="text" name="row_id" id="hidden_row_id" />
+      <input type="hidden" name="row_id" id="hidden_row_id" />
     	<input type="hidden" id="id" name="id" value="0">
     	
     	</div>
@@ -297,7 +297,7 @@ include('navbar.php');
         </div>
 
 </form>
-
+<br>
 <!--------------------To Show Temporary Record------------------------->
 
   <form method="post" id="user_form">
@@ -306,7 +306,7 @@ include('navbar.php');
           <table class="table table-striped table-bordered" id="user_data">
             
             <tr>
-        <th>ID</th>
+        <th>ID</th>   
         <th>Date</th>
         <th>Supplier Code</th>
         <th>Supplier Name</th>
@@ -331,13 +331,62 @@ include('navbar.php');
             </tr>
           </table>
         </div>
-        
+    <!------Temporary input boxex---------->
+
+      <div class="form-group">
+      <div class="row">
+        <div class="col-25">
+        <label for="tqty">Total Quantity:</label>
+        </div>
+        <div class="col-25">
+        <input type="text" id="tqty" name="tqty" placeholder="Total Quanity">
+        </div>
+        <div class="col-25" style="width:2%;"></div>
+        <div class="col-25" style="width: 10%;">
+        <label for="bamt">Bill Amount:</label>
+        </div>
+        <div class="col-25">
+        <input type="text" id="bamt" name="bamt" placeholder="Bill Amount">
+        </div>
+        <div class="col-25" style="width:2%;"></div>
+        <div class="col-25" style="width: 12%;">
+        <label for="gamt">Gross Amount:</label>
+        </div>
+        <div class="col-25">
+        <input type="text" id="gamt" name="gamt" placeholder="Gross Amount">
+        </div>
+        <div class="col-25" style="width:1%;"></div>
+        <div class="col-25" style="width: 12%;">
+        <input type="text" id="gamt" name="gamt" placeholder="Discount" style="width: 60%;">
+        </div>
+        </div>
+        </div>
+  <!------------------------------------------------------->
+
+        <div class="form-group">
+      <div class="row">
+      <div class="col-25"></div>
+      <div class="col-25">
+      <input type="submit" name="insert" id="insert" class="btn btn-primary" value="Insert Record" />
+      <center><p><p id="msg" style="color: red;"></p></p></center>
+
+      <input type="hidden" id="id" name="id" value="0">
+      
+      </div>
+      </div>
+      </div>
+
+
+
+
+
+
        </form>
-   
+   <br>
 </div>
-<!--------------------------------------------------------------->    
+<!------------------------------------------------------------  
 <div class="container">
-<form id="frm" action="" method="post">
+<form id="fooorm" action="" method="post">
 
 		<div class="form-group">
     	<div class="row">
@@ -368,20 +417,26 @@ include('navbar.php');
       	</div>
       	</div>
 
-		<!----button row------>
+--->  
+
+		<!----button row----
+    <div class="container">
+<form  id="user_formmoooo"  method="post">
+
 		<div class="form-group">
     	<div class="row">
     	<div class="col-25"></div>
     	<div class="col-25">
-    	<input type="button" id="insert" name="insert" class="btn btn-success" value="Save Record" >
+    	<input type="submit" id="insert" name="insert" class="btn btn-success" value="Save Record" >
+
     	<input type="hidden" id="id" name="id" value="0">
-    	<div id="msg"></div>
+    	
     	</div>
     	</div>
     	</div>
  </form>
 </div>
-
+----------------------------------------------->
 
 <div class="row">
 <div class="col-xs-6 col-sm-1"></div>
@@ -412,8 +467,6 @@ $("#output").load("Transaction_purchases/view.php");
 $("#scode").focus();
 
 var count = 0;
-
-
 
 $('#save').click(function(){
     var error_id = '';
@@ -791,26 +844,26 @@ if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' ||
       {
         count = count + 1;
         output = '<tr id="row_'+count+'">';
-output += '<td>'+ino+' <input type="text" name="ino[]" id="ino'+count+'"  value="'+ino+'" /></td>';
-output += '<td>'+pdate+' <input type="text" name="pdate[]" id="pdate'+count+'" value="'+pdate+'" /></td>';
-output += '<td>'+scode+' <input type="text" name="scode[]" id="scode'+count+'" value="'+scode+'" /></td>';
-output += '<td>'+sname+' <input type="text" name="sname[]" id="sname'+count+'" value="'+sname+'" /></td>';
-output += '<td>'+sbal+' <input type="text" name="sbal[]" id="sbal'+count+'" value="'+sbal+'" /></td>';
-output += '<td>'+icode+' <input type="text" name="icode[]" id="icode'+count+'" value="'+icode+'" /></td>';
-output += '<td>'+iname+' <input type="text" name="iname[]" id="iname'+count+'" value="'+iname+'" /></td>';
-output += '<td>'+wcode+' <input type="text" name="wcode[]" id="wcode'+count+'" value="'+wcode+'" /></td>';
-output += '<td>'+wname+' <input type="text" name="wname[]" id="wname'+count+'" value="'+wname+'" /></td>';
-output += '<td>'+qty+' <input type="text" name="qty[]" id="qty'+count+'" value="'+qty+'" /></td>';
-output += '<td>'+sqty+' <input type="text" name="sqty[]" id="sqty'+count+'" value="'+sqty+'" /></td>';
-output += '<td>'+grate+' <input type="text" name="grate[]" id="grate'+count+'" value="'+grate+'" /></td>';
-output += '<td>'+gamount+' <input type="text" name="gamount[]" id="gamount'+count+'" value="'+gamount+'" /></td>';
-output += '<td>'+disrate+' <input type="text" name="disrate[]" id="disrate'+count+'" value="'+disrate+'" /></td>';
-output += '<td>'+dvalue+' <input type="text" name="dvalue[]" id="dvalue'+count+'" value="'+dvalue+'" /></td>';
-output += '<td>'+disdrate+' <input type="text" name="disdrate[]" id="disdrate'+count+'" value="'+disdrate+'" /></td>';
-output += '<td>'+rate+' <input type="text" name="rate[]" id="rate'+count+'" value="'+rate+'" /></td>';
-output += '<td>'+amount+' <input type="text" name="amount[]" id="amount'+count+'" value="'+amount+'" /></td>';
-output += '<td>'+did+' <input type="text" name="did[]" id="did'+count+'" value="'+did+'" /></td>';
-output += '<td>'+remarks+' <input type="text" name="remarks[]" id="remarks'+count+'" value="'+remarks+'" /></td>';
+output += '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+count+'" class="ino"  value="'+ino+'" /></td>';
+output += '<td>'+pdate+' <input type="hidden" name="pdate[]" id="pdate'+count+'" value="'+pdate+'" /></td>';
+output += '<td>'+scode+' <input type="hidden" name="scode[]" id="scode'+count+'" value="'+scode+'" /></td>';
+output += '<td>'+sname+' <input type="hidden" name="sname[]" id="sname'+count+'" value="'+sname+'" /></td>';
+output += '<td>'+sbal+' <input type="hidden" name="sbal[]" id="sbal'+count+'" value="'+sbal+'" /></td>';
+output += '<td>'+icode+' <input type="hidden" name="icode[]" id="icode'+count+'" value="'+icode+'" /></td>';
+output += '<td>'+iname+' <input type="hidden" name="iname[]" id="iname'+count+'" value="'+iname+'" /></td>';
+output += '<td>'+wcode+' <input type="hidden" name="wcode[]" id="wcode'+count+'" value="'+wcode+'" /></td>';
+output += '<td>'+wname+' <input type="hidden" name="wname[]" id="wname'+count+'" value="'+wname+'" /></td>';
+output += '<td>'+qty+' <input type="hidden" name="qty[]" id="qty'+count+'" value="'+qty+'" /></td>';
+output += '<td>'+sqty+' <input type="hidden" name="sqty[]" id="sqty'+count+'" value="'+sqty+'" /></td>';
+output += '<td>'+grate+' <input type="hidden" name="grate[]" id="grate'+count+'" value="'+grate+'" /></td>';
+output += '<td>'+gamount+' <input type="hidden" name="gamount[]" id="gamount'+count+'" value="'+gamount+'" /></td>';
+output += '<td>'+disrate+' <input type="hidden" name="disrate[]" id="disrate'+count+'" value="'+disrate+'" /></td>';
+output += '<td>'+dvalue+' <input type="hidden" name="dvalue[]" id="dvalue'+count+'" value="'+dvalue+'" /></td>';
+output += '<td>'+disdrate+' <input type="hidden" name="disdrate[]" id="disdrate'+count+'" value="'+disdrate+'" /></td>';
+output += '<td>'+rate+' <input type="hidden" name="rate[]" id="rate'+count+'" value="'+rate+'" /></td>';
+output += '<td>'+amount+' <input type="hidden" name="amount[]" id="amount'+count+'" value="'+amount+'" /></td>';
+output += '<td>'+did+' <input type="hidden" name="did[]" id="did'+count+'" value="'+did+'" /></td>';
+output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+count+'" value="'+remarks+'" /></td>';
 
 //----------------Buttons----Edit------Delete-----------------------------
 output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">Edit</button></td>';
@@ -826,8 +879,8 @@ output += '</tr>';
       else
       {
         var row_id = $('#hidden_row_id').val();
-   
-output += '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+row_id+'" class="ino" value="'+ino+'" /></td>';
+
+output = '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+row_id+'" class="ino" value="'+ino+'" /></td>';
 output += '<td>'+pdate+' <input type="hidden" name="pdate[]" id="pdate'+row_id+'" value="'+pdate+'" /></td>';
 output += '<td>'+scode+' <input type="hidden" name="scode[]" id="scode'+row_id+'" value="'+scode+'" /></td>';
 output += '<td>'+sname+' <input type="hidden" name="sname[]" id="sname'+row_id+'" value="'+sname+'" /></td>';
@@ -851,9 +904,12 @@ output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+ro
 output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">Edit</button></td>';
 output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+row_id+'">Delete</button></td>';       
 
-        $('#row_'+row_id+'').html(output);
+    $('#row_'+row_id+'').html(output);
       }
+
    }
+
+    
   });
 
 
@@ -881,6 +937,7 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
     var did = $('#did'+row_id+'').val();
     var remarks = $('#remarks'+row_id+'').val();
     
+
     $('#ino').val(ino);
     $('#pdate').val(pdate);
     $('#scode').val(scode);
@@ -903,8 +960,9 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
     $('#remarks').val(remarks);
 
 
-    $('#save').text('Edit');
+    $('#save').text('Edit Record');
     $('#hidden_row_id').val(row_id);
+
  });
 
 $(document).on('click', '#save', function(){
@@ -915,6 +973,7 @@ $(document).on('click', '#save', function(){
      {
     $("#frm")[0].reset();
     $("#scode").focus();
+    $('#save').text('Save');
       
     }
     
@@ -933,80 +992,64 @@ $(document).on('click', '#save', function(){
     }
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  });
+
+
+
+
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+$('#user_form').on('submit', function(event){
+    event.preventDefault();
+    var count_data = 0;
+    $('.ino').each(function(){
+      count_data = count_data + 1;
+    });
+    if(count_data > 0)
+    {
+      var form_data = $(this).serialize();
+      $.ajax({
+        url:"Transaction_purchases/insert.php",
+        method:"POST",
+        data:form_data,
+        success:function(data)
+        {
+          $('#user_data').find("tr:gt(0)").remove();
+          
+        }
+      })
+    }
+    else
+    {
+      $("#msg").text('* Insert Atleast One Record');
+      //$('#action_alert').html('<p>Please Add atleast one data</p>');
+      //$('#action_alert').dialog('open');
+    }
+
+
+  });
   
+ 
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+</script>
 
 
 

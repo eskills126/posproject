@@ -1,28 +1,44 @@
-<?php 
-//session_start();
+<?php
+
+//$connect = new PDO("mysql:host=localhost;dbname=aansoftdb", "root", "");
+
 include "..\db_connect.php";
-	$name=$_POST["cname"];
-	$address=$_POST["caddress"];
-	$contact=$_POST["ccontac"];
-	$climit=$_POST["climit"];
-	$copbal=$_POST["copbal"];
-	$carea=$_POST["carea"];
-	
-$sql = "INSERT INTO customertbl(CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES('{$name}','{$address}','{$contact}','{$climit}',{$copbal},'{$carea}')";
-	$conn->query($sql);
 
-	$id = $conn->insert_id;
+//$date =$_POST["pdate"];
+$query = "
+INSERT INTO purchaseorderdetailtbl
+(PurOrderId,PurDate, PurSupCode, PurSupCodeName, PurSupBal, PurItemCode, PurItemName, PurWHCode, PurWHName, PurQty, PurGrossRate, PurGrossAmount, PurStockQty, PurSaleQty, PurDiscInPercent, PurDiscValueInRate, PurDiscRate, PurAmount, DisplayID, PurRemarks) 
+VALUES (:ino, :pdate, :scode, :sname, :sbal, :icode, :iname, :wcode, :wname, :qty, :sqty, :grate, :gamount, :disrate, :dvalue, :disdrate, :rate, :amount, :did, :remarks)";
 
-echo "<td>{$id}</td>";
-echo "<td>{$name}</td>";
-echo "<td>{$address}</td>";
-echo "<td>{$contact}</td>";
-echo "<td>{$climit}</td>";
-echo "<td>{$copbal}</td>";
-echo "<td>{$carea}</td>";
+for($count = 0; $count<count($_POST['ino']); $count++)
+{
+	$data = array(
+					':ino'	=>	$_POST['ino'][$count],
+					':pdate'	=>	$_POST['pdate'][$count],
+					':scode'	=>	$_POST['scode'][$count],
+					':sname'	=>	$_POST['sname'][$count],
+					':sbal'	=>	$_POST['sbal'][$count],
+					':icode'	=>	$_POST['icode'][$count],
+					':iname'	=>	$_POST['iname'][$count],
+					':wcode'	=>	$_POST['wcode'][$count],
+					':wname'	=>	$_POST['wname'][$count],
+					':qty'	=>	$_POST['qty'][$count],
+					':sqty'	=>	$_POST['sqty'][$count],
+					':grate'	=>	$_POST['grate'][$count],
+					':gamount'	=>	$_POST['gamount'][$count],
+					':disrate'	=>	$_POST['disrate'][$count],
+					':dvalue'	=>	$_POST['dvalue'][$count],
+					':disdrate'	=>	$_POST['disdrate'][$count],
+					':rate'	=>	$_POST['rate'][$count],
+					':amount'	=>	$_POST['amount'][$count],
+					':did'	=>	$_POST['did'][$count],
+					':remarks'	=>	$_POST['remarks'][$count]
 
+	//	':first_name'	=>	$_POST['hidden_first_name'][$count],
+	//	':last_name'	=>	$_POST['hidden_last_name'][$count]
+	);
+	$statement = $connect->prepare($query);
+	$statement->execute($data);
+}
 
-echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$id}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$id}'><i class='fa fa-trash'></i></td>";
- ?>
- 
+?>

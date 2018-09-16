@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2018 at 05:40 PM
+-- Generation Time: Sep 16, 2018 at 08:44 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -236,9 +236,10 @@ INSERT INTO `liabtbl` (`LiabId`, `LiabTitle`, `LiabAddress`, `LiabContact`, `Lia
 
 CREATE TABLE `purchaseorderdetailtbl` (
   `PurOrderId` int(50) NOT NULL,
-  `PurDate` date NOT NULL,
+  `PurDate` varchar(250) NOT NULL,
   `PurSupCode` int(50) NOT NULL,
   `PurSupCodeName` varchar(250) NOT NULL,
+  `PurSupBal` int(50) NOT NULL,
   `PurItemCode` int(50) NOT NULL,
   `PurItemName` varchar(250) NOT NULL,
   `PurWHCode` int(50) NOT NULL,
@@ -261,8 +262,16 @@ CREATE TABLE `purchaseorderdetailtbl` (
 -- Dumping data for table `purchaseorderdetailtbl`
 --
 
-INSERT INTO `purchaseorderdetailtbl` (`PurOrderId`, `PurDate`, `PurSupCode`, `PurSupCodeName`, `PurItemCode`, `PurItemName`, `PurWHCode`, `PurWHName`, `PurQty`, `PurGrossRate`, `PurGrossAmount`, `PurStockQty`, `PurSaleQty`, `PurDiscInPercent`, `PurDiscValueInRate`, `PurDiscRate`, `PurAmount`, `DisplayID`, `PurRemarks`, `PurTransType`) VALUES
-(1, '2018-09-12', 1, 'Naeem AHmed', 1, 'Laptop', 1, 'Warehouse', 7, 78, 67, 89, 90, 89, 7, 78, 98, 2, 'No Remarks', 'PT');
+INSERT INTO `purchaseorderdetailtbl` (`PurOrderId`, `PurDate`, `PurSupCode`, `PurSupCodeName`, `PurSupBal`, `PurItemCode`, `PurItemName`, `PurWHCode`, `PurWHName`, `PurQty`, `PurGrossRate`, `PurGrossAmount`, `PurStockQty`, `PurSaleQty`, `PurDiscInPercent`, `PurDiscValueInRate`, `PurDiscRate`, `PurAmount`, `DisplayID`, `PurRemarks`, `PurTransType`) VALUES
+(1, '2018-09-12', 1, 'Naeem AHmed', 0, 1, 'Laptop', 1, 'Warehouse', 7, 78, 67, 89, 90, 89, 7, 78, 98, 2, 'No Remarks', 'PT'),
+(2, '0000-00-00', 4, 'Amjad Hanif', 124106, 16, 'Nadeem', 1, 'Warehouse 2', 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, '3', 'PT'),
+(3, '0000-00-00', 5, 'Naeem Ahmed', 11898, 14, 'samsung', 1, 'Warehouse 2', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '1', 'PT'),
+(3, '0000-00-00', 4, 'Amjad Hanif', 124106, 17, 'Chair', 1, 'Warehouse 2', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, '2', 'PT'),
+(4, '16/09/2018', 2, 'Dummy 2', 13898, 14, 'samsung', 1, 'Warehouse 2', 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, '2', 'PT'),
+(5, '16/09/2018', 5, 'Naeem Ahmed', 11898, 16, 'Nadeem', 1, 'Warehouse 2', 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, '8', 'PT'),
+(6, '16/09/2018', 4, 'Amjad Hanif', 124106, 16, 'Nadeem', 1, 'Warehouse 2', 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, '3', 'PT'),
+(7, '16/09/2018', 4, 'Amjad Hanif', 124106, 17, 'Chair', 3, 'Shop Two', 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, '4', 'PT'),
+(8, '16/09/2018', 4, 'Amjad Hanif', 124106, 16, 'Nadeem', 1, 'Warehouse 2', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, '2', 'PT');
 
 -- --------------------------------------------------------
 
@@ -309,7 +318,8 @@ INSERT INTO `salareatbl` (`SalAreaId`, `SalAreaTitle`) VALUES
 (16, 'Blue'),
 (17, 'Green'),
 (18, 'Yellow and Green'),
-(19, 'Sky Blue');
+(19, 'Sky Blue'),
+(20, 'Lala Moosa');
 
 -- --------------------------------------------------------
 
@@ -656,7 +666,7 @@ ALTER TABLE `purchaseordertbl`
 -- AUTO_INCREMENT for table `salareatbl`
 --
 ALTER TABLE `salareatbl`
-  MODIFY `SalAreaId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `SalAreaId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `salesitemgrouptbl`
