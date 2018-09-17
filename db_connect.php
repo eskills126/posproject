@@ -12,9 +12,3 @@ if (mysqli_connect_errno()) {
 }
 
 ?>
-
-
-<?php 
-// PDO Code for /Transaction_Purchases/insert.php
-$connect = new PDO("mysql:host=localhost;dbname=aansoftdb", "root", "");
- ?>

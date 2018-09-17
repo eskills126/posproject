@@ -29,7 +29,7 @@
 					$did	=	$_POST['did'];
 					$remarks=	$_POST['remarks'];
 
-$sql = "update purchaseorderdetailtbl set PurOrderId=$ino,PurDate='$pdate',PurSupCode=$scode,PurSupCodeName='$sname',PurSupBal=$sbal, PurItemCode=$icode, PurItemName='$iname', PurWHCode=$wcode, PurWHName='$wname', PurQty=$qty, PurStockQty=$sqty,  PurGrossRate=$grate, PurGrossAmount=$gamount, PurDiscInPercent=$disrate, PurDiscValueInRate=$dvalue, PurDiscRate=$disdrate,PurRate=$rate, PurAmount=$amount, DisplayID='$did', PurRemarks='$remarks' where PurOrderId = ".$_POST["id"];
+$sql = "update purchaseorderdetailtbl set PurOrderId=$ino,PurDate='$pdate',PurSupCode=$scode,PurSupCodeName='$sname',PurSupBal=$sbal, PurItemCode=$icode, PurItemName='$iname', PurWHCode=$wcode, PurWHName='$wname', PurQty=$qty, PurStockQty=$sqty,  PurGrossRate=$grate, PurGrossAmount=$gamount, PurDiscInPercent=$disrate, PurDiscValueInRate=$dvalue, PurDiscRate=$disdrate,PurRate=$rate, PurAmount=$amount, DisplayID='$did', PurRemarks='$remarks' where PurOrderId = ".$_POST["ino"];
 
 /*
 	$sql = "update customertbl set CusName='$name',CusAddress='$address',CusContact='$contact',CusCreditLimit='$climit',CusOpenBal=$copbal,CusAreaName='$carea' where CusId = ".$_POST["id"];
