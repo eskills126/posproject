@@ -62,7 +62,7 @@ include('navbar.php');
         while($row=mysqli_fetch_array($result)) {
         ?>  
         
-        <div class="form-group">
+        <div class="form-group" id="inumber">
           <div class="row">
         <div class="col-25">
         <label for="ino">No:</label>
@@ -71,13 +71,13 @@ include('navbar.php');
         <input type="number" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
          $row['PurOrderId'] + 1;  ?>"  readonly>
          <span id="error_id" class="text-danger"></span>
-        </div>    
+        </div>
         <?php 
             }
         }
         else{
             ?>
-            <div class="form-group">
+            <div class="form-group" id="inumber">
           <div class="row">
         <div class="col-25">
         <label for="ino">No:</label>
@@ -1015,128 +1015,21 @@ $('#user_form').on('submit', function(event){
         success:function(data)
         {
           $('#user_data').find("tr:gt(0)").remove();
-          
-        }
-      })
+ //This line of code Reload the ID without refreshing............
+          $("#inumber").load(" #inumber");    
+          $("#output").load("Transaction_purchases/view.php");
+
+          }
+      
+      });
     }
     else
     {
       $("#msg").text('* Insert Atleast One Record');
-      //$('#action_alert').html('<p>Please Add atleast one data</p>');
-      //$('#action_alert').dialog('open');
-    }
-
-
+     }
   });
-  
- 
+
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1215,29 +1108,94 @@ $(document).ready(function(){
 			}
 		});
 	});
+  ---------------->
+  <script>
 // Update Query
 $(document).on("click",".edit",function(){
 		var row=$(this);
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
-		var name = row.closest("tr").find("td:eq(1)").text();
-			$("#cname").val(name);
-		var address = row.closest("tr").find("td:eq(2)").text();
-		$("#caddress").val(address);
-		var contact = row.closest("tr").find("td:eq(3)").text();
-		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
-		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
-		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
-		$("#carea").val(area);
-	});
+		var itemno = row.closest("tr").find("td:eq(2)").text();
+			$("#ino").val(itemno);
+		var pdate = row.closest("tr").find("td:eq(3)").text();
+		$("#pdate").val(pdate);
+		var scode = row.closest("tr").find("td:eq(4)").text();
+		$("#scode").val(scode);
+		var sname = row.closest("tr").find("td:eq(5)").text();
+		$("#sname").val(sname);
+		var balance = row.closest("tr").find("td:eq(6)").text();
+		$("#sbal").val(balance);
+		var icode = row.closest("tr").find("td:eq(7)").text();
+		$("#icode").val(icode);
+    var iname = row.closest("tr").find("td:eq(8)").text();
+    $("#iname").val(iname);
+    var wcode = row.closest("tr").find("td:eq(9)").text();
+    $("#wcode").val(wcode);
+    var wname = row.closest("tr").find("td:eq(10)").text();
+    $("#wname").val(wname);
+    var qty = row.closest("tr").find("td:eq(11)").text();
+    $("#qty").val(qty);
+    var sqty = row.closest("tr").find("td:eq(12)").text();
+    $("#sqty").val(sqty);
+    var grate = row.closest("tr").find("td:eq(13)").text();
+    $("#grate").val(grate);
+    var gamount = row.closest("tr").find("td:eq(14)").text();
+    $("#gamount").val(gamount);
+    var disrate = row.closest("tr").find("td:eq(15)").text();
+    $("#disrate").val(disrate);
+    var dvalue = row.closest("tr").find("td:eq(16)").text();
+    $("#dvalue").val(dvalue);
+    var disdrate = row.closest("tr").find("td:eq(17)").text();
+    $("#disdrate").val(disdrate);
+    var rate = row.closest("tr").find("td:eq(18)").text();
+    $("#rate").val(rate);
+    var amount = row.closest("tr").find("td:eq(19)").text();
+    $("#amount").val(amount);
+    var did = row.closest("tr").find("td:eq(20)").text();
+    $("#did").val(did);
+    var remarks = row.closest("tr").find("td:eq(21)").text();
+    $("#remarks").val(remarks);
 
-});	
+    $("#scode").focus();
+    $("#save").text("Update Value");
+	});
 </script>
-     --------------------------------------->
+<!-------------------------------------------------------------------->
+<script>
+  $(document).ready(function(){
+    $("#save").click(function(){
+if($('#save').text() == 'Update Value'){
+$.ajax({
+      url:  "Transaction_purchases/update.php",
+      type:  "post",
+      data: $("#frm").serialize(),
+      success:function(d) {
+      
+    $("#output").load("Transaction_purchases/view.php");
+    //$("#frm")[0].reset();
+    $("#ino").focus();
+    //$("#id").val("0");
+      }
+    });
+
+}
+
+
+
+
+    });
+
+  });
+
+
+
+
+  
+</script>
+
+
+
 <!---------Code for AutoComplete Suplier Name---------->
 <script>
 	 $(function() {
