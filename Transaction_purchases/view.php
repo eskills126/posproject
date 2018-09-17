@@ -15,7 +15,7 @@ $var=$_SESSION['user_session'];
 <script type="text/javascript">
 	$(document).ready(function() {
     $('.display').DataTable( {
-        "order": [[ 0, "desc" ]]
+        "order": [[ 2, "desc" ]]
     } );
 } );
 </script>
@@ -74,6 +74,7 @@ include '..\db_connect.php';
 				<th>Date</th>
 				<th>Supplier Code</th>
 				<th>Supplier Name</th>
+				<th>Balance</th>
 				<th>Item Code</th>
 				<th>Item Name</th>
 				<th>Warehouse Code</th>
@@ -108,18 +109,19 @@ echo "<td>{$row["PurOrderId"]}</td>";
 echo "<td>{$row["PurDate"]}</td>";
 echo "<td>{$row["PurSupCode"]}</td>";
 echo "<td>{$row["PurSupCodeName"]}</td>";
+echo "<td>{$row["PurSupBal"]}</td>";
 echo "<td>{$row["PurItemCode"]}</td>";
 echo "<td>{$row["PurItemName"]}</td>";
 echo "<td>{$row["PurWHCode"]}</td>";
 echo "<td>{$row["PurWHName"]}</td>";
 echo "<td>{$row["PurQty"]}</td>";
+echo "<td>{$row["PurStockQty"]}</td>";
 echo "<td>{$row["PurGrossRate"]}</td>";
 echo "<td>{$row["PurGrossAmount"]}</td>";
-echo "<td>{$row["PurStockQty"]}</td>";
-echo "<td>{$row["PurSaleQty"]}</td>";
 echo "<td>{$row["PurDiscInPercent"]}</td>";
 echo "<td>{$row["PurDiscValueInRate"]}</td>";
 echo "<td>{$row["PurDiscRate"]}</td>";
+echo "<td>{$row["PurRate"]}</td>";
 echo "<td>{$row["PurAmount"]}</td>";
 echo "<td>{$row["DisplayID"]}</td>";
 echo "<td>{$row["PurRemarks"]}</td>";
@@ -139,6 +141,7 @@ echo "<td>{$row["PurRemarks"]}</td>";
 				<th>Date</th>
 				<th>Supplier Code</th>
 				<th>Supplier Name</th>
+				<th>Balance</th>
 				<th>Item Code</th>
 				<th>Item Name</th>
 				<th>Warehouse Code</th>

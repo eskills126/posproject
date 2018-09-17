@@ -7,7 +7,7 @@ include "..\db_connect.php";
 //$date =$_POST["pdate"];
 $query = "
 INSERT INTO purchaseorderdetailtbl
-(PurOrderId,PurDate, PurSupCode, PurSupCodeName, PurSupBal, PurItemCode, PurItemName, PurWHCode, PurWHName, PurQty, PurGrossRate, PurGrossAmount, PurStockQty, PurSaleQty, PurDiscInPercent, PurDiscValueInRate, PurDiscRate, PurAmount, DisplayID, PurRemarks) 
+(PurOrderId,PurDate, PurSupCode, PurSupCodeName, PurSupBal, PurItemCode, PurItemName, PurWHCode, PurWHName, PurQty, PurStockQty, PurGrossRate, PurGrossAmount,PurDiscInPercent, PurDiscValueInRate, PurDiscRate, PurRate, PurAmount, DisplayID, PurRemarks) 
 VALUES (:ino, :pdate, :scode, :sname, :sbal, :icode, :iname, :wcode, :wname, :qty, :sqty, :grate, :gamount, :disrate, :dvalue, :disdrate, :rate, :amount, :did, :remarks)";
 
 for($count = 0; $count<count($_POST['ino']); $count++)
