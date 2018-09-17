@@ -32,9 +32,5 @@ include_once("db_connect.php");
 	</form>		
 		
 </div>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#userid").focus();
-	});
-</script>
+
 <?php include('footer.php');?>
