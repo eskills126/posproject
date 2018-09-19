@@ -58,7 +58,7 @@ include '..\db_connect.php';
 				<i class="fa fa-recycle fa-2x" aria-hidden="true" style="color: red;">&nbsp Delete</i>
 			</span>
 		</summary>
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Purchases Detail:<hr/></h4>
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Purchase Details:<hr/></h4>
 	<!--	<table class="table"> -->
 
 	<div class="table-responsive">

@@ -32,7 +32,7 @@ $rights = $_SESSION['user_role'];
   <!----------------------------------------------------------------->
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width:auto;white-space: nowrap;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->
   <a class="navbar-brand" href="welcome.php"><img style="display: inline-block; height: 50px; margin-top: -5px;"src="images/images.png"></a>
@@ -86,15 +86,15 @@ $rights = $_SESSION['user_role'];
     </li>
 
     <li class="nav-item active">
-      <a class="nav-link" href="#">Sales<span aria-hidden="true"></span></a>
+      <a class="nav-link" href="sales.php">Sales<span aria-hidden="true"></span></a>
     </li>
 
     <li class="nav-item active">
-      <a class="nav-link" href="#">Cash Paid<span aria-hidden="true"></span></a>
+      <a class="nav-link" href="cashpaid.php">Cash Paid<span aria-hidden="true"></span></a>
     </li>
 
     <li class="nav-item active">
-      <a class="nav-link" href="#">Cash Received<span aria-hidden="true"></span></a>
+      <a class="nav-link" href="cashreceived.php">Cash Received<span aria-hidden="true"></span></a>
     </li>
 
     <li class="nav-item active">

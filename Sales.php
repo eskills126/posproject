@@ -6,8 +6,10 @@ color: #e32;
 position: absolute; 
 margin: 0px 0px 0px -20px; 
 font-size: x-large; 
-padding: 0 5px 0 0; 
+padding: 0 5px 0 0;
+
 }
+
 </style>
 
 <!--Code for Login Detail-->
@@ -32,7 +34,7 @@ include('navbar.php');
   	<div class="row">
   			
 	<div class="col-xs-6 col-sm-8 col-md-offset-4">
-		<h2 class="page-header text-center"><i class="fa fa-edit"></i>&nbsp Purchases Bill/Transaction</h2>
+		<h2 class="page-header text-center"><i class="fa fa-edit"></i>&nbsp Sales Bill/Transaction</h2>
 		</div>
 
 
@@ -115,24 +117,24 @@ include('navbar.php');
     <div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="scode">Supplier Code:</label>
+        <label for="scode">Customer Code:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="scode" name="scode" placeholder="Enter Supplier Code" required ">
+        <input type="text" id="scode" name="scode" placeholder="Enter Customer Code" required ">
         <span id="error_scode" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="sname" name="sname" placeholder="Supplier Name"style="width: 95%;" readonly>
+      	<input type="text"id="sname" name="sname" placeholder="Customer Name"style="width: 95%;background-color:#edf1f7;" readonly>
         <span id="error_sname" class="text-danger"></span>
-        <a href="suppliers.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        <a href="customer.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-25"style="width: 10%;">
       	<label for="sbal">Balance:</label>
       	</div>
       	<div class="col-25">
-      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;" readonly>
+      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;background-color:#edf1f7;" readonly>
         <span id="error_sbal" class="text-danger"></span>
       	</div>
       	</div>
@@ -149,7 +151,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;" readonly>
+      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;background-color:#edf1f7;" readonly>
         <span id="error_iname" class="text-danger"></span>
         <a href="salesitem.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
@@ -167,14 +169,14 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;" readonly>
+      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;background-color:#edf1f7;" readonly>
         <span id="error_wname" class="text-danger"></span>
         <a href="warehouse.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
       	</div>
       	</div>
       <!---Quantity row----->
-      	<div class="form-group">
+      <div class="form-group">
     	<div class="row">
       	<div class="col-25">
         <label for="qty">Quantity:</label>
@@ -188,44 +190,45 @@ include('navbar.php');
         <label for="sqty">Stock Quantity:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Stock Quantity">
+        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Stock Quantity"readonly>
         <span id="error_sqty" class="text-danger"></span>
       	</div>
+
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
-        <label for="grate">Gross Rate:</label>
+        <label for="prate">Previous Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="grate" name="grate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Gross Rate">
+        <input type="number" id="prate" name="prate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Previous Rate"readonly>
         <span id="error_grate" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
 
-		<!---Gross Amount row----->
-      	<div class="form-group">
+		<!---Gross Rate row----->
+      <div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="gamount">Gross Amount:</label>
+        <label for="grate">Gross Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="gamount" name="gamount" placeholder="Gross Amount" required>
+        <input type="number" id="grate" name="grate" placeholder="Gross Rate" required>
         <span id="error_gamount" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
-        <label for="DisRate">Discount % Rate:</label>
+        <label for="gamount">Gross Amount:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="disrate" name="disRate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount % Rate">
+        <input type="number" id="gamount" name="gamount" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Gross Amount">
         <span id="error_disrate" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
-        <label for="Dvalue">DiscountValue Rate:</label>
+        <label for="Did">Display ID:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="dvalue" name="dvalue" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount Value Rate">
+        <input type="number" id="Did" name="Did" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Diplay Id...">
         <span id="error_dvalue" class="text-danger"></span>
       	</div>
     	</div>
@@ -235,51 +238,15 @@ include('navbar.php');
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="disdrate">Discounted Rate:</label>
+        <label for="sremarks">Remarks:</label>
       	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="disdrate" name="disdrate" placeholder="Discounted Rate" required>
-        <span id="error_disdrate" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="Rate">Rate:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="rate" name="rate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Rate">
-        <span id="error_rate" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="amount">Amount:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="amount" name="amount" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Amount">
-        <span id="error_amount" class="text-danger"></span>
-      	</div>
+      	<div class="col-75">
+        <input type="text" id="sremarks" name="sremarks" placeholder="Remarsk...">
+        </div>
     	</div>
 		</div>
 
-		<!---Display ID row----->
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="did">Display ID:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="did" name="did" placeholder="Enter Display Id" required">
-        <span id="error_did" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-      	<div class="col-25"><label for="remarks">Remarks</label></div>
-      	<div class="col-75">
-      	<input type="text"id="remarks" name="remarks" placeholder="Remarks..." style="width: 91%;">
-        <span id="error_remarks" class="text-danger"></span>
-      	</div>
-      	</div>
-      	</div>
-      
-  <!---------------------Save and Edit Button------------------------->
+		<!---------------------Save and Edit Button------------------------->
       <div class="form-group">
       <div class="row">
       <div class="col-25">
@@ -311,10 +278,12 @@ include('navbar.php');
           <table class="table table-striped table-bordered" id="user_data">
             
             <tr>
+        <th>Edit</th>
+        <th>Delete</th>
         <th>ID</th>   
         <th>Date</th>
-        <th>Supplier Code</th>
-        <th>Supplier Name</th>
+        <th>Customer Code</th>
+        <th>Customer Name</th>
         <th>Balance</th>
         <th>Item Code</th>
         <th>Item Name</th>
@@ -322,57 +291,78 @@ include('navbar.php');
         <th>Warehouse Name</th>
         <th>Quantity</th>
         <th>Stock Quantity</th>
+        <th>Previous Rate</th>
         <th>Gross Rate</th>
         <th>Gross Amount</th>
-        <th>Discount %</th>
-        <th>Discount Value</th>
-        <th>Discount Rate</th>
-        <th>Rate</th>
-        <th>Amount</th>
         <th>Display ID</th>
         <th>Remarks</th>
-        <th>Edit</th>
-        <th>Delete</th>
             </tr>
           </table>
         </div>
     <!------Temporary input boxex---------->
-
-      <div class="form-group">
+<div class="form-group">
       <div class="row">
         <div class="col-25">
         <label for="tqty">Total Quantity:</label>
         </div>
         <div class="col-25">
-        <input type="text" id="tqty" name="tqty" placeholder="Total Quanity">
+        <input type="number" id="tqty" name="tqty" placeholder="Total Quantity..."style="background-color:#edf1f7;"readonly>
+        <span id="error_gamount" class="text-danger"></span>
         </div>
-        <div class="col-25" style="width:2%;"></div>
-        <div class="col-25" style="width: 10%;">
-        <label for="bamt">Bill Amount:</label>
-        </div>
-        <div class="col-25">
-        <input type="text" id="bamt" name="bamt" placeholder="Bill Amount">
-        </div>
-        <div class="col-25" style="width:2%;"></div>
-        <div class="col-25" style="width: 12%;">
-        <label for="gamt">Gross Amount:</label>
+        <div class="col-25" style="width:0.5%;"></div>
+      <div class="col-25">
+        <label for="bamount">Bill Amount:</label>
         </div>
         <div class="col-25">
-        <input type="text" id="gamt" name="gamt" placeholder="Gross Amount">
+        <input type="number" id="bamount" name="bamount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Bill Amount"readonly>
+        <span id="error_disrate" class="text-danger"></span>
         </div>
-        <div class="col-25" style="width:1%;"></div>
-        <div class="col-25" style="width: 12%;">
-        <input type="text" id="gamt" name="gamt" placeholder="Discount" style="width: 60%;">
+        <div class="col-25" style="width:0.5%;"></div>
+      <div class="col-25">
+        <label for="Dper">Discount %:</label>
         </div>
+        <div class="col-25">
+        <input type="number" id="Dper" name="Dper" style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount Percent...">
+        <span id="error_dvalue" class="text-danger"></span>
         </div>
+      </div>
+    </div>
+
+    <!-----row for dicount amount-->
+    <div class="form-group">
+      <div class="row">
+        <div class="col-25">
+        <label for="discval">Discount Value:</label>
         </div>
+        <div class="col-25">
+        <input type="number" id="discval" name="discval" placeholder="Discount Value...">
+        <span id="error_gamount" class="text-danger"></span>
+        </div>
+        <div class="col-25" style="width:0.5%;"></div>
+      <div class="col-25">
+        <label for="famount">Freight:</label>
+        </div>
+        <div class="col-25">
+        <input type="number" id="famount" name="famount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Freight if any...">
+        <span id="error_disrate" class="text-danger"></span>
+        </div>
+        <div class="col-25" style="width:0.5%;"></div>
+      <div class="col-25">
+        <label for="namount">Net Bill:</label>
+        </div>
+        <div class="col-25">
+        <input type="number" id="namount" name="namount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Net Bill Amount...">
+        <span id="error_dvalue" class="text-danger"></span>
+        </div>
+      </div>
+    </div>
   <!------------------------------------------------------->
 
         <div class="form-group">
       <div class="row">
       <div class="col-25"></div>
       <div class="col-0">
-      <input type="submit" name="insert" id="insert" class="btn btn-success" value=" Insert " />
+      <input type="submit" name="insert" id="insert" class="btn btn-success" value="Insert" />
       <center><p><p id="msg" style="color: red;"></p></p></center>
 <!---
       <input type="text" id="id" name="id" value="0">
