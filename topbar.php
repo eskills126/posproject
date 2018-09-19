@@ -1,20 +1,3 @@
-<?php
-session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
-?>
-<!DOCTYPE html>
-<html>
-  
-  <body>
-  	
 <div style="text-align: right; font-size: 12px;font-family:Arial, Helvetica, sans-serif; margin: 5px;overflow: none;">
 
 
@@ -32,5 +15,4 @@ $row = mysqli_fetch_assoc($resultset);
 
 </div>
 </div>
-</body>
-</html>
+
