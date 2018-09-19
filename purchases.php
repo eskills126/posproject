@@ -54,6 +54,7 @@ include('navbar.php');
 <div class="container">
 					
 <form id="frm" action="" method="post">
+  <input type="hidden" id="autoid" name="">
   <!---------------------------------------------------------------->
 <?php  
       $sql2 = "SELECT * FROM purchaseorderdetailtbl where PurOrderId=(SELECT max(PurOrderId) FROM purchaseorderdetailtbl) GROUP by PurOrderId";
@@ -277,24 +278,28 @@ include('navbar.php');
       	</div>
       	</div>
       	</div>
-
-		<!----button row------>
-		<div class="form-group">
-    	<div class="row">
-    	<div class="col-25">
-    	</div>
-    	<div class="col-75">
+      
+  <!---------------------Save and Edit Button------------------------->
+      <div class="form-group">
+      <div class="row">
+      <div class="col-25">
+      </div>
+     <div class="col-75">  
+      <!--------------
+      <input type="button" id="updatesql" value="Update-btn" name="" style="display: none;">
+      <input type="text" id="id" name="id" value="0">
+      ---------------->
+      <!---   </div>   -->
+   <!----button row------>
+	 <!----	<div class="form-group">    -->
+    <!----  	<div class="row">          -->
+    <!--	<div class="col-75">  -->
     	<button type="button" name="save" id="save" class="btn btn-success">Save</button>
       <input type="hidden" name="row_id" id="hidden_row_id" />
-    	<input type="hidden" id="id" name="id" value="0">
-    	
+      <input type="hidden" id="idn" name="idn" value="0">
+     	</div>
     	</div>
     	</div>
-    	</div>
-
-    	<div class="form-group">
-    	<input type="hidden" id="temp" name="temp" autocomplete="on" style="width: 5%;">
-        </div>
 
 </form>
 <br>
@@ -366,86 +371,27 @@ include('navbar.php');
         <div class="form-group">
       <div class="row">
       <div class="col-25"></div>
-      <div class="col-25">
-      <input type="submit" name="insert" id="insert" class="btn btn-primary" value="Insert Record" />
+      <div class="col-0">
+      <input type="submit" name="insert" id="insert" class="btn btn-success" value="Insert Record" />
       <center><p><p id="msg" style="color: red;"></p></p></center>
-
-      <input type="hidden" id="id" name="id" value="0">
-      
+<!---
+      <input type="text" id="id" name="id" value="0">
+     --------------> 
       </div>
       </div>
       </div>
-
-
-
-
-
-
        </form>
-   <br>
+
 </div>
-<!------------------------------------------------------------  
-<div class="container">
-<form id="fooorm" action="" method="post">
-
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="tqty">Total Quantity:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" id="tqty" name="tqty" placeholder="Total Quanity">
-      	</div>
-      	<div class="col-25" style="width:2%;"></div>
-      	<div class="col-25" style="width: 10%;">
-        <label for="bamt">Bill Amount:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" id="bamt" name="bamt" placeholder="Bill Amount">
-      	</div>
-      	<div class="col-25" style="width:2%;"></div>
-      	<div class="col-25" style="width: 12%;">
-        <label for="gamt">Gross Amount:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" id="gamt" name="gamt" placeholder="Gross Amount">
-      	</div>
-      	<div class="col-25" style="width:1%;"></div>
-      	<div class="col-25" style="width: 12%;">
-      	<input type="text" id="gamt" name="gamt" placeholder="Discount" style="width: 60%;">
-      	</div>
-      	</div>
-      	</div>
-
---->  
-
-		<!----button row----
-    <div class="container">
-<form  id="user_formmoooo"  method="post">
-
-		<div class="form-group">
-    	<div class="row">
-    	<div class="col-25"></div>
-    	<div class="col-25">
-    	<input type="submit" id="insert" name="insert" class="btn btn-success" value="Save Record" >
-
-    	<input type="hidden" id="id" name="id" value="0">
-    	
-    	</div>
-    	</div>
-    	</div>
- </form>
-</div>
------------------------------------------------>
 
 <div class="row">
 <div class="col-xs-6 col-sm-1"></div>
 <div class="col-xs-6 col-sm-10 col-md-offset-4" id="output">
 </div>
 </div>
+<br>
 
-
-<!------This code is for Enter Index insted of TabIndex OK--------->
+<!------This code is for EnterIndex insted of TabIndex OK--------->
 <script type="text/javascript">
 	$(document).ready(function(){
 
@@ -460,7 +406,7 @@ $(inputs).keypress(function(e){
 </script>
 
 
-<!----------------------------------------------------------->
+<!-----------Validation and Record Insertion--------->
 <script>
   $(document).ready(function(){
 $("#output").load("Transaction_purchases/view.php");
@@ -511,7 +457,7 @@ $('#save').click(function(){
     var amount = '';
     var did = '';
     var remarks = '';
-        
+//------------------------------------------------------------        
     if($('#ino').val() == '')
     {
       error_id = 'ID is required';
@@ -544,261 +490,21 @@ if($('#pdate').val() == '')
       pdate = $('#pdate').val();
     } 
 //-----------------------------------------------------------
-//------------------------------------------------------------
-if($('#scode').val() == '')
+//---These fields are in Reverse Order to meet the desired Results---
+if($('#remarks').val() == '')
     {
-      error_scode = 'Supplier Code is required';
-      $('#error_scode').text(error_scode);
-      $('#scode').css('border-color', '#cc0000');
-      scode = '';
-      $('#scode').focus();
+      error_remarks = 'Remarks is required';
+      $('#error_remarks').text(error_remarks);
+      $('#remarks').css('border-color', '#cc0000');
+      remarks = '';
+      $('#remarks').focus();
     }
     else
     {
-      error_scode = '';
-      $('#error_scode').text(error_scode);
-      $('#scode').css('border-color', 'green');
-      scode = $('#scode').val();
-    } 
-//------------------------------------------------------------
-if($('#sname').val() == '')
-    {
-      error_sname = 'Supplier Name is required';
-      $('#error_sname').text(error_sname);
-      $('#sname').css('border-color', '#cc0000');
-      sname = '';
-      $('#sname').focus();
-    }
-    else
-    {
-      error_sname = '';
-      $('#error_sname').text(error_sname);
-      $('#sname').css('border-color', 'green');
-      sname = $('#sname').val();
-    } 
-//------------------------------------------------------------
-if($('#sbal').val() == '')
-    {
-      error_sbal = 'Supplier Balance is required';
-      $('#error_sbal').text(error_sbal);
-      $('#sbal').css('border-color', '#cc0000');
-      sbal = '';
-      $('#sbal').focus();
-    }
-    else
-    {
-      error_sbal = '';
-      $('#error_sbal').text(error_sbal);
-      $('#sbal').css('border-color', 'green');
-      sbal = $('#sbal').val();
-    } 
-//------------------------------------------------------------
-if($('#icode').val() == '')
-    {
-      error_icode = 'Supplier Item Code is required';
-      $('#error_icode').text(error_icode);
-      $('#icode').css('border-color', '#cc0000');
-      icode = '';
-      $('#icode').focus();
-    }
-    else
-    {
-      error_icode = '';
-      $('#error_icode').text(error_icode);
-      $('#icode').css('border-color', 'green');
-      icode = $('#icode').val();
-  }
-//------------------------------------------------------------
-if($('#iname').val() == '')
-    {
-      error_iname = 'Supplier Item Name is required';
-      $('#error_iname').text(error_iname);
-      $('#iname').css('border-color', '#cc0000');
-      iname = '';
-      $('#iname').focus();
-    }
-    else
-    {
-      error_iname = '';
-      $('#error_iname').text(error_iname);
-      $('#iname').css('border-color', 'green');
-      iname = $('#iname').val();
-    } 
-//------------------------------------------------------------
-if($('#wcode').val() == '')
-    {
-      error_wcode = 'Warehouse Code is required';
-      $('#error_wcode').text(error_wcode);
-      $('#wcode').css('border-color', '#cc0000');
-      wcode = '';
-      $('#wcode').focus();
-    }
-    else
-    {
-      error_wcode = '';
-      $('#error_wcode').text(error_wcode);
-      $('#wcode').css('border-color', 'green');
-      wcode = $('#wcode').val();
-    } 
-//------------------------------------------------------------
-if($('#wname').val() == '')
-    {
-      error_wname = 'Warehouse Name is required';
-      $('#error_wname').text(error_wname);
-      $('#wname').css('border-color', '#cc0000');
-      wname = '';
-      $('#wname').focus();
-    }
-    else
-    {
-      error_wname = '';
-      $('#error_wname').text(error_wname);
-      $('#wname').css('border-color', 'green');
-      wname = $('#wname').val();
-  }
-//------------------------------------------------------------
-if($('#qty').val() == '')
-    {
-      error_qty = 'Supplier Quantity is required';
-      $('#error_qty').text(error_qty);
-      $('#qty').css('border-color', '#cc0000');
-      qty = '';
-      $('#qty').focus();
-    }
-    else
-    {
-      error_qty = '';
-      $('#error_qty').text(error_qty);
-      $('#qty').css('border-color', 'green');
-      qty = $('#qty').val();
-    } 
-//------------------------------------------------------------
-if($('#sqty').val() == '')
-    {
-      error_sqty = 'Stock Quantity is required';
-      $('#error_sqty').text(error_sqty);
-      $('#sqty').css('border-color', '#cc0000');
-      sqty = '';
-      $('#sqty').focus();
-    }
-    else
-    {
-      error_sqty = '';
-      $('#error_sqty').text(error_sqty);
-      $('#sqty').css('border-color', 'green');
-      sqty = $('#sqty').val();
-    } 
-//------------------------------------------------------------
-if($('#grate').val() == '')
-    {
-      error_grate = 'Gross Rate is required';
-      $('#error_grate').text(error_grate);
-      $('#grate').css('border-color', '#cc0000');
-      grate = '';
-      $('#grate').focus();
-    }
-    else
-    {
-      error_grate = '';
-      $('#error_grate').text(error_grate);
-      $('#grate').css('border-color', 'green');
-      grate = $('#grate').val();
-    } 
-//------------------------------------------------------------
-if($('#gamount').val() == '')
-    {
-      error_gamount = 'Gross Amount is required';
-      $('#error_gamount').text(error_gamount);
-      $('#gamount').css('border-color', '#cc0000');
-      gamount = '';
-      $('#gamount').focus();
-    }
-    else
-    {
-      error_gamount = '';
-      $('#error_gamount').text(error_gamount);
-      $('#gamount').css('border-color', 'green');
-      gamount = $('#gamount').val();
-    } 
-//------------------------------------------------------------
-if($('#disrate').val() == '')
-    {
-      error_disrate = 'Discount % is required';
-      $('#error_disrate').text(error_disrate);
-      $('#disrate').css('border-color', '#cc0000');
-      disrate = '';
-      $('#disrate').focus();
-    }
-    else
-    {
-      error_disrate = '';
-      $('#error_disrate').text(error_disrate);
-      $('#disrate').css('border-color', 'green');
-      disrate = $('#disrate').val();
-    } 
-//------------------------------------------------------------
-if($('#dvalue').val() == '')
-    {
-      error_dvalue = 'Discount Value is required';
-      $('#error_dvalue').text(error_dvalue);
-      $('#dvalue').css('border-color', '#cc0000');
-      dvalue = '';
-      $('#dvalue').focus();
-    }
-    else
-    {
-      error_dvalue = '';
-      $('#error_dvalue').text(error_dvalue);
-      $('#dvalue').css('border-color', 'green');
-      dvalue = $('#dvalue').val();
-    } 
-//------------------------------------------------------------
-if($('#disdrate').val() == '')
-    {
-      error_disdrate = 'Discounted Value is required';
-      $('#error_disdrate').text(error_disdrate);
-      $('#disdrate').css('border-color', '#cc0000');
-      disdrate = '';
-      $('#disdrate').focus();
-    }
-    else
-    {
-      error_disdrate = '';
-      $('#error_disdrate').text(error_disdrate);
-      $('#disdrate').css('border-color', 'green');
-      disdrate = $('#disdrate').val();
-    }
-//------------------------------------------------------------
-if($('#rate').val() == '')
-    {
-      error_rate = 'Rate is required';
-      $('#error_rate').text(error_rate);
-      $('#rate').css('border-color', '#cc0000');
-      rate = '';
-      $('#rate').focus();
-    }
-    else
-    {
-      error_rate = '';
-      $('#error_rate').text(error_rate);
-      $('#rate').css('border-color', 'green');
-      rate = $('#rate').val();
-    }
-//------------------------------------------------------------
-if($('#amount').val() == '')
-    {
-      error_amount = 'Amount is required';
-      $('#error_amount').text(error_amount);
-      $('#amount').css('border-color', '#cc0000');
-      amount = '';
-      $('#amount').focus();
-    }
-    else
-    {
-      error_amount = '';
-      $('#error_amount').text(error_amount);
-      $('#amount').css('border-color', 'green');
-      amount = $('#amount').val();
+      error_remarks = '';
+      $('#error_remarks').text(error_remarks);
+      $('#remarks').css('border-color', 'green');
+      remarks = $('#remarks').val();
     }
 //------------------------------------------------------------
 if($('#did').val() == '')
@@ -817,23 +523,262 @@ if($('#did').val() == '')
       did = $('#did').val();
     }
 //------------------------------------------------------------
-if($('#remarks').val() == '')
+if($('#amount').val() == '')
     {
-      error_remarks = 'Remarks is required';
-      $('#error_remarks').text(error_remarks);
-      $('#remarks').css('border-color', '#cc0000');
-      remarks = '';
-      $('#remarks').focus();
+      error_amount = 'Amount is required';
+      $('#error_amount').text(error_amount);
+      $('#amount').css('border-color', '#cc0000');
+      amount = '';
+      $('#amount').focus();
     }
     else
     {
-      error_remarks = '';
-      $('#error_remarks').text(error_remarks);
-      $('#remarks').css('border-color', 'green');
-      remarks = $('#remarks').val();
+      error_amount = '';
+      $('#error_amount').text(error_amount);
+      $('#amount').css('border-color', 'green');
+      amount = $('#amount').val();
     }
+//------------------------------------------------------------
+if($('#rate').val() == '')
+    {
+      error_rate = 'Rate is required';
+      $('#error_rate').text(error_rate);
+      $('#rate').css('border-color', '#cc0000');
+      rate = '';
+      $('#rate').focus();
+    }
+    else
+    {
+      error_rate = '';
+      $('#error_rate').text(error_rate);
+      $('#rate').css('border-color', 'green');
+      rate = $('#rate').val();
+    }
+//------------------------------------------------------------
+if($('#disdrate').val() == '')
+    {
+      error_disdrate = 'Discounted Value is required';
+      $('#error_disdrate').text(error_disdrate);
+      $('#disdrate').css('border-color', '#cc0000');
+      disdrate = '';
+      $('#disdrate').focus();
+    }
+    else
+    {
+      error_disdrate = '';
+      $('#error_disdrate').text(error_disdrate);
+      $('#disdrate').css('border-color', 'green');
+      disdrate = $('#disdrate').val();
+    }
+//------------------------------------------------------------
+if($('#dvalue').val() == '')
+    {
+      error_dvalue = 'Discount Value is required';
+      $('#error_dvalue').text(error_dvalue);
+      $('#dvalue').css('border-color', '#cc0000');
+      dvalue = '';
+      $('#dvalue').focus();
+    }
+    else
+    {
+      error_dvalue = '';
+      $('#error_dvalue').text(error_dvalue);
+      $('#dvalue').css('border-color', 'green');
+      dvalue = $('#dvalue').val();
+    } 
+//------------------------------------------------------------
+if($('#disrate').val() == '')
+    {
+      error_disrate = 'Discount % is required';
+      $('#error_disrate').text(error_disrate);
+      $('#disrate').css('border-color', '#cc0000');
+      disrate = '';
+      $('#disrate').focus();
+    }
+    else
+    {
+      error_disrate = '';
+      $('#error_disrate').text(error_disrate);
+      $('#disrate').css('border-color', 'green');
+      disrate = $('#disrate').val();
+    } 
+//------------------------------------------------------------
+if($('#gamount').val() == '')
+    {
+      error_gamount = 'Gross Amount is required';
+      $('#error_gamount').text(error_gamount);
+      $('#gamount').css('border-color', '#cc0000');
+      gamount = '';
+      $('#gamount').focus();
+    }
+    else
+    {
+      error_gamount = '';
+      $('#error_gamount').text(error_gamount);
+      $('#gamount').css('border-color', 'green');
+      gamount = $('#gamount').val();
+    } 
+//------------------------------------------------------------
+if($('#grate').val() == '')
+    {
+      error_grate = 'Gross Rate is required';
+      $('#error_grate').text(error_grate);
+      $('#grate').css('border-color', '#cc0000');
+      grate = '';
+      $('#grate').focus();
+    }
+    else
+    {
+      error_grate = '';
+      $('#error_grate').text(error_grate);
+      $('#grate').css('border-color', 'green');
+      grate = $('#grate').val();
+    } 
+//------------------------------------------------------------
+if($('#sqty').val() == '')
+    {
+      error_sqty = 'Stock Quantity is required';
+      $('#error_sqty').text(error_sqty);
+      $('#sqty').css('border-color', '#cc0000');
+      sqty = '';
+      $('#sqty').focus();
+    }
+    else
+    {
+      error_sqty = '';
+      $('#error_sqty').text(error_sqty);
+      $('#sqty').css('border-color', 'green');
+      sqty = $('#sqty').val();
+    } 
+//------------------------------------------------------------
+if($('#qty').val() == '')
+    {
+      error_qty = 'Supplier Quantity is required';
+      $('#error_qty').text(error_qty);
+      $('#qty').css('border-color', '#cc0000');
+      qty = '';
+      $('#qty').focus();
+    }
+    else
+    {
+      error_qty = '';
+      $('#error_qty').text(error_qty);
+      $('#qty').css('border-color', 'green');
+      qty = $('#qty').val();
+    } 
+//------------------------------------------------------------
+if($('#wname').val() == '')
+    {
+      error_wname = 'Warehouse Name is required';
+      $('#error_wname').text(error_wname);
+      $('#wname').css('border-color', '#cc0000');
+      wname = '';
+      $('#wname').focus();
+    }
+    else
+    {
+      error_wname = '';
+      $('#error_wname').text(error_wname);
+      $('#wname').css('border-color', 'green');
+      wname = $('#wname').val();
+  }
+//------------------------------------------------------------
+if($('#wcode').val() == '')
+    {
+      error_wcode = 'Warehouse Code is required';
+      $('#error_wcode').text(error_wcode);
+      $('#wcode').css('border-color', '#cc0000');
+      wcode = '';
+      $('#wcode').focus();
+    }
+    else
+    {
+      error_wcode = '';
+      $('#error_wcode').text(error_wcode);
+      $('#wcode').css('border-color', 'green');
+      wcode = $('#wcode').val();
+    } 
+//------------------------------------------------------------
+if($('#iname').val() == '')
+    {
+      error_iname = 'Supplier Item Name is required';
+      $('#error_iname').text(error_iname);
+      $('#iname').css('border-color', '#cc0000');
+      iname = '';
+      $('#iname').focus();
+    }
+    else
+    {
+      error_iname = '';
+      $('#error_iname').text(error_iname);
+      $('#iname').css('border-color', 'green');
+      iname = $('#iname').val();
+    } 
+//------------------------------------------------------------
+if($('#icode').val() == '')
+    {
+      error_icode = 'Supplier Item Code is required';
+      $('#error_icode').text(error_icode);
+      $('#icode').css('border-color', '#cc0000');
+      icode = '';
+      $('#icode').focus();
+    }
+    else
+    {
+      error_icode = '';
+      $('#error_icode').text(error_icode);
+      $('#icode').css('border-color', 'green');
+      icode = $('#icode').val();
+  }
+//------------------------------------------------------------
+if($('#sbal').val() == '')
+    {
+      error_sbal = 'Supplier Balance is required';
+      $('#error_sbal').text(error_sbal);
+      $('#sbal').css('border-color', '#cc0000');
+      sbal = '';
+      $('#sbal').focus();
+    }
+    else
+    {
+      error_sbal = '';
+      $('#error_sbal').text(error_sbal);
+      $('#sbal').css('border-color', 'green');
+      sbal = $('#sbal').val();
+    } 
+//------------------------------------------------------------
+if($('#sname').val() == '')
+    {
+      error_sname = 'Supplier Name is required';
+      $('#error_sname').text(error_sname);
+      $('#sname').css('border-color', '#cc0000');
+      sname = '';
+      $('#sname').focus();
+    }
+    else
+    {
+      error_sname = '';
+      $('#error_sname').text(error_sname);
+      $('#sname').css('border-color', 'green');
+      sname = $('#sname').val();
+    } 
+//------------------------------------------------------------
+    if($('#scode').val() == '')
+    {
+      error_scode = 'Supplier Code is required';
+      $('#error_scode').text(error_scode);
+      $('#scode').css('border-color', '#cc0000');
+      scode = '';
+      $('#scode').focus();
+    }
+    else
+    {
+      error_scode = '';
+      $('#error_scode').text(error_scode);
+      $('#scode').css('border-color', 'green');
+      scode = $('#scode').val();
+    } 
 //-----------------------------------------------------------------------------
-
 if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' || error_sbal !='' || error_icode !='' || error_iname !='' || error_wcode !='' || error_wname !='' || error_qty !='' || error_sqty !='' || error_grate !='' || error_gamount !='' || error_disrate !='' || error_dvalue !='' || error_disdrate !='' || error_rate !='' || error_amount !='' || error_did !='' || error_remarks !='' )
     {
       return false;
@@ -876,7 +821,7 @@ output += '</tr>';
         $("#scode").focus();
       }
 
-      else
+      else if ($('#save').text() == 'Edit Record')
       {
         var row_id = $('#hidden_row_id').val();
 
@@ -903,16 +848,25 @@ output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+ro
 //----------------Buttons----Edit------Delete-----------------------------
 output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">Edit</button></td>';
 output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+row_id+'">Delete</button></td>';       
-
     $('#row_'+row_id+'').html(output);
       }
-
+      else //if ($('#save').text() == 'EditRecord')
+      {
+          $.ajax({
+            url:  "Transaction_purchases/update.php",
+            type:  "post",
+             data: $("#frm").serialize(),
+              success:function(d) {
+      
+    $("#output").load("Transaction_purchases/view.php");
+  $("#frm")[0].reset();
+  $("#scode").focus();
+        }
+      });
+      }
+   
    }
-
-    
-  });
-
-
+});
 
   $(document).on('click', '.view_details', function(){
     var row_id = $(this).attr("id");
@@ -958,19 +912,16 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
     $('#amount').val(amount);
     $('#did').val(did);
     $('#remarks').val(remarks);
-
-
+//--------------------------------------------------------
     $('#save').text('Edit Record');
     $('#hidden_row_id').val(row_id);
 
  });
-
+//--------------------------------------------------------
 $(document).on('click', '#save', function(){
     
     if ($("#ino").val()!="" && $("#pdate").val()!="" && $("#scode").val()!="" && $("#sname").val()!="" && $("#sbal").val()!="" && $("#icode").val()!="" && $("#iname").val()!="" && $("#wcode").val()!="" && $("#wname").val()!="" && $("#qty").val()!="" && $("#sqty").val()!="" && $("#grate").val()!="" && $("#gamount").val()!="" && $("#disrate").val()!="" && $("#rate").val()!="" && $("#amount").val()!="" && $("#did").val()!="" && $("#remarks").val()!="")
-
-
-     {
+   {
     $("#frm")[0].reset();
     $("#scode").focus();
     $('#save').text('Save');
@@ -978,8 +929,7 @@ $(document).on('click', '#save', function(){
     }
     
   });
-
-
+//--------------------------------------------------------
   $(document).on('click', '.remove_details', function(){
     var row_id = $(this).attr("id");
     if(confirm("Are you sure you want to remove this row data?"))
@@ -995,17 +945,17 @@ $(document).on('click', '#save', function(){
  });
 
 
-
-
-//---------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------
+//----------------------------------------------------------------------
+//----------------------------------------------------------------------
 $('#user_form').on('submit', function(event){
+
     event.preventDefault();
     var count_data = 0;
+         
     $('.ino').each(function(){
       count_data = count_data + 1;
     });
-    if(count_data > 0)
+    if(count_data > 0 )
     {
       var form_data = $(this).serialize();
       $.ajax({
@@ -1022,100 +972,38 @@ $('#user_form').on('submit', function(event){
           }
       
       });
+    }else{
+            $("#msg").text('* Insert Atleast One Record');      
     }
-    else
-    {
-      $("#msg").text('* Insert Atleast One Record');
-     }
+  });
+
+//............Code To Delete the Record from database..........
+
+$(document).on("click",".del",function(){
+    var del=$(this);
+    var id = $(this).attr("data-id");
+    $.ajax({
+      url:  "Transaction_purchases/delete.php",
+      type:  "post",
+      data: {id:id},
+      success:function() {
+        del.closest("tr").hide();
+
+      }
+    });
   });
 
 </script>
 
-
-
-
-
-
-<!----------------------------------------------
-<script>
-$(document).ready(function(){
-	$("#output").load("Transaction_purchases/view.php");
-	$("#scode").focus();
-	$("#save").click(function() {
-		var id=$("#id").val();
-		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
-		if ($("#cname").val()=="" ){
-			
-			alert("Please Add Customer Name ");
-			
-			$("#cname").focus();
-
-		}else if($("#copbal").val()=="" ){
-			alert("Please Add Opening Balance ");
-			$("#copbal").focus();
-		
-		}else if($("#carea").val()=="" ){
-			alert("Please Add Customer Area ");
-			$("#carea").focus();
-		
-		}else if($("#temp").val()== 0 ){
-			alert("Please Select Customer Area Value From Dropdown List: ");
-			$("#carea").focus();
-		
-		}else if (id==0){
-		$.ajax({
-			 url:  "Masters_Customers/insert.php",
-			type:  "post",
-			data: $("#frm").serialize(),
-			success:function(d) {
-				$("#output").load("Masters_Customers/view.php");
-		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		//$("#examples").html(d).appendTo("<tr></tr>");
-
-		$("#frm")[0].reset();
-		$("#cname").focus();
-		//$("#cname").val('');
-		
-		$("#id").val("0");
-			}
-
-		});
-	}else{
-			$.ajax({
-			url:  "Masters_Customers/update.php",
-			type:  "post",
-			data: $("#frm").serialize(),
-			success:function(d) {
-			
-		$("#output").load("Masters_Customers/view.php");
-		$("#frm")[0].reset();
-		$("#cname").focus();
-		$("#id").val("0");
-			}
-		});
-		}
-	});
-	$(document).on("click",".del",function(){
-		var del=$(this);
-		var id = $(this).attr("data-id");
-		$.ajax({
-			url:  "Masters_Customers/delete.php",
-			type:  "post",
-			data: {id:id},
-			success:function() {
-				del.closest("tr").hide();
-
-			}
-		});
-	});
-  ---------------->
+<!---------------------------------------------------------->
   <script>
 // Update Query
 $(document).on("click",".edit",function(){
-		var row=$(this);
+  	var row=$(this);
 		var id = $(this).attr("data-id");
-		$("#id").val(id);
-
+	   	$("#idn").val(id);
+   // var autoid = row.closest("tr").find("td:eq(2)").text();
+     // $("#autoid").val(autoid);
 		var itemno = row.closest("tr").find("td:eq(2)").text();
 			$("#ino").val(itemno);
 		var pdate = row.closest("tr").find("td:eq(3)").text();
@@ -1156,44 +1044,62 @@ $(document).on("click",".edit",function(){
     $("#did").val(did);
     var remarks = row.closest("tr").find("td:eq(21)").text();
     $("#remarks").val(remarks);
-
+//--------------------------------------------------------------------
     $("#scode").focus();
-    $("#save").text("Update Value");
-	});
+    $("#save").text('Update');
+
+    });
 </script>
-<!-------------------------------------------------------------------->
+
+<!-----------------
+//.......code to disable save Button..................
+    //$("#save").attr("disabled",true);
+    //$("#save").text('Insert New');
+    //$("#save").css("background-color", "red");
+/*
+var showsave = $("#save");
+showsave.hide();
+var showupdate = $("#updatesql");
+showupdate.show();
+*/
+//.......code to create an Update Button..............
+/*
+var $updatebtn = $('<input/>').attr({type:'button',id:'updatesql',class:'btn btn-success',name:'updatebtn',value:'Update'});
+  $("#beforesave").append($updatebtn);    
+*/
+
+//.......code to Enable save Button...................
+    //  $('#save').attr("disabled", false);  
+    // or
+    //  $('#save').removeAttr("disabled");
+
+	--->
+
+<!------------
 <script>
-  $(document).ready(function(){
-    $("#save").click(function(){
-if($('#save').text() == 'Update Value'){
-$.ajax({
-      url:  "Transaction_purchases/update.php",
-      type:  "post",
-      data: $("#frm").serialize(),
-      success:function(d) {
+$(document).on('click','#updatesql',function(){
+ // $('#updatesqld').click(function(){
+    $.ajax({
+            url:  "Transaction_purchases/update.php",
+            type:  "post",
+             data: $("#frm").serialize(),
+              success:function(d) {
       
     $("#output").load("Transaction_purchases/view.php");
-    //$("#frm")[0].reset();
-    $("#ino").focus();
-    //$("#id").val("0");
-      }
-    });
+    //$("#frm").load(" #frm");
+  $("#frm")[0].reset();
+  $("#scode").focus();
+  var showupdate = $("#updatesql");
+showupdate.hide();
+    var showsave = $("#save");
+showsave.show();
+        }
+      });
 
-}
-
-
-
-
-    });
-
-  });
-
-
-
-
-  
+//}
+ });
 </script>
-
+................-->
 
 
 <!---------Code for AutoComplete Suplier Name---------->
