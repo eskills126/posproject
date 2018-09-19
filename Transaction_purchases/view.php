@@ -70,7 +70,7 @@ include '..\db_connect.php';
 				
 				<th>Edit</th>
 				<th>Delete</th>
-				<th>ID</th>
+				<th>No</th>
 				<th>Date</th>
 				<th>Supplier Code</th>
 				<th>Supplier Name</th>
@@ -103,8 +103,9 @@ include '..\db_connect.php';
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";
-	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["PurOrderId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["PurOrderId"]}'><i class='fa fa-trash'></i></td>";			
+	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["PurAutoId"]}'><i class='fa fa-edit'></i></td>";
+echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["PurAutoId"]}'><i class='fa fa-trash'></i></td>";			
+//echo "<td>{$row["PurAutoId"]}</td>";
 echo "<td>{$row["PurOrderId"]}</td>";
 echo "<td>{$row["PurDate"]}</td>";
 echo "<td>{$row["PurSupCode"]}</td>";
@@ -137,7 +138,7 @@ echo "<td>{$row["PurRemarks"]}</td>";
 				<tr>
 				<th>Edit</th>
 				<th>Delete</th>
-				<th>ID</th>
+				<th>No</th>
 				<th>Date</th>
 				<th>Supplier Code</th>
 				<th>Supplier Name</th>
