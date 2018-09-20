@@ -11,7 +11,6 @@ padding: 0 5px 0 0;
 </style>
 <!--Code for Login Detail-->
 <?php
-include('topbar.php');
 include('navbar.php');
 ?>
 
