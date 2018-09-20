@@ -98,7 +98,7 @@ $rights = $_SESSION['user_role'];
     </li>
 
     <li class="nav-item active">
-      <a class="nav-link" href="#">Generals<span aria-hidden="true"></span></a>
+      <a class="nav-link" href="gt.php">Generals<span aria-hidden="true"></span></a>
     </li>
 
     <li class="nav-item dropdown active">
@@ -109,9 +109,9 @@ $rights = $_SESSION['user_role'];
        <!--Dropdown Item div-->
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <!-- Dropdown Items -->
-        <a class="dropdown-item" href="#">Purchases Return</a>
-        <a class="dropdown-item" href="#">Sales Return</a>
-        <a class="dropdown-item" href="#">Warehouse Stock Transfer</a>
+        <a class="dropdown-item" href="pr.php">Purchases Return</a>
+        <a class="dropdown-item" href="sr.php">Sales Return</a>
+        <a class="dropdown-item" href="stt.php">Warehouse Stock Transfer</a>
     </div>
   </li>
 
