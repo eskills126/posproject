@@ -21,7 +21,7 @@ include('navbar.php');
     	<div class="row">
       	<div class="col-25"></div>
         <div class="col-75">
-        	<div> <h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif;font-weight: bold;">Customer's Profile</h1></div>
+        <h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif;font-weight: bold;"><i class="fa fa-edit"></i> Customer's Profile</h1>
       	</div>
       </div>
       </div>
@@ -115,7 +115,7 @@ include('navbar.php');
 
 </form>
 </div>
-</div>
+
 
 <div class="row">
 <div class="col-xs-6 col-sm-1"></div>
@@ -264,8 +264,3 @@ $(document).on("click",".edit",function(){
 
 
 <?php include('footer.php'); ?>
-<p>
-	<br>
-	</p>
-</div>
-
