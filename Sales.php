@@ -9,24 +9,14 @@ font-size: x-large;
 padding: 0 5px 0 0;
 
 }
-
+input:read-only {
+  background-color: #edf1f7;
+  
+  }
 </style>
 
 <!--Code for Login Detail-->
-<?php
-include('header.php'); 
-session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
-include('navbar.php');
-?>
+<?php include('navbar.php'); ?>
 
 <div class="container-fluid">
 	<p>
@@ -125,7 +115,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="sname" name="sname" placeholder="Customer Name"style="width: 95%;background-color:#edf1f7;" readonly>
+      	<input type="text"id="sname" name="sname" placeholder="Customer Name"style="width: 95%;" readonly>
         <span id="error_sname" class="text-danger"></span>
         <a href="customer.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
@@ -134,7 +124,7 @@ include('navbar.php');
       	<label for="sbal">Balance:</label>
       	</div>
       	<div class="col-25">
-      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;background-color:#edf1f7;" readonly>
+      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;" readonly>
         <span id="error_sbal" class="text-danger"></span>
       	</div>
       	</div>
@@ -151,7 +141,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;background-color:#edf1f7;" readonly>
+      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;" readonly>
         <span id="error_iname" class="text-danger"></span>
         <a href="salesitem.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
@@ -169,7 +159,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;background-color:#edf1f7;" readonly>
+      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;" readonly>
         <span id="error_wname" class="text-danger"></span>
         <a href="warehouse.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
       	</div>
@@ -190,7 +180,7 @@ include('navbar.php');
         <label for="sqty">Stock Quantity:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Stock Quantity"readonly>
+        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Stock Quantity"readonly>
         <span id="error_sqty" class="text-danger"></span>
       	</div>
 
@@ -199,7 +189,7 @@ include('navbar.php');
         <label for="prate">Previous Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="prate" name="prate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Previous Rate"readonly>
+        <input type="number" id="prate" name="prate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Previous Rate"readonly>
         <span id="error_grate" class="text-danger"></span>
       	</div>
     	</div>
@@ -306,7 +296,7 @@ include('navbar.php');
         <label for="tqty">Total Quantity:</label>
         </div>
         <div class="col-25">
-        <input type="number" id="tqty" name="tqty" placeholder="Total Quantity..."style="background-color:#edf1f7;"readonly>
+        <input type="number" id="tqty" name="tqty" placeholder="Total Quantity..."readonly>
         <span id="error_gamount" class="text-danger"></span>
         </div>
         <div class="col-25" style="width:0.5%;"></div>
@@ -314,7 +304,7 @@ include('navbar.php');
         <label for="bamount">Bill Amount:</label>
         </div>
         <div class="col-25">
-        <input type="number" id="bamount" name="bamount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Bill Amount"readonly>
+        <input type="number" id="bamount" name="bamount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Bill Amount"readonly>
         <span id="error_disrate" class="text-danger"></span>
         </div>
         <div class="col-25" style="width:0.5%;"></div>
