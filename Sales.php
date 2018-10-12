@@ -418,8 +418,8 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
               </tr>
               <tr>
           <td colspan="6" align="center">
-           <!-- <input type="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
-          <input  type="text"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
+           <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
+          <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
           <input type="hidden" name="total_item" id="total_item" value="1" />
           <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />
 
@@ -900,7 +900,7 @@ $(document).on('click','#create_invoice',function(){
               </tr>
               <tr>
          <td colspan="6" align="center">
-         <input type="text" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
+         <input type="text" style="width: 100px;" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
           <input type="hidden" name="total_item" id="total_item" value="<?php echo $m; ?>" />
          <input type="hidden" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
           <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
