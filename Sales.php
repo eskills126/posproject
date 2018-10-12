@@ -376,11 +376,11 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
   <!----------Quantity------------->
   <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
   <!---------Stock Quantity-------------->
-<td><input type="text" name="order_item_squantity[]" id="order_item_squantity1" data-srno="1" class="form-control input-sm order_item_squantity" /></td>
+<td><input type="text" name="order_item_squantity[]" id="order_item_squantity1" data-srno="1" class="form-control input-sm order_item_squantity" readonly="" /></td>
   <!----------Previous Rate------------->
   <td><input type="text" name="order_item_prate[]" id="order_item_prate1" data-srno="1" class="form-control input-sm number_only order_item_prate" /></td>
   <!-----------Gross Rate------------>
-  <td><input type="text" name="order_item_grate[]" id="order_item_grate1" data-srno="1" class="form-control input-sm order_item_grate" /></td>
+  <td><input type="text" name="order_item_grate[]" id="order_item_grate1" data-srno="1" class="form-control input-sm order_item_grate" readonly="" /></td>
   <!-----------Gross Amount------------>
   <td><input type="text" name="order_item_gamount[]" id="order_item_gamount1" data-srno="1" class="form-control input-sm number_only order_item_gamount" readonly="" /></td>
   <!----------------------->
@@ -449,11 +449,11 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
           //-------- Quantity------------------------------------
   html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
           //-------- Stock Quantity-----------------------------
-  html_code +=  '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" /></td>';
+  html_code +=  '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" readonly=""/></td>';
           //--------Previous Rate------------------------------
   html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_prate"  /></td>';
           //---------Gross Rate-------------------------------
-  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_grate" /></td>';
+  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_grate" readonly=""/></td>';
           //--------Gross Amount------------------------------
   html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_gamount" value = "0"/></td>';
           //--------Delete Button----------------------------
@@ -847,11 +847,11 @@ $(document).on('click','#create_invoice',function(){
   <!----------Quantity------------------->
   <td><input type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $sub_row["order_item_quantity"]; ?>"/></td>
   <!----------Stock Quantity------------------->
-  <td><input type="text" name="order_item_squantity[]" id="order_item_squantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_squantity" value="<?php echo $sub_row["order_item_squantity"]; ?>" /></td>
+  <td><input type="text" name="order_item_squantity[]" id="order_item_squantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_squantity" value="<?php echo $sub_row["order_item_squantity"]; ?>" readonly=""/></td>
   <!----------Previous Rate------------------->
   <td><input type="text" name="order_item_prate[]" id="order_item_prate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_prate" value="<?php echo $sub_row["order_item_prate"];?>" /></td>
   <!----------Gross Rate------------------->
-  <td><input type="text" name="order_item_grate[]" id="order_item_grate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_grate" value="<?php echo $sub_row["order_item_grate"]; ?>" /></td>
+  <td><input type="text" name="order_item_grate[]" id="order_item_grate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_grate" value="<?php echo $sub_row["order_item_grate"]; ?>" readonly=""/></td>
   <!----------Gross Amount------------------->
   <td><input type="text" name="order_item_gamount[]" id="order_item_gamount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_gamount" value="<?php echo $sub_row["order_item_gamount"];?>" readonly/></td>
 
@@ -930,13 +930,13 @@ $(document).on('click','#create_invoice',function(){
   //----------Quantity-------------------
   html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
   //----------Stock Quanity-------------------
-  html_code += '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" /></td>';
+  html_code += '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" readonly=""/></td>';
   //----------Previous Rate-------------------        
  html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_prate" /></td>';
   //----------Gross Rate-------------------
-  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_grate" /></td>';
+  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_grate" readonly=""/></td>';
   //----------Gross Amount-------------------
-  html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_gamount" value = "0" /></td>';
+  html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_gamount" value = "0" readonly=""/></td>';
   //----------Delete Button-------------------
   //html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
 
