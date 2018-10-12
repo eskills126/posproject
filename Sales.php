@@ -1215,7 +1215,7 @@ $(document).on('click','#create_invoice',function(){
       {
       ?>
 <!----------First Page of Invoice System------------------->
-      <h3 align="center">Invoice System Using Jquery PHP Mysql and Bootstrap</h3>
+      <h3 align="center"><B>Sales Invoice:</B></h3>
       <br />
       <div align="right">
         <a href="sales.php?add=1" class="btn btn-info btn-xs" id="new_create">Create</a>
@@ -1244,8 +1244,8 @@ $(document).on('click','#create_invoice',function(){
                 <td>'.$row["order_date"].'</td>
                 <td>'.$row["order_receiver_name"].'</td>
                 <td>'.$row["order_total_after_discount_freight"].'</td>
-                <td><a href="print_sales.php?pdf=1&id='.$row["order_id"].'">
-                <i style="color:#ffcc00;font-size: 30px;" class="fa fa-print fa-lg"></i>    
+                <td><a href="Transaction_sales/print_sales.php?pdf=1&id='.$row["order_id"].'">
+                <i style="color:#7d42f4;font-size: 30px;" class="fa fa-print fa-lg"></i>    
                 </a></td>
                 <td><a href="sales.php?update=1&id='.$row["order_id"].'">
                 <i style="color:#00cc00;font-size: 30px;" class="fa fa-edit fa-lg"></i>    
@@ -1301,7 +1301,7 @@ $(document).on('click','#create_invoice',function(){
   });
 
 </script>
-
+<!--------------------------------------------------------------------->
 <script>
 $(document).ready(function(){
 $('.number_only').keypress(function(e){
@@ -1320,10 +1320,9 @@ return true;
 }
 });
 </script>
-
-
+<!--------------------------------------------------------------------->
+<!-----------D------------------------>
 <script>
-  //---------------------------Testing Purpose--------------------------
 $(document).ready(function(){
 $(document).on("click",".deleted",function(){
     var del=$(this);
@@ -1376,9 +1375,7 @@ $(inputs).keypress(function(e){
               }while(i<500);
 });
 </script>
-<script type="text/javascript">
 
-</script>
 <!------This code is for to move Cursor to Discount% input Box by Pressing Shift Key------>
 <script>
   $(document).keydown(function (e) {
@@ -1387,8 +1384,7 @@ $(inputs).keypress(function(e){
       $("#order_total_discount_percentage").focus();  
     }
 });
-</script>       --->
-
+</script>       
 <!------- This is a click event for autocomplete item_name--------->
 <script >
 //$(document).on('click',"#add_row",function(){
@@ -1400,13 +1396,11 @@ $(inputs).keypress(function(e){
         source: "Transaction_sales/autocomplete_itemname.php",
         minLength: 0,
         select: function (event, ui){}
-
-    });                
-auto++;
-}while(auto<500);
-});
-
-}); 
+          });                
+        auto++;
+      }while(auto<500);
+    });
+  }); 
 </script>
 <!------- This is a keypress event for autocomplete item_name---------
 <script >
@@ -1426,7 +1420,6 @@ auto++;
 </script>
 --->
 <!---------------Code for updating Stock Quantity dynamically------------->
-
 <script>
 $(document).on('keyup',function(){
   $(function() {
