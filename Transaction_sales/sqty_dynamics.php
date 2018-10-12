@@ -1,8 +1,8 @@
 <?php 
-include "..\db_connect.php";
+include "database_connection.php";
 ?>
 <?php
-$edata=$_POST["icode"];
+$edata=$_POST["item_name"];
 //$result = $edata;
 $result =preg_replace('/-.*/', '', $edata);
 //$result = preg_replace("/[^0-9]+/","", $edata);
@@ -10,13 +10,13 @@ $result =preg_replace('/-.*/', '', $edata);
 
 //if(isset($_POST["name"]) && !empty($_POST["name"])){
 	if(isset($result) && !empty($result)){
-		$sql = "SELECT * From salesitemtbl WHERE ProId LIKE ".$result." ";
+		$sql = "SELECT * From stockqty WHERE id LIKE ".$result." ";
 
 	$result = mysqli_query($conn,$sql);
 
 		if (mysqli_num_rows($result) > 0) {
 				while ($row = mysqli_fetch_assoc($result)) {
-					echo $row["ProName"];
+					echo $row["item_qty"];
 				}
 		}else{
 			echo "No Results";

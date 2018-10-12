@@ -1,6 +1,6 @@
 <?php
   //invoice.php  
-  include('db_connect.php');
+  include('database_connection.php');
 //  include ('navbar.php');
 include('header.php');
 
@@ -106,7 +106,7 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
           ':order_id'             =>  $order_id
         )
       );
-      header("location:sales.php");
+      header("location:invoice.php");
   }
 
 
@@ -198,7 +198,7 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       
       $result = $statement->fetchAll();
             
-      header("location:sales.php");
+      header("location:invoice.php");
   }
 
 //-----------------Delete Code --------------------------
@@ -217,7 +217,7 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
         ':id'       =>      $_GET["id"]
       )
     );
-    header("location:sales.php");
+    header("location:invoice.php");
   }
     ?>
     
@@ -1218,7 +1218,7 @@ $(document).on('click','#create_invoice',function(){
       <h3 align="center">Invoice System Using Jquery PHP Mysql and Bootstrap</h3>
       <br />
       <div align="right">
-        <a href="sales.php?add=1" class="btn btn-info btn-xs" id="new_create">Create</a>
+        <a href="invoice.php?add=1" class="btn btn-info btn-xs" id="new_create">Create</a>
       </div>
       <br />
       <table id="data-table" class="table table-bordered table-striped">
@@ -1244,10 +1244,10 @@ $(document).on('click','#create_invoice',function(){
                 <td>'.$row["order_date"].'</td>
                 <td>'.$row["order_receiver_name"].'</td>
                 <td>'.$row["order_total_after_discount_freight"].'</td>
-                <td><a href="print_sales.php?pdf=1&id='.$row["order_id"].'">
+                <td><a href="print_invoice.php?pdf=1&id='.$row["order_id"].'">
                 <i style="color:#ffcc00;font-size: 30px;" class="fa fa-print fa-lg"></i>    
                 </a></td>
-                <td><a href="sales.php?update=1&id='.$row["order_id"].'">
+                <td><a href="invoice.php?update=1&id='.$row["order_id"].'">
                 <i style="color:#00cc00;font-size: 30px;" class="fa fa-edit fa-lg"></i>    
                 </a></td>
                 <td><a href="#" id="'.$row["order_id"].'" class="delete">
@@ -1290,7 +1290,7 @@ $(document).on('click','#create_invoice',function(){
       var id = $(this).attr("id");
       if(confirm("Are you sure you want to remove this?"))
       {
-        window.location.href="sales.php?delete=1&id="+id;
+        window.location.href="invoice.php?delete=1&id="+id;
       }
       else
       {
@@ -1330,7 +1330,7 @@ $(document).on("click",".deleted",function(){
     var id = $(this).attr("data-id");
 
        $.ajax({
-      url:  "Transaction_sales/delete.php",
+      url:  "delete.php",
       type:  "post",
       data: {id:id},
       success:function() {
@@ -1397,7 +1397,7 @@ $(inputs).keypress(function(e){
   $(function() {
   do{  
      $("#item_name"+auto).autocomplete({
-        source: "Transaction_sales/autocomplete_itemname.php",
+        source: "autocomplete_itemname.php",
         minLength: 0,
         select: function (event, ui){}
 
@@ -1443,7 +1443,7 @@ $(document).on('keyup',function(){
       var itemcode = $(this).val();
         $.ajax({
           type: 'POST',
-          url: 'Transaction_sales/sqty_dynamics.php',
+          url: 'sqty_dynamics.php',
           data:{item_name:itemcode},
            success:function(data){
               $("#order_item_squantity"+ i).val(data);
@@ -1470,7 +1470,7 @@ $(document).on('keyup',function(){
       var itemcode = $(this).val();
         $.ajax({
           type: 'POST',
-          url: 'Transaction_sales/grate_dynamics.php',
+          url: 'grate_dynamics.php',
           data:{item_name:itemcode},
            success:function(data){
               $("#order_item_grate"+ i).val(data);
