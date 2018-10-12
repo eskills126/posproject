@@ -1,7 +1,14 @@
+<style type="text/css" media="screen">
+.footer{
+	position: fixed;
+	bottom: 0;
+}	
+</style>
 <?php 
 include('header.php');
 include_once("db_connect.php");
 ?>
+<div class="container-fluid">
 <title>aanSoft</title>
 <script type="text/javascript" src="script/validation.min.js"></script>
 <script type="text/javascript" src="script/login.js"></script>
@@ -30,7 +37,9 @@ include_once("db_connect.php");
 			</button> 
 		</div> 
 	</form>		
-		
-</div>
-
+	</center>
+</p>
+</div>	
+<div class="footer">
 <?php include('footer.php');?>
+</div>

@@ -51,7 +51,7 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Details :<hr/></h4>
+<h4 class="page-header"><i class="fa fa-table fa-lg" aria-hidden="true"style="color: blue;"></i> Customer Details:<hr/></h4>
 	<!--	<table class="table"> -->
 	
 	<table id="examples" class="display" style="width:100%">
@@ -59,7 +59,8 @@ include '..\db_connect.php';
 				
 					<thead>
 			<tr  id="DESC">
-				
+				<th>Edit</th>
+				<th>Delete</th>
 				<th>ID</th>
 				<th>Customer Name</th>
 				<th>Address</th>
@@ -67,8 +68,6 @@ include '..\db_connect.php';
 				<th>Credit Limit</th>
 				<th>Opening Balance</th>
 				<th>Customer Area</th>
-				<th>Edit</th>
-				<th>Delete</th>
 			</tr>
 
 		</thead>
@@ -80,16 +79,17 @@ include '..\db_connect.php';
 			
 			while ($row=$res->fetch_assoc()) {
 		
-	echo "<tr>";			
-echo "<td>{$row["CusId"]}</td>";
-echo "<td>{$row["CusName"]}</td>";
-echo "<td>{$row["CusAddress"]}</td>";
-echo "<td>{$row["CusContact"]}</td>";
-echo "<td>{$row["CusCreditLimit"]}</td>";
-echo "<td>{$row["CusOpenBal"]}</td>";
-echo "<td>{$row["CusAreaName"]}</td>";
-echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";
+	echo "<tr>";
+	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
+	echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";			
+	echo "<td>{$row["CusId"]}</td>";
+	echo "<td>{$row["CusName"]}</td>";
+	echo "<td>{$row["CusAddress"]}</td>";
+	echo "<td>{$row["CusContact"]}</td>";
+	echo "<td>{$row["CusCreditLimit"]}</td>";
+	echo "<td>{$row["CusOpenBal"]}</td>";
+	echo "<td>{$row["CusAreaName"]}</td>";
+
 	echo "</tr>";
 			
 			}
@@ -97,6 +97,8 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
  	?>
 <tfoot>
 				<tr>
+				<th>Edit</th>
+				<th>Delete</th>
 				<th>ID</th>
 				<th>Customer Name</th>
 				<th>Address</th>
@@ -104,8 +106,7 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 				<th>Credit Limit</th>
 				<th>Opening Balance</th>
 				<th>Customer Area</th>
-				<th>Edit</th>
-				<th>Delete</th>
+				
 			</tr>
 </tfoot>
 		</table>

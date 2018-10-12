@@ -3,7 +3,7 @@
 </div>
 <style>
 .footer {
-    position: fixed;
+    
     left: 0;
     bottom: 0;
     width: 100%;
@@ -14,8 +14,9 @@
 </style>
 
 <div class="footer">
-  All rights reserved<br>
-  annSoft Cell No. 0345-6344440, 0333-5575561
+  <i class="fa fa-copyright" aria-hidden="true"></i><span> All rights reserved</span>
+  <br>
+  annSoft
 </div>
 
 </body>

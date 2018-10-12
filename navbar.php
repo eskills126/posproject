@@ -3,11 +3,19 @@
     background-color: #bfc5cc;
     
    
-
+}
 </style>
 <!----------IF Not Admin then Can't Access the User.php Page----------->
 <?php 
-include_once 'header.php'; 
+session_start();
+if(!isset($_SESSION['user_session'])){
+  header("Location: index.php");
+}
+include_once 'header.php';
+include_once("db_connect.php");
+$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
+$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
+$row = mysqli_fetch_assoc($resultset); 
 $_SESSION['user_role'];
 $rights = $_SESSION['user_role'];
 ?>
@@ -26,6 +34,24 @@ $rights = $_SESSION['user_role'];
 </script>
 <!------------------------------------------------------------------->
 </head>
+<div style="text-align: right; font-size: 12px;font-family:Arial, Helvetica, sans-serif; margin: 5px;overflow: none;">
+
+
+  <div class="dropdown" id="logininfo"> 
+  <a href="#"style="text-decoration: none;"><i class="fa fa-fw fa-search"></i> Search &nbsp</a> 
+  <a href="#"style="text-decoration: none;"><i class="fa fa-fw fa-envelope"></i> Contacts &nbsp</a>
+  
+
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown"style="text-decoration: none;"><i class="fa fa-fw fa-user"></i> Welcome <?php echo $row['user']; ?>&nbsp;<span class="caret"></span></a>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
+    <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp</i>Sign Out</a>
+
+  </div>
+
+</div>
+</div>
+
 <body>
   <!-------This input is used to store and Access the Value of $_SESSION['user_role'] ----------->
   <input type="hidden" id="rights" value="<?php echo $rights; ?>" name="">
@@ -35,7 +61,7 @@ $rights = $_SESSION['user_role'];
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->
-  <a class="navbar-brand" href="welcome.php"><img style="display: inline-block; height: 50px; margin-top: -5px;"src="images/images.png"></a>
+  <a class="navbar-brand" href="welcome.php"><img style="display: inline-block; height: 40px;width: 40px; margin-top: -5px;border-radius: 50px;"src="images/images.png"></a>
 
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -98,7 +124,7 @@ $rights = $_SESSION['user_role'];
     </li>
 
     <li class="nav-item active">
-      <a class="nav-link" href="#">Generals<span aria-hidden="true"></span></a>
+      <a class="nav-link" href="gt.php">Generals<span aria-hidden="true"></span></a>
     </li>
 
     <li class="nav-item dropdown active">
@@ -109,9 +135,9 @@ $rights = $_SESSION['user_role'];
        <!--Dropdown Item div-->
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <!-- Dropdown Items -->
-        <a class="dropdown-item" href="#">Purchases Return</a>
-        <a class="dropdown-item" href="#">Sales Return</a>
-        <a class="dropdown-item" href="#">Warehouse Stock Transfer</a>
+        <a class="dropdown-item" href="pr.php">Purchases Return</a>
+        <a class="dropdown-item" href="sr.php">Sales Return</a>
+        <a class="dropdown-item" href="stt.php">Warehouse Stock Transfer</a>
     </div>
   </li>
 

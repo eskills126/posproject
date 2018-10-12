@@ -1,49 +1,25 @@
-<?php
-session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-include('header.php');
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
-include('navbar.php');
-
-?>
-
-<div class="container-fluid">
-
-  <p>
-    
-  <div class="row">
+<?php include('navbar.php'); 
+        include('sidenave.php');
         
-  <div class="col-xs-6 col-sm-8 col-md-offset-4">
-  <div style="text-align:center">
-  <h2 style="font-weight: bold;">Dash Board</h2>
-  <p>Click on the boxes below:</p>
-  </div>
+?>
+<div style="margin-left: 80px;">
+    <div class="container-fluid">
+        <div class="row border">
+            <div class="col-sm-2" style="background-color:yellow;">50%</div>
+      <div class="col-sm-8" style="background-color:orange;">50%</div>
+        </div>
+    </div>
+</div>
+
+<h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif;font-weight: bold;">Dash Board</h1>
+    
+  <div class='alert alert-success' id="success-alert">
+		<button class='close' data-dismiss='alert'>&times;</button>
+		Welcome to the
+    <strong> aanSoft</strong>
+    </div>		
   </div>
 
-  <div class="col-xs-6 col-sm-4">
-  <div class="dropdown" align="right" id="logininfo">
-  <button type="button" class="btn btn-primary d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-  <i class="fa fa-user-circle fa-3x" aria-hidden="false">&nbsp</i>Welcome <?php echo $row['user']; ?>&nbsp;<span class="caret"></span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
-    <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp</i>Sign Out</a>
-  </div>
-  </div>
-  </div>
-  </div> 
-  <div class='alert alert-success'>
-		<button class='close' data-dismiss='alert'>&times;</button>
-		Hello and Welcome to the members page.
-    </div>		
-  </p>
-  </div>
 <link rel="stylesheet" href="css/DataGrid.css">
 
 <div class="container">
@@ -139,6 +115,3 @@ include('navbar.php');
  
 
 <?php include('footer.php');?>
-<br>
-<!---container end div---> 
-</div>

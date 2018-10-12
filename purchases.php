@@ -8,23 +8,14 @@ margin: 0px 0px 0px -20px;
 font-size: x-large; 
 padding: 0 5px 0 0; 
 }
+input:read-only {
+  background-color: #edf1f7;
+  
+  }
 </style>
 
 <!--Code for Login Detail-->
-<?php
-include('header.php'); 
-session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
-include('navbar.php');
-?>
+<?php include('navbar.php'); ?>
 
 <div class="container-fluid">
 	<p>
@@ -1221,6 +1212,3 @@ showsave.show();
 
 
 <?php include('footer.php'); ?>
-<p>
-<br>
-</p>
