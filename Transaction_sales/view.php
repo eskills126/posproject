@@ -58,7 +58,7 @@ include '..\db_connect.php';
 				<i class="fa fa-recycle fa-2x" aria-hidden="true" style="color: red;">&nbsp Delete</i>
 			</span>
 		</summary>
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Purchase Details:<hr/></h4>
+<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Sales Detail:<hr/></h4>
 	<!--	<table class="table"> -->
 
 	<div class="table-responsive">
@@ -81,51 +81,65 @@ include '..\db_connect.php';
 				<th>Warehouse Name</th>
 				<th>Quantity</th>
 				<th>Stock Quantity</th>
+				<th>Previous Rate</th>
 				<th>Gross Rate</th>
 				<th>Gross Amount</th>
-				<th>Discount %</th>
-				<th>Discount Value</th>
-				<th>Discount Rate</th>
-				<th>Rate</th>
-				<th>Amount</th>
 				<th>Display ID</th>
 				<th>Remarks</th>
-				
+				<th>Total Quantity</th>
+				<th>Bill Amount</th>
+				<th>Discount%</th>
+				<th>Discount Value</th>
+				<th>Freight</th>
+				<th>Net Bill</th>
 			</tr>
 
 		</thead>
 			
 	<?php 
-		$sql = "SELECT * FROM `purchaseorderdetailtbl` ";
+		$sql = "SELECT * FROM `salesorderdetailtbl` ";
 		$res = $conn->query($sql);
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";
-	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["PurAutoId"]}'><i class='fa fa-edit'></i></td>";
-echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["PurAutoId"]}'><i class='fa fa-trash'></i></td>";			
+	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["SaleAutoId"]}'><i class='fa fa-edit'></i></td>";
+echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["SaleAutoId"]}'><i class='fa fa-trash'></i></td>";			
 //echo "<td>{$row["PurAutoId"]}</td>";
-echo "<td>{$row["PurOrderId"]}</td>";
-echo "<td>{$row["PurDate"]}</td>";
-echo "<td>{$row["PurSupCode"]}</td>";
-echo "<td>{$row["PurSupCodeName"]}</td>";
-echo "<td>{$row["PurSupBal"]}</td>";
-echo "<td>{$row["PurItemCode"]}</td>";
-echo "<td>{$row["PurItemName"]}</td>";
-echo "<td>{$row["PurWHCode"]}</td>";
-echo "<td>{$row["PurWHName"]}</td>";
-echo "<td>{$row["PurQty"]}</td>";
-echo "<td>{$row["PurStockQty"]}</td>";
-echo "<td>{$row["PurGrossRate"]}</td>";
-echo "<td>{$row["PurGrossAmount"]}</td>";
-echo "<td>{$row["PurDiscInPercent"]}</td>";
-echo "<td>{$row["PurDiscValueInRate"]}</td>";
-echo "<td>{$row["PurDiscRate"]}</td>";
-echo "<td>{$row["PurRate"]}</td>";
-echo "<td>{$row["PurAmount"]}</td>";
+echo "<td>{$row["SaleOrderId"]}</td>";
+echo "<td>{$row["SaleDate"]}</td>";
+echo "<td>{$row["SaleCusCode"]}</td>";
+echo "<td>{$row["SaleCusCodeName"]}</td>";
+echo "<td>{$row["SaleCusBal"]}</td>";
+echo "<td>{$row["SaleItemCode"]}</td>";
+echo "<td>{$row["SaleItemName"]}</td>";
+echo "<td>{$row["SaleWHCode"]}</td>";
+echo "<td>{$row["SaleWHName"]}</td>";
+echo "<td>{$row["SaleQty"]}</td>";
+echo "<td>{$row["SaleStockQty"]}</td>";
+echo "<td>{$row["SalePreviousRate"]}</td>";
+echo "<td>{$row["SaleGrossRate"]}</td>";
+echo "<td>{$row["SaleGrossAmount"]}</td>";
 echo "<td>{$row["DisplayID"]}</td>";
-echo "<td>{$row["PurRemarks"]}</td>";
+echo "<td>{$row["SaleRemarks"]}</td>";
+
+
+echo "<td>{$row["SaleTQty"]}</td>";
+echo "<td>{$row["SaleBillAmount"]}</td>";
+echo "<td>{$row["SaleDiscPercentage"]}</td>";
+echo "<td>{$row["SaleDiscountValue"]}</td>";
+echo "<td>{$row["SaleFreight"]}</td>";
+echo "<td>{$row["SaleNetBill"]}</td>";
+
+
+
+
+
+
+
+
+
 
 
 
@@ -149,16 +163,17 @@ echo "<td>{$row["PurRemarks"]}</td>";
 				<th>Warehouse Name</th>
 				<th>Quantity</th>
 				<th>Stock Quantity</th>
+				<th>Previous Rate</th>
 				<th>Gross Rate</th>
 				<th>Gross Amount</th>
-				<th>Discount %</th>
-				<th>Discount Value</th>
-				<th>Discount Rate</th>
-				<th>Rate</th>
-				<th>Amount</th>
 				<th>Display ID</th>
 				<th>Remarks</th>
-				
+				<th>Total Quantity</th>
+				<th>Bill Amount</th>
+				<th>Discount%</th>
+				<th>Discount Value</th>
+				<th>Freight</th>
+				<th>Net Bill</th>
 			</tr>
 </tfoot>
 		</table>

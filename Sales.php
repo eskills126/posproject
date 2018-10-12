@@ -56,10 +56,10 @@ include('navbar.php');
 <div class="container">
 					
 <form id="frm" action="" method="post">
-  <input type="hidden" id="autoid" name="">
+<!--  <input type="hidden" id="autoid" name="">     --->
   <!---------------------------------------------------------------->
 <?php  
-      $sql2 = "SELECT * FROM purchaseorderdetailtbl where PurOrderId=(SELECT max(PurOrderId) FROM purchaseorderdetailtbl) GROUP by PurOrderId";
+      $sql2 = "SELECT * FROM salesorderdetailtbl where SaleOrderId=(SELECT max(SaleOrderId) FROM salesorderdetailtbl) GROUP by SaleOrderId";
         $result = mysqli_query($conn,$sql2);
         if (mysqli_num_rows($result) > 0) {   
         while($row=mysqli_fetch_array($result)) {
@@ -72,7 +72,7 @@ include('navbar.php');
         </div>
           <div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
-         $row['PurOrderId'] + 1;  ?>"  readonly>
+         $row['SaleOrderId'] + 1;  ?>"  readonly>
          <span id="error_id" class="text-danger"></span>
         </div>
         <?php 
@@ -107,14 +107,7 @@ include('navbar.php');
 <!--------------------------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------------------->
-		
-
-
-
-
-
-
-    <div class="form-group">
+		  <div class="form-group">
     	<div class="row">
       	<div class="col-25">
         <label for="scode">Customer Code:</label>
@@ -190,7 +183,7 @@ include('navbar.php');
         <label for="sqty">Stock Quantity:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Stock Quantity"readonly>
+        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Stock Quantity">
         <span id="error_sqty" class="text-danger"></span>
       	</div>
 
@@ -199,8 +192,8 @@ include('navbar.php');
         <label for="prate">Previous Rate:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="prate" name="prate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Previous Rate"readonly>
-        <span id="error_grate" class="text-danger"></span>
+        <input type="number" id="prate" name="prate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Previous Rate" >
+        <span id="error_prate" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
@@ -213,7 +206,7 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="grate" name="grate" placeholder="Gross Rate" required>
-        <span id="error_gamount" class="text-danger"></span>
+        <span id="error_grate" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
@@ -221,15 +214,15 @@ include('navbar.php');
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
         <input type="number" id="gamount" name="gamount" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Gross Amount">
-        <span id="error_disrate" class="text-danger"></span>
+        <span id="error_gamount" class="text-danger"></span>
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
     	<div class="col-25">
         <label for="Did">Display ID:</label>
       	</div>
       	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="Did" name="Did" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Diplay Id...">
-        <span id="error_dvalue" class="text-danger"></span>
+        <input type="number" id="did" name="did" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Diplay Id...">
+        <span id="error_did" class="text-danger"></span>
       	</div>
     	</div>
 		</div>
@@ -241,26 +234,18 @@ include('navbar.php');
         <label for="sremarks">Remarks:</label>
       	</div>
       	<div class="col-75">
-        <input type="text" id="sremarks" name="sremarks" placeholder="Remarsk...">
+        <input type="text" id="remarks" name="remarks" placeholder="Remarsk...">
+        <span id="error_remarks" class="text-danger"></span>
         </div>
     	</div>
 		</div>
 
-		<!---------------------Save and Edit Button------------------------->
+		<!---------------------Save, Edit and Update Button------------------------->
       <div class="form-group">
       <div class="row">
       <div class="col-25">
       </div>
      <div class="col-75">  
-      <!--------------
-      <input type="button" id="updatesql" value="Update-btn" name="" style="display: none;">
-      <input type="text" id="id" name="id" value="0">
-      ---------------->
-      <!---   </div>   -->
-   <!----button row------>
-	 <!----	<div class="form-group">    -->
-    <!----  	<div class="row">          -->
-    <!--	<div class="col-75">  -->
     	<button type="button" name="save" id="save" class="btn btn-success">Save</button>
       <input type="hidden" name="row_id" id="hidden_row_id" />
       <input type="hidden" id="idn" name="idn" value="0">
@@ -299,6 +284,8 @@ include('navbar.php');
             </tr>
           </table>
         </div>
+
+    <!----------------------------------------------------------------------->    
     <!------Temporary input boxex---------->
 <div class="form-group">
       <div class="row">
@@ -306,7 +293,7 @@ include('navbar.php');
         <label for="tqty">Total Quantity:</label>
         </div>
         <div class="col-25">
-        <input type="number" id="tqty" name="tqty" placeholder="Total Quantity..."style="background-color:#edf1f7;"readonly>
+        <input type="number" id="tqty" name="tqty" placeholder="Total Quantity..."style="background-color:#edf1f7;">
         <span id="error_gamount" class="text-danger"></span>
         </div>
         <div class="col-25" style="width:0.5%;"></div>
@@ -314,7 +301,7 @@ include('navbar.php');
         <label for="bamount">Bill Amount:</label>
         </div>
         <div class="col-25">
-        <input type="number" id="bamount" name="bamount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Bill Amount"readonly>
+        <input type="number" id="bamount" name="bamount" style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Bill Amount">
         <span id="error_disrate" class="text-danger"></span>
         </div>
         <div class="col-25" style="width:0.5%;"></div>
@@ -327,8 +314,7 @@ include('navbar.php');
         </div>
       </div>
     </div>
-
-    <!-----row for dicount amount-->
+    <!-----------------Row for dicount amount----------------------------------->
     <div class="form-group">
       <div class="row">
         <div class="col-25">
@@ -399,7 +385,7 @@ $(inputs).keypress(function(e){
 <!-----------Validation and Record Insertion--------->
 <script>
   $(document).ready(function(){
-$("#output").load("Transaction_purchases/view.php");
+$("#output").load("Transaction_sales/view.php");
 $("#scode").focus();
 
 var count = 0;
@@ -418,11 +404,6 @@ $('#save').click(function(){
     var error_sqty = '';
     var error_grate = '';
     var error_gamount = '';
-    var error_disrate = '';
-    var error_dvalue = '';
-    var error_disdrate = '';
-    var error_rate = '';
-    var error_amount = '';
     var error_did = '';
     var error_remarks = '';
     
@@ -440,11 +421,6 @@ $('#save').click(function(){
     var sqty = '';
     var grate = '';
     var gamount = '';
-    var disrate = '';
-    var dvalue = '';
-    var disdrate = '';
-    var rate = '';
-    var amount = '';
     var did = '';
     var remarks = '';
 //------------------------------------------------------------        
@@ -513,86 +489,6 @@ if($('#did').val() == '')
       did = $('#did').val();
     }
 //------------------------------------------------------------
-if($('#amount').val() == '')
-    {
-      error_amount = 'Amount is required';
-      $('#error_amount').text(error_amount);
-      $('#amount').css('border-color', '#cc0000');
-      amount = '';
-      $('#amount').focus();
-    }
-    else
-    {
-      error_amount = '';
-      $('#error_amount').text(error_amount);
-      $('#amount').css('border-color', 'green');
-      amount = $('#amount').val();
-    }
-//------------------------------------------------------------
-if($('#rate').val() == '')
-    {
-      error_rate = 'Rate is required';
-      $('#error_rate').text(error_rate);
-      $('#rate').css('border-color', '#cc0000');
-      rate = '';
-      $('#rate').focus();
-    }
-    else
-    {
-      error_rate = '';
-      $('#error_rate').text(error_rate);
-      $('#rate').css('border-color', 'green');
-      rate = $('#rate').val();
-    }
-//------------------------------------------------------------
-if($('#disdrate').val() == '')
-    {
-      error_disdrate = 'Discounted Value is required';
-      $('#error_disdrate').text(error_disdrate);
-      $('#disdrate').css('border-color', '#cc0000');
-      disdrate = '';
-      $('#disdrate').focus();
-    }
-    else
-    {
-      error_disdrate = '';
-      $('#error_disdrate').text(error_disdrate);
-      $('#disdrate').css('border-color', 'green');
-      disdrate = $('#disdrate').val();
-    }
-//------------------------------------------------------------
-if($('#dvalue').val() == '')
-    {
-      error_dvalue = 'Discount Value is required';
-      $('#error_dvalue').text(error_dvalue);
-      $('#dvalue').css('border-color', '#cc0000');
-      dvalue = '';
-      $('#dvalue').focus();
-    }
-    else
-    {
-      error_dvalue = '';
-      $('#error_dvalue').text(error_dvalue);
-      $('#dvalue').css('border-color', 'green');
-      dvalue = $('#dvalue').val();
-    } 
-//------------------------------------------------------------
-if($('#disrate').val() == '')
-    {
-      error_disrate = 'Discount % is required';
-      $('#error_disrate').text(error_disrate);
-      $('#disrate').css('border-color', '#cc0000');
-      disrate = '';
-      $('#disrate').focus();
-    }
-    else
-    {
-      error_disrate = '';
-      $('#error_disrate').text(error_disrate);
-      $('#disrate').css('border-color', 'green');
-      disrate = $('#disrate').val();
-    } 
-//------------------------------------------------------------
 if($('#gamount').val() == '')
     {
       error_gamount = 'Gross Amount is required';
@@ -607,7 +503,7 @@ if($('#gamount').val() == '')
       $('#error_gamount').text(error_gamount);
       $('#gamount').css('border-color', 'green');
       gamount = $('#gamount').val();
-    } 
+    }
 //------------------------------------------------------------
 if($('#grate').val() == '')
     {
@@ -623,7 +519,24 @@ if($('#grate').val() == '')
       $('#error_grate').text(error_grate);
       $('#grate').css('border-color', 'green');
       grate = $('#grate').val();
-    } 
+    }
+//------------------------------------------------------------
+if($('#prate').val() == '')
+    {
+      error_prate = 'Previous Rate is required';
+      $('#error_prate').text(error_prate);
+      $('#prate').css('border-color', '#cc0000');
+      prate = '';
+      $('#prate').focus();
+    }
+    else
+    {
+      error_prate = '';
+      $('#error_prate').text(error_prate);
+      $('#prate').css('border-color', 'green');
+      prate = $('#prate').val();
+    }
+//------------------------------------------------------------
 //------------------------------------------------------------
 if($('#sqty').val() == '')
     {
@@ -769,7 +682,7 @@ if($('#sname').val() == '')
       scode = $('#scode').val();
     } 
 //-----------------------------------------------------------------------------
-if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' || error_sbal !='' || error_icode !='' || error_iname !='' || error_wcode !='' || error_wname !='' || error_qty !='' || error_sqty !='' || error_grate !='' || error_gamount !='' || error_disrate !='' || error_dvalue !='' || error_disdrate !='' || error_rate !='' || error_amount !='' || error_did !='' || error_remarks !='' )
+if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' || error_sbal !='' || error_icode !='' || error_iname !='' || error_wcode !='' || error_wname !='' || error_qty !='' || error_sqty !='' || error_prate !='' || error_grate !='' || error_gamount !='' || error_did !='' || error_remarks !='' )
     {
       return false;
     }
@@ -779,6 +692,12 @@ if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' ||
       {
         count = count + 1;
         output = '<tr id="row_'+count+'">';
+
+//----------------Buttons----Edit------Delete-----------------------------
+output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">Edit</button></td>';
+
+output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Delete</button></td>';
+//------------------------------------------------------------------------        
 output += '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+count+'" class="ino"  value="'+ino+'" /></td>';
 output += '<td>'+pdate+' <input type="hidden" name="pdate[]" id="pdate'+count+'" value="'+pdate+'" /></td>';
 output += '<td>'+scode+' <input type="hidden" name="scode[]" id="scode'+count+'" value="'+scode+'" /></td>';
@@ -790,20 +709,12 @@ output += '<td>'+wcode+' <input type="hidden" name="wcode[]" id="wcode'+count+'"
 output += '<td>'+wname+' <input type="hidden" name="wname[]" id="wname'+count+'" value="'+wname+'" /></td>';
 output += '<td>'+qty+' <input type="hidden" name="qty[]" id="qty'+count+'" value="'+qty+'" /></td>';
 output += '<td>'+sqty+' <input type="hidden" name="sqty[]" id="sqty'+count+'" value="'+sqty+'" /></td>';
+output += '<td>'+prate+' <input type="hidden" name="prate[]" id="prate'+count+'" value="'+prate+'" /></td>';
 output += '<td>'+grate+' <input type="hidden" name="grate[]" id="grate'+count+'" value="'+grate+'" /></td>';
 output += '<td>'+gamount+' <input type="hidden" name="gamount[]" id="gamount'+count+'" value="'+gamount+'" /></td>';
-output += '<td>'+disrate+' <input type="hidden" name="disrate[]" id="disrate'+count+'" value="'+disrate+'" /></td>';
-output += '<td>'+dvalue+' <input type="hidden" name="dvalue[]" id="dvalue'+count+'" value="'+dvalue+'" /></td>';
-output += '<td>'+disdrate+' <input type="hidden" name="disdrate[]" id="disdrate'+count+'" value="'+disdrate+'" /></td>';
-output += '<td>'+rate+' <input type="hidden" name="rate[]" id="rate'+count+'" value="'+rate+'" /></td>';
-output += '<td>'+amount+' <input type="hidden" name="amount[]" id="amount'+count+'" value="'+amount+'" /></td>';
 output += '<td>'+did+' <input type="hidden" name="did[]" id="did'+count+'" value="'+did+'" /></td>';
 output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+count+'" value="'+remarks+'" /></td>';
 
-//----------------Buttons----Edit------Delete-----------------------------
-output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">Edit</button></td>';
-
-output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Delete</button></td>';
 //------------------------------------------------------------------------
 output += '</tr>';
         $('#user_data').append(output);
@@ -815,6 +726,10 @@ output += '</tr>';
       {
         var row_id = $('#hidden_row_id').val();
 
+//----------------Buttons----Edit------Delete-----------------------------
+output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">Edit</button></td>';
+output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+row_id+'">Delete</button></td>';       
+//----------------------------------------------------------------------------
 output = '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+row_id+'" class="ino" value="'+ino+'" /></td>';
 output += '<td>'+pdate+' <input type="hidden" name="pdate[]" id="pdate'+row_id+'" value="'+pdate+'" /></td>';
 output += '<td>'+scode+' <input type="hidden" name="scode[]" id="scode'+row_id+'" value="'+scode+'" /></td>';
@@ -826,29 +741,23 @@ output += '<td>'+wcode+' <input type="hidden" name="wcode[]" id="wcode'+row_id+'
 output += '<td>'+wname+' <input type="hidden" name="wname[]" id="wname'+row_id+'" value="'+wname+'" /></td>';
 output += '<td>'+qty+' <input type="hidden" name="qty[]" id="qty'+row_id+'" value="'+qty+'" /></td>';
 output += '<td>'+sqty+' <input type="hidden" name="sqty[]" id="sqty'+row_id+'" value="'+sqty+'" /></td>';
+output += '<td>'+prate+' <input type="hidden" name="prate[]" id="prate'+row_id+'" value="'+prate+'" /></td>';
 output += '<td>'+grate+' <input type="hidden" name="grate[]" id="grate'+row_id+'" value="'+grate+'" /></td>';
 output += '<td>'+gamount+' <input type="hidden" name="gamount[]" id="gamount'+row_id+'" value="'+gamount+'" /></td>';
-output += '<td>'+disrate+' <input type="hidden" name="disrate[]" id="disrate'+row_id+'" value="'+disrate+'" /></td>';
-output += '<td>'+dvalue+' <input type="hidden" name="dvalue[]" id="dvalue'+row_id+'" value="'+dvalue+'" /></td>';
-output += '<td>'+disdrate+' <input type="hidden" name="disdrate[]" id="disdrate'+row_id+'" value="'+disdrate+'" /></td>';
-output += '<td>'+rate+' <input type="hidden" name="rate[]" id="rate'+row_id+'" value="'+rate+'" /></td>';
-output += '<td>'+amount+' <input type="hidden" name="amount[]" id="amount'+row_id+'" value="'+amount+'" /></td>';
 output += '<td>'+did+' <input type="hidden" name="did[]" id="did'+row_id+'" value="'+did+'" /></td>';
 output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+row_id+'" value="'+remarks+'" /></td>';
-//----------------Buttons----Edit------Delete-----------------------------
-output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">Edit</button></td>';
-output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+row_id+'">Delete</button></td>';       
+//------------------------------------------------------------------------------
     $('#row_'+row_id+'').html(output);
       }
       else //if ($('#save').text() == 'EditRecord')
       {
           $.ajax({
-            url:  "Transaction_purchases/update.php",
+            url:  "Transaction_sales/update.php",
             type:  "post",
              data: $("#frm").serialize(),
               success:function(d) {
       
-    $("#output").load("Transaction_purchases/view.php");
+    $("#output").load("Transaction_sales/view.php");
   $("#frm")[0].reset();
   $("#scode").focus();
         }
@@ -871,13 +780,9 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
     var wname = $('#wname'+row_id+'').val();
     var qty = $('#qty'+row_id+'').val();
     var sqty = $('#sqty'+row_id+'').val();
+     var prate = $('#prate'+row_id+'').val();   
     var grate = $('#grate'+row_id+'').val();
     var gamount = $('#gamount'+row_id+'').val();
-    var disrate = $('#disrate'+row_id+'').val();
-    var dvalue = $('#dvalue'+row_id+'').val();
-    var disdrate = $('#disdrate'+row_id+'').val();
-    var rate = $('#rate'+row_id+'').val();
-    var amount = $('#amount'+row_id+'').val();
     var did = $('#did'+row_id+'').val();
     var remarks = $('#remarks'+row_id+'').val();
     
@@ -893,13 +798,9 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
     $('#wname').val(wname);
     $('#qty').val(qty);
     $('#sqty').val(sqty);
+    $('#prate').val(prate);
     $('#grate').val(grate);
     $('#gamount').val(gamount);
-    $('#disrate').val(disrate);
-    $('#dvalue').val(dvalue);
-    $('#disdrate').val(disdrate);
-    $('#rate').val(rate);
-    $('#amount').val(amount);
     $('#did').val(did);
     $('#remarks').val(remarks);
 //--------------------------------------------------------
@@ -910,7 +811,7 @@ output += '<td><button type="button" name="remove_details" class="btn btn-danger
 //--------------------------------------------------------
 $(document).on('click', '#save', function(){
     
-    if ($("#ino").val()!="" && $("#pdate").val()!="" && $("#scode").val()!="" && $("#sname").val()!="" && $("#sbal").val()!="" && $("#icode").val()!="" && $("#iname").val()!="" && $("#wcode").val()!="" && $("#wname").val()!="" && $("#qty").val()!="" && $("#sqty").val()!="" && $("#grate").val()!="" && $("#gamount").val()!="" && $("#disrate").val()!="" && $("#rate").val()!="" && $("#amount").val()!="" && $("#did").val()!="" && $("#remarks").val()!="")
+    if ($("#ino").val()!="" && $("#pdate").val()!="" && $("#scode").val()!="" && $("#sname").val()!="" && $("#sbal").val()!="" && $("#icode").val()!="" && $("#iname").val()!="" && $("#wcode").val()!="" && $("#wname").val()!="" && $("#qty").val()!="" && $("#sqty").val()!="" && $("#prate").val()!="" && $("#grate").val()!="" && $("#gamount").val()!="" && $("#did").val()!="" && $("#remarks").val()!="")
    {
     $("#frm")[0].reset();
     $("#scode").focus();
@@ -949,7 +850,7 @@ $('#user_form').on('submit', function(event){
     {
       var form_data = $(this).serialize();
       $.ajax({
-        url:"Transaction_purchases/insert.php",
+        url:"Transaction_sales/insert.php",
         method:"POST",
         data:form_data,
         success:function(data)
@@ -957,7 +858,7 @@ $('#user_form').on('submit', function(event){
           $('#user_data').find("tr:gt(0)").remove();
  //This line of code Reload the ID without refreshing............
           $("#inumber").load(" #inumber");    
-          $("#output").load("Transaction_purchases/view.php");
+          $("#output").load("Transaction_sales/view.php");
 
           }
       
@@ -973,7 +874,7 @@ $(document).on("click",".del",function(){
     var del=$(this);
     var id = $(this).attr("data-id");
     $.ajax({
-      url:  "Transaction_purchases/delete.php",
+      url:  "Transaction_sales/delete.php",
       type:  "post",
       data: {id:id},
       success:function() {
@@ -1016,23 +917,15 @@ $(document).on("click",".edit",function(){
     $("#qty").val(qty);
     var sqty = row.closest("tr").find("td:eq(12)").text();
     $("#sqty").val(sqty);
-    var grate = row.closest("tr").find("td:eq(13)").text();
+    var prate = row.closest("tr").find("td:eq(13)").text();
+    $("#prate").val(prate);
+    var grate = row.closest("tr").find("td:eq(14)").text();
     $("#grate").val(grate);
-    var gamount = row.closest("tr").find("td:eq(14)").text();
+    var gamount = row.closest("tr").find("td:eq(15)").text();
     $("#gamount").val(gamount);
-    var disrate = row.closest("tr").find("td:eq(15)").text();
-    $("#disrate").val(disrate);
-    var dvalue = row.closest("tr").find("td:eq(16)").text();
-    $("#dvalue").val(dvalue);
-    var disdrate = row.closest("tr").find("td:eq(17)").text();
-    $("#disdrate").val(disdrate);
-    var rate = row.closest("tr").find("td:eq(18)").text();
-    $("#rate").val(rate);
-    var amount = row.closest("tr").find("td:eq(19)").text();
-    $("#amount").val(amount);
-    var did = row.closest("tr").find("td:eq(20)").text();
+    var did = row.closest("tr").find("td:eq(16)").text();
     $("#did").val(did);
-    var remarks = row.closest("tr").find("td:eq(21)").text();
+    var remarks = row.closest("tr").find("td:eq(17)").text();
     $("#remarks").val(remarks);
 //--------------------------------------------------------------------
     $("#scode").focus();
@@ -1097,7 +990,7 @@ showsave.show();
 	 $(function() {
     
      $("#scode").autocomplete({
-        source: "Transaction_purchases/autocomplete_supplier.php",
+        source: "Transaction_sales/autocomplete_customers.php",
         minLength: 0,
         select: function (event, ui){}
     });                
@@ -1108,12 +1001,12 @@ showsave.show();
 <script type="text/javascript">
   $(document).ready(function(){
     $("#scode").on('keyup',function(){
-      var suppliercode = $(this).val();
+      var customercode = $(this).val();
       
         $.ajax({
           type: 'POST',
-          url: 'Transaction_purchases/Baldynamic.php',
-          data:{scode:suppliercode},
+          url: 'Transaction_sales/Baldynamic.php',
+          data:{scode:customercode},
           success:function(data){
               $("#sbal").val(data);
           }
@@ -1130,7 +1023,7 @@ showsave.show();
       
         $.ajax({
           type: 'POST',
-          url: 'Transaction_purchases/supdynamic.php',
+          url: 'Transaction_sales/cusdynamic.php',
           data:{scode:suppliercode},
           success:function(data){
               $("#sname").val(data);
@@ -1145,7 +1038,7 @@ showsave.show();
    $(function() {
     
      $("#icode").autocomplete({
-        source: "Transaction_purchases/autocomplete_item.php",
+        source: "Transaction_sales/autocomplete_item.php",
         minLength: 0,
         select: function (event, ui){}
     });                
@@ -1160,7 +1053,7 @@ showsave.show();
       
         $.ajax({
           type: 'POST',
-          url: 'Transaction_purchases/itemdynamic.php',
+          url: 'Transaction_sales/itemdynamic.php',
           data:{icode:suppliercode},
           success:function(data){
               $("#iname").val(data);
@@ -1175,7 +1068,7 @@ showsave.show();
    $(function() {
     
      $("#wcode").autocomplete({
-        source: "Transaction_purchases/autocomplete_warehouse.php",
+        source: "Transaction_sales/autocomplete_warehouse.php",
         minLength: 0,
         select: function (event, ui){}
     });                
@@ -1190,7 +1083,7 @@ showsave.show();
       
         $.ajax({
           type: 'POST',
-          url: 'Transaction_purchases/whdynamic.php',
+          url: 'Transaction_sales/whdynamic.php',
           data:{wcode:suppliercode},
           success:function(data){
               $("#wname").val(data);

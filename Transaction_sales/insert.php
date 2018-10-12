@@ -6,9 +6,9 @@ include "..\db_connect.php";
 
 //$date =$_POST["pdate"];
 $query = "
-INSERT INTO purchaseorderdetailtbl
-(PurOrderId,PurDate, PurSupCode, PurSupCodeName, PurSupBal, PurItemCode, PurItemName, PurWHCode, PurWHName, PurQty, PurStockQty, PurGrossRate, PurGrossAmount,PurDiscInPercent, PurDiscValueInRate, PurDiscRate, PurRate, PurAmount, DisplayID, PurRemarks) 
-VALUES (:ino, :pdate, :scode, :sname, :sbal, :icode, :iname, :wcode, :wname, :qty, :sqty, :grate, :gamount, :disrate, :dvalue, :disdrate, :rate, :amount, :did, :remarks)";
+INSERT INTO salesorderdetailtbl
+(SaleOrderId,SaleDate, SaleCusCode, SaleCusCodeName, SaleCusBal, SaleItemCode, SaleItemName, SaleWHCode, SaleWHName, SaleQty, SaleStockQty, SalePreviousRate,SaleGrossRate, SaleGrossAmount, DisplayID, SaleRemarks) 
+VALUES (:ino, :pdate, :scode, :sname, :sbal, :icode, :iname, :wcode, :wname, :qty, :sqty, :prate, :grate, :gamount, :did, :remarks)";
 
 for($count = 0; $count<count($_POST['ino']); $count++)
 {
@@ -24,13 +24,9 @@ for($count = 0; $count<count($_POST['ino']); $count++)
 					':wname'	=>	$_POST['wname'][$count],
 					':qty'	=>	$_POST['qty'][$count],
 					':sqty'	=>	$_POST['sqty'][$count],
+					':prate'	=>	$_POST['prate'][$count],
 					':grate'	=>	$_POST['grate'][$count],
 					':gamount'	=>	$_POST['gamount'][$count],
-					':disrate'	=>	$_POST['disrate'][$count],
-					':dvalue'	=>	$_POST['dvalue'][$count],
-					':disdrate'	=>	$_POST['disdrate'][$count],
-					':rate'	=>	$_POST['rate'][$count],
-					':amount'	=>	$_POST['amount'][$count],
 					':did'	=>	$_POST['did'][$count],
 					':remarks'	=>	$_POST['remarks'][$count]
 

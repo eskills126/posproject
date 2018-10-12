@@ -11,7 +11,7 @@ $result =preg_replace('/-.*/', '', $edata);
 
 //if(isset($_POST["name"]) && !empty($_POST["name"])){
 	if(isset($result) && !empty($result)){
-		$sql = "SELECT suptbl.SupId ,(suptbl.SupOpenBal + purchaseorderdetailtbl.PurAmount + cashpaidtbl.amountpaid + cashreceivetbl.receiveamount + gttbl.cramount + gttbl.dramount) AS Balance FROM suptbl JOIN purchaseorderdetailtbl JOIN cashpaidtbl JOIN cashreceivetbl JOIN gttbl WHERE suptbl.SupId LIKE ".$result." GROUP by SupId";
+		$sql = "SELECT customertbl.CusId ,(customertbl.CusOpenBal + salesorderdetailtbl.SaleNetBill + cashpaidtbl.amountpaid + cashreceivetbl.receiveamount + gttbl.cramount + gttbl.dramount) AS Balance FROM customertbl JOIN salesorderdetailtbl JOIN cashpaidtbl JOIN cashreceivetbl JOIN gttbl WHERE customertbl.CusId LIKE ".$result." GROUP by CusId";
 
 	$result = mysqli_query($conn,$sql);
 

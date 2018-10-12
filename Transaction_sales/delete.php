@@ -1,5 +1,5 @@
 <?php 
 	include "..\db_connect.php";
-	$sql = "delete from purchaseorderdetailtbl where PurAutoId = ".$_POST["id"];
+	$sql = "delete from salesorderdetailtbl where SaleAutoId = ".$_POST["id"];
 	$conn->query($sql);
  ?>

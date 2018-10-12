@@ -12,17 +12,13 @@
 					$wname	=	$_POST["wname"];
 					$qty	=	$_POST["qty"];
 					$sqty	=	$_POST["sqty"];
+					$prate	=	$_POST["prate"];
 					$grate	=	$_POST["grate"];
 					$gamount=	$_POST["gamount"];
-					$disrate=	$_POST["disRate"];
-					$dvalue	=	$_POST["dvalue"];
-					$disdrate=	$_POST["disdrate"];
-					$rate	=	$_POST["rate"];
-					$amount	=	$_POST["amount"];
 					$did	=	$_POST["did"];
 					$remarks=	$_POST["remarks"];
 
-$sql = "update purchaseorderdetailtbl set PurOrderId=$ino,PurDate='$pdate',PurSupCode=$scode,PurSupCodeName='$sname',PurSupBal=$sbal, PurItemCode=$icode, PurItemName='$iname', PurWHCode=$wcode, PurWHName='$wname', PurQty=$qty, PurStockQty=$sqty,  PurGrossRate=$grate, PurGrossAmount=$gamount, PurDiscInPercent=$disrate, PurDiscValueInRate=$dvalue, PurDiscRate=$disdrate,PurRate=$rate, PurAmount=$amount, DisplayID='$did', PurRemarks='$remarks' where PurAutoId = ".$_POST['idn'];
+$sql = "update salesorderdetailtbl set SaleOrderId=$ino,SaleDate='$pdate',SaleCusCode=$scode,SaleCusCodeName='$sname',SaleCusBal=$sbal, SaleItemCode=$icode, SaleItemName='$iname', SaleWHCode=$wcode, SaleWHName='$wname', SaleQty=$qty, SaleStockQty=$sqty, SalePreviousRate=$prate,  SaleGrossRate=$grate, SaleGrossAmount=$gamount, DisplayID='$did', SaleRemarks='$remarks' where SaleAutoId = ".$_POST['idn'];
 
 	$conn->query($sql);
  ?>

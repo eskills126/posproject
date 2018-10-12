@@ -10,13 +10,13 @@ $result =preg_replace('/-.*/', '', $edata);
 
 //if(isset($_POST["name"]) && !empty($_POST["name"])){
 	if(isset($result) && !empty($result)){
-		$sql = "SELECT * From suptbl WHERE suptbl.SupId LIKE ".$result." ";
+		$sql = "SELECT * From customertbl WHERE customertbl.CusId LIKE ".$result." ";
 
 	$result = mysqli_query($conn,$sql);
 
 		if (mysqli_num_rows($result) > 0) {
 				while ($row = mysqli_fetch_assoc($result)) {
-					echo $row["SupName"];
+					echo $row["CusName"];
 				}
 		}else{
 			echo "No Results";
