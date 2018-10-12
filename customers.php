@@ -102,7 +102,10 @@ include('navbar.php');
     	<div class="col-25">
     	</div>
     	<div class="col-75">
-    	<input type="button" class="btn btn-success" id="save" value="Save Detail" >
+
+    	<button type="button" class="btn btn-success" id="save" value="Save Detail"><i class="fa fa-database fa-lg" aria-hidden="true"></i>&nbsp Save Detail</button>
+    </div>
+
     	<input type="hidden" id="id" name="id" value="0">
     	<div id="msg"></div>
     	</div>

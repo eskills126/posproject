@@ -3,7 +3,7 @@
     background-color: #bfc5cc;
     
    
-
+}
 </style>
 <!----------IF Not Admin then Can't Access the User.php Page----------->
 <?php 
@@ -61,7 +61,7 @@ $rights = $_SESSION['user_role'];
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->
-  <a class="navbar-brand" href="welcome.php"><img style="display: inline-block; height: 40px;width: 40px; margin-top: -5px;border-radius: 80px;"src="images/images.png"></a>
+  <a class="navbar-brand" href="welcome.php"><img style="display: inline-block; height: 40px;width: 40px; margin-top: -5px;border-radius: 50px;"src="images/images.png"></a>
 
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

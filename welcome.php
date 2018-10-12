@@ -1,6 +1,18 @@
-<?php include('navbar.php'); ?>
-<h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif;font-weight: bold;">Dash Board</h1>
+<?php include('navbar.php'); 
+        include('sidenave.php');
+        
+?>
+<div style="margin-left: 80px;">
+    <div class="container-fluid">
+        <div class="row border">
+            <div class="col-sm-2" style="background-color:yellow;">50%</div>
+      <div class="col-sm-8" style="background-color:orange;">50%</div>
+        </div>
+    </div>
+</div>
 
+<h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif;font-weight: bold;">Dash Board</h1>
+    
   <div class='alert alert-success' id="success-alert">
 		<button class='close' data-dismiss='alert'>&times;</button>
 		Welcome to the
