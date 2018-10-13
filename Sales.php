@@ -1,8 +1,12 @@
 <?php
+//------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----
+ ob_start(); ?>
+<?php
   //invoice.php  
-  include('db_connect.php');
-//  include ('navbar.php');
-include('header.php');
+   include('db_connect.php');
+   include('navbar.php');
+//   include('header.php');
 
 //---------Create invoice Mysql INSERT Code-------------------------
   $statement = $connect->prepare("
@@ -107,6 +111,9 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
         )
       );
       header("location:sales.php");
+      //------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----      
+      ob_end_flush();
   }
 
 
@@ -199,6 +206,9 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       $result = $statement->fetchAll();
             
       header("location:sales.php");
+//------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----      
+      ob_end_flush();
   }
 
 //-----------------Delete Code --------------------------
@@ -218,9 +228,12 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       )
     );
     header("location:sales.php");
+  //------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----      
+      ob_end_flush();
   }
     ?>
-    
+   
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -378,7 +391,7 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
   <!---------Stock Quantity-------------->
 <td><input type="text" name="order_item_squantity[]" id="order_item_squantity1" data-srno="1" class="form-control input-sm order_item_squantity" readonly="" /></td>
   <!----------Previous Rate------------->
-  <td><input type="text" name="order_item_prate[]" id="order_item_prate1" data-srno="1" class="form-control input-sm number_only order_item_prate" /></td>
+  <td><input type="text" name="order_item_prate[]" id="order_item_prate1" data-srno="1" class="form-control input-sm number_only order_item_prate" readonly="" /></td>
   <!-----------Gross Rate------------>
   <td><input type="text" name="order_item_grate[]" id="order_item_grate1" data-srno="1" class="form-control input-sm order_item_grate" readonly="" /></td>
   <!-----------Gross Amount------------>
@@ -451,7 +464,7 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
           //-------- Stock Quantity-----------------------------
   html_code +=  '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" readonly=""/></td>';
           //--------Previous Rate------------------------------
-  html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_prate"  /></td>';
+  html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_prate"  readonly/></td>';
           //---------Gross Rate-------------------------------
   html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_grate" readonly=""/></td>';
           //--------Gross Amount------------------------------
@@ -669,13 +682,9 @@ if(bs > ab) {
             }
 
           }
-            
             $('#invoice_form').submit();
-          //$('#invoice_form').submit();
-
         });
 
-      //});
 //--------------Repeating above code for Click Button to Submit Form --------------------
 
 $(document).on('click','#create_invoice',function(){
@@ -849,7 +858,7 @@ $(document).on('click','#create_invoice',function(){
   <!----------Stock Quantity------------------->
   <td><input type="text" name="order_item_squantity[]" id="order_item_squantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_squantity" value="<?php echo $sub_row["order_item_squantity"]; ?>" readonly=""/></td>
   <!----------Previous Rate------------------->
-  <td><input type="text" name="order_item_prate[]" id="order_item_prate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_prate" value="<?php echo $sub_row["order_item_prate"];?>" /></td>
+  <td><input type="text" name="order_item_prate[]" id="order_item_prate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_prate" value="<?php echo $sub_row["order_item_prate"];?>" readonly/></td>
   <!----------Gross Rate------------------->
   <td><input type="text" name="order_item_grate[]" id="order_item_grate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_grate" value="<?php echo $sub_row["order_item_grate"]; ?>" readonly=""/></td>
   <!----------Gross Amount------------------->
@@ -932,7 +941,7 @@ $(document).on('click','#create_invoice',function(){
   //----------Stock Quanity-------------------
   html_code += '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" readonly=""/></td>';
   //----------Previous Rate-------------------        
- html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_prate" /></td>';
+ html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_prate" readonly/></td>';
   //----------Gross Rate-------------------
   html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_grate" readonly=""/></td>';
   //----------Gross Amount-------------------
@@ -1088,7 +1097,7 @@ if(bs > ab) {
   }
 });
 //----------Authentication code for Edit Invoice-----------
-        $(document).on('keydown','#create_invoice',function(){
+        $(document).on('keypress','#create_invoice',function(){
           if($.trim($('#order_receiver_name').val()).length == 0)
           {
             alert("Please Enter Reciever Name ");
@@ -1121,21 +1130,21 @@ if(bs > ab) {
             if($.trim($('#order_item_whname'+no).val()).length == 0)
             {
               alert("Please Enter Warehouse Name");
-              $('#order_item_whname1'+no).focus();
+              $('#order_item_whname'+no).focus();
               return false;
             }
 
             if($.trim($('#order_item_quantity'+no).val()).length == 0)
             {
               alert("Please Enter Quantity");
-              $('#order_item_quantity1'+no).focus();
+              $('#order_item_quantity'+no).focus();
               return false;
             }
 
             if($.trim($('#order_item_grate'+no).val()).length == 0)
             {
               alert("Please Enter Gross Rate");
-              $('#order_item_grate1'+no).focus();
+              $('#order_item_grate'+no).focus();
               return false;
             }
             
@@ -1182,21 +1191,21 @@ $(document).on('click','#create_invoice',function(){
             if($.trim($('#order_item_whname'+no).val()).length == 0)
             {
               alert("Please Enter Warehouse Name");
-              $('#order_item_whname1'+no).focus();
+              $('#order_item_whname'+no).focus();
               return false;
             }
 
             if($.trim($('#order_item_quantity'+no).val()).length == 0)
             {
               alert("Please Enter Quantity");
-              $('#order_item_quantity1'+no).focus();
+              $('#order_item_quantity'+no).focus();
               return false;
             }
 
             if($.trim($('#order_item_grate'+no).val()).length == 0)
             {
               alert("Please Enter Gross Rate");
-              $('#order_item_grate1'+no).focus();
+              $('#order_item_grate'+no).focus();
               return false;
             }
             
@@ -1385,6 +1394,17 @@ $(inputs).keypress(function(e){
     }
 });
 </script>       
+<!------- This is a click event for autocomplete Customer_name--------->
+<script >
+  $(function() {
+     $("#order_receiver_name").autocomplete({
+        source: "Transaction_sales/autocomplete_cusname.php",
+        minLength: 0,
+        select: function (event, ui){}
+          });                
+    });
+ </script>
+
 <!------- This is a click event for autocomplete item_name--------->
 <script >
 //$(document).on('click',"#add_row",function(){
@@ -1394,6 +1414,23 @@ $(inputs).keypress(function(e){
   do{  
      $("#item_name"+auto).autocomplete({
         source: "Transaction_sales/autocomplete_itemname.php",
+        minLength: 0,
+        select: function (event, ui){}
+          });                
+        auto++;
+      }while(auto<500);
+    });
+  }); 
+</script>
+<!------- This is a click event for autocomplete Warehouse_name--------->
+<script >
+//$(document).on('click',"#add_row",function(){
+  $(document).add("#add_row").bind('keypress click',function(){
+  var auto = 1;
+  $(function() {
+  do{  
+     $("#order_item_whname"+auto).autocomplete({
+        source: "Transaction_sales/autocomplete_whname.php",
         minLength: 0,
         select: function (event, ui){}
           });                
@@ -1467,6 +1504,33 @@ $(document).on('keyup',function(){
           data:{item_name:itemcode},
            success:function(data){
               $("#order_item_grate"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+</script>
+<!---------------Code for updating Previous Rate dynamically------------->
+<script>
+$(document).on('keyup',function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_sales/prate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_prate"+ i).val(data);
             }
         });
       });
