@@ -263,37 +263,7 @@ $result =preg_replace('/.*-/', '', $edata);
     <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 ------------------------>
 
-    <style>
-      /* Remove the navbar's default margin-bottom and rounded borders */ 
-      .navbar {
-      margin-bottom: 4px;
-      border-radius: 0;
-      }
-      /* Add a gray background color and some padding to the footer */
-      footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-      }
-      .carousel-inner img {
-      width: 100%; /* Set width to 100% */
-      margin: auto;
-      min-height:200px;
-      }
-      .navbar-brand
-      {
-      padding:5px 40px;
-      }
-      .navbar-brand:hover
-      {
-      background-color:#ffffff;
-      }
-      /* Hide the carousel text when the screen is less than 600 pixels wide */
-      @media (max-width: 600px) {
-      .carousel-caption {
-      display: none; 
-      }
-      }
-    </style>
+    
   </head>
   <body>
     <style>
@@ -329,11 +299,12 @@ $result =preg_replace('/.*-/', '', $edata);
       {
       ?>
       <!----onkeypress="return event.keyCode != 13;"  --->
+      <br>
       <form method="post" id="invoice_form" >
         <div class="table-responsive">
           <table class="table table-bordered">
             <tr>
-              <td colspan="6" align="center"><h2 style="margin-top:10.5px">Create Invoice</h2></td>
+              <td colspan="6" align="center"><h2 style="margin-top:10.5px"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp Create Invoice</h2></td>
             </tr>
             <tr>
                 <td colspan="6">
@@ -359,7 +330,7 @@ $result =preg_replace('/.*-/', '', $edata);
           <input type="text" name="order_no" id="order_no" class="form-control input-sm" placeholder="Enter Invoice No." value="<?php echo $row['order_no'] + 1;  ?>" readonly/>
            <input type="text" data-inputmask="'alias': 'date'" name="order_date" id="order_date" value="<?php echo date('d/m/Y'); ?>" class="form-control input-sm" />
            <b>Opening Balance</b><br />
-                        <input type="text" name="opbal" id="opbal" class="form-control input-sm" placeholder="Opening Balance" readonly="" />
+                        <input type="text" name="opbal" id="opbal" class="form-control input-sm" placeholder="Opening Balance"readonly="" />
                         
         </div>
         <?php 
@@ -416,7 +387,7 @@ $result =preg_replace('/.*-/', '', $edata);
 
        <div align="right">
 
-         <button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs">+</button>
+         <button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
        </div>
                </td>
               </tr>
@@ -1289,9 +1260,7 @@ $(document).on('click','#create_invoice',function(){
       ?>
     </div>
     <br>
-    <footer class="container-fluid text-center">
-      <p>Footer Text</p>
-    </footer>
+    
   </body>
 </html>
 <!-------------------------First Page Closed-------------------------->
@@ -1551,3 +1520,4 @@ $(document).on('keyup',function(){
   }); 
 });
 </script>
+<?php include('footer.php'); ?>
