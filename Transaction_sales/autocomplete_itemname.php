@@ -16,7 +16,7 @@ $db = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
    $query = $conn->query("SELECT * FROM `salesitemtbl` WHERE ProId LIKE  '%".$searchTerm."%' OR ProName LIKE '%".$searchTerm."%'");
    while ($row = $query->fetch_assoc()) {
      $data[] = $row['ProId'].'-'.$row['ProName'];
-     //$data[] = $row['id'];
+     //$data[] = $row['ProName'];
   }
    //return json data
      echo json_encode($data);

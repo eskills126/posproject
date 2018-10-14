@@ -23,6 +23,10 @@
 //------Create Invoice----Insert Data into Table--------------------
   if(isset($_POST["create_invoice"]))
   { 
+
+$edata=$_POST["order_receiver_name"];
+$result =preg_replace('/.*-/', '', $edata);
+
     $order_total_before_discount_freight = 0;
     $order_total_discount_percentage = 0;
     $order_total_discount_value = 0;
@@ -36,16 +40,17 @@
     ");
     $statement->execute(
       array(
-          ':order_no'               =>  trim($_POST["order_no"]),
-          ':order_date'             =>  trim($_POST["order_date"]),
-          ':order_receiver_name'          =>  trim($_POST["order_receiver_name"]),
-          ':order_receiver_remarks'       =>  trim($_POST["order_receiver_remarks"]),
-          ':order_total_before_discount_freight'       =>  $order_total_before_discount_freight,
-          ':order_total_discount_percentage'           =>  $order_total_discount_percentage,
-          ':order_total_discount_value'           =>  $order_total_discount_value,
-          ':order_total_freight'           =>  $order_total_freight,
-          ':order_total_after_discount_freight'        =>  $order_total_after_discount_freight,
-          ':order_datetime'           =>  date("Y-m-d")
+      ':order_no'                             =>  trim($_POST["order_no"]),
+      ':order_date'                           =>  trim($_POST["order_date"]),
+      //':order_receiver_name'                   =>  trim($_POST["order_receiver_name"]),
+      ':order_receiver_name'                  =>  trim($result), 
+      ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
+      ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
+      ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
+      ':order_total_discount_value'           =>  $order_total_discount_value,
+      ':order_total_freight'                  =>  $order_total_freight,
+      ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
+      ':order_datetime'                       =>  date("Y-m-d")
       )
     );
 
@@ -55,15 +60,13 @@
       for($count=0; $count<$_POST["total_item"]; $count++)
       {
         $order_total_before_discount_freight = $order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
-//--------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+$item_name_value=$_POST["item_name"];
+$item_name =preg_replace('/.*-/', '', $item_name_value);
 
-       // $order_total_tax1 = $order_total_tax1 + floatval(trim($_POST["order_item_tax1_amount"][$count]));
+$whname_value=$_POST["order_item_whname"];
+$wh_name =preg_replace('/.*-/', '', $whname_value);
 
-       // $order_total_tax2 = $order_total_tax2 + floatval(trim($_POST["order_item_tax2_amount"][$count]));
-
-       // $order_total_tax3 = $order_total_tax3 + floatval(trim($_POST["order_item_tax3_amount"][$count]));
-
-       // $order_total_after_tax = $order_total_after_tax + floatval(trim($_POST["order_item_final_amount"][$count]));
 
         $statement = $connect->prepare("
           INSERT INTO tbl_order_item 
@@ -73,14 +76,16 @@
 
         $statement->execute(
           array(
-            ':order_id'               =>  $order_id,
-            ':item_name'              =>  trim($_POST["item_name"][$count]),
-            ':order_item_whname'              =>  trim($_POST["order_item_whname"][$count]),
-            ':order_item_quantity'          =>  trim($_POST["order_item_quantity"][$count]),
-            ':order_item_squantity'          =>  trim($_POST["order_item_squantity"][$count]),
-            ':order_item_prate'           =>  trim($_POST["order_item_prate"][$count]),
-            ':order_item_grate'           =>  trim($_POST["order_item_grate"][$count]),
-            ':order_item_gamount'           =>  trim($_POST["order_item_gamount"][$count])
+            ':order_id'                 =>  $order_id,
+       //   ':item_name'               =>  trim($_POST["item_name"][$count]),
+       //   ':order_item_whname'              =>  trim($_POST["order_item_whname"][$count]),
+            ':item_name'                =>  trim($item_name[$count]),
+            ':order_item_whname'        =>  trim($wh_name[$count]),
+            ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
+            ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
+            ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
+            ':order_item_grate'         =>  trim($_POST["order_item_grate"][$count]),
+            ':order_item_gamount'       =>  trim($_POST["order_item_gamount"][$count])
 
           )
         );
@@ -142,11 +147,13 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       for($count=0; $count<$_POST["total_item"]; $count++)
       {
   $order_total_before_discount_freight =$order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
-  
- //$order_total_tax1 = $order_total_tax1 + floatval(trim($_POST["order_item_tax1_amount"][$count]));
- //$order_total_tax2 = $order_total_tax2 + floatval(trim($_POST["order_item_tax2_amount"][$count]));
- // $order_total_tax3 = $order_total_tax3 + floatval(trim($_POST["order_item_tax3_amount"][$count]));
- //$order_total_after_discount_freight = $order_total_after_discount_freight + floatval(trim($_POST["order_total_before_discount_freight"][$count]));
+ //----------------------------------------------------- 
+$item_name_value=$_POST["item_name"];
+$item_name =preg_replace('/.*-/', '', $item_name_value);
+
+$whname_value=$_POST["order_item_whname"];
+$wh_name =preg_replace('/.*-/', '', $whname_value);
+
 
         $statement = $connect->prepare("
    INSERT INTO tbl_order_item 
@@ -156,8 +163,10 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
         $statement->execute(
           array(
             ':order_id'                 =>  $order_id,
-            ':item_name'                =>  trim($_POST["item_name"][$count]),
-            ':order_item_whname'        =>  trim($_POST["order_item_whname"][$count]),
+//          ':item_name'                =>  trim($_POST["item_name"][$count]),
+//          ':order_item_whname'        =>  trim($_POST["order_item_whname"][$count]),
+            ':item_name'                =>  trim($item_name[$count]),
+            ':order_item_whname'        =>  trim($wh_name[$count]),
             ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
             ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
             ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
@@ -173,6 +182,10 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
   $order_total_freight = floatval(trim($_POST["order_total_freight"])); 
 
   $order_total_after_discount_freight = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
+//---------------------------------------------------------------
+$edata=$_POST["order_receiver_name"];
+$result =preg_replace('/.*-/', '', $edata);
+
 
       $statement = $connect->prepare("
         UPDATE tbl_order 
@@ -190,16 +203,16 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       
       $statement->execute(
         array(
-          ':order_no'               =>  trim($_POST["order_no"]),
-          ':order_date'             =>  trim($_POST["order_date"]),
-          ':order_receiver_name'        =>  trim($_POST["order_receiver_name"]),
-          ':order_receiver_remarks'     =>  trim($_POST["order_receiver_remarks"]),
-          ':order_total_before_discount_freight'     =>  $order_total_before_discount_freight,
-          ':order_total_discount_percentage'          =>  $order_total_discount_percentage,
-          ':order_total_discount_value'          =>  $order_total_discount_value,
-          ':order_total_freight'          =>  $order_total_freight,
-          ':order_total_after_discount_freight'      =>  $order_total_after_discount_freight,
-          ':order_id'               =>  $order_id
+    ':order_no'                             =>  trim($_POST["order_no"]),
+    ':order_date'                           =>  trim($_POST["order_date"]),
+    ':order_receiver_name'                  =>  trim($result),
+    ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
+    ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
+    ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
+    ':order_total_discount_value'           =>  $order_total_discount_value,
+    ':order_total_freight'                  =>  $order_total_freight,
+    ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
+    ':order_id'                             =>  $order_id
         )
       );
       
