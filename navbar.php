@@ -1,15 +1,13 @@
 <style type="text/css" media="screen">
    .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #bfc5cc;
-    
-   
 }
 </style>
 <!----------IF Not Admin then Can't Access the User.php Page----------->
-<?php 
+<?php
 session_start();
 if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
+header("Location: index.php"); 
 }
 include_once 'header.php';
 include_once("db_connect.php");
@@ -270,4 +268,3 @@ $rights = $_SESSION['user_role'];
 
 </nav>
 </div>
-

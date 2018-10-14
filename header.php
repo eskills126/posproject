@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="css/form.css">
 	
 	<!----------------added for autocomplete Textboxes file------------------->
-	<script type="text/javascript" src="Jquery_ui/jquery.js"></script>
+<!--<script type="text/javascript" src="Jquery_ui/jquery.js"></script>  -->
 	<script type="text/javascript" src="Jquery_ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="Jquery_ui/jquery-ui.min.js"></script>
 
