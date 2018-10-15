@@ -1237,7 +1237,7 @@ $(document).on('click','#create_invoice',function(){
       {
       ?>
 <!----------First Page of Invoice System------------------->
-      <h3 align="center"><B>Sales Invoice:</B></h3>
+      <div style="border: solid; background: green; color: white;"><h3 align="center"><B>Sales Invoice:</B></h3></div>
       <br />
       <div align="right">
         <a href="sales.php?add=1" class="btn btn-info btn-xs" id="new_create">Create</a>

@@ -1,6 +1,6 @@
 <?php
 //pdf.php;
-require_once 'dompdf/autoload.inc.php';
+require_once '../dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 
 class Pdf extends Dompdf{
@@ -8,5 +8,4 @@ class Pdf extends Dompdf{
         parent::__construct();
     }
 }
-
 ?>

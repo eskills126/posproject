@@ -1,4 +1,3 @@
-
 <?php
 //print_invoice.php
 if(isset($_GET["pdf"]) && isset($_GET["id"]))
@@ -110,10 +109,15 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
    </table>
   ';
  }
- $pdf = new Pdf();
- $file_name = 'Invoice-'.$row["order_no"].'.pdf';
- $pdf->loadHtml($output);
- $pdf->render();
- $pdf->stream($file_name, array("Attachment" => false));
-}
+
+ $dompdf = new Pdf();
+$file_name = 'Invoice-'.$row["order_no"].'.pdf';
+$dompdf->loadHtml($output);
+
+$dompdf->setPaper('A4', 'landscape');
+
+$dompdf->render();
+$dompdf->stream($file_name,array("Attachment"=>0));
+//exit(0);
+ }
 ?>

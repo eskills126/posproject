@@ -1,1214 +1,1553 @@
-<!--Asterik Input Red-->
-<style type="text/css" media="screen">
-.asterisk_input:after {
-content:" *"; 
-color: #e32;
-position: absolute; 
-margin: 0px 0px 0px -20px; 
-font-size: x-large; 
-padding: 0 5px 0 0; 
-}
-input:read-only {
-  background-color: #edf1f7;
-  
+<?php
+//------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----
+ ob_start(); ?>
+<?php
+  //invoice.php  
+   include('db_connect.php');
+   include('navbar.php');
+//   include('header.php');
+
+//---------Create invoice Mysql INSERT Code-------------------------
+  $statement = $connect->prepare("
+    SELECT * FROM tbl_order 
+    ORDER BY order_id DESC
+  ");
+
+  $statement->execute();
+
+  $all_result = $statement->fetchAll();
+
+  $total_rows = $statement->rowCount();
+
+//------Create Invoice----Insert Data into Table--------------------
+  if(isset($_POST["create_invoice"]))
+  { 
+
+$edata=$_POST["order_receiver_name"];
+$result =preg_replace('/.*-/', '', $edata);
+
+    $order_total_before_discount_freight = 0;
+    $order_total_discount_percentage = 0;
+    $order_total_discount_value = 0;
+    $order_total_freight = 0;
+    //$order_total_tax = 0;
+    $order_total_after_discount_freight = 0;
+    $statement = $connect->prepare("
+      INSERT INTO tbl_order 
+  (order_no, order_date, order_receiver_name, order_receiver_remarks, order_total_before_discount_freight, order_total_discount_percentage, order_total_discount_value, order_total_freight, order_total_after_discount_freight,order_datetime)
+        VALUES (:order_no, :order_date, :order_receiver_name, :order_receiver_remarks, :order_total_before_discount_freight, :order_total_discount_percentage, :order_total_discount_value, :order_total_freight, :order_total_after_discount_freight, :order_datetime)
+    ");
+    $statement->execute(
+      array(
+      ':order_no'                             =>  trim($_POST["order_no"]),
+      ':order_date'                           =>  trim($_POST["order_date"]),
+      //':order_receiver_name'                   =>  trim($_POST["order_receiver_name"]),
+      ':order_receiver_name'                  =>  trim($result), 
+      ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
+      ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
+      ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
+      ':order_total_discount_value'           =>  $order_total_discount_value,
+      ':order_total_freight'                  =>  $order_total_freight,
+      ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
+      ':order_datetime'                       =>  date("Y-m-d")
+      )
+    );
+
+      $statement = $connect->query("SELECT LAST_INSERT_ID()");
+      $order_id = $statement->fetchColumn();
+
+      for($count=0; $count<$_POST["total_item"]; $count++)
+      {
+        $order_total_before_discount_freight = $order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
+//------------------------------------------------------------------------------------------
+$item_name_value=$_POST["item_name"];
+$item_name =preg_replace('/.*-/', '', $item_name_value);
+
+$whname_value=$_POST["order_item_whname"];
+$wh_name =preg_replace('/.*-/', '', $whname_value);
+
+
+        $statement = $connect->prepare("
+          INSERT INTO tbl_order_item 
+          (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity, order_item_prate, order_item_grate, order_item_gamount)
+          VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
+        ");
+
+        $statement->execute(
+          array(
+            ':order_id'                 =>  $order_id,
+       //   ':item_name'               =>  trim($_POST["item_name"][$count]),
+       //   ':order_item_whname'              =>  trim($_POST["order_item_whname"][$count]),
+            ':item_name'                =>  trim($item_name[$count]),
+            ':order_item_whname'        =>  trim($wh_name[$count]),
+            ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
+            ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
+            ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
+            ':order_item_grate'         =>  trim($_POST["order_item_grate"][$count]),
+            ':order_item_gamount'       =>  trim($_POST["order_item_gamount"][$count])
+
+          )
+        );
+      }
+  $order_total_discount_percentage = $order_total_discount_percentage + floatval(trim($_POST["order_total_discount_percentage"]));
+  $order_total_discount_value = $order_total_discount_value + floatval(trim($_POST["order_total_discount_value"]));
+  $order_total_freight = $order_total_freight + floatval(trim($_POST["order_total_freight"]));
+
+$order_total_after_discount_freight = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
+
+      $statement = $connect->prepare("
+        UPDATE tbl_order 
+        SET order_total_before_discount_freight = :order_total_before_discount_freight, 
+        order_total_discount_percentage = :order_total_discount_percentage,
+        order_total_discount_value = :order_total_discount_value, 
+        order_total_freight = :order_total_freight, 
+        order_total_after_discount_freight = :order_total_after_discount_freight 
+        WHERE order_id = :order_id 
+      ");
+      $statement->execute(
+        array(
+          ':order_total_before_discount_freight'     =>  $order_total_before_discount_freight,
+          ':order_total_discount_percentage'         =>  $order_total_discount_percentage,
+          ':order_total_discount_value'         =>  $order_total_discount_value,
+          ':order_total_freight'         =>  $order_total_freight,
+          ':order_total_after_discount_freight'      =>  $order_total_after_discount_freight,
+          ':order_id'             =>  $order_id
+        )
+      );
+      header("location:sales.php");
+      //------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----      
+      ob_end_flush();
   }
-</style>
-
-<!--Code for Login Detail-->
-<?php include('navbar.php'); ?>
-
-<div class="container-fluid">
-	<p>
-		
-  	<div class="row">
-  			
-	<div class="col-xs-6 col-sm-8 col-md-offset-4">
-		<h2 class="page-header text-center"><i class="fa fa-edit"></i>&nbsp Purchases Bill/Transaction</h2>
-		</div>
 
 
-	<div class="col-xs-6 col-sm-4">
-	<div class="dropdown" align="right"id="logininfo">
-  <button type="button" class="btn btn-primary d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-    <i class="fa fa-user-circle fa-3x" aria-hidden="false">&nbsp</i>Welcome <?php echo $row['user']; ?>&nbsp;<span class="caret"></span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
-    <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp</i>Sign Out</a>
-    </div>
-  </div>  
- </div>
-</div>
-</p>
-</div>
 
-<div class="container">
-					
-<form id="frm" action="" method="post">
-  <input type="hidden" id="autoid" name="">
-  <!---------------------------------------------------------------->
-<?php  
-      $sql2 = "SELECT * FROM purchaseorderdetailtbl where PurOrderId=(SELECT max(PurOrderId) FROM purchaseorderdetailtbl) GROUP by PurOrderId";
-        $result = mysqli_query($conn,$sql2);
+//--------------------Updating / Edit Invoice-----------------------------
+  if(isset($_POST["update_invoice"]))
+  {
+    $order_total_before_discount_freight = 0;
+      $order_total_discount_percentage = 0;
+      $order_total_discount_value = 0;
+      $order_total_freight = 0;
+      //$order_total_tax = 0;
+      $order_total_after_discount_freight = 0;
+      
+      $order_id = $_POST["order_id"];
+            
+      $statement = $connect->prepare("
+                DELETE FROM tbl_order_item WHERE order_id = :order_id
+            ");
+            $statement->execute(
+                array(
+                    ':order_id'       =>      $order_id
+                )
+            );
+      
+      for($count=0; $count<$_POST["total_item"]; $count++)
+      {
+  $order_total_before_discount_freight =$order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
+ //----------------------------------------------------- 
+$item_name_value=$_POST["item_name"];
+$item_name =preg_replace('/.*-/', '', $item_name_value);
+
+$whname_value=$_POST["order_item_whname"];
+$wh_name =preg_replace('/.*-/', '', $whname_value);
+
+
+        $statement = $connect->prepare("
+   INSERT INTO tbl_order_item 
+   (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity,order_item_prate, order_item_grate, order_item_gamount) 
+   VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
+        ");
+        $statement->execute(
+          array(
+            ':order_id'                 =>  $order_id,
+//          ':item_name'                =>  trim($_POST["item_name"][$count]),
+//          ':order_item_whname'        =>  trim($_POST["order_item_whname"][$count]),
+            ':item_name'                =>  trim($item_name[$count]),
+            ':order_item_whname'        =>  trim($wh_name[$count]),
+            ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
+            ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
+            ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
+            ':order_item_grate'         =>  trim($_POST["order_item_grate"][$count]),
+            ':order_item_gamount'       =>  trim($_POST["order_item_gamount"][$count]),
+            )
+        );
+        $result = $statement->fetchAll();
+      }
+      //$order_total_tax = $order_total_tax1 + $order_total_tax2 + $order_total_tax3;
+  $order_total_discount_percentage = floatval(trim($_POST["order_total_discount_percentage"]));
+  $order_total_discount_value = floatval(trim($_POST["order_total_discount_value"]));
+  $order_total_freight = floatval(trim($_POST["order_total_freight"])); 
+
+  $order_total_after_discount_freight = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
+//---------------------------------------------------------------
+$edata=$_POST["order_receiver_name"];
+$result =preg_replace('/.*-/', '', $edata);
+
+
+      $statement = $connect->prepare("
+        UPDATE tbl_order 
+        SET order_no = :order_no, 
+        order_date = :order_date, 
+        order_receiver_name = :order_receiver_name, 
+        order_receiver_remarks = :order_receiver_remarks, 
+        order_total_before_discount_freight = :order_total_before_discount_freight, 
+        order_total_discount_percentage = :order_total_discount_percentage, 
+        order_total_discount_value = :order_total_discount_value, 
+        order_total_freight = :order_total_freight, 
+        order_total_after_discount_freight = :order_total_after_discount_freight 
+        WHERE order_id = :order_id 
+      ");
+      
+      $statement->execute(
+        array(
+    ':order_no'                             =>  trim($_POST["order_no"]),
+    ':order_date'                           =>  trim($_POST["order_date"]),
+    ':order_receiver_name'                  =>  trim($result),
+    ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
+    ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
+    ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
+    ':order_total_discount_value'           =>  $order_total_discount_value,
+    ':order_total_freight'                  =>  $order_total_freight,
+    ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
+    ':order_id'                             =>  $order_id
+        )
+      );
+      
+      $result = $statement->fetchAll();
+            
+      header("location:sales.php");
+//------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----      
+      ob_end_flush();
+  }
+
+//-----------------Delete Code --------------------------
+  if(isset($_GET["delete"]) && isset($_GET["id"]))
+  {
+    $statement = $connect->prepare("DELETE FROM tbl_order WHERE order_id = :id");
+    $statement->execute(
+      array(
+        ':id'       =>      $_GET["id"]
+      )
+    );
+    $statement = $connect->prepare(
+      "DELETE FROM tbl_order_item WHERE order_id = :id");
+    $statement->execute(
+      array(
+        ':id'       =>      $_GET["id"]
+      )
+    );
+    header("location:sales.php");
+  //------ This code is to remove the following error-----------
+//---Cannot modify header information - headers already sent by... ----      
+      ob_end_flush();
+  }
+    ?>
+   
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <!---------------------------------------------
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+------------------------>
+
+    <style>
+      /* Remove the navbar's default margin-bottom and rounded borders */ 
+      .navbar {
+      margin-bottom: 4px;
+      border-radius: 0;
+      }
+      /* Add a gray background color and some padding to the footer */
+      footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      }
+      .carousel-inner img {
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+      min-height:200px;
+      }
+      .navbar-brand
+      {
+      padding:5px 40px;
+      }
+      .navbar-brand:hover
+      {
+      background-color:#ffffff;
+      }
+      /* Hide the carousel text when the screen is less than 600 pixels wide */
+      @media (max-width: 600px) {
+      .carousel-caption {
+      display: none; 
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <style>
+      .box
+      {
+      width: 100%;
+      max-width: 1390px;
+      border-radius: 5px;
+      border:1px solid #ccc;
+      padding: 15px;
+      margin: 0 auto;                
+      margin-top:50px;
+      box-sizing:border-box;
+      }
+    </style>
+<!-----------------------------------------------------
+    <link rel="stylesheet" href="css/datepicker.css">
+    <script src="js/bootstrap-datepicker1.js"></script>
+----------------------------------------------------------->    
+    <!--------------------------------------
+    <script>
+      $(document).ready(function(){
+        $('#order_date').datepicker({
+          format: "yyyy-mm-dd",
+          autoclose: true
+        });
+      });
+    </script>
+    ----------------------------------------->
+    <div class="container-fluid">
+      <?php
+      if(isset($_GET["add"]))
+      {
+      ?>
+      <!----onkeypress="return event.keyCode != 13;"  --->
+      <form method="post" id="invoice_form" >
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td colspan="6" align="center"><h2 style="margin-top:10.5px">Create Invoice</h2></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                  <div class="row">
+                    <div class="col-md-8">
+                      To,<br />
+                        <b>RECEIVER (BILL TO)</b><br />
+                        <input type="text" name="order_receiver_name" id="order_receiver_name" class="form-control input-sm" placeholder="Enter Receiver Name" />
+                        <b>Remarks</b><br />
+                        <input type="text" name="order_receiver_remarks" id="order_receiver_remarks" class="form-control" placeholder="Enter Billing Address">
+                    </div>
+        <!-------------------------------------------------->
+                    <?php  
+      $connect = "SELECT * FROM tbl_order where order_no=(SELECT max(order_no) FROM tbl_order) GROUP by order_no";
+        $result = mysqli_query($conn,$connect);
         if (mysqli_num_rows($result) > 0) {   
         while($row=mysqli_fetch_array($result)) {
         ?>  
-        
-        <div class="form-group" id="inumber">
-          <div class="row">
-        <div class="col-25">
-        <label for="ino">No:</label>
-        </div>
-          <div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
-         $row['PurOrderId'] + 1;  ?>"  readonly>
-         <span id="error_id" class="text-danger"></span>
+        <!-------------------------------------------------->
+        <div class="col-md-4">
+          <br />
+          <b> Invoice No. </b><br />
+          <input type="text" name="order_no" id="order_no" class="form-control input-sm" placeholder="Enter Invoice No." value="<?php echo $row['order_no'] + 1;  ?>" readonly/>
+           <input type="text" data-inputmask="'alias': 'date'" name="order_date" id="order_date" value="<?php echo date('d/m/Y'); ?>" class="form-control input-sm" />
+           <b>Opening Balance</b><br />
+                        <input type="text" name="opbal" id="opbal" class="form-control input-sm" placeholder="Opening Balance" readonly="" />
+                        
         </div>
         <?php 
             }
         }
         else{
             ?>
-            <div class="form-group" id="inumber">
-          <div class="row">
-        <div class="col-25">
-        <label for="ino">No:</label>
-        </div>
-          <div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="ino" name="ino" placeholder="Invoice No." value="1" readonly>
-        <span id="error_id" class="text-danger"></span>
+            <div class="col-md-4">
+          <b> Invoice No. </b><br />
+          <input type="text" name="order_no" id="order_no" class="form-control input-sm" placeholder="Enter Invoice No." value="1"; readonly="" >" />
+           <input type="text" data-inputmask="'alias': 'date'" name="order_date" id="order_date" value="<?php echo date('d/m/Y'); ?>" class="form-control input-sm" />
+           <b>Opening Balance</b><br />
+                        <input type="text" name="opbal" id="opbal" class="form-control input-sm" placeholder="Opening Balance" readonly="" />
+                        
         </div>  
             <?php 
             }
              ?> 
-     
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="pdate">Date:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input id="pdate" data-inputmask="'alias': 'date'" name="pdate" value="<?php echo date('d/m/Y'); ?>" style="border:2px solid #ccc; border-radius: 4px;height: 35px;">
-        <span id="error_date" class="text-danger"></span>
-      	</div>
-    	</div>
-		</div>
-<!--------------------------------------------------------------------------------------------------->
-<!--------------------------------------------------------------------------------------------------->
-<!--------------------------------------------------------------------------------------------------->
-<!--------------------------------------------------------------------------------------------------->
-		
-
-
-
-
-
-
-    <div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="scode">Supplier Code:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="scode" name="scode" placeholder="Enter Supplier Code" required ">
-        <span id="error_scode" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-      	<div class="col-60">
-      	<input type="text"id="sname" name="sname" placeholder="Supplier Name"style="width: 95%;" readonly>
-        <span id="error_sname" class="text-danger"></span>
-        <a href="suppliers.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-      	<div class="col-25"style="width: 10%;">
-      	<label for="sbal">Balance:</label>
-      	</div>
-      	<div class="col-25">
-      	<input type="text" name="sbal" id="sbal" placeholder="Supplier Balance"style="width:80%;" readonly>
-        <span id="error_sbal" class="text-danger"></span>
-      	</div>
-      	</div>
-      	</div>
-    	 <!---Item Code row----->
-    	<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="icode">Item Code:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="icode" name="icode" placeholder="Enter Item Code" required">
-        <span id="error_icode" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-      	<div class="col-60">
-      	<input type="text"id="iname" name="iname" placeholder="Item Name"style="width: 95%;" readonly>
-        <span id="error_iname" class="text-danger"></span>
-        <a href="salesitem.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
-      	</div>
-      	</div>
-      	</div>
-		 <!---Warehouse row----->
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="wcode">Warehouse Code:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="wcode" name="wcode" placeholder="Enter Warhouse Code" required">
-        <span id="error_wcode" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-      	<div class="col-60">
-      	<input type="text"id="wname" name="wname" placeholder="Warehouse Name"style="width: 95%;" readonly>
-        <span id="error_wname" class="text-danger"></span>
-        <a href="warehouse.php"><i class="fa fa-plus" aria-hidden="true"></i></a>
-      	</div>
-      	</div>
-      	</div>
-      <!---Quantity row----->
-      	<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="qty">Quantity:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="qty" name="qty" placeholder="Quantity" required>
-        <span id="error_qty" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="sqty">Stock Quantity:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="sqty" name="sqty" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Stock Quantity">
-        <span id="error_sqty" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="grate">Gross Rate:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="grate" name="grate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Gross Rate">
-        <span id="error_grate" class="text-danger"></span>
-      	</div>
-    	</div>
-		</div>
-
-		<!---Gross Amount row----->
-      	<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="gamount">Gross Amount:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="gamount" name="gamount" placeholder="Gross Amount" required>
-        <span id="error_gamount" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="DisRate">Discount % Rate:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="disrate" name="disRate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount % Rate">
-        <span id="error_disrate" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="Dvalue">DiscountValue Rate:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="dvalue" name="dvalue" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Discount Value Rate">
-        <span id="error_dvalue" class="text-danger"></span>
-      	</div>
-    	</div>
-		</div>
-
-		<!---Discounted Rate----->
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="disdrate">Discounted Rate:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="disdrate" name="disdrate" placeholder="Discounted Rate" required>
-        <span id="error_disdrate" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="Rate">Rate:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="rate" name="rate" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Rate">
-        <span id="error_rate" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-    	<div class="col-25">
-        <label for="amount">Amount:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="amount" name="amount" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;" placeholder="Amount">
-        <span id="error_amount" class="text-danger"></span>
-      	</div>
-    	</div>
-		</div>
-
-		<!---Display ID row----->
-		<div class="form-group">
-    	<div class="row">
-      	<div class="col-25">
-        <label for="did">Display ID:</label>
-      	</div>
-      	<div class="col-25"><span class="asterisk_input"></span>
-        <input type="text" id="did" name="did" placeholder="Enter Display Id" required">
-        <span id="error_did" class="text-danger"></span>
-      	</div>
-      	<div class="col-25" style="width:0.5%;"></div>
-      	<div class="col-25"><label for="remarks">Remarks</label></div>
-      	<div class="col-75">
-      	<input type="text"id="remarks" name="remarks" placeholder="Remarks..." style="width: 91%;">
-        <span id="error_remarks" class="text-danger"></span>
-      	</div>
-      	</div>
-      	</div>
-      
-  <!---------------------Save and Edit Button------------------------->
-      <div class="form-group">
-      <div class="row">
-      <div class="col-25">
-      </div>
-     <div class="col-75">  
-      <!--------------
-      <input type="button" id="updatesql" value="Update-btn" name="" style="display: none;">
-      <input type="text" id="id" name="id" value="0">
-      ---------------->
-      <!---   </div>   -->
-   <!----button row------>
-	 <!----	<div class="form-group">    -->
-    <!----  	<div class="row">          -->
-    <!--	<div class="col-75">  -->
-    	<button type="button" name="save" id="save" class="btn btn-success">Save</button>
-      <input type="hidden" name="row_id" id="hidden_row_id" />
-      <input type="hidden" id="idn" name="idn" value="0">
-     	</div>
-    	</div>
-    	</div>
-
-</form>
-<br>
-<!--------------------To Show Temporary Record------------------------->
-
-  <form method="post" id="user_form">
-       
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered" id="user_data">
-            
-            <tr>
-        <th>ID</th>   
-        <th>Date</th>
-        <th>Supplier Code</th>
-        <th>Supplier Name</th>
-        <th>Balance</th>
-        <th>Item Code</th>
-        <th>Item Name</th>
-        <th>Warehouse Code</th>
-        <th>Warehouse Name</th>
-        <th>Quantity</th>
-        <th>Stock Quantity</th>
-        <th>Gross Rate</th>
-        <th>Gross Amount</th>
-        <th>Discount %</th>
-        <th>Discount Value</th>
-        <th>Discount Rate</th>
-        <th>Rate</th>
-        <th>Amount</th>
-        <th>Display ID</th>
-        <th>Remarks</th>
-        <th>Edit</th>
-        <th>Delete</th>
+                  </div>
+                  <br />
+                  <table id="invoice-item-table" class="table table-bordered">
+                    <tr>
+                      <th width="2%">Sr#</th>
+                      <th width="20%">Item Name</th>
+                      <th width="20%">Warehouse Name</th>
+                      <th width="5%">Quantity</th>
+                      <th width="5%">Stock Quantity</th>
+                      <th width="5%">Previous Rate</th>
+                      <th width="7%">Gross Rate</th>
+                      <th width="8%">Gross Amount</th>
+                      <th width="3%">+/-</th>
+                    </tr>
+                            
+             <tr>
+    <td><span id="sr_no">1</span></td>
+    <!----------Item Name------------->
+    <td><input type="text" name="item_name[]" id="item_name1" class="form-control input-sm"  autocomplete="on" /></td>
+    <!----------Warehouse Name------------->
+  <td><input type="text" name="order_item_whname[]" id="order_item_whname1" data-srno="1" class="form-control input-sm order_item_whname" /></td>
+  <!----------Quantity------------->
+  <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
+  <!---------Stock Quantity-------------->
+<td><input type="text" name="order_item_squantity[]" id="order_item_squantity1" data-srno="1" class="form-control input-sm order_item_squantity" readonly="" /></td>
+  <!----------Previous Rate------------->
+  <td><input type="text" name="order_item_prate[]" id="order_item_prate1" data-srno="1" class="form-control input-sm number_only order_item_prate" readonly="" /></td>
+  <!-----------Gross Rate------------>
+  <td><input type="text" name="order_item_grate[]" id="order_item_grate1" data-srno="1" class="form-control input-sm order_item_grate" readonly="" /></td>
+  <!-----------Gross Amount------------>
+  <td><input type="text" name="order_item_gamount[]" id="order_item_gamount1" data-srno="1" class="form-control input-sm number_only order_item_gamount" readonly="" /></td>
+  <!----------------------->
+ <td> </td>
             </tr>
+            </table>
+
+       <div align="right">
+
+         <button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs">+</button>
+       </div>
+               </td>
+              </tr>
+
+      <tr>
+        <td>
+  <label><b>Discount%:</label>
+  <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
+        <td>
+  <label><b>Discount Value:</label>
+  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="one" value="0" />  </td>
+        <td>
+  <label><b>Freight:</label>
+  <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
+  <!----------Hidden for total--------------------->
+  
+    <td><b>Total</b></td>
+        <td><b><span id="final_total_amt"></span></b></td>
+      
+      </tr>
+
+
+              <tr>
+                <td colspan="6"></td>
+              </tr>
+              <tr>
+          <td colspan="6" align="center">
+           <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
+          <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
+          <input type="hidden" name="total_item" id="total_item" value="1" />
+          <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />
+
+          
+                </td>
+              </tr>
           </table>
         </div>
-    <!------Temporary input boxex---------->
+      </form>
+      <script>
+      $(document).ready(function(){
+        $("#order_receiver_name").focus();
+        var final_total_amt = $('#final_total_amt').text();
+        var count = 1;
+        
+        $(document).on('click', '#add_row', function(){
+          //alert(count);
+          count++;
+          $('#total_item').val(count);
+          var html_code = '';
+  html_code += '<tr id="row_id_'+count+'">';
+  html_code += '<td><span id="sr_no">'+count+'</span></td>';
+          
+  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
+          //--------Warehouse Name added-------------------------
+  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /></td>';
+          //-------- Quantity------------------------------------
+  html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
+          //-------- Stock Quantity-----------------------------
+  html_code +=  '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" readonly=""/></td>';
+          //--------Previous Rate------------------------------
+  html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_prate"  readonly/></td>';
+          //---------Gross Rate-------------------------------
+  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_grate" readonly=""/></td>';
+          //--------Gross Amount------------------------------
+  html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_gamount" value = "0"/></td>';
+          //--------Delete Button----------------------------
+ // html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
 
-      <div class="form-group">
-      <div class="row">
-        <div class="col-25">
-        <label for="tqty">Total Quantity:</label>
-        </div>
-        <div class="col-25">
-        <input type="text" id="tqty" name="tqty" placeholder="Total Quanity">
-        </div>
-        <div class="col-25" style="width:2%;"></div>
-        <div class="col-25" style="width: 10%;">
-        <label for="bamt">Bill Amount:</label>
-        </div>
-        <div class="col-25">
-        <input type="text" id="bamt" name="bamt" placeholder="Bill Amount">
-        </div>
-        <div class="col-25" style="width:2%;"></div>
-        <div class="col-25" style="width: 12%;">
-        <label for="gamt">Gross Amount:</label>
-        </div>
-        <div class="col-25">
-        <input type="text" id="gamt" name="gamt" placeholder="Gross Amount">
-        </div>
-        <div class="col-25" style="width:1%;"></div>
-        <div class="col-25" style="width: 12%;">
-        <input type="text" id="gamt" name="gamt" placeholder="Discount" style="width: 60%;">
-        </div>
-        </div>
-        </div>
-  <!------------------------------------------------------->
-
-        <div class="form-group">
-      <div class="row">
-      <div class="col-25"></div>
-      <div class="col-0">
-      <input type="submit" name="insert" id="insert" class="btn btn-success" value=" Insert " />
-      <center><p><p id="msg" style="color: red;"></p></p></center>
-<!---
-      <input type="text" id="id" name="id" value="0">
-     --------------> 
-      </div>
-      </div>
-      </div>
-       </form>
-
-</div>
-
-<div class="row">
-<div class="col-xs-6 col-sm-1"></div>
-<div class="col-xs-6 col-sm-10 col-md-offset-4" id="output">
-</div>
-</div>
-<br>
-
-<!------This code is for EnterIndex insted of TabIndex OK--------->
-<script type="text/javascript">
-	$(document).ready(function(){
-
-inputs = $("form :input");
-$(inputs).keypress(function(e){
-	  if (e.keyCode == 13){
-		  inputs[inputs.index(this)+1].focus();
-	  }
-});
-
-});
-</script>
+html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+count+'" class="fa fa-trash-o fa-lg remove_row"></i></td>';
 
 
-<!-----------Validation and Record Insertion--------->
-<script>
-  $(document).ready(function(){
-$("#output").load("Transaction_purchases/view.php");
-$("#scode").focus();
+ //<i style="color:red;font-size: 40px;" id="dell" class="fa fa-trash-o fa-lg"></i>
+       
 
-var count = 0;
+  html_code += '</tr>';
+  //-----------Append New Row --------------------------
+  $('#invoice-item-table').append(html_code);
+  $("#item_name"+count).focus();
+        });
+        
+        $(document).on('click', '.remove_row', function(){
+          
+          var row_id = $(this).attr("id");
+          
+          var total_item_amount = $('#order_item_gamount'+row_id).val();
+          var final_amount = $('#final_total_amt').text();
+          var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
+          $('#final_total_amt').text(result_amount);
 
-$('#save').click(function(){
-    var error_id = '';
-    var error_date = '';
-    var error_scode = '';
-    var error_sname = '';
-    var error_sbal = '';
-    var error_icode = '';
-    var error_iname = '';
-    var error_wcode = '';
-    var error_wname = '';
-    var error_qty = '';
-    var error_sqty = '';
-    var error_grate = '';
-    var error_gamount = '';
-    var error_disrate = '';
-    var error_dvalue = '';
-    var error_disdrate = '';
-    var error_rate = '';
-    var error_amount = '';
-    var error_did = '';
-    var error_remarks = '';
-    
-//-------------------------------------------------------------------
-    var ino = '';
-    var pdate = '';
-    var scode = '';
-    var sname = '';
-    var sbal = '';
-    var icode = '';
-    var iname = '';
-    var wcode = '';
-    var wname = '';
-    var qty = '';
-    var sqty = '';
-    var grate = '';
-    var gamount = '';
-    var disrate = '';
-    var dvalue = '';
-    var disdrate = '';
-    var rate = '';
-    var amount = '';
-    var did = '';
-    var remarks = '';
-//------------------------------------------------------------        
-    if($('#ino').val() == '')
-    {
-      error_id = 'ID is required';
-      $('#error_id').text(error_id);
-      $('#ino').css('border-color', '#cc0000');
-      ino = '';
-      $('#ino').focus();
-    }
-    else
-    {
-      error_id = '';
-      $('#error_id').text(error_id);
-      $('#ino').css('border-color', 'green');
-      ino = $('#ino').val();
-    } 
-//------------------------------------------------------------
-if($('#pdate').val() == '')
-    {
-      error_date = 'Date is required';
-      $('#error_date').text(error_date);
-      $('#pdate').css('border-color', '#cc0000');
-      pdate = '';
-      $('#pdate').focus();
-    }
-    else
-    {
-      error_date = '';
-      $('#error_date').text(error_date);
-      $('#pdate').css('border-color', 'green');
-      pdate = $('#pdate').val();
-    } 
-//-----------------------------------------------------------
-//---These fields are in Reverse Order to meet the desired Results---
-if($('#remarks').val() == '')
-    {
-      error_remarks = 'Remarks is required';
-      $('#error_remarks').text(error_remarks);
-      $('#remarks').css('border-color', '#cc0000');
-      remarks = '';
-      $('#remarks').focus();
-    }
-    else
-    {
-      error_remarks = '';
-      $('#error_remarks').text(error_remarks);
-      $('#remarks').css('border-color', 'green');
-      remarks = $('#remarks').val();
-    }
-//------------------------------------------------------------
-if($('#did').val() == '')
-    {
-      error_did = 'Display Id is required';
-      $('#error_did').text(error_did);
-      $('#did').css('border-color', '#cc0000');
-      did = '';
-      $('#did').focus();
-    }
-    else
-    {
-      error_did = '';
-      $('#error_did').text(error_did);
-      $('#did').css('border-color', 'green');
-      did = $('#did').val();
-    }
-//------------------------------------------------------------
-if($('#amount').val() == '')
-    {
-      error_amount = 'Amount is required';
-      $('#error_amount').text(error_amount);
-      $('#amount').css('border-color', '#cc0000');
-      amount = '';
-      $('#amount').focus();
-    }
-    else
-    {
-      error_amount = '';
-      $('#error_amount').text(error_amount);
-      $('#amount').css('border-color', 'green');
-      amount = $('#amount').val();
-    }
-//------------------------------------------------------------
-if($('#rate').val() == '')
-    {
-      error_rate = 'Rate is required';
-      $('#error_rate').text(error_rate);
-      $('#rate').css('border-color', '#cc0000');
-      rate = '';
-      $('#rate').focus();
-    }
-    else
-    {
-      error_rate = '';
-      $('#error_rate').text(error_rate);
-      $('#rate').css('border-color', 'green');
-      rate = $('#rate').val();
-    }
-//------------------------------------------------------------
-if($('#disdrate').val() == '')
-    {
-      error_disdrate = 'Discounted Value is required';
-      $('#error_disdrate').text(error_disdrate);
-      $('#disdrate').css('border-color', '#cc0000');
-      disdrate = '';
-      $('#disdrate').focus();
-    }
-    else
-    {
-      error_disdrate = '';
-      $('#error_disdrate').text(error_disdrate);
-      $('#disdrate').css('border-color', 'green');
-      disdrate = $('#disdrate').val();
-    }
-//------------------------------------------------------------
-if($('#dvalue').val() == '')
-    {
-      error_dvalue = 'Discount Value is required';
-      $('#error_dvalue').text(error_dvalue);
-      $('#dvalue').css('border-color', '#cc0000');
-      dvalue = '';
-      $('#dvalue').focus();
-    }
-    else
-    {
-      error_dvalue = '';
-      $('#error_dvalue').text(error_dvalue);
-      $('#dvalue').css('border-color', 'green');
-      dvalue = $('#dvalue').val();
-    } 
-//------------------------------------------------------------
-if($('#disrate').val() == '')
-    {
-      error_disrate = 'Discount % is required';
-      $('#error_disrate').text(error_disrate);
-      $('#disrate').css('border-color', '#cc0000');
-      disrate = '';
-      $('#disrate').focus();
-    }
-    else
-    {
-      error_disrate = '';
-      $('#error_disrate').text(error_disrate);
-      $('#disrate').css('border-color', 'green');
-      disrate = $('#disrate').val();
-    } 
-//------------------------------------------------------------
-if($('#gamount').val() == '')
-    {
-      error_gamount = 'Gross Amount is required';
-      $('#error_gamount').text(error_gamount);
-      $('#gamount').css('border-color', '#cc0000');
-      gamount = '';
-      $('#gamount').focus();
-    }
-    else
-    {
-      error_gamount = '';
-      $('#error_gamount').text(error_gamount);
-      $('#gamount').css('border-color', 'green');
-      gamount = $('#gamount').val();
-    } 
-//------------------------------------------------------------
-if($('#grate').val() == '')
-    {
-      error_grate = 'Gross Rate is required';
-      $('#error_grate').text(error_grate);
-      $('#grate').css('border-color', '#cc0000');
-      grate = '';
-      $('#grate').focus();
-    }
-    else
-    {
-      error_grate = '';
-      $('#error_grate').text(error_grate);
-      $('#grate').css('border-color', 'green');
-      grate = $('#grate').val();
-    } 
-//------------------------------------------------------------
-if($('#sqty').val() == '')
-    {
-      error_sqty = 'Stock Quantity is required';
-      $('#error_sqty').text(error_sqty);
-      $('#sqty').css('border-color', '#cc0000');
-      sqty = '';
-      $('#sqty').focus();
-    }
-    else
-    {
-      error_sqty = '';
-      $('#error_sqty').text(error_sqty);
-      $('#sqty').css('border-color', 'green');
-      sqty = $('#sqty').val();
-    } 
-//------------------------------------------------------------
-if($('#qty').val() == '')
-    {
-      error_qty = 'Supplier Quantity is required';
-      $('#error_qty').text(error_qty);
-      $('#qty').css('border-color', '#cc0000');
-      qty = '';
-      $('#qty').focus();
-    }
-    else
-    {
-      error_qty = '';
-      $('#error_qty').text(error_qty);
-      $('#qty').css('border-color', 'green');
-      qty = $('#qty').val();
-    } 
-//------------------------------------------------------------
-if($('#wname').val() == '')
-    {
-      error_wname = 'Warehouse Name is required';
-      $('#error_wname').text(error_wname);
-      $('#wname').css('border-color', '#cc0000');
-      wname = '';
-      $('#wname').focus();
-    }
-    else
-    {
-      error_wname = '';
-      $('#error_wname').text(error_wname);
-      $('#wname').css('border-color', 'green');
-      wname = $('#wname').val();
-  }
-//------------------------------------------------------------
-if($('#wcode').val() == '')
-    {
-      error_wcode = 'Warehouse Code is required';
-      $('#error_wcode').text(error_wcode);
-      $('#wcode').css('border-color', '#cc0000');
-      wcode = '';
-      $('#wcode').focus();
-    }
-    else
-    {
-      error_wcode = '';
-      $('#error_wcode').text(error_wcode);
-      $('#wcode').css('border-color', 'green');
-      wcode = $('#wcode').val();
-    } 
-//------------------------------------------------------------
-if($('#iname').val() == '')
-    {
-      error_iname = 'Supplier Item Name is required';
-      $('#error_iname').text(error_iname);
-      $('#iname').css('border-color', '#cc0000');
-      iname = '';
-      $('#iname').focus();
-    }
-    else
-    {
-      error_iname = '';
-      $('#error_iname').text(error_iname);
-      $('#iname').css('border-color', 'green');
-      iname = $('#iname').val();
-    } 
-//------------------------------------------------------------
-if($('#icode').val() == '')
-    {
-      error_icode = 'Supplier Item Code is required';
-      $('#error_icode').text(error_icode);
-      $('#icode').css('border-color', '#cc0000');
-      icode = '';
-      $('#icode').focus();
-    }
-    else
-    {
-      error_icode = '';
-      $('#error_icode').text(error_icode);
-      $('#icode').css('border-color', 'green');
-      icode = $('#icode').val();
-  }
-//------------------------------------------------------------
-if($('#sbal').val() == '')
-    {
-      error_sbal = 'Supplier Balance is required';
-      $('#error_sbal').text(error_sbal);
-      $('#sbal').css('border-color', '#cc0000');
-      sbal = '';
-      $('#sbal').focus();
-    }
-    else
-    {
-      error_sbal = '';
-      $('#error_sbal').text(error_sbal);
-      $('#sbal').css('border-color', 'green');
-      sbal = $('#sbal').val();
-    } 
-//------------------------------------------------------------
-if($('#sname').val() == '')
-    {
-      error_sname = 'Supplier Name is required';
-      $('#error_sname').text(error_sname);
-      $('#sname').css('border-color', '#cc0000');
-      sname = '';
-      $('#sname').focus();
-    }
-    else
-    {
-      error_sname = '';
-      $('#error_sname').text(error_sname);
-      $('#sname').css('border-color', 'green');
-      sname = $('#sname').val();
-    } 
-//------------------------------------------------------------
-    if($('#scode').val() == '')
-    {
-      error_scode = 'Supplier Code is required';
-      $('#error_scode').text(error_scode);
-      $('#scode').css('border-color', '#cc0000');
-      scode = '';
-      $('#scode').focus();
-    }
-    else
-    {
-      error_scode = '';
-      $('#error_scode').text(error_scode);
-      $('#scode').css('border-color', 'green');
-      scode = $('#scode').val();
-    } 
-//-----------------------------------------------------------------------------
-if(error_id != '' || error_date != '' || error_scode !='' || error_sname !='' || error_sbal !='' || error_icode !='' || error_iname !='' || error_wcode !='' || error_wname !='' || error_qty !='' || error_sqty !='' || error_grate !='' || error_gamount !='' || error_disrate !='' || error_dvalue !='' || error_disdrate !='' || error_rate !='' || error_amount !='' || error_did !='' || error_remarks !='' )
-    {
-      return false;
-    }
-    else
-    {
-      if($('#save').text() == 'Save')
-      {
-        count = count + 1;
-        output = '<tr id="row_'+count+'">';
-output += '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+count+'" class="ino"  value="'+ino+'" /></td>';
-output += '<td>'+pdate+' <input type="hidden" name="pdate[]" id="pdate'+count+'" value="'+pdate+'" /></td>';
-output += '<td>'+scode+' <input type="hidden" name="scode[]" id="scode'+count+'" value="'+scode+'" /></td>';
-output += '<td>'+sname+' <input type="hidden" name="sname[]" id="sname'+count+'" value="'+sname+'" /></td>';
-output += '<td>'+sbal+' <input type="hidden" name="sbal[]" id="sbal'+count+'" value="'+sbal+'" /></td>';
-output += '<td>'+icode+' <input type="hidden" name="icode[]" id="icode'+count+'" value="'+icode+'" /></td>';
-output += '<td>'+iname+' <input type="hidden" name="iname[]" id="iname'+count+'" value="'+iname+'" /></td>';
-output += '<td>'+wcode+' <input type="hidden" name="wcode[]" id="wcode'+count+'" value="'+wcode+'" /></td>';
-output += '<td>'+wname+' <input type="hidden" name="wname[]" id="wname'+count+'" value="'+wname+'" /></td>';
-output += '<td>'+qty+' <input type="hidden" name="qty[]" id="qty'+count+'" value="'+qty+'" /></td>';
-output += '<td>'+sqty+' <input type="hidden" name="sqty[]" id="sqty'+count+'" value="'+sqty+'" /></td>';
-output += '<td>'+grate+' <input type="hidden" name="grate[]" id="grate'+count+'" value="'+grate+'" /></td>';
-output += '<td>'+gamount+' <input type="hidden" name="gamount[]" id="gamount'+count+'" value="'+gamount+'" /></td>';
-output += '<td>'+disrate+' <input type="hidden" name="disrate[]" id="disrate'+count+'" value="'+disrate+'" /></td>';
-output += '<td>'+dvalue+' <input type="hidden" name="dvalue[]" id="dvalue'+count+'" value="'+dvalue+'" /></td>';
-output += '<td>'+disdrate+' <input type="hidden" name="disdrate[]" id="disdrate'+count+'" value="'+disdrate+'" /></td>';
-output += '<td>'+rate+' <input type="hidden" name="rate[]" id="rate'+count+'" value="'+rate+'" /></td>';
-output += '<td>'+amount+' <input type="hidden" name="amount[]" id="amount'+count+'" value="'+amount+'" /></td>';
-output += '<td>'+did+' <input type="hidden" name="did[]" id="did'+count+'" value="'+did+'" /></td>';
-output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+count+'" value="'+remarks+'" /></td>';
+          var order_gtotal = $('#order_gtotal').val();
+          var order_gtotal1 = parseFloat(order_gtotal) - parseFloat(total_item_amount);
+          $('#order_gtotal').val(order_gtotal1);
 
-//----------------Buttons----Edit------Delete-----------------------------
-output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">Edit</button></td>';
-
-output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Delete</button></td>';
-//------------------------------------------------------------------------
-output += '</tr>';
-        $('#user_data').append(output);
-        $("#frm")[0].reset();
-        $("#scode").focus();
+       
+       if(isNaN($('#final_total_amt').text())){
+               $('#final_total_amt').text(0);
       }
 
-      else if ($('#save').text() == 'Edit Record')
-      {
-        var row_id = $('#hidden_row_id').val();
+          $('#row_id_'+row_id).remove();
+          count--;
+          $('#total_item').val(count);
+          
+          var row_idd = row_id - 1;
+          $("#item_name"+row_idd).focus();
+          
 
-output = '<td>'+ino+' <input type="hidden" name="ino[]" id="ino'+row_id+'" class="ino" value="'+ino+'" /></td>';
-output += '<td>'+pdate+' <input type="hidden" name="pdate[]" id="pdate'+row_id+'" value="'+pdate+'" /></td>';
-output += '<td>'+scode+' <input type="hidden" name="scode[]" id="scode'+row_id+'" value="'+scode+'" /></td>';
-output += '<td>'+sname+' <input type="hidden" name="sname[]" id="sname'+row_id+'" value="'+sname+'" /></td>';
-output += '<td>'+sbal+' <input type="hidden" name="sbal[]" id="sbal'+row_id+'" value="'+sbal+'" /></td>';
-output += '<td>'+icode+' <input type="hidden" name="icode[]" id="icode'+row_id+'" value="'+icode+'" /></td>';
-output += '<td>'+iname+' <input type="hidden" name="iname[]" id="iname'+row_id+'" value="'+iname+'" /></td>';
-output += '<td>'+wcode+' <input type="hidden" name="wcode[]" id="wcode'+row_id+'" value="'+wcode+'" /></td>';
-output += '<td>'+wname+' <input type="hidden" name="wname[]" id="wname'+row_id+'" value="'+wname+'" /></td>';
-output += '<td>'+qty+' <input type="hidden" name="qty[]" id="qty'+row_id+'" value="'+qty+'" /></td>';
-output += '<td>'+sqty+' <input type="hidden" name="sqty[]" id="sqty'+row_id+'" value="'+sqty+'" /></td>';
-output += '<td>'+grate+' <input type="hidden" name="grate[]" id="grate'+row_id+'" value="'+grate+'" /></td>';
-output += '<td>'+gamount+' <input type="hidden" name="gamount[]" id="gamount'+row_id+'" value="'+gamount+'" /></td>';
-output += '<td>'+disrate+' <input type="hidden" name="disrate[]" id="disrate'+row_id+'" value="'+disrate+'" /></td>';
-output += '<td>'+dvalue+' <input type="hidden" name="dvalue[]" id="dvalue'+row_id+'" value="'+dvalue+'" /></td>';
-output += '<td>'+disdrate+' <input type="hidden" name="disdrate[]" id="disdrate'+row_id+'" value="'+disdrate+'" /></td>';
-output += '<td>'+rate+' <input type="hidden" name="rate[]" id="rate'+row_id+'" value="'+rate+'" /></td>';
-output += '<td>'+amount+' <input type="hidden" name="amount[]" id="amount'+row_id+'" value="'+amount+'" /></td>';
-output += '<td>'+did+' <input type="hidden" name="did[]" id="did'+row_id+'" value="'+did+'" /></td>';
-output += '<td>'+remarks+' <input type="hidden" name="remarks[]" id="remarks'+row_id+'" value="'+remarks+'" /></td>';
-//----------------Buttons----Edit------Delete-----------------------------
-output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">Edit</button></td>';
-output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+row_id+'">Delete</button></td>';       
-    $('#row_'+row_id+'').html(output);
-      }
-      else //if ($('#save').text() == 'EditRecord')
-      {
-          $.ajax({
-            url:  "Transaction_purchases/update.php",
-            type:  "post",
-             data: $("#frm").serialize(),
-              success:function(d) {
-      
-    $("#output").load("Transaction_purchases/view.php");
-  $("#frm")[0].reset();
-  $("#scode").focus();
-        }
-      });
-      }
-   
-   }
-});
-
-  $(document).on('click', '.view_details', function(){
-    var row_id = $(this).attr("id");
-    var ino = $('#ino'+row_id+'').val();
-    var pdate = $('#pdate'+row_id+'').val();
-    var scode = $('#scode'+row_id+'').val();
-    var sname = $('#sname'+row_id+'').val();
-    var sbal = $('#sbal'+row_id+'').val();
-    var icode = $('#icode'+row_id+'').val();
-    var iname = $('#iname'+row_id+'').val();
-    var wcode = $('#wcode'+row_id+'').val();
-    var wname = $('#wname'+row_id+'').val();
-    var qty = $('#qty'+row_id+'').val();
-    var sqty = $('#sqty'+row_id+'').val();
-    var grate = $('#grate'+row_id+'').val();
-    var gamount = $('#gamount'+row_id+'').val();
-    var disrate = $('#disrate'+row_id+'').val();
-    var dvalue = $('#dvalue'+row_id+'').val();
-    var disdrate = $('#disdrate'+row_id+'').val();
-    var rate = $('#rate'+row_id+'').val();
-    var amount = $('#amount'+row_id+'').val();
-    var did = $('#did'+row_id+'').val();
-    var remarks = $('#remarks'+row_id+'').val();
-    
-
-    $('#ino').val(ino);
-    $('#pdate').val(pdate);
-    $('#scode').val(scode);
-    $('#sname').val(sname);
-    $('#sbal').val(sbal);
-    $('#icode').val(icode);
-    $('#iname').val(iname);
-    $('#wcode').val(wcode);
-    $('#wname').val(wname);
-    $('#qty').val(qty);
-    $('#sqty').val(sqty);
-    $('#grate').val(grate);
-    $('#gamount').val(gamount);
-    $('#disrate').val(disrate);
-    $('#dvalue').val(dvalue);
-    $('#disdrate').val(disdrate);
-    $('#rate').val(rate);
-    $('#amount').val(amount);
-    $('#did').val(did);
-    $('#remarks').val(remarks);
-//--------------------------------------------------------
-    $('#save').text('Edit Record');
-    $('#hidden_row_id').val(row_id);
-
- });
-//--------------------------------------------------------
-$(document).on('click', '#save', function(){
-    
-    if ($("#ino").val()!="" && $("#pdate").val()!="" && $("#scode").val()!="" && $("#sname").val()!="" && $("#sbal").val()!="" && $("#icode").val()!="" && $("#iname").val()!="" && $("#wcode").val()!="" && $("#wname").val()!="" && $("#qty").val()!="" && $("#sqty").val()!="" && $("#grate").val()!="" && $("#gamount").val()!="" && $("#disrate").val()!="" && $("#rate").val()!="" && $("#amount").val()!="" && $("#did").val()!="" && $("#remarks").val()!="")
-   {
-    $("#frm")[0].reset();
-    $("#scode").focus();
-    $('#save').text('Save');
-      
-    }
-    
-  });
-//--------------------------------------------------------
-  $(document).on('click', '.remove_details', function(){
-    var row_id = $(this).attr("id");
-    if(confirm("Are you sure you want to remove this row data?"))
-    {
-      $('#row_'+row_id+'').remove();
-    }
-    else
-    {
-      return false;
-    }
-  });
-
- });
-
-
-//----------------------------------------------------------------------
-//----------------------------------------------------------------------
-$('#user_form').on('submit', function(event){
-
-    event.preventDefault();
-    var count_data = 0;
-         
-    $('.ino').each(function(){
-      count_data = count_data + 1;
-    });
-    if(count_data > 0 )
-    {
-      var form_data = $(this).serialize();
-      $.ajax({
-        url:"Transaction_purchases/insert.php",
-        method:"POST",
-        data:form_data,
-        success:function(data)
+          });
+//---------------------Create Invoice Function------------------------------
+        function cal_final_total(count)
         {
-          $('#user_data').find("tr:gt(0)").remove();
- //This line of code Reload the ID without refreshing............
-          $("#inumber").load(" #inumber");    
-          $("#output").load("Transaction_purchases/view.php");
+          var final_item_total = 0;
+          for(j=1; j<=count; j++)
+          {
+            var quantity = 0;
+            var grate = 0;
+            var gamount = 0;
+            var item_total=0;
+            
+            quantity = $('#order_item_quantity'+j).val();
+            if(quantity > 0)
+            {
+              grate = $('#order_item_grate'+j).val();
+              if(grate > 0)
+              {
+                gamount = parseFloat(quantity) * parseFloat(grate);
+                //$('#order_item_gamount'+j).val(gamount);
+              }
+              item_total = gamount;
+              final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
+
+              $('#order_item_gamount'+j).val(item_total);
+                //$('#order_item_final_amount'+j).val(item_total);
+              }
+            }
+            $('#order_gtotal').val(final_item_total);
+          var dvalue = $('#order_total_discount_value').val();
+          var freight = $('#order_total_freight').val();
+          var final_gamount = parseFloat(final_item_total) - parseFloat(dvalue) + parseFloat(freight);
+          $('#final_total_amt').text(final_gamount);
+         }
+/*
+        $(document).on('blur', '.order_item_grate', function(){
+          cal_final_total(count);
+        });
+*/
+$(document).on('keyup', '.order_item_quantity', function(){
+          cal_final_total(count);
+        });
+//--------------------------Temporary Total Function-------------------------------------------
+ $("#order_total_discount_value").keyup(function(){
+      var temp = $("#order_gtotal").val();
+      var dvalue = $("#order_total_discount_value").val();
+      var freight = $("#order_total_freight").val();
+      //alert(freight);
+      var summ = 0;
+      summ = parseFloat(temp) + parseFloat(freight);
+      //-------------------------------------------- 
+      var sum = 0;
+      sum = parseFloat(temp) -  parseFloat(dvalue) ;
+      sum = parseFloat(sum) + parseFloat(freight);
+      $('#final_total_amt').text(sum);
+      if(isNaN($('#final_total_amt').text())){
+        $('#final_total_amt').text(summ);
+      }
+ });
+
+ $("#order_total_freight").keyup(function(){
+      var temp = $("#order_gtotal").val();
+      var dvalue = $("#order_total_discount_value").val();
+      var freight = $("#order_total_freight").val();
+      //alert(freight);
+      var summ = 0;
+      var sum = 0;
+      summ = parseFloat(temp) -  parseFloat(dvalue) ;
+      sum = parseFloat(summ) + parseFloat(freight);
+      $('#final_total_amt').text(sum);
+      
+      if(isNaN($('#final_total_amt').text())){
+        $("#final_total_amt").text(summ);
+      } 
+ });
+ //--------------------Percentage--------------------------------
+
+ $("#order_total_discount_percentage").keyup(function(){
+      var temp = $("#order_gtotal").val();
+      var percent = $("#order_total_discount_percentage").val();
+      var percent_value = 0;
+      percent_value = parseFloat(temp) *  parseFloat(percent) / 100;
+      $('#order_total_discount_value').val(percent_value);
+
+      if(isNaN($('#order_total_discount_value').val())){
+        $("#order_total_discount_value").val(0);
+      } 
+      
+ });
+//-----------This code is for removing NaN value in $final_total_amt.text() if user clik the percentage or freight textbox without entering any item for sale/purchase-----------------------------------------------
+ $("#order_total_discount_value").keyup(function(){
+if(isNaN($('#final_total_amt').text())){
+        $("#final_total_amt").text(0);
+    }
+});
+ $("#order_total_freight").keyup(function(){
+if(isNaN($('#final_total_amt').text())){
+        $("#final_total_amt").text(0);
+    }
+}); 
+//-----Alert for if user Enter Discount Value greater than Actual------
+$('#order_total_discount_percentage').on('keyup',function(){
+   var grand_total = $("#order_gtotal").val();
+   var discount = $("#order_total_discount_value").val();
+var ab = parseFloat(grand_total);
+var bs = parseFloat(discount);
+if(bs > ab) {
+  alert("Discount Value is Greater Than Actual Amount");
+  }
+});
+//-------------Create Invoice------Authentication-------------------------
+//-------------Code for Pressing Enter Key to Submit a Form---------------
+  $(document).on('keydown','#create_invoice',function(){
+  //          if (e.keyCode == 13) {
+          if($.trim($('#order_receiver_name').val()).length == 0)
+          {
+            alert("Please Enter Reciever Name Naeem");
+            $('#order_receiver_name').focus();
+            return false;
+          }
+
+          if($.trim($('#order_no').val()).length == 0)
+          {
+            alert("Please Enter Invoice Number");
+            $('#order_no').focus();
+            return false;
+          }
+
+          if($.trim($('#order_date').val()).length == 0)
+          {
+            alert("Please Select Invoice Date");
+            $('#order_date').focus();
+            return false;
+          }
+
+          for(var no=1; no<=count; no++) {
+
+            if($.trim($('#item_name'+no).val()).length == 0)
+            {
+              alert("Please Enter Item Name");
+              $('#item_name'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_whname'+no).val()).length == 0)
+            {
+              alert("Please Enter Warehouse Name");
+              $('#order_item_whname'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_quantity'+no).val()).length == 0)
+            {
+              alert("Please Enter Quantity");
+              $('#order_item_quantity'+no).focus();
+              return false;
+            }
+            if($.trim($('#order_item_squantity'+no).val()).length == 0)
+            {
+              alert("Please Enter Stock Quantity");
+              $('#order_item_squantity'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_grate'+no).val()).length == 0)
+            {
+              alert("Please Enter Gross Rate");
+              $('#order_item_grate'+no).focus();
+              return false;
+            }
 
           }
+            $('#invoice_form').submit();
+        });
+
+//--------------Repeating above code for Click Button to Submit Form --------------------
+
+$(document).on('click','#create_invoice',function(){
+          if($.trim($('#order_receiver_name').val()).length == 0)
+          {
+            alert("Please Enter Reciever Name Naeem");
+            $('#order_receiver_name').focus();
+            return false;
+            //$('#order_receiver_name').focus();
+          }
+
+          if($.trim($('#order_no').val()).length == 0)
+          {
+            alert("Please Enter Invoice Number");
+            $('#order_no').focus();
+            return false;
+          }
+
+          if($.trim($('#order_date').val()).length == 0)
+          {
+            alert("Please Select Invoice Date");
+            $('#order_date').focus();
+            return false;
+          }
+
+          for(var no=1; no<=count; no++) {
+
+            if($.trim($('#item_name'+no).val()).length == 0)
+            {
+              alert("Please Enter Item Name");
+              $('#item_name'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_whname'+no).val()).length == 0)
+            {
+              alert("Please Enter Warehouse Name");
+              $('#order_item_whname'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_quantity'+no).val()).length == 0)
+            {
+              alert("Please Enter Quantity");
+              $('#order_item_quantity'+no).focus();
+              return false;
+            }
+            if($.trim($('#order_item_squantity'+no).val()).length == 0)
+            {
+              alert("Please Enter Stock Quantity");
+              $('#order_item_squantity'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_grate'+no).val()).length == 0)
+            {
+              alert("Please Enter Gross Rate");
+              $('#order_item_grate'+no).focus();
+              return false;
+            }
+
+          }
+            
+            $('#invoice_form').submit();
+        });  
+});
+//});
+   </script>
+
+
+      <?php
+      }
+ //----------------------Update code----------------------------
       
-      });
-    }else{
-            $("#msg").text('* Insert Atleast One Record');      
-    }
+      elseif(isset($_GET["update"]) && isset($_GET["id"]))
+      {
+        $statement = $connect->prepare("
+          SELECT * FROM tbl_order 
+            WHERE order_id = :order_id
+            LIMIT 1
+        ");
+        $statement->execute(
+          array(
+            ':order_id'       =>  $_GET["id"]
+            )
+          );
+        $result = $statement->fetchAll();
+        //$tempvalue = $row[""]
+
+        foreach($result as $row)
+        {
+        ?>
+        <script>
+        $(document).ready(function(){
+    $('#order_no').val("<?php echo $row["order_no"]; ?>");
+    $('#order_date').val("<?php echo $row["order_date"]; ?>");
+    $('#order_receiver_name').val("<?php echo $row["order_receiver_name"]; ?>");
+    $('#order_receiver_remarks').val("<?php echo $row["order_receiver_remarks"]; ?>");
+    $('#order_total_discount_percentage').val("<?php echo $row["order_total_discount_percentage"]; ?>");
+    $('#order_total_discount_value').val("<?php echo $row["order_total_discount_value"]; ?>");
+    $('#order_total_freight').val("<?php echo $row["order_total_freight"]; ?>");
+    $('#order_gtotal').val("<?php echo $row["order_total_before_discount_freight"]; ?>");
+        });
+        </script>
+        <form method="post" id="invoice_form">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <td colspan="6" align="center"><h2 style="margin-top:10.5px">Edit Invoice</h2></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                  <div class="row">
+                    <div class="col-md-8">
+                      To,<br />
+                        <b>RECEIVER (BILL TO)</b><br />
+                        <input type="text" name="order_receiver_name" id="order_receiver_name" class="form-control input-sm" placeholder="Enter Receiver Name" />
+                        <b>Remarks</b><br />
+                        <input type="text" name="order_receiver_remarks" id="order_receiver_remarks" class="form-control" placeholder="Enter Billing Address">
+                    </div>
+                    <div class="col-md-4">
+                      <br />
+                      <b>Invoice No.</b><br />
+                      <input type="text" name="order_no" id="order_no" class="form-control input-sm" placeholder="Enter Invoice No." readonly="" />
+                      <input type="text" data-inputmask="'alias': 'date'" name="order_date" id="order_date" value="<?php echo date('d/m/Y'); ?>" class="form-control input-sm" />
+                      <b>Opening Balance</b><br />
+                        <input type="text" name="opbal" id="opbal" class="form-control input-sm" placeholder="Opening Balance" readonly="" />
+                        
+                    </div>
+                  </div>
+                  <br />
+                  <table id="invoice-item-table" class="table table-bordered">
+                    <tr>
+
+                      <th width="2%">Sr#</th>
+                      <th width="20%">Item Name</th>
+                      <th width="20%">Warehouse Name</th>
+                      <th width="5%">Quantity</th>
+                      <th width="5%">Stock Quantity</th>
+                      <th width="5%">Previous Rate</th>
+                      <th width="7%">Gross Rate</th>
+                      <th width="8%">Gross Amount</th>
+                      <th width="3%">+/-</th>
+                    </tr>
+                    
+                    <?php
+                    $statement = $connect->prepare("
+                      SELECT * FROM tbl_order_item 
+                      WHERE order_id = :order_id
+                    ");
+                    $statement->execute(
+                      array(
+                        ':order_id'       =>  $_GET["id"]
+                      )
+                    );
+                    $item_result = $statement->fetchAll();
+                    $m = 0;
+                    foreach($item_result as $sub_row)
+                    {
+                      $m = $m + 1;
+                    ?>
+                    <tr>
+                  <!----  <tr id="rload">    -->
+  <td><span id="sr_no"><?php echo $m; ?></span></td>
+  <!----------Item Name------------->
+  <td><input type="text" name="item_name[]" id="item_name<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $sub_row["item_name"]; ?>" /></td>
+  <!----------Warehouse Name------------->
+  <td><input type="text" name="order_item_whname[]" id="order_item_whname<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $sub_row["order_item_whname"]; ?>" /></td>
+  <!----------Quantity------------------->
+  <td><input type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $sub_row["order_item_quantity"]; ?>"/></td>
+  <!----------Stock Quantity------------------->
+  <td><input type="text" name="order_item_squantity[]" id="order_item_squantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_squantity" value="<?php echo $sub_row["order_item_squantity"]; ?>" readonly=""/></td>
+  <!----------Previous Rate------------------->
+  <td><input type="text" name="order_item_prate[]" id="order_item_prate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_prate" value="<?php echo $sub_row["order_item_prate"];?>" readonly/></td>
+  <!----------Gross Rate------------------->
+  <td><input type="text" name="order_item_grate[]" id="order_item_grate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_grate" value="<?php echo $sub_row["order_item_grate"]; ?>" readonly=""/></td>
+  <!----------Gross Amount------------------->
+  <td><input type="text" name="order_item_gamount[]" id="order_item_gamount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_gamount" value="<?php echo $sub_row["order_item_gamount"];?>" readonly/></td>
+
+                      <!--------------------Naeem Ahmed------------------->
+  <td>
+  <a href="#" id="" class="deleted" data-srno="<?php echo $m; ?>" data-id="<?php echo $sub_row["order_item_id"]; ?>" > <!--<span class="glyphicon glyphicon-remove">Delete</span> -->
+    <i style="color:red;font-size: 40px;" class="fa fa-trash-o fa-lg"></i> </a>
+
+  <span type="text" name="deleting[]" id="deleting" data-id="<?php echo $sub_row["order_item_id"]; ?>" value ="<?php echo $sub_row["order_item_id"]; ?>" ></span>
+  
+  </td>       
+     </tr>
+         <?php
+               }
+                ?>
+   </table>
+
+<div align="right">
+       <button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs">+</button>
+       </div>
+           </td>
+              </tr>
+
+  <tr>
+    <td>
+<label><b>Discount%:</label>
+  <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
+        <td>
+  <label><b>Discount Value:</label>
+  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="one" value="0" />  </td>
+        <td>
+  <label><b>Freight:</label>
+  <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
+  <!----------Hidden for total---------------------
+  <td>
+  <label><b>Hidden</label>
+  <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />  </td>
+--->
+
+    <td><b>Total</b></td>
+    <td><b><span id="final_total_amt"><?php echo $row["order_total_after_discount_freight"]; ?></span></b>
+    </td>
+  </tr>
+  <tr>
+                <td colspan="6"></td>
+              </tr>
+              <tr>
+         <td colspan="6" align="center">
+         <input type="text" style="width: 100px;" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
+          <input type="hidden" name="total_item" id="total_item" value="<?php echo $m; ?>" />
+         <input type="hidden" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
+          <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
+                    </td>
+              </tr>
+          </table>
+        </div>
+      </form>
+<!---------------------------------------------------------------------->      
+      <script>
+      $(document).ready(function(){
+        $("#order_receiver_name").focus();
+        var final_total_amt = $('#final_total_amt').text();
+        var count = "<?php echo $m; ?>";
+        
+        $(document).on('click', '#add_row', function(){
+          //alert(count);
+          count++;
+          $('#total_item').val(count);
+          var html_code = '';
+          html_code += '<tr id="row_id_'+count+'">';
+          html_code += '<td><span id="sr_no">'+count+'</span></td>';
+  //----------Item Name-------------------        
+  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
+  //----------Warehouse Name-------------------
+  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /></td>';
+  //----------Quantity-------------------
+  html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
+  //----------Stock Quanity-------------------
+  html_code += '<td><input type="text" name="order_item_squantity[]" id="order_item_squantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_squantity" readonly=""/></td>';
+  //----------Previous Rate-------------------        
+ html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_prate" readonly/></td>';
+  //----------Gross Rate-------------------
+  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_grate" readonly=""/></td>';
+  //----------Gross Amount-------------------
+  html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_gamount" value = "0" readonly=""/></td>';
+  //----------Delete Button-------------------
+  //html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
+
+html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+count+'" class="fa fa-trash-o fa-lg remove_row"></i></td>';
+
+
+
+
+  html_code += '</tr>';
+          $('#invoice-item-table').append(html_code);
+          $("#item_name"+count).focus();
+        });
+
+        $(document).on('click', '.remove_row', function(){
+          var row_id = $(this).attr("id");
+          var total_item_amount = $('#order_item_gamount'+row_id).val();
+          var final_amount = $('#final_total_amt').text();
+          var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
+          
+          var order_gtotal = $('#order_gtotal').val();
+          var order_gtotal1 = parseFloat(order_gtotal) - parseFloat(total_item_amount);
+          $('#order_gtotal').val(order_gtotal1);
+
+          $('#final_total_amt').text(result_amount);
+          $('#row_id_'+row_id).remove();
+          count--;
+          $('#total_item').val(count);
+
+          var row_idd = row_id - 1;
+          $("#item_name"+row_idd).focus();
+       });
+
+// This code is added by Naeem to Refresh the Final Total Amount while deleting any record
+        $(document).on('click', '.deleted', function(){
+          var row_id = $(this).attr("data-srno");
+//var row_id = $(this).attr("id");
+          var total_item_amount = $('#order_item_gamount'+row_id).val();
+          var final_amount = $('#final_total_amt').text();
+          var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
+
+          var order_gtotal = $('#order_gtotal').val();
+          var order_gtotal1 = parseFloat(order_gtotal) - parseFloat(total_item_amount);
+          $('#order_gtotal').val(order_gtotal1);
+
+          $('#final_total_amt').text(result_amount);
+          $('#row_id_'+row_id).remove();
+          count--;
+          $('#total_item').val(count);
+
+          var row_idd = row_id - 1;
+          $("#item_name"+row_idd).focus();
+  
+        });
+//------------------------------Edit Invoice Function -----------------------------------
+        function cal_final_total(count)
+        {
+          var final_item_total = 0;
+          for(j=1; j<=count; j++)
+          {
+            var quantity = 0;
+            var grate = 0;
+            var gamount = 0;
+            var item_total=0;
+
+            quantity = $('#order_item_quantity'+j).val();
+            if(quantity > 0)
+            {
+              grate = $('#order_item_grate'+j).val();
+              if(grate > 0)
+              {
+                gamount = parseFloat(quantity) * parseFloat(grate);
+              }
+               item_total = gamount;
+              final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
+
+              $('#order_item_gamount'+j).val(item_total);
+            }
+          }
+          $('#order_gtotal').val(final_item_total);
+          var dvalue = $('#order_total_discount_value').val();
+          var freight = $('#order_total_freight').val();
+          var final_gamount = parseFloat(final_item_total) - parseFloat(dvalue) + parseFloat(freight);
+          $('#final_total_amt').text(final_gamount);
+        }
+/*
+        $(document).on('blur', '.order_item_grate', function(){
+          cal_final_total(count);
+        });
+*/
+        $(document).on('keyup', '.order_item_quantity', function(){
+          cal_final_total(count);
+        });
+//--------------------------Temporary Total Function-------------------------------------------
+ $("#order_total_discount_value").keyup(function(){
+      var temp = $("#order_gtotal").val();
+      var dvalue = $("#order_total_discount_value").val();
+      var freight = $("#order_total_freight").val();
+      //alert(freight);
+      var summ = 0;
+      summ = parseFloat(temp) + parseFloat(freight);
+      //-------------------------------------------- 
+      var sum = 0;
+      sum = parseFloat(temp) -  parseFloat(dvalue) ;
+      sum = parseFloat(sum) + parseFloat(freight);
+      $('#final_total_amt').text(sum);
+      if(isNaN($('#final_total_amt').text())){
+        $('#final_total_amt').text(summ);
+      }
+ });
+
+ $("#order_total_freight").keyup(function(){
+      var temp = $("#order_gtotal").val();
+      var dvalue = $("#order_total_discount_value").val();
+      var freight = $("#order_total_freight").val();
+      //alert(freight);
+      var summ = 0;
+      var sum = 0;
+      summ = parseFloat(temp) -  parseFloat(dvalue) ;
+      sum = parseFloat(summ) + parseFloat(freight);
+      $('#final_total_amt').text(sum);
+      
+      if(isNaN($('#final_total_amt').text())){
+        $("#final_total_amt").text(summ);
+      } 
+ });
+//--------------------------------------------------------------------------
+//--------------------Percentage--------------------------------
+
+ $("#order_total_discount_percentage").keyup(function(){
+      var temp = $("#order_gtotal").val();
+      var percent = $("#order_total_discount_percentage").val();
+      var percent_value = 0;
+      percent_value = parseFloat(temp) *  parseFloat(percent) / 100;
+      $('#order_total_discount_value').val(percent_value);
+
+      if(isNaN($('#order_total_discount_value').val())){
+        $("#order_total_discount_value").val(0);
+      } 
+      
+ });
+//-----Alert for if user Enter Discount Value greater than Actual------
+$('#order_total_discount_percentage').on('keyup',function(){
+   var grand_total = $("#order_gtotal").val();
+   var discount = $("#order_total_discount_value").val();
+var ab = parseFloat(grand_total);
+var bs = parseFloat(discount);
+if(bs > ab) {
+  alert("Discount Value is Greater Than Actual Amount");
+  }
+});
+//----------Authentication code for Edit Invoice-----------
+        $(document).on('keypress','#create_invoice',function(){
+          if($.trim($('#order_receiver_name').val()).length == 0)
+          {
+            alert("Please Enter Reciever Name ");
+            $('#order_receiver_name').focus();
+            return false; 
+          }
+
+          if($.trim($('#order_no').val()).length == 0)
+          {
+            alert("Please Enter Invoice Number");
+            $('#order_no').focus();
+            return false;
+          }
+
+          if($.trim($('#order_date').val()).length == 0)
+          {
+            alert("Please Select Invoice Date");
+            $('#order_date').focus();
+            return false;
+          }
+
+          for(var no=1; no<=count; no++)
+          {
+            if($.trim($('#item_name'+no).val()).length == 0)
+            {
+              alert("Please Enter Item Name");
+              $('#item_name'+no).focus();
+              return false;
+            }
+            if($.trim($('#order_item_whname'+no).val()).length == 0)
+            {
+              alert("Please Enter Warehouse Name");
+              $('#order_item_whname'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_quantity'+no).val()).length == 0)
+            {
+              alert("Please Enter Quantity");
+              $('#order_item_quantity'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_grate'+no).val()).length == 0)
+            {
+              alert("Please Enter Gross Rate");
+              $('#order_item_grate'+no).focus();
+              return false;
+            }
+            
+
+          }
+
+          $('#invoice_form').submit();
+
+        });
+
+   //   });
+//-----------------Repeating code for Edit invoice on Click Event-------------------
+$(document).on('click','#create_invoice',function(){
+
+          if($.trim($('#order_receiver_name').val()).length == 0)
+          {
+            alert("Please Enter Reciever Name ");
+            $('#order_receiver_name').focus();
+            return false; 
+          }
+
+          if($.trim($('#order_no').val()).length == 0)
+          {
+            alert("Please Enter Invoice Number");
+            $('#order_no').focus();
+            return false;
+          }
+
+          if($.trim($('#order_date').val()).length == 0)
+          {
+            alert("Please Select Invoice Date");
+            $('#order_date').focus();
+            return false;
+          }
+
+          for(var no=1; no<=count; no++)
+          {
+            if($.trim($('#item_name'+no).val()).length == 0)
+            {
+              alert("Please Enter Item Name");
+              $('#item_name'+no).focus();
+              return false;
+            }
+            if($.trim($('#order_item_whname'+no).val()).length == 0)
+            {
+              alert("Please Enter Warehouse Name");
+              $('#order_item_whname'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_quantity'+no).val()).length == 0)
+            {
+              alert("Please Enter Quantity");
+              $('#order_item_quantity'+no).focus();
+              return false;
+            }
+
+            if($.trim($('#order_item_grate'+no).val()).length == 0)
+            {
+              alert("Please Enter Gross Rate");
+              $('#order_item_grate'+no).focus();
+              return false;
+            }
+            
+
+          }
+
+          $('#invoice_form').submit();
+
+        });
+   });
+      </script>
+        <?php 
+        }
+      }
+      else
+      {
+      ?>
+<!----------First Page of Invoice System------------------->
+      <div style="border: solid; background: purple; color: white;"><h3 align="center"><B>Purchase Invoice:</B></h3></div>
+      <br />
+      <div align="right">
+        <a href="sales.php?add=1" class="btn btn-info btn-xs" id="new_create">Create</a>
+      </div>
+      <br />
+      <table id="data-table" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Invoice No.</th>
+            <th>Invoice Date</th>
+            <th>Receiver Name</th>
+            <th>Invoice Total</th>
+            <th>PDF</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <?php
+        if($total_rows > 0)
+        {
+          foreach($all_result as $row)
+          {
+            echo '
+              <tr>
+                <td>'.$row["order_no"].'</td>
+                <td>'.$row["order_date"].'</td>
+                <td>'.$row["order_receiver_name"].'</td>
+                <td>'.$row["order_total_after_discount_freight"].'</td>
+                <td><a href="Transaction_sales/print_sales.php?pdf=1&id='.$row["order_id"].'">
+                <i style="color:#7d42f4;font-size: 30px;" class="fa fa-print fa-lg"></i>    
+                </a></td>
+                <td><a href="sales.php?update=1&id='.$row["order_id"].'">
+                <i style="color:#00cc00;font-size: 30px;" class="fa fa-edit fa-lg"></i>    
+                </a></td>
+                <td><a href="#" id="'.$row["order_id"].'" class="delete">
+                <i style="color:Red;font-size: 30px;" class="fa fa-trash-o fa-lg"></i>    
+                </a></td>
+              </tr>
+            ';
+          }
+          //
+          //
+          //
+        }
+        ?>
+      </table>
+      <?php
+      }
+      ?>
+    </div>
+    <br>
+    <footer class="container-fluid text-center">
+      <p>Footer Text</p>
+    </footer>
+  </body>
+</html>
+<!-------------------------First Page Closed-------------------------->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#new_create").focus();
+    var table = $('#data-table').DataTable({
+          "order":[],
+          "columnDefs":[
+          {
+            "targets":[4, 5, 6],
+            "orderable":false,
+          },
+        ],
+        "pageLength": 25
+        });
+    $(document).on('click', '.delete', function(){
+      var id = $(this).attr("id");
+      if(confirm("Are you sure you want to remove this?"))
+      {
+        window.location.href="sales.php?delete=1&id="+id;
+      }
+      else
+      {
+        return false;
+      }
+    });
+   
   });
 
-//............Code To Delete the Record from database..........
+</script>
+<!--------------------------------------------------------------------->
+<script>
+$(document).ready(function(){
+$('.number_only').keypress(function(e){
+return isNumbers(e, this);      
+});
+function isNumbers(evt, element) 
+{
+var charCode = (evt.which) ? evt.which : event.keyCode;
+if (
+          // “.” CHECK DOT, AND ONLY ONE.
+(charCode != 46 || $(element).val().indexOf('.') != -1) &&  //46 code of Delete
 
-$(document).on("click",".del",function(){
+(charCode < 48 || charCode > 57))  // 0-9  .... 48 is code of 0 and 57 is code of 9
+return false;
+return true;
+}
+});
+</script>
+<!--------------------------------------------------------------------->
+<!-----------D------------------------>
+<script>
+$(document).ready(function(){
+$(document).on("click",".deleted",function(){
     var del=$(this);
     var id = $(this).attr("data-id");
-    $.ajax({
-      url:  "Transaction_purchases/delete.php",
+
+       $.ajax({
+      url:  "Transaction_sales/delete.php",
       type:  "post",
       data: {id:id},
       success:function() {
         del.closest("tr").hide();
-
       }
     });
   });
-
+});
 </script>
+<!------This code is of inputmask for Date  ------>
+<script>
+  $("#order_date").inputmask();
+</script>
+<!------This code is For Enter Index  ---->
+<script type="text/javascript">
+ $(document).ready(function(){
+//e.preventDefault();
+inputs = $("form :input");
+ $(inputs).keypress(function(e){
+ if(e.keyCode == 13){
+ //   e.preventDefault();
+   inputs[inputs.index(this)+1].focus();
+    }
+});
+});
+ //});
+</script>
+<!------This code is For Enter Index "Item_names" ---->
+<script>
+  $(document).ready(function(){
+  var i = 1;
+  do{
 
-<!---------------------------------------------------------->
-  <script>
-// Update Query
-$(document).on("click",".edit",function(){
-  	var row=$(this);
-		var id = $(this).attr("data-id");
-	   	$("#idn").val(id);
-   // var autoid = row.closest("tr").find("td:eq(2)").text();
-     // $("#autoid").val(autoid);
-		var itemno = row.closest("tr").find("td:eq(2)").text();
-			$("#ino").val(itemno);
-		var pdate = row.closest("tr").find("td:eq(3)").text();
-		$("#pdate").val(pdate);
-		var scode = row.closest("tr").find("td:eq(4)").text();
-		$("#scode").val(scode);
-		var sname = row.closest("tr").find("td:eq(5)").text();
-		$("#sname").val(sname);
-		var balance = row.closest("tr").find("td:eq(6)").text();
-		$("#sbal").val(balance);
-		var icode = row.closest("tr").find("td:eq(7)").text();
-		$("#icode").val(icode);
-    var iname = row.closest("tr").find("td:eq(8)").text();
-    $("#iname").val(iname);
-    var wcode = row.closest("tr").find("td:eq(9)").text();
-    $("#wcode").val(wcode);
-    var wname = row.closest("tr").find("td:eq(10)").text();
-    $("#wname").val(wname);
-    var qty = row.closest("tr").find("td:eq(11)").text();
-    $("#qty").val(qty);
-    var sqty = row.closest("tr").find("td:eq(12)").text();
-    $("#sqty").val(sqty);
-    var grate = row.closest("tr").find("td:eq(13)").text();
-    $("#grate").val(grate);
-    var gamount = row.closest("tr").find("td:eq(14)").text();
-    $("#gamount").val(gamount);
-    var disrate = row.closest("tr").find("td:eq(15)").text();
-    $("#disrate").val(disrate);
-    var dvalue = row.closest("tr").find("td:eq(16)").text();
-    $("#dvalue").val(dvalue);
-    var disdrate = row.closest("tr").find("td:eq(17)").text();
-    $("#disdrate").val(disdrate);
-    var rate = row.closest("tr").find("td:eq(18)").text();
-    $("#rate").val(rate);
-    var amount = row.closest("tr").find("td:eq(19)").text();
-    $("#amount").val(amount);
-    var did = row.closest("tr").find("td:eq(20)").text();
-    $("#did").val(did);
-    var remarks = row.closest("tr").find("td:eq(21)").text();
-    $("#remarks").val(remarks);
-//--------------------------------------------------------------------
-    $("#scode").focus();
-    $("#save").text('Update');
-
+  $(document).on('focus','#item_name'+i,function(){
+inputs = $(":input");
+$(inputs).keypress(function(e){
+    if (e.keyCode == 13){
+      inputs[inputs.index(this)+1].focus();
+    }
+});
     });
+        i++;
+              }while(i<500);
+});
 </script>
 
-<!-----------------
-//.......code to disable save Button..................
-    //$("#save").attr("disabled",true);
-    //$("#save").text('Insert New');
-    //$("#save").css("background-color", "red");
-/*
-var showsave = $("#save");
-showsave.hide();
-var showupdate = $("#updatesql");
-showupdate.show();
-*/
-//.......code to create an Update Button..............
-/*
-var $updatebtn = $('<input/>').attr({type:'button',id:'updatesql',class:'btn btn-success',name:'updatebtn',value:'Update'});
-  $("#beforesave").append($updatebtn);    
-*/
-
-//.......code to Enable save Button...................
-    //  $('#save').attr("disabled", false);  
-    // or
-    //  $('#save').removeAttr("disabled");
-
-	--->
-
-<!------------
+<!------This code is for to move Cursor to Discount% input Box by Pressing Shift Key------>
 <script>
-$(document).on('click','#updatesql',function(){
- // $('#updatesqld').click(function(){
-    $.ajax({
-            url:  "Transaction_purchases/update.php",
-            type:  "post",
-             data: $("#frm").serialize(),
-              success:function(d) {
-      
-    $("#output").load("Transaction_purchases/view.php");
-    //$("#frm").load(" #frm");
-  $("#frm")[0].reset();
-  $("#scode").focus();
-  var showupdate = $("#updatesql");
-showupdate.hide();
-    var showsave = $("#save");
-showsave.show();
-        }
-      });
+  $(document).keydown(function (e) {
+    if (e.keyCode == 35 || e.keyCode == 36) {
+        //alert(e.which + " or Shift was pressed");
+      $("#order_total_discount_percentage").focus();  
+    }
+});
+</script>       
+<!------- This is a click event for autocomplete Customer_name--------->
+<script >
+  $(function() {
+     $("#order_receiver_name").autocomplete({
+        source: "Transaction_sales/autocomplete_cusname.php",
+        minLength: 0,
+        select: function (event, ui){}
+          });                
+    });
+ </script>
 
-//}
- });
+<!------- This is a click event for autocomplete item_name--------->
+<script >
+//$(document).on('click',"#add_row",function(){
+  $(document).add("#add_row").bind('keypress click',function(){
+  var auto = 1;
+  $(function() {
+  do{  
+     $("#item_name"+auto).autocomplete({
+        source: "Transaction_sales/autocomplete_itemname.php",
+        minLength: 0,
+        select: function (event, ui){}
+          });                
+        auto++;
+      }while(auto<500);
+    });
+  }); 
 </script>
-................-->
-
-
-<!---------Code for AutoComplete Suplier Name---------->
-<script>
-	 $(function() {
-    
-     $("#scode").autocomplete({
-        source: "Transaction_purchases/autocomplete_supplier.php",
+<!------- This is a click event for autocomplete Warehouse_name--------->
+<script >
+//$(document).on('click',"#add_row",function(){
+  $(document).add("#add_row").bind('keypress click',function(){
+  var auto = 1;
+  $(function() {
+  do{  
+     $("#order_item_whname"+auto).autocomplete({
+        source: "Transaction_sales/autocomplete_whname.php",
+        minLength: 0,
+        select: function (event, ui){}
+          });                
+        auto++;
+      }while(auto<500);
+    });
+  }); 
+</script>
+<!------- This is a keypress event for autocomplete item_name---------
+<script >
+$(document).on('keypress',function(){
+  var auto = 1;
+  $(function() {
+  do{  
+     $("#item_name"+auto).autocomplete({
+        source: "autocomplete_itemname.php",
         minLength: 0,
         select: function (event, ui){}
     });                
-
+auto++;
+}while(auto<500);
+});
+}); 
+</script>
+--->
+<!---------------Code for updating Stock Quantity dynamically------------->
+<script>
+$(document).on('keyup',function(){
+  $(function() {
+// var dummy = [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41]; 
+//-------the above code also works fine , but in below code i used the for loop to push 500 numbres in dummy array-----------------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_sales/sqty_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_squantity"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
 });
 </script>
-<!-----------Update Value in Balance OK ----------->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#scode").on('keyup',function(){
-      var suppliercode = $(this).val();
-      
-        $.ajax({
-          type: 'POST',
-          url: 'Transaction_purchases/Baldynamic.php',
-          data:{scode:suppliercode},
-          success:function(data){
-              $("#sbal").val(data);
-          }
-        });
-      });
-    });
-</script>
-<!---------------------------------------------------->
-<!-----------Update Value in Supplier Name OK ----------->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#scode").on('keyup',function(){
-      var suppliercode = $(this).val();
-      
-        $.ajax({
-          type: 'POST',
-          url: 'Transaction_purchases/supdynamic.php',
-          data:{scode:suppliercode},
-          success:function(data){
-              $("#sname").val(data);
-          }
-        });
-      });
-    });
-</script>
-<!---------------------------------------------------->
-<!----------Code for AutoComplete Item Name-------->
+<!---------------Code for updating Gross Rate dynamically------------->
 <script>
-   $(function() {
-    
-     $("#icode").autocomplete({
-        source: "Transaction_purchases/autocomplete_item.php",
-        minLength: 0,
-        select: function (event, ui){}
-    });                
-
+$(document).on('keyup',function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_sales/grate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_grate"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
 });
 </script>
-<!-----------Update Value in Item Name OK ----------->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#icode").on('keyup',function(){
-      var suppliercode = $(this).val();
-      
+<!---------------Code for updating Previous Rate dynamically------------->
+<script>
+$(document).on('keyup',function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
         $.ajax({
           type: 'POST',
-          url: 'Transaction_purchases/itemdynamic.php',
-          data:{icode:suppliercode},
-          success:function(data){
-              $("#iname").val(data);
-          }
+          url: 'Transaction_sales/prate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_prate"+ i).val(data);
+            }
         });
       });
     });
-</script>
-<!---------------------------------------------------->
-<!----------Code for AutoComplete Warehouse Name-------->
-<script>
-   $(function() {
-    
-     $("#wcode").autocomplete({
-        source: "Transaction_purchases/autocomplete_warehouse.php",
-        minLength: 0,
-        select: function (event, ui){}
-    });                
-
+  }); 
 });
 </script>
-<!-----------Update Value in Warehouse Name OK ----------->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#wcode").on('keyup',function(){
-      var suppliercode = $(this).val();
-      
-        $.ajax({
-          type: 'POST',
-          url: 'Transaction_purchases/whdynamic.php',
-          data:{wcode:suppliercode},
-          success:function(data){
-              $("#wname").val(data);
-          }
-        });
-      });
-    });
-</script>
-<!---------------------------------------------------->
-
-
-
-<!---------Code for Date(Formate) Masking---------->
-<script>
-  $("#pdate").inputmask();
-</script>
-<!------------------------------------------------->
-
-
-<?php include('footer.php'); ?>
