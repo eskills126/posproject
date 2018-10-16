@@ -10,7 +10,7 @@
 
 //---------Create invoice Mysql INSERT Code-------------------------
   $statement = $connect->prepare("
-    SELECT * FROM tbl_order 
+    SELECT * FROM tbl_order_purchase 
     ORDER BY order_id DESC
   ");
 
@@ -34,7 +34,7 @@ $result =preg_replace('/.*-/', '', $edata);
     //$order_total_tax = 0;
     $order_total_after_discount_freight = 0;
     $statement = $connect->prepare("
-      INSERT INTO tbl_order 
+      INSERT INTO tbl_order_purchase 
   (order_no, order_date, order_receiver_name, order_receiver_remarks, order_total_before_discount_freight, order_total_discount_percentage, order_total_discount_value, order_total_freight, order_total_after_discount_freight,order_datetime)
         VALUES (:order_no, :order_date, :order_receiver_name, :order_receiver_remarks, :order_total_before_discount_freight, :order_total_discount_percentage, :order_total_discount_value, :order_total_freight, :order_total_after_discount_freight, :order_datetime)
     ");
@@ -59,7 +59,7 @@ $result =preg_replace('/.*-/', '', $edata);
 
       for($count=0; $count<$_POST["total_item"]; $count++)
       {
-        $order_total_before_discount_freight = $order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
+$order_total_before_discount_freight = $order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
 //------------------------------------------------------------------------------------------
 $item_name_value=$_POST["item_name"];
 $item_name =preg_replace('/.*-/', '', $item_name_value);
@@ -69,7 +69,7 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 
 
         $statement = $connect->prepare("
-          INSERT INTO tbl_order_item 
+          INSERT INTO tbl_order_item_purchase 
           (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity, order_item_prate, order_item_grate, order_item_gamount)
           VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
         ");
@@ -97,7 +97,7 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 $order_total_after_discount_freight = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
 
       $statement = $connect->prepare("
-        UPDATE tbl_order 
+        UPDATE tbl_order_purchase 
         SET order_total_before_discount_freight = :order_total_before_discount_freight, 
         order_total_discount_percentage = :order_total_discount_percentage,
         order_total_discount_value = :order_total_discount_value, 
@@ -136,7 +136,7 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       $order_id = $_POST["order_id"];
             
       $statement = $connect->prepare("
-                DELETE FROM tbl_order_item WHERE order_id = :order_id
+                DELETE FROM tbl_order_item_purchase WHERE order_id = :order_id
             ");
             $statement->execute(
                 array(
@@ -156,7 +156,7 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 
 
         $statement = $connect->prepare("
-   INSERT INTO tbl_order_item 
+   INSERT INTO tbl_order_item_purchase 
    (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity,order_item_prate, order_item_grate, order_item_gamount) 
    VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
         ");
@@ -188,7 +188,7 @@ $result =preg_replace('/.*-/', '', $edata);
 
 
       $statement = $connect->prepare("
-        UPDATE tbl_order 
+        UPDATE tbl_order_purchase 
         SET order_no = :order_no, 
         order_date = :order_date, 
         order_receiver_name = :order_receiver_name, 
@@ -227,14 +227,14 @@ $result =preg_replace('/.*-/', '', $edata);
 //-----------------Delete Code --------------------------
   if(isset($_GET["delete"]) && isset($_GET["id"]))
   {
-    $statement = $connect->prepare("DELETE FROM tbl_order WHERE order_id = :id");
+    $statement = $connect->prepare("DELETE FROM tbl_order_purchase WHERE order_id = :id");
     $statement->execute(
       array(
         ':id'       =>      $_GET["id"]
       )
     );
     $statement = $connect->prepare(
-      "DELETE FROM tbl_order_item WHERE order_id = :id");
+      "DELETE FROM tbl_order_item_purchase WHERE order_id = :id");
     $statement->execute(
       array(
         ':id'       =>      $_GET["id"]
@@ -347,7 +347,7 @@ $result =preg_replace('/.*-/', '', $edata);
                     </div>
         <!-------------------------------------------------->
                     <?php  
-      $connect = "SELECT * FROM tbl_order where order_no=(SELECT max(order_no) FROM tbl_order) GROUP by order_no";
+      $connect = "SELECT * FROM tbl_order_purchase where order_no=(SELECT max(order_no) FROM tbl_order_purchase) GROUP by order_no";
         $result = mysqli_query($conn,$connect);
         if (mysqli_num_rows($result) > 0) {   
         while($row=mysqli_fetch_array($result)) {
@@ -386,15 +386,14 @@ $result =preg_replace('/.*-/', '', $edata);
                       <th width="30%">Item Name</th>
                       <th width="20%">Warehouse Name</th>
                       <th width="1%">Quantity</th>
-                      <th width="3%">Stock Quantity</th>
+                      <th width="2%">Stock Quantity</th>
                       <th width="5%">Previous Rate</th>
                       <th width="7%">Gross Rate</th>
                       <th width="8%">Gross Amount</th>
 
-                      <th width="8%">Disc. %</th>
-                      <th width="8%">Disc. Value</th>
-                      <th width="8%">Disc. Rate</th>
-                      <th width="8%">Rate</th>
+                      <th width="5%">Disc. %</th>
+                      <th width="6%">Disc. Value</th>
+                      <th width="7%">Disc. Rate</th>
                       <th width="8%">Amount</th>
                       
                       <th width="3%">+/-</th>
@@ -423,8 +422,6 @@ $result =preg_replace('/.*-/', '', $edata);
   <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" /></td>
   <!-----------Disc Rate------------>
   <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" /></td>
-  <!-----------Rate------------>
-  <td><input type="text" name="order_item_rate[]" id="order_item_rate1" data-srno="1" class="form-control input-sm number_only order_item_rate" /></td>
   <!-----------Amount------------>
   <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount"  /></td>
   <!----------------------->
@@ -509,8 +506,6 @@ $result =preg_replace('/.*-/', '', $edata);
   html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" /></td>';
   //<!-----------Disc Rate------------>
   html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" /></td>';
-  //<!-----------Rate------------>
-  html_code += '<td><input type="text" name="order_item_rate[]" id="order_item_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_rate" /></td>';
   //<!-----------Amount------------>
   html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount"  /></td>';
   //<!----------------------->
@@ -808,7 +803,7 @@ $(document).on('click','#create_invoice',function(){
       elseif(isset($_GET["update"]) && isset($_GET["id"]))
       {
         $statement = $connect->prepare("
-          SELECT * FROM tbl_order 
+          SELECT * FROM tbl_order_purchase 
             WHERE order_id = :order_id
             LIMIT 1
         ");
@@ -877,7 +872,6 @@ $(document).on('click','#create_invoice',function(){
                       <th width="8%">Disc. %</th>
                       <th width="8%">Disc. Value</th>
                       <th width="8%">Disc. Rate</th>
-                      <th width="8%">Rate</th>
                       <th width="8%">Amount</th>
 
                       <th width="3%">+/-</th>
@@ -885,7 +879,7 @@ $(document).on('click','#create_invoice',function(){
                     
                     <?php
                     $statement = $connect->prepare("
-                      SELECT * FROM tbl_order_item 
+                      SELECT * FROM tbl_order_item_purchase 
                       WHERE order_id = :order_id
                     ");
                     $statement->execute(
@@ -924,8 +918,6 @@ $(document).on('click','#create_invoice',function(){
   <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" /></td>
   <!-----------Disc Rate------------>
   <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" /></td>
-  <!-----------Rate------------>
-  <td><input type="text" name="order_item_rate[]" id="order_item_rate1" data-srno="1" class="form-control input-sm number_only order_item_rate" /></td>
   <!-----------Amount------------>
   <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount"  /></td>
   <!----------------------->
@@ -1020,9 +1012,7 @@ $(document).on('click','#create_invoice',function(){
   html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" /></td>';
   //<!-----------Disc Rate------------>
   html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" /></td>';
-  //<!-----------Rate------------>
-  html_code += '<td><input type="text" name="order_item_rate[]" id="order_item_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_rate" /></td>';
-  //<!-----------Amount------------>
+    //<!-----------Amount------------>
   html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount"  /></td>';
   //----------Delete Button-------------------
   //html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
