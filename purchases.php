@@ -352,20 +352,20 @@ $result =preg_replace('/.*-/', '', $edata);
                   <br />
                   <table id="invoice-item-table" class="table table-bordered">
                     <tr>
-                      <th width="1%">Sr#</th>
-                      <th width="30%">Item Name</th>
-                      <th width="20%">Warehouse Name</th>
-                      <th width="1%">Quantity</th>
-                      <th width="2%">Stock Quantity</th>
+                      <th width="2%">Sr#</th>
+                      <th width="23%">Item Name</th>
+                      <th width="15%">Warehouse Name</th>
+                      <th width="5%">Quantity</th>
+                      <th width="5%">Stock Quantity</th>
                       <th width="5%">Previous Rate</th>
                       <th width="7%">Gross Rate</th>
                       <th width="8%">Gross Amount</th>
 
-                      <th width="5%">Disc. %</th>
-                      <th width="6%">Disc. Value</th>
-                      <th width="7%">Disc. Rate</th>
+                      <th width="8%">Disc. %</th>
+                      <th width="8%">Disc. Value</th>
+                      <th width="8%">Disc. Rate</th>
                       <th width="8%">Amount</th>
-                      
+
                       <th width="3%">+/-</th>
                     </tr>
                             
@@ -382,18 +382,18 @@ $result =preg_replace('/.*-/', '', $edata);
   <!----------Previous Rate------------->
   <td><input type="text" name="order_item_prate[]" id="order_item_prate1" data-srno="1" class="form-control input-sm number_only order_item_prate" readonly="" /></td>
   <!-----------Gross Rate------------>
-  <td><input type="text" name="order_item_grate[]" id="order_item_grate1" data-srno="1" class="form-control input-sm order_item_grate" readonly="" /></td>
+  <td><input type="text" name="order_item_grate[]" id="order_item_grate1" data-srno="1" class="form-control input-sm order_item_grate"  /></td>
   <!-----------Gross Amount------------>
   <td><input type="text" name="order_item_gamount[]" id="order_item_gamount1" data-srno="1" class="form-control input-sm number_only order_item_gamount" readonly="" /></td>
   <!------------------------------------------------------------------------------->
   <!-----------Disc %------------>
   <td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent1" data-srno="1" class="form-control input-sm number_only order_item_disc_percent" /></td>
   <!-----------Disc Value------------>
-  <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" /></td>
+  <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" readonly="" /></td>
   <!-----------Disc Rate------------>
-  <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" /></td>
+  <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" readonly="" /></td>
   <!-----------Amount------------>
-  <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount"  /></td>
+  <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount" readonly="" /></td>
   <!----------------------->
  <td> </td>
             </tr>
@@ -431,8 +431,8 @@ $result =preg_replace('/.*-/', '', $edata);
           <td colspan="6" align="center">
            <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
           <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
-          <input type="hidden" name="total_item" id="total_item" value="1" />
-          <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />
+          <input type="text" name="total_item" id="total_item" value="1" />
+          <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />
 
           
                 </td>
@@ -464,7 +464,7 @@ $result =preg_replace('/.*-/', '', $edata);
           //--------Previous Rate------------------------------
   html_code += '<td><input type="text" name="order_item_prate[]" id="order_item_prate'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_prate"  readonly/></td>';
           //---------Gross Rate-------------------------------
-  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_grate" readonly=""/></td>';
+  html_code += '<td><input type="text" name="order_item_grate[]" id="order_item_grate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_grate" /></td>';
           //--------Gross Amount------------------------------
   html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_gamount" value = "0"/></td>';
  //-----------------------------------------------------------------------
@@ -473,11 +473,11 @@ $result =preg_replace('/.*-/', '', $edata);
 //<!-----------Disc %------------>
   html_code += '<td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_percent" /></td>';
   //<!-----------Disc Value------------>
-  html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" /></td>';
+  html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" readonly/></td>';
   //<!-----------Disc Rate------------>
-  html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" /></td>';
+  html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" readonly/></td>';
   //<!-----------Amount------------>
-  html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount"  /></td>';
+  html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount" value="0" readonly/></td>';
   //<!----------------------->
  
         //--------Delete Button----------------------------
@@ -499,7 +499,7 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
           
           var row_id = $(this).attr("id");
           
-          var total_item_amount = $('#order_item_gamount'+row_id).val();
+          var total_item_amount = $('#order_item_amount'+row_id).val();
           var final_amount = $('#final_total_amt').text();
           var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
           $('#final_total_amt').text(result_amount);
@@ -536,7 +536,7 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
             quantity = $('#order_item_quantity'+j).val();
             if(quantity > 0)
             {
-              grate = $('#order_item_grate'+j).val();
+              grate = $('#order_item_disc_rate'+j).val();
               if(grate > 0)
               {
                 gamount = parseFloat(quantity) * parseFloat(grate);
@@ -545,7 +545,7 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
               item_total = gamount;
               final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
 
-              $('#order_item_gamount'+j).val(item_total);
+              //$('#order_item_gamount'+j).val(item_total);
                 //$('#order_item_final_amount'+j).val(item_total);
               }
             }
@@ -560,9 +560,10 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
           cal_final_total(count);
         });
 */
-$(document).on('keyup', '.order_item_quantity', function(){
+$(document).on('keyup', '.order_item_disc_percent', function(){
           cal_final_total(count);
         });
+
 //--------------------------Temporary Total Function-------------------------------------------
  $("#order_total_discount_value").keyup(function(){
       var temp = $("#order_gtotal").val();
@@ -831,8 +832,8 @@ $(document).on('click','#create_invoice',function(){
                     <tr>
 
                       <th width="2%">Sr#</th>
-                      <th width="20%">Item Name</th>
-                      <th width="20%">Warehouse Name</th>
+                      <th width="23%">Item Name</th>
+                      <th width="15%">Warehouse Name</th>
                       <th width="5%">Quantity</th>
                       <th width="5%">Stock Quantity</th>
                       <th width="5%">Previous Rate</th>
@@ -885,11 +886,11 @@ $(document).on('click','#create_invoice',function(){
   <!-----------Disc %------------>
   <td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent1" data-srno="1" class="form-control input-sm number_only order_item_disc_percent" /></td>
   <!-----------Disc Value------------>
-  <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" /></td>
+  <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" readonly="" /></td>
   <!-----------Disc Rate------------>
-  <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" /></td>
+  <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" readonly="" /></td>
   <!-----------Amount------------>
-  <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount"  /></td>
+  <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount"  readonly="" /></td>
   <!----------------------->
                       <!--------------------Naeem Ahmed------------------->
   <td>
@@ -937,9 +938,9 @@ $(document).on('click','#create_invoice',function(){
               <tr>
          <td colspan="6" align="center">
          <input type="text" style="width: 100px;" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
-          <input type="hidden" name="total_item" id="total_item" value="<?php echo $m; ?>" />
-         <input type="hidden" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
-          <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
+          <input type="text" name="total_item" id="total_item" value="<?php echo $m; ?>" />
+         <input type="text" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
+          <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
                     </td>
               </tr>
           </table>
@@ -979,11 +980,11 @@ $(document).on('click','#create_invoice',function(){
 //<!-----------Disc %------------>
   html_code += '<td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_percent" /></td>';
   //<!-----------Disc Value------------>
-  html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" /></td>';
+  html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" readonly/></td>';
   //<!-----------Disc Rate------------>
-  html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" /></td>';
+  html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" readonly/></td>';
     //<!-----------Amount------------>
-  html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount"  /></td>';
+  html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount" readonly /></td>';
   //----------Delete Button-------------------
   //html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
 
@@ -1110,6 +1111,7 @@ html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+
       } 
  });
 //--------------------------------------------------------------------------
+
 //--------------------Percentage--------------------------------
 
  $("#order_total_discount_percentage").keyup(function(){
@@ -1576,3 +1578,79 @@ $(document).on('keyup',function(){
   }); 
 });
 </script>
+<!----------------------------------------------------------------------------------->
+<script>
+  $(document).on('keyup',function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#order_item_quantity' + i).keyup(function() {
+      var qty = $("#order_item_quantity"+i).val();
+      var grate = $("#order_item_grate"+i).val();
+      var gamount = 0;
+      gamount = parseFloat(qty) * parseFloat(grate);
+      $("#order_item_gamount"+i).val(gamount);
+      $("#order_item_amount"+i).val(gamount);
+
+      if(isNaN($('#order_item_gamount'+i).val())){
+        $("#order_item_gamount"+i).val(0);
+      }
+      if(isNaN($('#order_item_amount'+i).val())){
+        $("#order_item_amount"+i).val(0);
+      }      
+      });
+    });
+  }); 
+});
+</script>
+<!----------------------------------------------------------------------------------->
+<script>
+$(document).keydown(function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+  $("#order_item_disc_percent"+i).keyup(function(){
+      var temp = $("#order_item_grate"+i).val();
+      var percent = $("#order_item_disc_percent"+i).val();
+      var percent_value = 0;
+      percent_value = parseFloat(temp) *  parseFloat(percent) / 100;
+  $('#order_item_disc_value'+i).val(percent_value);
+//---------Discounted Rate---------------
+    var grate = $("#order_item_grate"+i).val();
+    var dvalue = $("#order_item_disc_value"+i).val();
+    var did_rate = 0;
+    var did_rate = parseFloat(grate)-parseFloat(dvalue);
+  $("#order_item_disc_rate"+i).val(did_rate);
+//---------Amount------------------------
+    var quantity = $("#order_item_quantity"+i).val();
+    var drate = $("#order_item_disc_rate"+i).val();
+    var amount = 0;
+    var amount = parseFloat(quantity) * parseFloat(drate);
+  $("#order_item_amount"+i).val(amount);
+//---------NaN Removing code-------------
+      if(isNaN($('#order_item_disc_value'+i).val())){
+        $("#order_item_disc_value"+i).val(0);
+      }
+      if(isNaN($('#order_item_disc_rate'+i).val())){
+        $("#order_item_disc_rate"+i).val(0);
+      }
+      if(isNaN($('#order_item_amount'+i).val())){
+        var gamount =$("#order_item_gamount"+i).val(); 
+        $("#order_item_amount"+i).val(gamount);
+      }
+        });
+      });
+    });
+  });
+</script>
+<?php include('footer.php'); ?>
