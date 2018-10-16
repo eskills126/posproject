@@ -1,26 +1,25 @@
 <?php 
-include "..\db_connect.php";
+include "../db_connect.php";
 ?>
 <?php
-$edata=$_POST["scode"];
+$edata=$_POST["item_name"];
 //$result = $edata;
-//preg_replace('/ By.*/', '', $posted);
-$result =preg_replace('/-.*/', '', $edata);
+$result =preg_replace('/.*-/', '', $edata);
 //$result = preg_replace("/[^0-9]+/","", $edata);
 //$result = preg_replace("/[^a-z A-Z]+/","", $edata);//Here we add those characters that we want to keep i.e, a to z, A to Z and a space, While those we dont want to keep, we don't write here like 0 to 9 , - etc.
 
 //if(isset($_POST["name"]) && !empty($_POST["name"])){
 	if(isset($result) && !empty($result)){
-		$sql = "SELECT suptbl.SupId ,(suptbl.SupOpenBal + purchaseorderdetailtbl.PurAmount + cashpaidtbl.amountpaid + cashreceivetbl.receiveamount + gttbl.cramount + gttbl.dramount) AS Balance FROM suptbl JOIN purchaseorderdetailtbl JOIN cashpaidtbl JOIN cashreceivetbl JOIN gttbl WHERE suptbl.SupId LIKE ".$result." GROUP by SupId";
-
+		$sql = "SELECT * From salesitemtbl WHERE ProName LIKE '".$result."' ";
+//$query = $conn->query("SELECT * FROM `salesitemtbl` WHERE ProId LIKE  '%".$searchTerm."%' OR ProName LIKE '%".$searchTerm."%'");
 	$result = mysqli_query($conn,$sql);
 
 		if (mysqli_num_rows($result) > 0) {
 				while ($row = mysqli_fetch_assoc($result)) {
-					echo $row["Balance"];
+					echo $row["ProOpenQtyUnit"];
 				}
 		}else{
-			echo "0";
+			echo "No Results";
 		}
 
 		}
