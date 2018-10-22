@@ -438,7 +438,7 @@ $r_name =preg_replace('/.*-/', '', $edata);
           <td colspan="6" align="center">
            <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
           <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
-          <input type="text" name="total_item" id="total_item" value="1" />
+          <input type="hidden" name="total_item" id="total_item" value="1" />
          
           
                 </td>
@@ -452,9 +452,15 @@ $r_name =preg_replace('/.*-/', '', $edata);
         var final_total_amt = $('#final_total_amt').text();
         var count = 1;
         var row_count = 1;
+var a = [];
+var ab = [];
+//-----------------------------------------------------------------------
         $(document).on('click', '#add_row', function(){
           row_count++;
           count++;
+for(var i = count; i <= count; i++){
+a.push(count);
+}
           $('#total_item').val(row_count);
           var html_code = '';
   html_code += '<tr id="row_id_'+count+'">';
@@ -556,7 +562,10 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
           
           var row_idd = row_id - 1;
           $("#item_name"+row_idd).focus();
-  
+
+for(var i = row_count; i <=row_count; i++){
+  ab.push(row_id);
+ }  
           });
 //---------------------Create Invoice Function------------------------------
         function cal_final_total(count)
@@ -702,125 +711,246 @@ $(document).on('keypress',function(){
 
 //-------------Create Invoice------Authentication-------------------------
 //-------------Code for Pressing Enter Key to Submit a Form---------------
-//  $(document).on('keydown','#create_invoice',function(){
-  //          if (e.keyCode == 13) {
-          
-//-----For Item names -------------------------------------------------
- 
-     //      $('#invoice_form').submit();
-  //      });
-
-//------------------------------------------------------------------
-
-
-       //$(document).on('keypress','#create_invoice',function(){
-
-      $('#create_invoice').keydown(function(){
-           if($.trim($('#order_receiver_name').val()).length == 0)
-          {
-            alert("Please Enter Reciever Name Naeem");
-            $('#order_receiver_name').focus();
-            return false;
-          }
-
-          if($.trim($('#order_no').val()).length == 0)
-          {
-            alert("Please Enter Invoice Number");
-            $('#order_no').focus();
-            return false;
-          }
-
-          if($.trim($('#order_date').val()).length == 0)
-          {
-            alert("Please Select Invoice Date");
-            $('#order_date').focus();
-            return false;
-          }
-          
-//----------------------------------------------------------      
-         for(var i = count; i>=1; i--){
-
-        if(!($.trim($('#item_name'+i).val()).length == 0))
-            {
-            }else{
-       alert('Please Enter Item Name');
-            $('#item_name'+i).focus();
-            $('#item_name'+i).css("border-color", "red");
-            return false;
-     }
-}
- $('#invoice_form').submit();  
+$(document).on('keypress', '#create_invoice', function(e) {
+  e.preventDefault();
+  if(e.keyCode == 13){
+//-------------------------------------------------------------
+var myArr = $.merge(a,ab);
+var newArr = myArr;
+for(var h = 0; h < myArr.length; h++) {
+    var curItem = myArr[h];
+    var foundCount = 0;
+    // search array for item
+    for(var i = 0; i < myArr.length; i++) {
+        if (myArr[i] == myArr[h])
+            foundCount++;
+    }
+    if(foundCount > 1) {
+        // remove repeated item from new array
+        for(var j = 0; j < newArr.length; j++) {
+            if(newArr[j] == curItem) {                
+                newArr.splice(j, 1);
+                j = j - 1;
+} } } }
+//-------------------------------------------------------------
+  var allowSubmit = true;    // boolean variable
+//-------------------------------------------------------------
+if($.trim($('#order_receiver_name').val()).length == 0)
+      {
+      alert("Please Enter Reciever Name ");
+      $('#order_receiver_name').focus();
+      $('#order_receiver_name').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false; 
+      }
+if($.trim($('#order_date').val()).length == 0)
+      {
+      alert("Please Select Invoice Date");
+      $('#order_date').focus();
+      $('#order_date').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//--------------------This code is only for 1st Row and only for Create invoice------------------
+if($.trim($('#item_name1').val()).length == 0)
+      {
+      alert("Please Enter Item Name");
+      $('#item_name1').focus();
+      $('#item_name1').css("border-color","#ff3300");
+      allowSubmit = false;    // set the variable to false
+      return false;
+      }
+if($.trim($('#order_item_whname1').val()).length == 0)
+      {
+      alert("Please Enter Warehouse Name");
+      $('#order_item_whname1').focus();
+      $('#order_item_whname1').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_quantity1').val()).length == 0)
+      {
+      alert("Please Enter Quantity");
+      $('#order_item_quantity1').focus();
+      $('#order_item_quantity1').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_grate1').val()).length == 0)
+      {
+      alert("Please Enter Gross Rate");
+      $('#order_item_grate1').focus();
+      $('#order_item_grate1').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//-------------------------------------------------------------
+$.each(newArr, function( i, l ){
+  //alert( "Index #" + i + ": " + l );
+if($.trim($('#item_name'+ l).val()).length == 0)
+      {
+      alert("Please Enter Item Name");
+      $('#item_name'+ l).focus();
+      $('#item_name'+ l).css("border-color","#ff3300");
+      allowSubmit = false;    // set the variable to false
+      return false;
+      }
+if($.trim($('#order_item_whname'+ l).val()).length == 0)
+      {
+      alert("Please Enter Warehouse Name");
+      $('#order_item_whname'+ l).focus();
+      $('#order_item_whname'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_quantity'+ l).val()).length == 0)
+      {
+      alert("Please Enter Quantity");
+      $('#order_item_quantity'+ l).focus();
+      $('#order_item_quantity'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_grate'+ l).val()).length == 0)
+      {
+      alert("Please Enter Gross Rate");
+      $('#order_item_grate'+ l).focus();
+      $('#order_item_grate'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//-----------------------------------------------------------
 });
-  
+if (allowSubmit) {
+    $('#invoice_form').submit();
+  }
+} // if (e.keyCode == 13)
+  });
 
+        
+//-----------------Repeating code for Edit invoice on Click Event-------------------------------------
+$(document).on('click', '#create_invoice', function(e) {
+  e.preventDefault();
+//-------------------------------------------------------------
+var myArr = $.merge(a,ab);
+var newArr = myArr;
+for(var h = 0; h < myArr.length; h++) {
+    var curItem = myArr[h];
+    var foundCount = 0;
+    // search array for item
+    for(var i = 0; i < myArr.length; i++) {
+        if (myArr[i] == myArr[h])
+            foundCount++;
+    }
+    if(foundCount > 1) {
+        // remove repeated item from new array
+        for(var j = 0; j < newArr.length; j++) {
+            if(newArr[j] == curItem) {                
+                newArr.splice(j, 1);
+                j = j - 1;
+} } } }
+//-------------------------------------------------------------
+  var allowSubmit = true;    // boolean variable
+//-------------------------------------------------------------
+if($.trim($('#order_receiver_name').val()).length == 0)
+      {
+      alert("Please Enter Reciever Name ");
+      $('#order_receiver_name').focus();
+      $('#order_receiver_name').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false; 
+      }
+if($.trim($('#order_date').val()).length == 0)
+      {
+      alert("Please Select Invoice Date");
+      $('#order_date').focus();
+      $('#order_date').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//-------------------------------------------------------------
+//--------------------This code is only for 1st Row and only for Create invoice------------------
+if($.trim($('#item_name1').val()).length == 0)
+      {
+      alert("Please Enter Item Name");
+      $('#item_name1').focus();
+      $('#item_name1').css("border-color","#ff3300");
+      allowSubmit = false;    // set the variable to false
+      return false;
+      }
+if($.trim($('#order_item_whname1').val()).length == 0)
+      {
+      alert("Please Enter Warehouse Name");
+      $('#order_item_whname1').focus();
+      $('#order_item_whname1').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_quantity1').val()).length == 0)
+      {
+      alert("Please Enter Quantity");
+      $('#order_item_quantity1').focus();
+      $('#order_item_quantity1').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_grate1').val()).length == 0)
+      {
+      alert("Please Enter Gross Rate");
+      $('#order_item_grate1').focus();
+      $('#order_item_grate1').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//-------------------------------------------------------------
+$.each(newArr, function( i, l ){
+  //alert( "Index #" + i + ": " + l );
+if($.trim($('#item_name'+ l).val()).length == 0)
+      {
+      alert("Please Enter Item Name");
+      $('#item_name'+ l).focus();
+      $('#item_name'+ l).css("border-color","#ff3300");
+      allowSubmit = false;    // set the variable to false
+      return false;
+      }
+if($.trim($('#order_item_whname'+ l).val()).length == 0)
+      {
+      alert("Please Enter Warehouse Name");
+      $('#order_item_whname'+ l).focus();
+      $('#order_item_whname'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_quantity'+ l).val()).length == 0)
+      {
+      alert("Please Enter Quantity");
+      $('#order_item_quantity'+ l).focus();
+      $('#order_item_quantity'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_grate'+ l).val()).length == 0)
+      {
+      alert("Please Enter Gross Rate");
+      $('#order_item_grate'+ l).focus();
+      $('#order_item_grate'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }      
 
-//--------------Repeating above code for Click Button to Submit Form --------------------
-
-$(document).on('click','#create_invoice',function(){
-          if($.trim($('#order_receiver_name').val()).length == 0)
-          {
-            alert("Please Enter Reciever Name Naeem");
-            $('#order_receiver_name').focus();
-            return false;
-            //$('#order_receiver_name').focus();
-          }
-
-          if($.trim($('#order_no').val()).length == 0)
-          {
-            alert("Please Enter Invoice Number");
-            $('#order_no').focus();
-            return false;
-          }
-
-          if($.trim($('#order_date').val()).length == 0)
-          {
-            alert("Please Select Invoice Date");
-            $('#order_date').focus();
-            return false;
-          }
-
-          for(var no=1; no<=row_count; no++) {
-
-            if($.trim($('#item_name'+no).val()).length == 0)
-            {
-              alert("Please Enter Item Name");
-              $('#item_name'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_whname'+no).val()).length == 0)
-            {
-              alert("Please Enter Warehouse Name");
-              $('#order_item_whname'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_quantity'+no).val()).length == 0)
-            {
-              alert("Please Enter Quantity");
-              $('#order_item_quantity'+no).focus();
-              return false;
-            }
-            if($.trim($('#order_item_squantity'+no).val()).length == 0)
-            {
-              alert("Please Enter Stock Quantity");
-              $('#order_item_squantity'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_grate'+no).val()).length == 0)
-            {
-              alert("Please Enter Gross Rate");
-              $('#order_item_grate'+no).focus();
-              return false;
-            }
-
-          }
-            
-            $('#invoice_form').submit();
-        });  
+//-----------------------------------------------------------
 });
-//});
+if (allowSubmit) {
+    $('#invoice_form').submit();
+  }
+
+});
+
+
+
+
+});
+
    </script>
 
 
@@ -999,10 +1129,9 @@ $(document).on('click','#create_invoice',function(){
               <tr>
          <td colspan="6" align="center">
          <input type="text" style="width: 100px;" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
-          <input type="text" name="total_item" id="total_item" value="<?php echo $m; ?>" />
-         <input type="text" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
-          <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
-                    </td>
+          <input type="hidden" name="total_item" id="total_item" value="<?php echo $m; ?>" />
+         <input type="hidden" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
+                         </td>
               </tr>
           </table>
         </div>
@@ -1013,22 +1142,15 @@ $(document).on('click','#create_invoice',function(){
         $("#order_receiver_name").focus();
         var final_total_amt = $('#final_total_amt').text();
         var count = "<?php echo $m; ?>";
-        var row_count = "<?php echo $m; ?>";
-        //alert(row_count);
+var row_count = "<?php echo $m; ?>";
 var a = [];
- var ab = [];
-//var i = 0;       
+var ab = [];
         $(document).on('click', '#add_row', function(){
           row_count++; 
-          //alert(row_count);
           count++;
-          ///alert(count);
 for(var i = count; i <= count; i++){
-  a.push(count);
-  //a[1] = count;
+a.push(count);
 }
-//alert(a[0]);
-//alert(a[1]);
 
           $('#total_item').val(row_count);
           var html_code = '';
@@ -1099,8 +1221,6 @@ html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+
           $('#order_total_tdisc').val(result_disc.toFixed(2));
           $('#order_total_bamount').val(result_amount.toFixed(2));
 
-//var asd = row_id;
-//alert(asd);
           $('#row_id_'+row_id).remove();
           row_count--;
           $('#total_item').val(row_count);
@@ -1108,8 +1228,6 @@ html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+
           var row_idd = row_id - 1;
           $("#item_name"+row_idd).focus();
 
-//var delcount = 2;
-//var ab = [];
 for(var i = row_count; i <=row_count; i++){
   ab.push(row_id);
  }
@@ -1149,47 +1267,7 @@ for(var i = row_count; i <=row_count; i++){
           $("#item_name"+row_idd).focus();
   
         });
-//------------------------------Edit Invoice Function -----------------------------------
-/*
-        function cal_final_total(count)
-        {
-          var final_item_total = 0;
-          for(j=1; j<=count; j++)
-          {
-            var quantity = 0;
-            var grate = 0;
-            var gamount = 0;
-            var item_total=0;
 
-            quantity = $('#order_item_quantity'+j).val();
-            if(quantity > 0)
-            {
-              grate = $('#order_item_grate'+j).val();
-              if(grate > 0)
-              {
-                gamount = parseFloat(quantity) * parseFloat(grate);
-              }
-               item_total = gamount;
-              final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
-
-              $('#order_item_gamount'+j).val(item_total);
-            }
-          }
-          $('#order_gtotal').val(final_item_total);
-          var dvalue = $('#order_total_discount_value').val();
-          var freight = $('#order_total_freight').val();
-          var final_gamount = parseFloat(final_item_total) - parseFloat(dvalue) + parseFloat(freight);
-          $('#final_total_amt').text(final_gamount);
-        }
-/*
-        $(document).on('blur', '.order_item_grate', function(){
-          cal_final_total(count);
-        });
-*
-        $(document).on('keyup', '.order_item_quantity', function(){
-          cal_final_total(count);
-        });
-*/
 //-------------------------Edit Invoice-----------------------------
 function cal_final_total(count)
         {
@@ -1228,9 +1306,77 @@ function cal_final_total(count)
 $(document).on('keyup','.order_item_quantity , .order_item_disc_percent', function(){
           cal_final_total(count);
         });
-//-------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+  $(document).on('keydown',function(){
+    $(function() {
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/sqty_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_squantity"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+//---------------------------------------------------------------------------------------
+$(document).on('keydown',function(){
+  $(function() {
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/grate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_grate"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+//--------------------------------------------------------------------------------------
+$(document).on('keydown',function(){
+  $(function() {
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/prate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_prate"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
 
-//----------Authentication code for Edit Invoice-----------
+//----------Authentication code for Edit Invoice-----------------------------------------------------
 $(document).on('keypress', '#create_invoice', function(e) {
   e.preventDefault();
   if(e.keyCode == 13){
@@ -1259,6 +1405,7 @@ if($.trim($('#order_receiver_name').val()).length == 0)
       {
       alert("Please Enter Reciever Name ");
       $('#order_receiver_name').focus();
+      $('#order_receiver_name').css("border-color","#ff3300");
       allowSubmit = false;
       return false; 
       }
@@ -1266,6 +1413,7 @@ if($.trim($('#order_date').val()).length == 0)
       {
       alert("Please Select Invoice Date");
       $('#order_date').focus();
+      $('#order_date').css("border-color","#ff3300");
       allowSubmit = false;
       return false;
       }
@@ -1276,6 +1424,7 @@ if($.trim($('#item_name'+ l).val()).length == 0)
       {
       alert("Please Enter Item Name");
       $('#item_name'+ l).focus();
+      $('#item_name'+ l).css("border-color","#ff3300");
       allowSubmit = false;    // set the variable to false
       return false;
       }
@@ -1283,6 +1432,7 @@ if($.trim($('#order_item_whname'+ l).val()).length == 0)
       {
       alert("Please Enter Warehouse Name");
       $('#order_item_whname'+ l).focus();
+      $('#order_item_whname'+ l).css("border-color","#ff3300");
       allowSubmit = false;
       return false;
       }
@@ -1290,14 +1440,20 @@ if($.trim($('#order_item_quantity'+ l).val()).length == 0)
       {
       alert("Please Enter Quantity");
       $('#order_item_quantity'+ l).focus();
+      $('#order_item_quantity'+ l).css("border-color","#ff3300");
       allowSubmit = false;
       return false;
       }
+if($.trim($('#order_item_grate'+ l).val()).length == 0)
+      {
+      alert("Please Enter Gross Rate");
+      $('#order_item_grate'+ l).focus();
+      $('#order_item_grate'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }      
 
-
-
-
-//return false; 
+//-----------------------------------------------------------
 });
 if (allowSubmit) {
     $('#invoice_form').submit();
@@ -1305,66 +1461,92 @@ if (allowSubmit) {
 } // if (e.keyCode == 13)
   });
 
-//});         
-//-----------------Repeating code for Edit invoice on Click Event-------------------
-$(document).on('click','#create_invoice',function(){
+        
+//-----------------Repeating code for Edit invoice on Click Event-------------------------------------
+$(document).on('click', '#create_invoice', function(e) {
+  e.preventDefault();
+//-------------------------------------------------------------
+var myArr = $.merge(a,ab);
+var newArr = myArr;
+for(var h = 0; h < myArr.length; h++) {
+    var curItem = myArr[h];
+    var foundCount = 0;
+    // search array for item
+    for(var i = 0; i < myArr.length; i++) {
+        if (myArr[i] == myArr[h])
+            foundCount++;
+    }
+    if(foundCount > 1) {
+        // remove repeated item from new array
+        for(var j = 0; j < newArr.length; j++) {
+            if(newArr[j] == curItem) {                
+                newArr.splice(j, 1);
+                j = j - 1;
+} } } }
+//-------------------------------------------------------------
+  var allowSubmit = true;    // boolean variable
+//-------------------------------------------------------------
+if($.trim($('#order_receiver_name').val()).length == 0)
+      {
+      alert("Please Enter Reciever Name ");
+      $('#order_receiver_name').focus();
+      $('#order_receiver_name').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false; 
+      }
+if($.trim($('#order_date').val()).length == 0)
+      {
+      alert("Please Select Invoice Date");
+      $('#order_date').focus();
+      $('#order_date').css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//-------------------------------------------------------------
+$.each(newArr, function( i, l ){
+  //alert( "Index #" + i + ": " + l );
+if($.trim($('#item_name'+ l).val()).length == 0)
+      {
+      alert("Please Enter Item Name");
+      $('#item_name'+ l).focus();
+      $('#item_name'+ l).css("border-color","#ff3300");
+      allowSubmit = false;    // set the variable to false
+      return false;
+      }
+if($.trim($('#order_item_whname'+ l).val()).length == 0)
+      {
+      alert("Please Enter Warehouse Name");
+      $('#order_item_whname'+ l).focus();
+      $('#order_item_whname'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_quantity'+ l).val()).length == 0)
+      {
+      alert("Please Enter Quantity");
+      $('#order_item_quantity'+ l).focus();
+      $('#order_item_quantity'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_grate'+ l).val()).length == 0)
+      {
+      alert("Please Enter Gross Rate");
+      $('#order_item_grate'+ l).focus();
+      $('#order_item_grate'+ l).css("border-color","#ff3300");
+      allowSubmit = false;
+      return false;
+      }
+//-----------------------------------------------------------
+});
+if (allowSubmit) {
+    $('#invoice_form').submit();
+  }
 
-          if($.trim($('#order_receiver_name').val()).length == 0)
-          {
-            alert("Please Enter Reciever Name ");
-            $('#order_receiver_name').focus();
-            return false; 
-          }
+});
 
-          if($.trim($('#order_no').val()).length == 0)
-          {
-            alert("Please Enter Invoice Number");
-            $('#order_no').focus();
-            return false;
-          }
 
-          if($.trim($('#order_date').val()).length == 0)
-          {
-            alert("Please Select Invoice Date");
-            $('#order_date').focus();
-            return false;
-          }
 
-          for(var no=1; no<=row_count; no++)
-          {
-            if($.trim($('#item_name'+no).val()).length == 0)
-            {
-              alert("Please Enter Item Name");
-              $('#item_name'+no).focus();
-              return false;
-            }
-            if($.trim($('#order_item_whname'+no).val()).length == 0)
-            {
-              alert("Please Enter Warehouse Name");
-              $('#order_item_whname'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_quantity'+no).val()).length == 0)
-            {
-              alert("Please Enter Quantity");
-              $('#order_item_quantity'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_grate'+no).val()).length == 0)
-            {
-              alert("Please Enter Gross Rate");
-              $('#order_item_grate'+no).focus();
-              return false;
-            }
-            
-
-          }
-
-          $('#invoice_form').submit();
-
-        });
    });
       </script>
         <?php 
@@ -1426,9 +1608,6 @@ $(document).on('click','#create_invoice',function(){
       ?>
     </div>
     
- <!--   <footer class="container-fluid text-center">
-      <p>Footer Text</p>
-    </footer>  -->
   </body>
 </html>
 <!-------------------------First Page Closed-------------------------->
@@ -1590,16 +1769,7 @@ $(inputs).keypress(function(e){
     });
   }); 
 </script>
-<!---------------Code for updating Stock Quantity dynamically------------->
-
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------------->
+<!----------------------------------------------------->
 <script>
 
   $(document).on('keyup',function(){
@@ -1631,7 +1801,7 @@ $(inputs).keypress(function(e){
 });
   
 </script>
-<!----------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------->
 <script>
   
 $(document).keydown(function(){

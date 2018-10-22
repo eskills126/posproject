@@ -21,7 +21,7 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
   $output .= '
    <table width="100%" border=".5" cellpadding="5" cellspacing="0" >
     <tr>
-     <td colspan="2" align="center" style="font-size:18px"><b>Invoice</b></td>
+     <td colspan="2" align="center" style="font-size:18px"><b>Sales-Invoice</b></td>
     </tr>
     <tr>
      <td colspan="2">
