@@ -1440,7 +1440,7 @@ auto++;
 --->
 <!---------------Code for updating Stock Quantity dynamically------------->
 <script>
-$(document).on('keyup',function(){
+$(document).on('keypress',function(){
   $(function() {
 // var dummy = [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41]; 
 //-------the above code also works fine , but in below code i used the for loop to push 500 numbres in dummy array-----------------
@@ -1468,7 +1468,7 @@ $(document).on('keyup',function(){
 </script>
 <!---------------Code for updating Gross Rate dynamically------------->
 <script>
-$(document).on('keyup',function(){
+$(document).on('keypress',function(){
   $(function() {
 //----- push numbers in dummy array----------
   var dummy = [];
@@ -1495,7 +1495,7 @@ $(document).on('keyup',function(){
 </script>
 <!---------------Code for updating Previous Rate dynamically------------->
 <script>
-$(document).on('keyup',function(){
+$(document).on('keypress',function(){
   $(function() {
 //----- push numbers in dummy array----------
   var dummy = [];
