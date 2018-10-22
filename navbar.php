@@ -157,7 +157,7 @@ $rights = $_SESSION['user_role'];
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">Assets</a>
-        <a class="dropdown-item" href="#">Customers</a>
+        <a class="dropdown-item" href="js/csrpt.php">Customers</a>
         <a class="dropdown-item" href="#">Liabilities</a>
         <a class="dropdown-item" href="#">Suppliers</a>
         <!--dropdown divider-->

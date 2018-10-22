@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" application="StiReport" type="Flex">
+  <Dictionary isKey="true" Ref="1" type="Dictionary">
+    <Databases count="1" isList="true">
+      <con isKey="true" Ref="2" type="Stimulsoft.Report.Dictionary.StiMySqlDatabase">
+        <Alias>con</Alias>
+        <ConnectionStringEncrypted>41bNa2JLo5njXO2EYlzhP4t40UhhV3PZYhP99E09dy/CfvtIT1pL+WtbpfhoaGUTwlb7Kc1ZMcE=</ConnectionStringEncrypted>
+        <Name>con</Name>
+      </con>
+    </Databases>
+    <DataSources count="2" isList="true">
+      <ds isKey="true" Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource">
+        <Alias>ds</Alias>
+        <Columns count="9" isList="true">
+          <value>CusId,System.Int32</value>
+          <value>CusName,System.String</value>
+          <value>CusAddress,System.String</value>
+          <value>CusContact,System.String</value>
+          <value>CusCreditLimit,System.Int32</value>
+          <value>CusOpenBal,System.Int32</value>
+          <value>CusAreaName,System.String</value>
+          <value>CusAccType,System.Int32</value>
+          <value>CusAssetType,System.Int32</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1"/>
+        <Name>ds</Name>
+        <NameInSource>con</NameInSource>
+        <Parameters count="0" isList="true"/>
+        <SqlCommand>select * from customertbl</SqlCommand>
+      </ds>
+      <ds2 isKey="true" Ref="4" type="Stimulsoft.Report.Dictionary.StiMySqlSource">
+        <Alias>ds2</Alias>
+        <Columns count="4" isList="true">
+          <value>cmpid,System.Int32</value>
+          <value>cmpName,System.String</value>
+          <value>cmpAddress,System.String</value>
+          <value>cmpContact,System.String</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1"/>
+        <Name>ds2</Name>
+        <NameInSource>con</NameInSource>
+        <Parameters count="0" isList="true"/>
+        <SqlCommand>select * from companytbl</SqlCommand>
+      </ds2>
+    </DataSources>
+    <Relations count="0" isList="true"/>
+    <Report isRef="0"/>
+    <Variables count="0" isList="true"/>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings count="0" isList="true"/>
+  <MetaTags count="0" isList="true"/>
+  <Pages count="1" isList="true">
+    <Page1 isKey="true" Ref="5" type="Page">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components count="3" isList="true">
+        <GroupHeaderBand1 isKey="true" Ref="6" type="GroupHeaderBand">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,20.01,2.2</ClientRectangle>
+          <Components count="8" isList="true">
+            <Text1 isKey="true" Ref="7" type="Text">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,20,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,14,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>{ds2.cmpName}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text4 isKey="true" Ref="8" type="Text">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.8,20,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,14,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>Customer's Detail</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text6 isKey="true" Ref="9" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[255:165:0]</Brush>
+              <ClientRectangle>1,1.4,1.6,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>ID</Text>
+              <TextBrush>[255:255:255]</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text8 isKey="true" Ref="10" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[255:165:0]</Brush>
+              <ClientRectangle>2.6,1.4,4.8,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>Customer Name</Text>
+              <TextBrush>[255:255:255]</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text19 isKey="true" Ref="11" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[255:165:0]</Brush>
+              <ClientRectangle>7.4,1.4,4.8,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10,Bold</Font>
+              <Guid>50f198868b1b59e3ea338234269d28bb</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>Customer Address</Text>
+              <TextBrush>[255:255:255]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+            <Text20 isKey="true" Ref="12" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[255:165:0]</Brush>
+              <ClientRectangle>12.2,1.4,2.8,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10,Bold</Font>
+              <Guid>97dc748bb02664a0468d82359165ce9c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>Contact</Text>
+              <TextBrush>[255:255:255]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text20>
+            <Text17 isKey="true" Ref="13" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[255:165:0]</Brush>
+              <ClientRectangle>15,1.4,2,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10,Bold</Font>
+              <Guid>ba9fbc6a01607c1a71e38236aecf2ccc</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>Opening Balance</Text>
+              <TextBrush>[255:255:255]</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text12 isKey="true" Ref="14" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[255:165:0]</Brush>
+              <ClientRectangle>17,1.4,2,0.8</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10,Bold</Font>
+              <Guid>7465af082b28e22fbc008238a9192a53</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="5"/>
+              <Parent isRef="6"/>
+              <Text>Credit Limt</Text>
+              <TextBrush>[255:255:255]</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+          </Components>
+          <Condition>{ds2.cmpName}</Condition>
+          <Conditions count="0" isList="true"/>
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="5"/>
+          <Parent isRef="5"/>
+        </GroupHeaderBand1>
+        <DataBand1 isKey="true" Ref="15" type="DataBand">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3.4,20.01,0.6</ClientRectangle>
+          <Components count="6" isList="true">
+            <Text5 isKey="true" Ref="16" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1,0,1.6,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="5"/>
+              <Parent isRef="15"/>
+              <Text>{ds.CusId}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text7 isKey="true" Ref="17" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.6,0,4.8,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10</Font>
+              <Locked>True</Locked>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="5"/>
+              <Parent isRef="15"/>
+              <Text>{ds.CusName}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text9 isKey="true" Ref="18" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.4,0,4.8,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10</Font>
+              <Locked>True</Locked>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="5"/>
+              <Parent isRef="15"/>
+              <Text>{ds.CusAddress}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text15 isKey="true" Ref="19" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15,0,2,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Locked>True</Locked>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="5"/>
+              <Parent isRef="15"/>
+              <Text>{ds.CusOpenBal}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat isKey="true" Ref="20" type="NumberFormat">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator></GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text11 isKey="true" Ref="21" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12.2,0,2.8,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10</Font>
+              <Locked>True</Locked>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="5"/>
+              <Parent isRef="15"/>
+              <Text>{ds.CusContact}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <Text13 isKey="true" Ref="22" type="Text">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17,0,2,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,10</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Locked>True</Locked>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="5"/>
+              <Parent isRef="15"/>
+              <Text>{ds.CusCreditLimit}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat isKey="true" Ref="23" type="NumberFormat">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator></GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+          </Components>
+          <Conditions count="0" isList="true"/>
+          <DataSourceName>ds</DataSourceName>
+          <Filters count="0" isList="true"/>
+          <Name>DataBand1</Name>
+          <Page isRef="5"/>
+          <Parent isRef="5"/>
+          <Sort count="0" isList="true"/>
+        </DataBand1>
+        <GroupFooterBand1 isKey="true" Ref="24" type="GroupFooterBand">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,4.8,20.01,0.8</ClientRectangle>
+          <Components count="2" isList="true">
+            <Text3 isKey="true" Ref="25" type="Text">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,8.2,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,12,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="5"/>
+              <Parent isRef="24"/>
+              <Text>{ds2.cmpAddress}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text2 isKey="true" Ref="26" type="Text">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8.2,0,11.8,0.6</ClientRectangle>
+              <Conditions count="0" isList="true"/>
+              <Font>Arial,12,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="5"/>
+              <Parent isRef="24"/>
+              <Text>{ds2.cmpContact}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+          </Components>
+          <Conditions count="0" isList="true"/>
+          <Name>GroupFooterBand1</Name>
+          <Page isRef="5"/>
+          <Parent isRef="5"/>
+        </GroupFooterBand1>
+      </Components>
+      <Conditions count="0" isList="true"/>
+      <Guid>e24e07a4d1a8eb10694d82176d992c30</Guid>
+      <Margins>0.5,0.5,0.5,0.5</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.69</PageHeight>
+      <PageWidth>21.01</PageWidth>
+      <PaperSize>A4</PaperSize>
+      <Report isRef="0"/>
+      <ReportUnit isKey="true" Ref="27" type="cm"/>
+      <Watermark isKey="true" Ref="28" type="Stimulsoft.Report.Components.StiWatermark">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings isKey="true" Ref="29" type="Stimulsoft.Report.Print.StiPrinterSettings"/>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>10/17/2018 07:35:08 PM</ReportChanged>
+  <ReportCreated>10/17/2018 05:54:25 PM</ReportCreated>
+  <ReportFile>csrpt.mrt</ReportFile>
+  <ReportGuid>3f66a4748ab80aaad046826f132b496b</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2016.3.1</ReportVersion>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles count="0" isList="true"/>
+</StiSerializer>
