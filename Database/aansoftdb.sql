@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2018 at 11:48 AM
+-- Generation Time: Oct 22, 2018 at 02:20 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -120,6 +120,23 @@ CREATE TABLE `cashreceivetbl` (
 INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `timestamp`, `cashinhandr`) VALUES
 (1, '2018-09-11', 3, 'Asad', 'ok', 1200, 'abc', '2018-09-11 17:13:52', 5),
 (2, '2018-09-11', 1, 'Rehman', 'wao', 800, 'asd', '2018-09-11 17:13:52', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `companytbl`
+--
+
+CREATE TABLE `companytbl` (
+  `cid` int(11) NOT NULL,
+  `cmpname` varchar(250) NOT NULL,
+  `cmpaddr` varchar(250) NOT NULL,
+  `cmpcontact1` varchar(250) NOT NULL,
+  `cmpcontact2` varchar(250) NOT NULL,
+  `cmpemail` varchar(250) NOT NULL,
+  `cmpweb` varchar(250) NOT NULL,
+  `cmplogo` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -589,7 +606,8 @@ INSERT INTO `tbl_order` (`order_id`, `order_no`, `order_date`, `order_receiver_n
 (31, 19, '13/10/2018', '36', '', '10.00', '0.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
 (32, 20, '13/10/2018', 'Amjad Hanif', '', '10.00', '0.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
 (33, 21, '13/10/2018', 'Parveen Shakar', 'Lalazar Colony Vehari', '300.00', '0.00', '0.00', '0.00', '300.00', '2018-10-13 00:00:00'),
-(34, 22, '13/10/2018', 'Kamran Ahmed', '', '1045.00', '0.00', '0.00', '0.00', '1045.00', '2018-10-13 00:00:00');
+(34, 22, '13/10/2018', 'Kamran Ahmed', '', '1045.00', '0.00', '0.00', '0.00', '1045.00', '2018-10-13 00:00:00'),
+(35, 23, '17/10/2018', 'KOt', 'Address', '12.00', '55.00', '6.60', '10.00', '15.40', '2018-10-17 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -641,7 +659,7 @@ INSERT INTO `tbl_order_item` (`order_item_id`, `order_id`, `item_name`, `order_i
 (665, 34, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00'),
 (666, 34, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00'),
 (667, 34, 'Keyboard', 'Warehouse 2', '10.00', '5.00', '5.00', '100.00', '1000.00'),
-(668, 34, 'samsung', 'Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00');
+(669, 35, 'samsung', 'Warehouse 2', '6.00', '5.00', '5.00', '2.00', '12.00');
 
 -- --------------------------------------------------------
 
@@ -658,42 +676,55 @@ CREATE TABLE `tbl_order_item_purchase` (
   `order_item_squantity` decimal(10,2) NOT NULL,
   `order_item_prate` decimal(10,2) NOT NULL,
   `order_item_grate` decimal(10,2) NOT NULL,
-  `order_item_gamount` decimal(10,2) NOT NULL
+  `order_item_gamount` decimal(10,2) NOT NULL,
+  `order_item_disc_percent` decimal(10,2) NOT NULL,
+  `order_item_disc_value` decimal(10,2) NOT NULL,
+  `order_item_disc_rate` decimal(10,2) NOT NULL,
+  `order_item_amount` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_order_item_purchase`
 --
 
-INSERT INTO `tbl_order_item_purchase` (`order_item_id`, `order_id`, `item_name`, `order_item_whname`, `order_item_quantity`, `order_item_squantity`, `order_item_prate`, `order_item_grate`, `order_item_gamount`) VALUES
-(390, 6, 'Fan', 'Shop1', '5.00', '5.00', '5.00', '100.00', '500.00'),
-(404, 10, 'Cup', 'Shop', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(405, 11, 'no', 'no', '3.00', '7.00', '7.00', '7.00', '21.00'),
-(406, 12, 'i', 'i', '8.00', '9.00', '8.00', '9.00', '72.00'),
-(407, 13, 'Cup', 'cup', '8.00', '8.00', '8.00', '8.00', '64.00'),
-(435, 21, 'item', 'no', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(438, 23, 't', 't', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(439, 23, 'r', 'r', '4.00', '4.00', '4.00', '4.00', '16.00'),
-(457, 14, 'mug', 'mug', '9.00', '9.00', '9.00', '9.00', '81.00'),
-(458, 14, 'Cup', 'shop', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(632, 28, '22-Keyboard', 'Shop 2', '60.00', '5.00', '5.00', '100.00', '6000.00'),
-(633, 28, '17-Chair', '3-Shop Two', '6.00', '5.00', '5.00', '5.00', '30.00'),
-(638, 27, '2-Dell', 'No', '5.00', '10.00', '0.00', '300.00', '1500.00'),
-(639, 27, '4-Asus', 'Shop 2', '50.00', '70.00', '0.00', '20.00', '1000.00'),
-(640, 27, '3-IBM', 'No', '5.00', '25.00', '0.00', '50.00', '250.00'),
-(641, 27, '1-HP', 'N0', '4.00', '5.00', '0.00', '200.00', '800.00'),
-(644, 29, '16-Nadeem', '1-Warehouse 2', '6.00', '6.00', '6.00', '200.00', '1200.00'),
-(645, 30, '17-Chair', '1-Warehouse 2', '6.00', '5.00', '5.00', '5.00', '30.00'),
-(646, 30, '14-samsung', '3-Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00'),
-(647, 31, '14-samsung', '1-Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00'),
-(648, 0, '16-Nadeem', '1-Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00'),
-(649, 32, '14-samsung', '1-Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00'),
-(652, 33, '5', '5', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(653, 33, 'no', 'no', '5.00', '5.00', '5.00', '55.00', '275.00'),
-(665, 34, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00'),
-(666, 34, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(667, 34, 'Keyboard', 'Warehouse 2', '10.00', '5.00', '5.00', '100.00', '1000.00'),
-(668, 34, 'samsung', 'Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00');
+INSERT INTO `tbl_order_item_purchase` (`order_item_id`, `order_id`, `item_name`, `order_item_whname`, `order_item_quantity`, `order_item_squantity`, `order_item_prate`, `order_item_grate`, `order_item_gamount`, `order_item_disc_percent`, `order_item_disc_value`, `order_item_disc_rate`, `order_item_amount`) VALUES
+(390, 6, 'Fan', 'Shop1', '5.00', '5.00', '5.00', '100.00', '500.00', '0.00', '0.00', '0.00', '0.00'),
+(404, 10, 'Cup', 'Shop', '5.00', '5.00', '5.00', '5.00', '25.00', '0.00', '0.00', '0.00', '0.00'),
+(405, 11, 'no', 'no', '3.00', '7.00', '7.00', '7.00', '21.00', '0.00', '0.00', '0.00', '0.00'),
+(406, 12, 'i', 'i', '8.00', '9.00', '8.00', '9.00', '72.00', '0.00', '0.00', '0.00', '0.00'),
+(407, 13, 'Cup', 'cup', '8.00', '8.00', '8.00', '8.00', '64.00', '0.00', '0.00', '0.00', '0.00'),
+(435, 21, 'item', 'no', '5.00', '5.00', '5.00', '5.00', '25.00', '0.00', '0.00', '0.00', '0.00'),
+(438, 23, 't', 't', '5.00', '5.00', '5.00', '5.00', '25.00', '0.00', '0.00', '0.00', '0.00'),
+(439, 23, 'r', 'r', '4.00', '4.00', '4.00', '4.00', '16.00', '0.00', '0.00', '0.00', '0.00'),
+(457, 14, 'mug', 'mug', '9.00', '9.00', '9.00', '9.00', '81.00', '0.00', '0.00', '0.00', '0.00'),
+(458, 14, 'Cup', 'shop', '5.00', '5.00', '5.00', '5.00', '25.00', '0.00', '0.00', '0.00', '0.00'),
+(632, 28, '22-Keyboard', 'Shop 2', '60.00', '5.00', '5.00', '100.00', '6000.00', '0.00', '0.00', '0.00', '0.00'),
+(633, 28, '17-Chair', '3-Shop Two', '6.00', '5.00', '5.00', '5.00', '30.00', '0.00', '0.00', '0.00', '0.00'),
+(638, 27, '2-Dell', 'No', '5.00', '10.00', '0.00', '300.00', '1500.00', '0.00', '0.00', '0.00', '0.00'),
+(639, 27, '4-Asus', 'Shop 2', '50.00', '70.00', '0.00', '20.00', '1000.00', '0.00', '0.00', '0.00', '0.00'),
+(640, 27, '3-IBM', 'No', '5.00', '25.00', '0.00', '50.00', '250.00', '0.00', '0.00', '0.00', '0.00'),
+(641, 27, '1-HP', 'N0', '4.00', '5.00', '0.00', '200.00', '800.00', '0.00', '0.00', '0.00', '0.00'),
+(644, 29, '16-Nadeem', '1-Warehouse 2', '6.00', '6.00', '6.00', '200.00', '1200.00', '0.00', '0.00', '0.00', '0.00'),
+(645, 30, '17-Chair', '1-Warehouse 2', '6.00', '5.00', '5.00', '5.00', '30.00', '0.00', '0.00', '0.00', '0.00'),
+(646, 30, '14-samsung', '3-Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00', '0.00', '0.00', '0.00', '0.00'),
+(647, 31, '14-samsung', '1-Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '0.00', '0.00', '0.00', '0.00'),
+(648, 0, '16-Nadeem', '1-Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00', '0.00', '0.00', '0.00', '0.00'),
+(649, 32, '14-samsung', '1-Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '0.00', '0.00', '0.00', '0.00'),
+(652, 33, '5', '5', '5.00', '5.00', '5.00', '5.00', '25.00', '0.00', '0.00', '0.00', '0.00'),
+(653, 33, 'no', 'no', '5.00', '5.00', '5.00', '55.00', '275.00', '0.00', '0.00', '0.00', '0.00'),
+(669, 0, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50'),
+(670, 0, 'Chair', 'Warehouse 2', '45.00', '5.00', '5.00', '5.00', '225.00', '55.00', '2.75', '2.25', '101.25'),
+(671, 0, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '50.00', '1.00', '1.00', '5.00'),
+(726, 34, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50'),
+(727, 34, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '20.00', '1.00', '4.00', '20.00'),
+(728, 34, 'Keyboard', 'Warehouse 2', '10.00', '5.00', '5.00', '100.00', '1000.00', '2.00', '2.00', '98.00', '980.00'),
+(783, 41, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '50.00', '1.00', '1.00', '5.00'),
+(784, 42, 'sf', 'Warehouse 2', '5.00', '56.00', '56.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
+(805, 58, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00', '6.00', '12.00', '188.00', '940.00'),
+(806, 58, 'samsung', 'Warehouse 2', '4.00', '5.00', '5.00', '2.00', '8.00', '4.00', '0.08', '1.92', '7.68'),
+(925, 61, 'samsung', 'Shop 5', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '10.00'),
+(926, 61, 'samsung', 'Warehouse 2', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'),
+(927, 61, 'samsung', 'Warehouse 2', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -707,11 +738,10 @@ CREATE TABLE `tbl_order_purchase` (
   `order_date` varchar(250) NOT NULL,
   `order_receiver_name` varchar(250) NOT NULL,
   `order_receiver_remarks` varchar(500) NOT NULL,
-  `order_total_before_discount_freight` decimal(10,2) NOT NULL,
-  `order_total_discount_percentage` decimal(10,2) NOT NULL,
+  `order_total_qty` decimal(10,2) NOT NULL,
+  `order_total_before_discount` decimal(10,2) NOT NULL,
   `order_total_discount_value` decimal(10,2) NOT NULL,
-  `order_total_freight` decimal(10,2) NOT NULL,
-  `order_total_after_discount_freight` decimal(10,2) NOT NULL,
+  `order_total_after_discount` decimal(10,2) NOT NULL,
   `order_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -719,22 +749,26 @@ CREATE TABLE `tbl_order_purchase` (
 -- Dumping data for table `tbl_order_purchase`
 --
 
-INSERT INTO `tbl_order_purchase` (`order_id`, `order_no`, `order_date`, `order_receiver_name`, `order_receiver_remarks`, `order_total_before_discount_freight`, `order_total_discount_percentage`, `order_total_discount_value`, `order_total_freight`, `order_total_after_discount_freight`, `order_datetime`) VALUES
-(6, 4, '29/09/2018', 'Amjad', '220KV Grid Station', '500.00', '5.00', '250.00', '250.00', '500.00', '2018-09-29 00:00:00'),
-(11, 5, '05/10/2018', 'Naeem', 'no', '21.00', '0.00', '0.00', '0.00', '21.00', '2018-10-05 00:00:00'),
-(12, 6, '06/10/2018', 'Jamal Ahmed', 'no', '72.00', '0.00', '0.00', '0.00', '72.00', '2018-10-06 00:00:00'),
-(13, 7, '07/10/2018', 'Jutt', '', '64.00', '0.00', '0.00', '0.00', '64.00', '2018-10-07 00:00:00'),
-(14, 8, '07/10/2018', 'Jut2', 'no', '106.00', '0.00', '0.00', '0.00', '106.00', '2018-10-07 00:00:00'),
-(21, 10, '08/10/2018', 'Imran', 'No', '25.00', '0.00', '0.00', '0.00', '25.00', '2018-10-08 00:00:00'),
-(23, 11, '08/10/2018', 'Imran khan', '', '41.00', '0.00', '0.00', '0.00', '41.00', '2018-10-08 00:00:00'),
-(27, 15, '11/10/2018', 'Ghs 567', 'govt high school', '3550.00', '0.00', '20.00', '200.00', '3730.00', '2018-10-11 00:00:00'),
-(28, 16, '11/10/2018', 'Asad Umar', 'Address', '6030.00', '8.00', '482.40', '200.00', '5747.60', '2018-10-11 00:00:00'),
-(29, 17, '13/10/2018', 'Kaleem', 'No Remarks', '1200.00', '10.00', '120.00', '20.00', '1100.00', '2018-10-13 00:00:00'),
-(30, 18, '13/10/2018', '40-Parveen Shakar', '', '40.00', '12.00', '4.80', '10.00', '45.20', '2018-10-13 00:00:00'),
-(31, 19, '13/10/2018', '36', '', '10.00', '0.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
-(32, 20, '13/10/2018', 'Amjad Hanif', '', '10.00', '0.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
-(33, 21, '13/10/2018', 'Parveen Shakar', 'Lalazar Colony Vehari', '300.00', '0.00', '0.00', '0.00', '300.00', '2018-10-13 00:00:00'),
-(34, 22, '13/10/2018', 'Kamran Ahmed', '', '1045.00', '0.00', '0.00', '0.00', '1045.00', '2018-10-13 00:00:00');
+INSERT INTO `tbl_order_purchase` (`order_id`, `order_no`, `order_date`, `order_receiver_name`, `order_receiver_remarks`, `order_total_qty`, `order_total_before_discount`, `order_total_discount_value`, `order_total_after_discount`, `order_datetime`) VALUES
+(6, 4, '29/09/2018', 'Amjad', '220KV Grid Station', '500.00', '5.00', '250.00', '500.00', '2018-09-29 00:00:00'),
+(11, 5, '05/10/2018', 'Naeem', 'no', '21.00', '0.00', '0.00', '21.00', '2018-10-05 00:00:00'),
+(12, 6, '06/10/2018', 'Jamal Ahmed', 'no', '72.00', '0.00', '0.00', '72.00', '2018-10-06 00:00:00'),
+(13, 7, '07/10/2018', 'Jutt', '', '64.00', '0.00', '0.00', '64.00', '2018-10-07 00:00:00'),
+(14, 8, '07/10/2018', 'Jut2', 'no', '106.00', '0.00', '0.00', '106.00', '2018-10-07 00:00:00'),
+(21, 10, '08/10/2018', 'Imran', 'No', '25.00', '0.00', '0.00', '25.00', '2018-10-08 00:00:00'),
+(23, 11, '08/10/2018', 'Imran khan', '', '41.00', '0.00', '0.00', '41.00', '2018-10-08 00:00:00'),
+(27, 15, '11/10/2018', 'Ghs 567', 'govt high school', '3550.00', '0.00', '20.00', '3730.00', '2018-10-11 00:00:00'),
+(28, 16, '11/10/2018', 'Asad Umar', 'Address', '6030.00', '8.00', '482.40', '5747.60', '2018-10-11 00:00:00'),
+(29, 17, '13/10/2018', 'Kaleem', 'No Remarks', '1200.00', '10.00', '120.00', '1100.00', '2018-10-13 00:00:00'),
+(30, 18, '13/10/2018', '40-Parveen Shakar', '', '40.00', '12.00', '4.80', '45.20', '2018-10-13 00:00:00'),
+(31, 19, '13/10/2018', '36', '', '10.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
+(32, 20, '13/10/2018', 'Amjad Hanif', '', '10.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
+(33, 21, '13/10/2018', 'Parveen Shakar', 'Lalazar Colony Vehari', '300.00', '0.00', '0.00', '300.00', '2018-10-13 00:00:00'),
+(34, 22, '13/10/2018', 'Kamran Ahmed', '', '20.00', '1035.00', '3.10', '1009.50', '2018-10-13 00:00:00'),
+(41, 23, '17/10/2018', 'KOt', '', '10.00', '20.00', '1.10', '14.50', '2018-10-17 00:00:00'),
+(42, 24, '20/10/2018', 'Amjad Hanif', '', '5.00', '25.00', '0.25', '23.75', '2018-10-20 00:00:00'),
+(58, 35, '20/10/2018', 'Amjad Hanif', '', '9.00', '1008.00', '12.08', '947.68', '2018-10-20 00:00:00'),
+(61, 38, '20/10/2018', 'KOt', '', '5.00', '10.00', '0.10', '10.00', '2018-10-20 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -812,7 +846,11 @@ CREATE TABLE `wharehousetbl` (
 
 INSERT INTO `wharehousetbl` (`WarehouseId`, `WarehouseName`) VALUES
 (1, 'Warehouse 2'),
-(3, 'Shop Two');
+(3, 'Shop Two'),
+(4, 'Shop3'),
+(5, 'Shop4'),
+(6, 'Shop 5'),
+(7, 'Shop 6');
 
 --
 -- Indexes for dumped tables
@@ -842,6 +880,12 @@ ALTER TABLE `cashpaidtbl`
 --
 ALTER TABLE `cashreceivetbl`
   ADD PRIMARY KEY (`cashrid`);
+
+--
+-- Indexes for table `companytbl`
+--
+ALTER TABLE `companytbl`
+  ADD PRIMARY KEY (`cid`);
 
 --
 -- Indexes for table `customertbl`
@@ -1003,6 +1047,12 @@ ALTER TABLE `assettbl`
   MODIFY `AssId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `companytbl`
+--
+ALTER TABLE `companytbl`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `customertbl`
 --
 ALTER TABLE `customertbl`
@@ -1078,25 +1128,25 @@ ALTER TABLE `suptbl`
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_item`
 --
 ALTER TABLE `tbl_order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=669;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=670;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_item_purchase`
 --
 ALTER TABLE `tbl_order_item_purchase`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=669;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=928;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_purchase`
 --
 ALTER TABLE `tbl_order_purchase`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `uomtbl`
@@ -1114,7 +1164,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wharehousetbl`
 --
 ALTER TABLE `wharehousetbl`
-  MODIFY `WarehouseId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `WarehouseId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

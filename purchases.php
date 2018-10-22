@@ -26,31 +26,28 @@
 
 $edata=$_POST["order_receiver_name"];
 $result =preg_replace('/.*-/', '', $edata);
-
-    $order_total_before_discount_freight = 0;
-    $order_total_discount_percentage = 0;
+  
+    $order_total_qty = 0;
+    $order_total_before_discount = 0;
     $order_total_discount_value = 0;
-    $order_total_freight = 0;
-    //$order_total_tax = 0;
-    $order_total_after_discount_freight = 0;
+    $order_total_after_discount = 0;
+    
     $statement = $connect->prepare("
       INSERT INTO tbl_order_purchase 
-  (order_no, order_date, order_receiver_name, order_receiver_remarks, order_total_before_discount_freight, order_total_discount_percentage, order_total_discount_value, order_total_freight, order_total_after_discount_freight,order_datetime)
-        VALUES (:order_no, :order_date, :order_receiver_name, :order_receiver_remarks, :order_total_before_discount_freight, :order_total_discount_percentage, :order_total_discount_value, :order_total_freight, :order_total_after_discount_freight, :order_datetime)
+         (order_no, order_date, order_receiver_name, order_receiver_remarks, order_total_qty,order_total_before_discount, order_total_discount_value, order_total_after_discount,order_datetime)
+  VALUES (:order_no, :order_date, :order_receiver_name, :order_receiver_remarks, :order_total_qty, :order_total_before_discount, :order_total_discount_value, :order_total_after_discount, :order_datetime)
     ");
     $statement->execute(
       array(
-      ':order_no'                             =>  trim($_POST["order_no"]),
-      ':order_date'                           =>  trim($_POST["order_date"]),
-      //':order_receiver_name'                   =>  trim($_POST["order_receiver_name"]),
-      ':order_receiver_name'                  =>  trim($result), 
-      ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
-      ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
-      ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
-      ':order_total_discount_value'           =>  $order_total_discount_value,
-      ':order_total_freight'                  =>  $order_total_freight,
-      ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
-      ':order_datetime'                       =>  date("Y-m-d")
+      ':order_no'                         =>  trim($_POST["order_no"]),
+      ':order_date'                       =>  trim($_POST["order_date"]),
+      ':order_receiver_name'              =>  trim($result), 
+      ':order_receiver_remarks'           =>  trim($_POST["order_receiver_remarks"]),
+      ':order_total_qty'                  =>  $order_total_qty,
+      ':order_total_before_discount'      =>  $order_total_before_discount,
+      ':order_total_discount_value'       =>  $order_total_discount_value,
+      ':order_total_after_discount'       =>  $order_total_after_discount,
+      ':order_datetime'                   =>  date("Y-m-d")
       )
     );
 
@@ -59,7 +56,7 @@ $result =preg_replace('/.*-/', '', $edata);
 
       for($count=0; $count<$_POST["total_item"]; $count++)
       {
-$order_total_before_discount_freight = $order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
+$order_total_before_discount = $order_total_before_discount + floatval(trim($_POST["order_item_gamount"][$count]));
 //------------------------------------------------------------------------------------------
 $item_name_value=$_POST["item_name"];
 $item_name =preg_replace('/.*-/', '', $item_name_value);
@@ -70,8 +67,8 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 
         $statement = $connect->prepare("
           INSERT INTO tbl_order_item_purchase 
-          (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity, order_item_prate, order_item_grate, order_item_gamount)
-          VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
+          (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity, order_item_prate, order_item_grate, order_item_gamount,order_item_disc_percent,order_item_disc_value,order_item_disc_rate,order_item_amount)
+          VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount, :order_item_disc_percent, :order_item_disc_value, :order_item_disc_rate, :order_item_amount)
         ");
 
         $statement->execute(
@@ -85,34 +82,37 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
             ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
             ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
             ':order_item_grate'         =>  trim($_POST["order_item_grate"][$count]),
-            ':order_item_gamount'       =>  trim($_POST["order_item_gamount"][$count])
+            ':order_item_gamount'       =>  trim($_POST["order_item_gamount"][$count]),
+// ---------------------------------
+            ':order_item_disc_percent'  =>  trim($_POST["order_item_disc_percent"][$count]),
+            ':order_item_disc_value'    =>  trim($_POST["order_item_disc_value"][$count]),
+            ':order_item_disc_rate'     =>  trim($_POST["order_item_disc_rate"][$count]),
+            ':order_item_amount'        =>  trim($_POST["order_item_amount"][$count])
+
 
           )
         );
       }
-  $order_total_discount_percentage = $order_total_discount_percentage + floatval(trim($_POST["order_total_discount_percentage"]));
-  $order_total_discount_value = $order_total_discount_value + floatval(trim($_POST["order_total_discount_value"]));
-  $order_total_freight = $order_total_freight + floatval(trim($_POST["order_total_freight"]));
-
-$order_total_after_discount_freight = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
+  
+  $order_total_qty = floatval(trim($_POST["order_total_qty"]));
+  $order_total_discount_value = floatval(trim($_POST["order_total_tdisc"]));
+  $order_total_after_discount = floatval(trim($_POST["order_total_bamount"]));
 
       $statement = $connect->prepare("
         UPDATE tbl_order_purchase 
-        SET order_total_before_discount_freight = :order_total_before_discount_freight, 
-        order_total_discount_percentage = :order_total_discount_percentage,
+        SET order_total_qty = :order_total_qty, 
+        order_total_before_discount = :order_total_before_discount, 
         order_total_discount_value = :order_total_discount_value, 
-        order_total_freight = :order_total_freight, 
-        order_total_after_discount_freight = :order_total_after_discount_freight 
+        order_total_after_discount = :order_total_after_discount
         WHERE order_id = :order_id 
       ");
       $statement->execute(
         array(
-          ':order_total_before_discount_freight'     =>  $order_total_before_discount_freight,
-          ':order_total_discount_percentage'         =>  $order_total_discount_percentage,
-          ':order_total_discount_value'         =>  $order_total_discount_value,
-          ':order_total_freight'         =>  $order_total_freight,
-          ':order_total_after_discount_freight'      =>  $order_total_after_discount_freight,
-          ':order_id'             =>  $order_id
+          ':order_total_qty'                 =>  $order_total_qty,
+          ':order_total_before_discount'     =>  $order_total_before_discount,
+          ':order_total_discount_value'      =>  $order_total_discount_value,
+          ':order_total_after_discount'      =>  $order_total_after_discount,
+          ':order_id'                        =>  $order_id
         )
       );
       header("location:purchases.php");
@@ -126,12 +126,12 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
 //--------------------Updating / Edit Invoice-----------------------------
   if(isset($_POST["update_invoice"]))
   {
-    $order_total_before_discount_freight = 0;
-      $order_total_discount_percentage = 0;
-      $order_total_discount_value = 0;
-      $order_total_freight = 0;
+      $order_total_qty = 0;
+      $order_total_tgamout = 0;
+      $order_total_tdisc = 0;
+      $order_total_bamount = 0;
       //$order_total_tax = 0;
-      $order_total_after_discount_freight = 0;
+      //$order_total_after_discount = 0;
       
       $order_id = $_POST["order_id"];
             
@@ -146,25 +146,23 @@ $order_total_after_discount_freight = $order_total_before_discount_freight - $or
       
       for($count=0; $count<$_POST["total_item"]; $count++)
       {
-  $order_total_before_discount_freight =$order_total_before_discount_freight + floatval(trim($_POST["order_item_gamount"][$count]));
+  $order_total_tgamout =$order_total_tgamout + floatval(trim($_POST["order_item_amount"][$count]));
  //----------------------------------------------------- 
-$item_name_value=$_POST["item_name"];
-$item_name =preg_replace('/.*-/', '', $item_name_value);
+$item_name_value = $_POST["item_name"];
+$item_name = preg_replace('/.*-/', '', $item_name_value);
 
-$whname_value=$_POST["order_item_whname"];
-$wh_name =preg_replace('/.*-/', '', $whname_value);
+$whname_value = $_POST["order_item_whname"];
+$wh_name = preg_replace('/.*-/', '', $whname_value);
 
 
         $statement = $connect->prepare("
    INSERT INTO tbl_order_item_purchase 
-   (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity,order_item_prate, order_item_grate, order_item_gamount) 
-   VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
+   (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity,order_item_prate, order_item_grate, order_item_gamount,order_item_disc_percent,order_item_disc_value,order_item_disc_rate,order_item_amount) 
+   VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount, :order_item_disc_percent , :order_item_disc_value , :order_item_disc_rate , :order_item_amount)
         ");
         $statement->execute(
           array(
             ':order_id'                 =>  $order_id,
-//          ':item_name'                =>  trim($_POST["item_name"][$count]),
-//          ':order_item_whname'        =>  trim($_POST["order_item_whname"][$count]),
             ':item_name'                =>  trim($item_name[$count]),
             ':order_item_whname'        =>  trim($wh_name[$count]),
             ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
@@ -172,19 +170,26 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
             ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
             ':order_item_grate'         =>  trim($_POST["order_item_grate"][$count]),
             ':order_item_gamount'       =>  trim($_POST["order_item_gamount"][$count]),
+
+            ':order_item_disc_percent'  =>  trim($_POST["order_item_disc_percent"][$count]),
+            ':order_item_disc_value'    =>  trim($_POST["order_item_disc_value"][$count]),
+            ':order_item_disc_rate'     =>  trim($_POST["order_item_disc_rate"][$count]),
+            ':order_item_amount'        =>  trim($_POST["order_item_amount"][$count])
+
             )
         );
         $result = $statement->fetchAll();
       }
       //$order_total_tax = $order_total_tax1 + $order_total_tax2 + $order_total_tax3;
-  $order_total_discount_percentage = floatval(trim($_POST["order_total_discount_percentage"]));
-  $order_total_discount_value = floatval(trim($_POST["order_total_discount_value"]));
-  $order_total_freight = floatval(trim($_POST["order_total_freight"])); 
+  $order_total_qty = floatval(trim($_POST["order_total_qty"]));
+  $order_total_tgamout = floatval(trim($_POST["order_total_tgamout"]));
+  $order_total_tdisc = floatval(trim($_POST["order_total_tdisc"])); 
+  $order_total_bamount = floatval(trim($_POST["order_total_bamount"])); 
 
-  $order_total_after_discount_freight = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
+  //$order_total_after_discount = $order_total_before_discount_freight - $order_total_discount_value + $order_total_freight;
 //---------------------------------------------------------------
 $edata=$_POST["order_receiver_name"];
-$result =preg_replace('/.*-/', '', $edata);
+$r_name =preg_replace('/.*-/', '', $edata);
 
 
       $statement = $connect->prepare("
@@ -193,11 +198,10 @@ $result =preg_replace('/.*-/', '', $edata);
         order_date = :order_date, 
         order_receiver_name = :order_receiver_name, 
         order_receiver_remarks = :order_receiver_remarks, 
-        order_total_before_discount_freight = :order_total_before_discount_freight, 
-        order_total_discount_percentage = :order_total_discount_percentage, 
+        order_total_qty = :order_total_qty, 
+        order_total_before_discount = :order_total_before_discount, 
         order_total_discount_value = :order_total_discount_value, 
-        order_total_freight = :order_total_freight, 
-        order_total_after_discount_freight = :order_total_after_discount_freight 
+        order_total_after_discount = :order_total_after_discount
         WHERE order_id = :order_id 
       ");
       
@@ -205,13 +209,12 @@ $result =preg_replace('/.*-/', '', $edata);
         array(
     ':order_no'                             =>  trim($_POST["order_no"]),
     ':order_date'                           =>  trim($_POST["order_date"]),
-    ':order_receiver_name'                  =>  trim($result),
+    ':order_receiver_name'                  =>  trim($r_name),
     ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
-    ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
-    ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
-    ':order_total_discount_value'           =>  $order_total_discount_value,
-    ':order_total_freight'                  =>  $order_total_freight,
-    ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
+    ':order_total_qty'                      =>  $order_total_qty,
+    ':order_total_before_discount'          =>  $order_total_tgamout,
+    ':order_total_discount_value'           =>  $order_total_tdisc,
+    ':order_total_after_discount'           =>  $order_total_bamount,
     ':order_id'                             =>  $order_id
         )
       );
@@ -436,8 +439,7 @@ $result =preg_replace('/.*-/', '', $edata);
            <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
           <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
           <input type="text" name="total_item" id="total_item" value="1" />
-          <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />
-
+         
           
                 </td>
               </tr>
@@ -449,11 +451,11 @@ $result =preg_replace('/.*-/', '', $edata);
         $("#order_receiver_name").focus();
         var final_total_amt = $('#final_total_amt').text();
         var count = 1;
-        
+        var row_count = 1;
         $(document).on('click', '#add_row', function(){
-          //alert(count);
+          row_count++;
           count++;
-          $('#total_item').val(count);
+          $('#total_item').val(row_count);
           var html_code = '';
   html_code += '<tr id="row_id_'+count+'">';
   html_code += '<td><span id="sr_no">'+count+'</span></td>';
@@ -508,9 +510,9 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
           var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
           $('#final_total_amt').text(result_amount);
 
-          var order_gtotal = $('#order_gtotal').val();
-          var order_gtotal1 = parseFloat(order_gtotal) - parseFloat(total_item_amount);
-          $('#order_gtotal').val(order_gtotal1);
+          var order_bamount = $('#order_total_bamount').val();
+          var order_bill_amount = parseFloat(order_bamount) - parseFloat(total_item_amount);
+          $('#order_total_bamount').val(order_bill_amount);
 //--------------- Total Quantity----------------------------------------
           var qty = $("#order_item_quantity"+row_id).val();
           if(qty <= 0){
@@ -522,7 +524,7 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
           var total_qty = parseFloat(oqty) - parseFloat(qty);
           $('#order_total_qty').val(total_qty);    
           }
-//--------------- Total Quantity----------------------------------------
+//--------------- Total Gross Amount----------------------------------------
           var gmt = $("#order_item_gamount"+row_id).val();
           if(gmt <= 0){
           var ogmt = $("#order_total_tgamout").val();
@@ -532,14 +534,25 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
           var ogmt = $("#order_total_tgamout").val();
           var total_gmt = parseFloat(ogmt) - parseFloat(gmt);
           $('#order_total_tgamout').val(total_gmt);    
+          }
+//--------------- Total Discount----------------------------------------
+          var disc = $("#order_item_disc_value"+row_id).val();
+          if(disc <= 0){
+          var odisc = $("#order_total_tdisc").val();
+          var total_disc = parseFloat(odisc) - 0;
+          $('#order_total_tdisc').val(total_disc);    
+          }else{
+          var odisc = $("#order_total_tdisc").val();
+          var total_disc = parseFloat(odisc) - parseFloat(disc);
+          $('#order_total_tdisc').val(total_disc);    
           }       
 
 /*       if(isNaN($('#final_total_amt').text())){
                $('#final_total_amt').text(0);
       }  */
           $('#row_id_'+row_id).remove();
-          count--;
-          $('#total_item').val(count);
+          row_count--;
+          $('#total_item').val(row_count);
           
           var row_idd = row_id - 1;
           $("#item_name"+row_idd).focus();
@@ -549,7 +562,8 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
         function cal_final_total(count)
         {
           var final_item_total = 0;
-          for(j=1; j<=count; j++)
+          var disc_value = 0;
+          for(j=1; j<=row_count; j++)
           {
             var quantity = 0;
             var grate = 0;
@@ -568,10 +582,16 @@ html_code += '<td><i style="color:red;font-size: 35px;" name="remove_row" id="'+
               item_total = amount;
               final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
               }
+              var disc = $("#order_item_disc_value"+j).val();
+            if(disc > 0){
+              disc_value = parseFloat(disc_value) + parseFloat(disc);
+            }  
+
             }
-            $('#order_gtotal').val(final_item_total);
-            $('#order_total_bamount').val(final_item_total);
-          $('#final_total_amt').text(final_item_total);
+            // final_item_total.toFixed(2);
+          $('#order_total_tdisc').val(disc_value.toFixed(2));  
+          $('#order_total_bamount').val(final_item_total.toFixed(2));
+          $('#final_total_amt').text(final_item_total.toFixed(2));
          }
 /* $(document).on('blur', '.order_item_grate', function(){
    cal_final_total(count);
@@ -585,7 +605,7 @@ $(document).on('keyup','.order_item_quantity , .order_item_disc_percent', functi
         {
           var final_total_qty = 0;
           var final_total_gmt = 0;
-          for(j=1; j<=count; j++)
+          for(j=1; j<=row_count; j++)
           {
             var quantity = 0;
             var qty = 0;
@@ -611,11 +631,92 @@ $(document).on('keyup', '.order_item_quantity', function(){
           cal_final_total_qty(count);
         });
 
+//---------------------------------------------------------------------------------------
+  $(document).on('keypress',function(){
+    $(function() {
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/sqty_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_squantity"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+//---------------------------------------------------------------------------------------
+$(document).on('keypress',function(){
+  $(function() {
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/grate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_grate"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+//--------------------------------------------------------------------------------------
+$(document).on('keypress',function(){
+  $(function() {
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_purchases/prate_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_item_prate"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+
 //-------------Create Invoice------Authentication-------------------------
 //-------------Code for Pressing Enter Key to Submit a Form---------------
-  $(document).on('keydown','#create_invoice',function(){
+//  $(document).on('keydown','#create_invoice',function(){
   //          if (e.keyCode == 13) {
-          if($.trim($('#order_receiver_name').val()).length == 0)
+          
+//-----For Item names -------------------------------------------------
+ 
+     //      $('#invoice_form').submit();
+  //      });
+
+//------------------------------------------------------------------
+
+
+       //$(document).on('keypress','#create_invoice',function(){
+
+      $('#create_invoice').keydown(function(){
+           if($.trim($('#order_receiver_name').val()).length == 0)
           {
             alert("Please Enter Reciever Name Naeem");
             $('#order_receiver_name').focus();
@@ -635,46 +736,23 @@ $(document).on('keyup', '.order_item_quantity', function(){
             $('#order_date').focus();
             return false;
           }
+          
+//----------------------------------------------------------      
+         for(var i = count; i>=1; i--){
 
-          for(var no=1; no<=count; no++) {
-
-            if($.trim($('#item_name'+no).val()).length == 0)
+        if(!($.trim($('#item_name'+i).val()).length == 0))
             {
-              alert("Please Enter Item Name");
-              $('#item_name'+no).focus();
-              return false;
-            }
+            }else{
+       alert('Please Enter Item Name');
+            $('#item_name'+i).focus();
+            $('#item_name'+i).css("border-color", "red");
+            return false;
+     }
+}
+ $('#invoice_form').submit();  
+});
+  
 
-            if($.trim($('#order_item_whname'+no).val()).length == 0)
-            {
-              alert("Please Enter Warehouse Name");
-              $('#order_item_whname'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_quantity'+no).val()).length == 0)
-            {
-              alert("Please Enter Quantity");
-              $('#order_item_quantity'+no).focus();
-              return false;
-            }
-            if($.trim($('#order_item_squantity'+no).val()).length == 0)
-            {
-              alert("Please Enter Stock Quantity");
-              $('#order_item_squantity'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_grate'+no).val()).length == 0)
-            {
-              alert("Please Enter Gross Rate");
-              $('#order_item_grate'+no).focus();
-              return false;
-            }
-
-          }
-            $('#invoice_form').submit();
-        });
 
 //--------------Repeating above code for Click Button to Submit Form --------------------
 
@@ -701,7 +779,7 @@ $(document).on('click','#create_invoice',function(){
             return false;
           }
 
-          for(var no=1; no<=count; no++) {
+          for(var no=1; no<=row_count; no++) {
 
             if($.trim($('#item_name'+no).val()).length == 0)
             {
@@ -774,10 +852,10 @@ $(document).on('click','#create_invoice',function(){
     $('#order_date').val("<?php echo $row["order_date"]; ?>");
     $('#order_receiver_name').val("<?php echo $row["order_receiver_name"]; ?>");
     $('#order_receiver_remarks').val("<?php echo $row["order_receiver_remarks"]; ?>");
-    $('#order_total_discount_percentage').val("<?php echo $row["order_total_discount_percentage"]; ?>");
-    $('#order_total_discount_value').val("<?php echo $row["order_total_discount_value"]; ?>");
-    $('#order_total_freight').val("<?php echo $row["order_total_freight"]; ?>");
-    $('#order_gtotal').val("<?php echo $row["order_total_before_discount_freight"]; ?>");
+    $('#order_total_qty').val("<?php echo $row["order_total_qty"]; ?>");
+    $('#order_total_tgamout').val("<?php echo $row["order_total_before_discount"]; ?>");
+    $('#order_total_tdisc').val("<?php echo $row["order_total_discount_value"]; ?>");
+    $('#order_total_bamount').val("<?php echo $row["order_total_after_discount"]; ?>");
         });
         </script>
         <form method="post" id="invoice_form">
@@ -863,13 +941,13 @@ $(document).on('click','#create_invoice',function(){
 
   <!------------------------------------------------------------------------------->
   <!-----------Disc %------------>
-  <td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent1" data-srno="1" class="form-control input-sm number_only order_item_disc_percent" /></td>
+  <td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent<?php echo $m; ?>" data-srno="1" class="form-control input-sm number_only order_item_disc_percent" value="<?php echo $sub_row["order_item_disc_percent"];?>" /></td>
   <!-----------Disc Value------------>
-  <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value1" data-srno="1" class="form-control input-sm number_only order_item_disc_value" readonly="" /></td>
+  <td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value<?php echo $m; ?>" data-srno="1" class="form-control input-sm number_only order_item_disc_value" value="<?php echo $sub_row["order_item_disc_value"];?>" readonly="" /></td>
   <!-----------Disc Rate------------>
-  <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate1" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" readonly="" /></td>
+  <td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate<?php echo $m; ?>" data-srno="1" class="form-control input-sm number_only order_item_disc_rate" value="<?php echo $sub_row["order_item_disc_rate"];?>" readonly="" /></td>
   <!-----------Amount------------>
-  <td><input type="text" name="order_item_amount[]" id="order_item_amount1" data-srno="1" class="form-control input-sm number_only order_item_amount"  readonly="" /></td>
+  <td><input type="text" name="order_item_amount[]" id="order_item_amount<?php echo $m; ?>" data-srno="1" class="form-control input-sm number_only order_item_amount" value="<?php echo $sub_row["order_item_amount"];?>" readonly="" /></td>
   <!----------------------->
                       <!--------------------Naeem Ahmed------------------->
   <td>
@@ -893,14 +971,18 @@ $(document).on('click','#create_invoice',function(){
 
   <tr>
     <td>
-<label><b>Discount%:</label>
-  <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
-        <td>
-  <label><b>Discount Value:</label>
-  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="one" value="0" />  </td>
-        <td>
-  <label><b>Freight:</label>
-  <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
+<label><b>Total Qty:</label>
+  <input type="text" name="order_total_qty" id="order_total_qty" data-srno="1" />
+      </td>
+      <td>
+  <label><b>Total G.Amount:</label>
+  <input type="text" name="order_total_tgamout" id="order_total_tgamout" data-srno="1" class="one"  />  </td>
+  <td>
+  <label><b>Total Discount:</label>
+  <input type="text" name="order_total_tdisc" id="order_total_tdisc" data-srno="1" class="one"  />  </td>
+  <td>
+  <label><b>Bill Amount:</label>
+  <input type="text" name="order_total_bamount" id="order_total_bamount" data-srno="1" class="one" />  </td>
   <!----------Hidden for total---------------------
   <td>
   <label><b>Hidden</label>
@@ -908,7 +990,7 @@ $(document).on('click','#create_invoice',function(){
 --->
 
     <td><b>Total</b></td>
-    <td><b><span id="final_total_amt"><?php echo $row["order_total_after_discount_freight"]; ?></span></b>
+    <td><b><span id="final_total_amt"><?php echo $row["order_total_after_discount"]; ?></span></b>
     </td>
   </tr>
   <tr>
@@ -931,16 +1013,29 @@ $(document).on('click','#create_invoice',function(){
         $("#order_receiver_name").focus();
         var final_total_amt = $('#final_total_amt').text();
         var count = "<?php echo $m; ?>";
-        
+        var row_count = "<?php echo $m; ?>";
+        //alert(row_count);
+var a = [];
+ var ab = [];
+//var i = 0;       
         $(document).on('click', '#add_row', function(){
-          //alert(count);
+          row_count++; 
+          //alert(row_count);
           count++;
-          $('#total_item').val(count);
+          ///alert(count);
+for(var i = count; i <= count; i++){
+  a.push(count);
+  //a[1] = count;
+}
+//alert(a[0]);
+//alert(a[1]);
+
+          $('#total_item').val(row_count);
           var html_code = '';
           html_code += '<tr id="row_id_'+count+'">';
           html_code += '<td><span id="sr_no">'+count+'</span></td>';
   //----------Item Name-------------------        
-  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
+  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm abc" /></td>';
   //----------Warehouse Name-------------------
   html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /></td>';
   //----------Quantity-------------------
@@ -955,15 +1050,14 @@ $(document).on('click','#create_invoice',function(){
   html_code += '<td><input type="text" name="order_item_gamount[]" id="order_item_gamount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_gamount" value = "0" readonly=""/></td>';
    //-----------------------------------------------------------------------
 
-
 //<!-----------Disc %------------>
   html_code += '<td><input type="text" name="order_item_disc_percent[]" id="order_item_disc_percent'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_percent" /></td>';
   //<!-----------Disc Value------------>
-  html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" readonly/></td>';
+  html_code += '<td><input type="text" name="order_item_disc_value[]" id="order_item_disc_value'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_value" value = "0" readonly/></td>';
   //<!-----------Disc Rate------------>
   html_code += '<td><input type="text" name="order_item_disc_rate[]" id="order_item_disc_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_disc_rate" readonly/></td>';
     //<!-----------Amount------------>
-  html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount" readonly /></td>';
+  html_code += '<td><input type="text" name="order_item_amount[]" id="order_item_amount'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_amount" readonly value = "0" /></td>';
   //----------Delete Button-------------------
   //html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
 
@@ -977,47 +1071,86 @@ html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+
           $("#item_name"+count).focus();
         });
 
+//---------------------------------Remove Button ------------------------------------------
         $(document).on('click', '.remove_row', function(){
           var row_id = $(this).attr("id");
-          var total_item_amount = $('#order_item_gamount'+row_id).val();
-          var final_amount = $('#final_total_amt').text();
+
+          //var total_item_qty = $('#order_item_quantity'+row_id).val();
+          var final_qty = $('#order_total_qty').val();
+        
+           if(isNaN($('#order_total_qty').val())){
+              $("#order_total_qty").val(final_qty);
+           }
+
+          var total_item_gmt = $('#order_item_gamount'+row_id).val();
+          var final_gmt = $('#order_total_tgamout').val();
+          var result_gmt = parseFloat(final_gmt) - parseFloat(total_item_gmt);
+
+          var total_item_disc = $('#order_item_disc_value'+row_id).val();
+          var final_disc = $('#order_total_tdisc').val();
+          var result_disc = parseFloat(final_disc) - parseFloat(total_item_disc);
+
+          var total_item_amount = $('#order_item_amount'+row_id).val();
+          var final_amount = $('#order_total_bamount').val();
           var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
-          
-          var order_gtotal = $('#order_gtotal').val();
-          var order_gtotal1 = parseFloat(order_gtotal) - parseFloat(total_item_amount);
-          $('#order_gtotal').val(order_gtotal1);
 
-          $('#final_total_amt').text(result_amount);
+          //$('#order_total_qty').val(result_qty.toFixed(2));
+          $('#order_total_tgamout').val(result_gmt.toFixed(2));
+          $('#order_total_tdisc').val(result_disc.toFixed(2));
+          $('#order_total_bamount').val(result_amount.toFixed(2));
+
+//var asd = row_id;
+//alert(asd);
           $('#row_id_'+row_id).remove();
-          count--;
-          $('#total_item').val(count);
-
+          row_count--;
+          $('#total_item').val(row_count);
+          
           var row_idd = row_id - 1;
           $("#item_name"+row_idd).focus();
-       });
+
+//var delcount = 2;
+//var ab = [];
+for(var i = row_count; i <=row_count; i++){
+  ab.push(row_id);
+ }
+
+});
 
 // This code is added by Naeem to Refresh the Final Total Amount while deleting any record
         $(document).on('click', '.deleted', function(){
           var row_id = $(this).attr("data-srno");
-//var row_id = $(this).attr("id");
-          var total_item_amount = $('#order_item_gamount'+row_id).val();
-          var final_amount = $('#final_total_amt').text();
+          
+          var total_item_qty = $('#order_item_quantity'+row_id).val();
+          var final_qty = $('#order_total_qty').val();
+          var result_qty = parseFloat(final_qty) - parseFloat(total_item_qty);
+
+          var total_item_gmt = $('#order_item_gamount'+row_id).val();
+          var final_gmt = $('#order_total_tgamout').val();
+          var result_gmt = parseFloat(final_gmt) - parseFloat(total_item_gmt);
+
+          var total_item_disc = $('#order_item_disc_value'+row_id).val();
+          var final_disc = $('#order_total_tdisc').val();
+          var result_disc = parseFloat(final_disc) - parseFloat(total_item_disc);
+
+          var total_item_amount = $('#order_item_amount'+row_id).val();
+          var final_amount = $('#order_total_bamount').val();
           var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
 
-          var order_gtotal = $('#order_gtotal').val();
-          var order_gtotal1 = parseFloat(order_gtotal) - parseFloat(total_item_amount);
-          $('#order_gtotal').val(order_gtotal1);
+          $('#order_total_qty').val(result_qty.toFixed(2));
+          $('#order_total_tgamout').val(result_gmt.toFixed(2));
+          $('#order_total_tdisc').val(result_disc.toFixed(2));
+          $('#order_total_bamount').val(result_amount.toFixed(2));
 
-          $('#final_total_amt').text(result_amount);
           $('#row_id_'+row_id).remove();
-          count--;
-          $('#total_item').val(count);
-
+          row_count--;
+          $('#total_item').val(row_count);
+          
           var row_idd = row_id - 1;
           $("#item_name"+row_idd).focus();
   
         });
 //------------------------------Edit Invoice Function -----------------------------------
+/*
         function cal_final_total(count)
         {
           var final_item_total = 0;
@@ -1052,129 +1185,127 @@ html_code += '<td><i style="color:red;font-size: 40px;" name="remove_row" id="'+
         $(document).on('blur', '.order_item_grate', function(){
           cal_final_total(count);
         });
-*/
+*
         $(document).on('keyup', '.order_item_quantity', function(){
           cal_final_total(count);
         });
-//--------------------------Temporary Total Function-------------------------------------------
- $("#order_total_discount_value").keyup(function(){
-      var temp = $("#order_gtotal").val();
-      var dvalue = $("#order_total_discount_value").val();
-      var freight = $("#order_total_freight").val();
-      //alert(freight);
-      var summ = 0;
-      summ = parseFloat(temp) + parseFloat(freight);
-      //-------------------------------------------- 
-      var sum = 0;
-      sum = parseFloat(temp) -  parseFloat(dvalue) ;
-      sum = parseFloat(sum) + parseFloat(freight);
-      $('#final_total_amt').text(sum);
-      if(isNaN($('#final_total_amt').text())){
-        $('#final_total_amt').text(summ);
+*/
+//-------------------------Edit Invoice-----------------------------
+function cal_final_total(count)
+        {
+          var final_item_total = 0;
+          var disc_value = 0;
+          var total_qty = 0;
+          var total_gamount = 0;
+          for(j=1; j<=row_count; j++)
+      {
+            var quantity = 0;
+            var gamount = 0;
+            var item_total=0;
+            quantity = $('#order_item_quantity'+j).val();
+            if(quantity > 0){
+              total_qty = parseFloat(total_qty) + parseFloat(quantity);
+            }
+             var disc = $('#order_item_disc_value'+j).val();
+            if(disc > 0){
+              disc_value = parseFloat(disc_value) + parseFloat(disc);
+            }
+            var bill = $('#order_item_amount'+j).val();
+            if(bill > 0){
+              final_item_total = parseFloat(final_item_total) + parseFloat(bill);
+            }  
+              var total_gmt = $("#order_item_gamount"+j).val();
+            if(total_gmt > 0){
+               total_gamount = parseFloat(total_gamount) + parseFloat(total_gmt);
+            } 
       }
- });
-
- $("#order_total_freight").keyup(function(){
-      var temp = $("#order_gtotal").val();
-      var dvalue = $("#order_total_discount_value").val();
-      var freight = $("#order_total_freight").val();
-      //alert(freight);
-      var summ = 0;
-      var sum = 0;
-      summ = parseFloat(temp) -  parseFloat(dvalue) ;
-      sum = parseFloat(summ) + parseFloat(freight);
-      $('#final_total_amt').text(sum);
-      
-      if(isNaN($('#final_total_amt').text())){
-        $("#final_total_amt").text(summ);
-      } 
- });
-//--------------------------------------------------------------------------
-
-//--------------------Percentage--------------------------------
-
- $("#order_total_discount_percentage").keyup(function(){
-      var temp = $("#order_gtotal").val();
-      var percent = $("#order_total_discount_percentage").val();
-      var percent_value = 0;
-      percent_value = parseFloat(temp) *  parseFloat(percent) / 100;
-      $('#order_total_discount_value').val(percent_value);
-
-      if(isNaN($('#order_total_discount_value').val())){
-        $("#order_total_discount_value").val(0);
-      } 
-      
- });
-//-----Alert for if user Enter Discount Value greater than Actual------
-$('#order_total_discount_percentage').on('keyup',function(){
-   var grand_total = $("#order_gtotal").val();
-   var discount = $("#order_total_discount_value").val();
-var ab = parseFloat(grand_total);
-var bs = parseFloat(discount);
-if(bs > ab) {
-  alert("Discount Value is Greater Than Actual Amount");
-  }
-});
-//----------Authentication code for Edit Invoice-----------
-        $(document).on('keypress','#create_invoice',function(){
-          if($.trim($('#order_receiver_name').val()).length == 0)
-          {
-            alert("Please Enter Reciever Name ");
-            $('#order_receiver_name').focus();
-            return false; 
-          }
-
-          if($.trim($('#order_no').val()).length == 0)
-          {
-            alert("Please Enter Invoice Number");
-            $('#order_no').focus();
-            return false;
-          }
-
-          if($.trim($('#order_date').val()).length == 0)
-          {
-            alert("Please Select Invoice Date");
-            $('#order_date').focus();
-            return false;
-          }
-
-          for(var no=1; no<=count; no++)
-          {
-            if($.trim($('#item_name'+no).val()).length == 0)
-            {
-              alert("Please Enter Item Name");
-              $('#item_name'+no).focus();
-              return false;
-            }
-            if($.trim($('#order_item_whname'+no).val()).length == 0)
-            {
-              alert("Please Enter Warehouse Name");
-              $('#order_item_whname'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_quantity'+no).val()).length == 0)
-            {
-              alert("Please Enter Quantity");
-              $('#order_item_quantity'+no).focus();
-              return false;
-            }
-
-            if($.trim($('#order_item_grate'+no).val()).length == 0)
-            {
-              alert("Please Enter Gross Rate");
-              $('#order_item_grate'+no).focus();
-              return false;
-            }
-            
-
-          }
-
-          $('#invoice_form').submit();
-
+          $('#order_total_qty').val(total_qty.toFixed(2));    
+          $('#order_total_tgamout').val(total_gamount.toFixed(2));   
+          $('#order_total_tdisc').val(disc_value.toFixed(2));  
+          $('#order_total_bamount').val(final_item_total.toFixed(2));
+          $('#final_total_amt').text(final_item_total.toFixed(2));
+         }
+$(document).on('keyup','.order_item_quantity , .order_item_disc_percent', function(){
+          cal_final_total(count);
         });
+//-------------------------------------------------------------------------
 
-   //   });
+//----------Authentication code for Edit Invoice-----------
+$(document).on('keypress', '#create_invoice', function(e) {
+  e.preventDefault();
+  if(e.keyCode == 13){
+//-------------------------------------------------------------
+var myArr = $.merge(a,ab);
+var newArr = myArr;
+for(var h = 0; h < myArr.length; h++) {
+    var curItem = myArr[h];
+    var foundCount = 0;
+    // search array for item
+    for(var i = 0; i < myArr.length; i++) {
+        if (myArr[i] == myArr[h])
+            foundCount++;
+    }
+    if(foundCount > 1) {
+        // remove repeated item from new array
+        for(var j = 0; j < newArr.length; j++) {
+            if(newArr[j] == curItem) {                
+                newArr.splice(j, 1);
+                j = j - 1;
+} } } }
+//-------------------------------------------------------------
+  var allowSubmit = true;    // boolean variable
+//-------------------------------------------------------------
+if($.trim($('#order_receiver_name').val()).length == 0)
+      {
+      alert("Please Enter Reciever Name ");
+      $('#order_receiver_name').focus();
+      allowSubmit = false;
+      return false; 
+      }
+if($.trim($('#order_date').val()).length == 0)
+      {
+      alert("Please Select Invoice Date");
+      $('#order_date').focus();
+      allowSubmit = false;
+      return false;
+      }
+//-------------------------------------------------------------
+$.each(newArr, function( i, l ){
+  //alert( "Index #" + i + ": " + l );
+if($.trim($('#item_name'+ l).val()).length == 0)
+      {
+      alert("Please Enter Item Name");
+      $('#item_name'+ l).focus();
+      allowSubmit = false;    // set the variable to false
+      return false;
+      }
+if($.trim($('#order_item_whname'+ l).val()).length == 0)
+      {
+      alert("Please Enter Warehouse Name");
+      $('#order_item_whname'+ l).focus();
+      allowSubmit = false;
+      return false;
+      }
+if($.trim($('#order_item_quantity'+ l).val()).length == 0)
+      {
+      alert("Please Enter Quantity");
+      $('#order_item_quantity'+ l).focus();
+      allowSubmit = false;
+      return false;
+      }
+
+
+
+
+//return false; 
+});
+if (allowSubmit) {
+    $('#invoice_form').submit();
+  }
+} // if (e.keyCode == 13)
+  });
+
+//});         
 //-----------------Repeating code for Edit invoice on Click Event-------------------
 $(document).on('click','#create_invoice',function(){
 
@@ -1199,7 +1330,7 @@ $(document).on('click','#create_invoice',function(){
             return false;
           }
 
-          for(var no=1; no<=count; no++)
+          for(var no=1; no<=row_count; no++)
           {
             if($.trim($('#item_name'+no).val()).length == 0)
             {
@@ -1271,7 +1402,7 @@ $(document).on('click','#create_invoice',function(){
                 <td>'.$row["order_no"].'</td>
                 <td>'.$row["order_date"].'</td>
                 <td>'.$row["order_receiver_name"].'</td>
-                <td>'.$row["order_total_after_discount_freight"].'</td>
+                <td>'.$row["order_total_after_discount"].'</td>
                 <td><a href="Transaction_purchases/print_purchases.php?pdf=1&id='.$row["order_id"].'">
                 <i style="color:#7d42f4;font-size: 30px;" class="fa fa-print fa-lg"></i>    
                 </a></td>
@@ -1371,6 +1502,7 @@ $(document).on("click",".deleted",function(){
 <script>
   $("#order_date").inputmask();
 </script>
+
 <!------This code is For Enter Index  ---->
 <script type="text/javascript">
  $(document).ready(function(){
@@ -1409,7 +1541,7 @@ $(inputs).keypress(function(e){
   $(document).keydown(function (e) {
     if (e.keyCode == 35 || e.keyCode == 36) {
         //alert(e.which + " or Shift was pressed");
-      $("#order_total_discount_percentage").focus();  
+      $("#order_total_qty").focus();  
     }
 });
 </script>       
@@ -1458,107 +1590,18 @@ $(inputs).keypress(function(e){
     });
   }); 
 </script>
-<!------- This is a keypress event for autocomplete item_name---------
-<script >
-$(document).on('keypress',function(){
-  var auto = 1;
-  $(function() {
-  do{  
-     $("#item_name"+auto).autocomplete({
-        source: "autocomplete_itemname.php",
-        minLength: 0,
-        select: function (event, ui){}
-    });                
-auto++;
-}while(auto<500);
-});
-}); 
-</script>
---->
 <!---------------Code for updating Stock Quantity dynamically------------->
-<script>
-$(document).on('keyup',function(){
-  $(function() {
-// var dummy = [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41]; 
-//-------the above code also works fine , but in below code i used the for loop to push 500 numbres in dummy array-----------------
-  var dummy = [];
-  for (var i = 0; i < 500; i++) {
-    dummy.push(i);
-    }
- //----------------------------------------   
-  $.each(dummy, function(i, v) { // New scope for i and v
-     $('#item_name' + i).keyup(function() {
-                  //alert(i);
-      var itemcode = $(this).val();
-        $.ajax({
-          type: 'POST',
-          url: 'Transaction_purchases/sqty_dynamics.php',
-          data:{item_name:itemcode},
-           success:function(data){
-              $("#order_item_squantity"+ i).val(data);
-            }
-        });
-      });
-    });
-  }); 
-});
-</script>
-<!---------------Code for updating Gross Rate dynamically------------->
-<script>
-$(document).on('keyup',function(){
-  $(function() {
-//----- push numbers in dummy array----------
-  var dummy = [];
-  for (var i = 0; i < 500; i++) {
-    dummy.push(i);
-    }
- //----------------------------------------   
-  $.each(dummy, function(i, v) { // New scope for i and v
-     $('#item_name' + i).keyup(function() {
-                  //alert(i);
-      var itemcode = $(this).val();
-        $.ajax({
-          type: 'POST',
-          url: 'Transaction_purchases/grate_dynamics.php',
-          data:{item_name:itemcode},
-           success:function(data){
-              $("#order_item_grate"+ i).val(data);
-            }
-        });
-      });
-    });
-  }); 
-});
-</script>
-<!---------------Code for updating Previous Rate dynamically------------->
-<script>
-$(document).on('keyup',function(){
-  $(function() {
-//----- push numbers in dummy array----------
-  var dummy = [];
-  for (var i = 0; i < 500; i++) {
-    dummy.push(i);
-    }
- //----------------------------------------   
-  $.each(dummy, function(i, v) { // New scope for i and v
-     $('#item_name' + i).keyup(function() {
-                  //alert(i);
-      var itemcode = $(this).val();
-        $.ajax({
-          type: 'POST',
-          url: 'Transaction_purchases/prate_dynamics.php',
-          data:{item_name:itemcode},
-           success:function(data){
-              $("#order_item_prate"+ i).val(data);
-            }
-        });
-      });
-    });
-  }); 
-});
-</script>
+
+
+
+
+
+
+
+
 <!----------------------------------------------------------------------------------->
 <script>
+
   $(document).on('keyup',function(){
   $(function() {
 //----- push numbers in dummy array----------
@@ -1586,9 +1629,11 @@ $(document).on('keyup',function(){
     });
   }); 
 });
+  
 </script>
 <!----------------------------------------------------------------------------------->
 <script>
+  
 $(document).keydown(function(){
   $(function() {
 //----- push numbers in dummy array----------
@@ -1631,5 +1676,6 @@ $(document).keydown(function(){
       });
     });
   });
+
 </script>
 <?php include('footer.php'); ?>
