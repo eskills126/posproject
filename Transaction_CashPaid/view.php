@@ -51,7 +51,7 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><i class="fa fa-table fa-lg" aria-hidden="true"style="color: blue;"></i> General Transaction Details:<hr/></h4>
+<h4 class="page-header"><i class="fa fa-table fa-lg" aria-hidden="true"style="color: blue;"></i> Cash Paid Details:<hr/></h4>
 	<!--	<table class="table"> -->
 	
 	<table id="examples" class="display" style="width:100%">
@@ -63,37 +63,31 @@ include '..\db_connect.php';
 				<th>Delete</th>
 				<th>ID</th>
 				<th>Date</th>
-				<th>Dr.Code</th>
-				<th>Dr. Name</th>
-				<th>Dr. Remarks</th>
-				<th>Cr. Code</th>
-				<th>Cr. Name</th>
-				<th>Cr. Remarks</th>
+				<th>Payer Code</th>
+				<th>Payer Name</th>
+				<th>Remarks</th>
 				<th>Amount</th>
 			</tr>
 
 		</thead>
 			
 	<?php 
-		$sql = "SELECT * FROM `gttbl` ORDER BY gtid DESC";
+		$sql = "SELECT * FROM `cashpaidtbl` ORDER BY cashid DESC";
 		$res = $conn->query($sql);
 		if ($res->num_rows>0) {
 			
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";
-	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["gtid"]}'><i class='fa fa-edit'></i></td>";
-	echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["gtid"]}'><i class='fa fa-trash'></i></td>";	
+	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["cashid"]}'><i class='fa fa-edit'></i></td>";
+	echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["cashid"]}'><i class='fa fa-trash'></i></td>";	
 
-	echo "<td>{$row["gtid"]}</td>";
-	echo "<td>{$row["gtdate"]}</td>";
-	echo "<td>{$row["drcode"]}</td>";
-	echo "<td>{$row["drname"]}</td>";
-	echo "<td>{$row["drremarks"]}</td>";
-	echo "<td>{$row["crcode"]}</td>";
-	echo "<td>{$row["crname"]}</td>";
-	echo "<td>{$row["crremarks"]}</td>";
-	echo "<td>{$row["cramount"]}</td>";
+	echo "<td>{$row["cashid"]}</td>";
+	echo "<td>{$row["cashdate"]}</td>";
+	echo "<td>{$row["payercode"]}</td>";
+	echo "<td>{$row["payername"]}</td>";
+	echo "<td>{$row["remarks"]}</td>";
+	echo "<td>{$row["amountpaid"]}</td>";
 
 	echo "</tr>";
 			
@@ -106,12 +100,9 @@ include '..\db_connect.php';
 				<th>Delete</th>
 				<th>ID</th>
 				<th>Date</th>
-				<th>Dr.Code</th>
-				<th>Dr. Name</th>
-				<th>Dr. Remarks</th>
-				<th>Cr. Code</th>
-				<th>Cr. Name</th>
-				<th>Cr. Remarks</th>
+				<th>Payer Code</th>
+				<th>Payer Name</th>
+				<th>Remarks</th>
 				<th>Amount</th>
 			</tr>
 

@@ -263,7 +263,4 @@ $(document).on("click",".edit",function(){
 
 });
 </script>
-
-
-
 <?php include('footer.php'); ?>
