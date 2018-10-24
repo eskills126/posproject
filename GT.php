@@ -200,7 +200,7 @@ include_once("db_connect.php");
       </div>
      <div class="col-75">  
      	<button type="button" class="btn btn-success" id="save" value="Save Detail"><i class="fa fa-database fa-lg" aria-hidden="true"></i>&nbsp Save Detail</button>
-      <input type="text" id="id" name="id" value="0" >
+      <input type="hidden" id="id" name="id" value="0" >
      	</div>
     	</div>
     	</div>
