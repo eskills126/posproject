@@ -180,13 +180,13 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
-		var name = row.closest("tr").find("td:eq(1)").text();
+		var name = row.closest("tr").find("td:eq(3)").text();
 			$("#sname").val(name);
-		var address = row.closest("tr").find("td:eq(2)").text();
+		var address = row.closest("tr").find("td:eq(4)").text();
 		$("#saddress").val(address);
-		var contact = row.closest("tr").find("td:eq(3)").text();
+		var contact = row.closest("tr").find("td:eq(5)").text();
 		$("#scontact").val(contact);
-		var opbal = row.closest("tr").find("td:eq(4)").text();
+		var opbal = row.closest("tr").find("td:eq(6)").text();
 		$("#sopbal").val(opbal);
 	});
 

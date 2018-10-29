@@ -58,7 +58,7 @@ include_once("db_connect.php");
         <label for="ino">No:</label>
         </div>
           <div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
+        <input type="number" class="form-control" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
          $row['gtid'] + 1;  ?>"  readonly>
          <span id="error_id" class="text-danger"></span>
         </div>
@@ -73,7 +73,7 @@ include_once("db_connect.php");
         <label for="ino">No:</label>
         </div>
           <div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" id="ino" name="ino" placeholder="Invoice No." value="1" readonly>
+        <input type="number" class="form-control" id="ino" name="ino" placeholder="Invoice No." value="1" readonly>
         <span id="error_id" class="text-danger"></span>
         </div>  
             <?php 
@@ -104,7 +104,7 @@ include_once("db_connect.php");
       	</div>
       	<div class="col-25" style="width:0.5%;"></div>
       	<div class="col-60">
-      	<input type="text"id="adetail" name="adetail" placeholder="Account Detail"style="width: 95%;background-color:#edf1f7;" readonly>
+      	<input type="text"id="adetail" name="adetail" placeholder="Account Detail" class="form-control" readonly>
         <span id="error_sname" class="text-danger"></span>
        	</div>
       	<div class="col-25" style="width:0.5%;"></div>
@@ -112,7 +112,7 @@ include_once("db_connect.php");
       	<label for="abal">Balance:</label>
       	</div>
       	<div class="col-25">
-      	<input type="text" name="abal" id="abal" placeholder="Account Balance"style="width:80%;background-color:#edf1f7;" readonly>
+      	<input type="text" name="abal" id="abal" placeholder="Account Balance" class="form-control" readonly>
         <span id="error_sbal" class="text-danger"></span>
       	</div>
       	</div>
@@ -143,7 +143,7 @@ include_once("db_connect.php");
         </div>
         <div class="col-25" style="width:0.5%;"></div>
         <div class="col-60">
-        <input type="text"id="cdetail" name="cdetail" placeholder="Account Detail"style="width: 95%;background-color:#edf1f7;" readonly>
+        <input type="text"id="cdetail" name="cdetail" placeholder="Account Detail" class="form-control" readonly>
         <span id="error_sname" class="text-danger"></span>
         </div>
         <div class="col-25" style="width:0.5%;"></div>
@@ -151,7 +151,7 @@ include_once("db_connect.php");
         <label for="abal">Balance:</label>
         </div>
         <div class="col-25">
-        <input type="text" name="abal" id="abal" placeholder="Account Balance"style="width:80%;background-color:#edf1f7;" readonly>
+        <input type="text" name="abal" id="abal" placeholder="Account Balance" class="form-control" readonly>
         <span id="error_sbal" class="text-danger"></span>
         </div>
         </div>
@@ -186,7 +186,7 @@ include_once("db_connect.php");
         <label for="abal">Current Balance:</label>
       	</div>
       	<div class="col-25">
-        <input type="number" id="curbal" name="curbal" required style="border:2px solid #ccc; border-radius: 4px;height: 35px;background-color:#edf1f7;" placeholder="Current Balance"readonly>
+        <input type="number" id="curbal" name="curbal" required class="form-control" placeholder="Current Balance"readonly>
         <span id="error_sqty" class="text-danger"></span>
       	</div>
       </div>

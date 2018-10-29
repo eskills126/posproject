@@ -235,17 +235,17 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
-		var name = row.closest("tr").find("td:eq(1)").text();
+		var name = row.closest("tr").find("td:eq(3)").text();
 			$("#cname").val(name);
-		var address = row.closest("tr").find("td:eq(2)").text();
+		var address = row.closest("tr").find("td:eq(4)").text();
 		$("#caddress").val(address);
-		var contact = row.closest("tr").find("td:eq(3)").text();
+		var contact = row.closest("tr").find("td:eq(5)").text();
 		$("#ccontact").val(contact);
-		var limit = row.closest("tr").find("td:eq(4)").text();
+		var limit = row.closest("tr").find("td:eq(6)").text();
 		$("#climit").val(limit);
-		var opbal = row.closest("tr").find("td:eq(5)").text();
+		var opbal = row.closest("tr").find("td:eq(7)").text();
 		$("#copbal").val(opbal);
-		var area = row.closest("tr").find("td:eq(6)").text();
+		var area = row.closest("tr").find("td:eq(8)").text();
 		$("#carea").val(area);
 	});
 
