@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2018 at 05:26 PM
+-- Generation Time: Oct 29, 2018 at 04:35 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -56,18 +56,22 @@ CREATE TABLE `assettbl` (
   `AssContact` varchar(250) NOT NULL,
   `AssOpenBal` int(50) NOT NULL,
   `AssAccType` int(50) NOT NULL,
-  `AssType` int(50) NOT NULL DEFAULT '1'
+  `AssSort` int(50) NOT NULL DEFAULT '1',
+  `AssSortName` varchar(250) NOT NULL DEFAULT '1. Asset'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `assettbl`
 --
 
-INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpenBal`, `AssAccType`, `AssType`) VALUES
-(1, 'Mobile', 'Office', '03127867567', 9000, 0, 1),
-(2, 'AC', 'No Ac', '8799', 800, 0, 1),
-(3, 'Rate', 'no', '8999', 9000, 0, 1),
-(4, 'HBL', 'Grain Market', '0923457', 450000, 0, 1);
+INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpenBal`, `AssAccType`, `AssSort`, `AssSortName`) VALUES
+(5, 'Cash in Hand', '', '', 234423, 0, 1, '1. Asset'),
+(6, 'ABL Bankk', 'Vehari', '', 237680, 0, 1, '1. Asset'),
+(7, 'Commity Tufail', 'Vehari', '', 45700, 0, 1, '1. Asset'),
+(8, 'Sheikh Mazhar Commity', 'Vehari', '', 30000, 0, 1, '1. Asset'),
+(9, 'Commity Farhan Nazir', 'Vehari', '', -56000, 0, 1, '1. Asset'),
+(10, 'Cash Sale', '', '', 59294, 0, 1, '1. Asset'),
+(11, 'Ray Kaleem Ullah', 'Danewal', '', 25395, 0, 1, '1. Asset');
 
 -- --------------------------------------------------------
 
@@ -77,23 +81,23 @@ INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpe
 
 CREATE TABLE `cashpaidtbl` (
   `cashid` int(11) NOT NULL,
-  `cashdate` varchar(250) NOT NULL,
+  `cashdate` date NOT NULL,
   `payercode` int(50) NOT NULL,
   `payername` varchar(250) NOT NULL,
   `remarks` varchar(250) NOT NULL,
   `amountpaid` int(50) NOT NULL,
   `uname` varchar(250) NOT NULL,
-  `cashinhand` int(50) NOT NULL DEFAULT '5',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cashinhand` int(50) NOT NULL DEFAULT '5'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashpaidtbl`
 --
 
-INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `cashinhand`, `timestamp`) VALUES
-(1, '24/10/2018', 5, 'Naeem', 'No Remarks', 1800, 'name', 5, '2018-09-11 17:11:59'),
-(2, '25/10/2018', 2, 'Amjad hanif', 'yes i have', 700, 'amj', 5, '2018-09-11 17:11:59');
+INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `timestamp`, `cashinhand`) VALUES
+(1, '2018-09-11', 5, 'Naeem', 'No Remarks', 1800, 'name', '2018-09-11 17:11:59', 5),
+(2, '2018-09-11', 2, 'Amjad hanif', 'yes i have', 600, 'amj', '2018-09-11 17:11:59', 5);
 
 -- --------------------------------------------------------
 
@@ -103,23 +107,23 @@ INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `rema
 
 CREATE TABLE `cashreceivetbl` (
   `cashrid` int(50) NOT NULL,
-  `cashrdate` varchar(250) NOT NULL,
+  `cashrdate` date NOT NULL,
   `receivercode` int(50) NOT NULL,
   `receivername` varchar(250) NOT NULL,
   `remarks` varchar(250) NOT NULL,
   `receiveamount` int(50) NOT NULL,
   `uname` varchar(250) NOT NULL,
-  `cashinhandr` int(50) NOT NULL DEFAULT '5',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cashinhandr` int(50) NOT NULL DEFAULT '5'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashreceivetbl`
 --
 
-INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `cashinhandr`, `timestamp`) VALUES
-(1, '23/10/2018', 3, 'Asad', 'ok', 1200, 'abc', 5, '2018-09-11 17:13:52'),
-(2, '22/10/2018', 1, 'Rehman', 'wao', 800, 'asd', 5, '2018-09-11 17:13:52');
+INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `timestamp`, `cashinhandr`) VALUES
+(1, '2018-09-11', 3, 'Asad', 'ok', 1200, 'abc', '2018-09-11 17:13:52', 5),
+(2, '2018-09-11', 1, 'Rehman', 'wao', 800, 'asd', '2018-09-11 17:13:52', 5);
 
 -- --------------------------------------------------------
 
@@ -135,8 +139,15 @@ CREATE TABLE `companytbl` (
   `cmpcontact2` varchar(250) NOT NULL,
   `cmpemail` varchar(250) NOT NULL,
   `cmpweb` varchar(250) NOT NULL,
-  `cmplogo` blob NOT NULL
+  `cmplogo` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `companytbl`
+--
+
+INSERT INTO `companytbl` (`cid`, `cmpname`, `cmpaddr`, `cmpcontact1`, `cmpcontact2`, `cmpemail`, `cmpweb`, `cmplogo`) VALUES
+(1, 'aanSoft', 'Vehari', '03335575561', '', '', '', 0x89504e470d0a1a0a0000000d49484452000000c20000010408030000004df91b1e000001a1504c5445ffffff1d1d1dff5b1f3f8ec0f9e43d91ca2d5d821bec23273576a00000005fbf001a1a1a191919151515131313ff51000e0e0e090909f9f9f98ec923358abe8cc81b537b003188bdd7d7d7ff540debebebd0d0d0236e9bf2f2f24444442d2d2deb0000e5e5e5f9e32fb6b6b6a2a2a25c5c5c323232525252b4b4b4656565c4c4c49a9a9a2323237171717979798787878c8c8c3d3d3dffa186fbec80f3f9e9344220fff4f08cc22dbddf8ae5f2d0ffe8dfffaf9887c600ff896bcae5a2f9fcf4d0dac0add76bfae753bfd7e863a1cab2d977ffc6b7a6d45bd8e7f1a5c7dfff6834f8b9bad5eab6fef9d7ff4400569ac6f6aaab588baeffd9ceeef7dffdf7ccc2e1967fa4bf6c8d35dfefc7ed3336b3cada91b1c888a25f7b984b4982a8ff7c55bdcba7a1b582e4eadbfad0d02c341fff774cff9879ffbba9fcf1a488b6d69dd049fcf2adfae96b8cd051d2e9b1f48785af7e7ff16567b1c298d9a2a2907b78283a3aef4548005f91ed3032f79293f45d5ff9767883b826a0d77578c73897d468150c1a29212e65a82271875e81b3565e7c4497b977fbee8a3c6d00ffa98f4fba003342e7de0000200049444154789ced5d095b1b479a968c71284bdd3a01a1d33248420201225a451287c0022131d80c60012330576208246676bc3bc924b376b2b33b331b7ef57e55d5477577b50e2c0cecf23e4f88915aad7afbbbbf3ab0581ef080073ce0010f78c0031ef080073ce001ffcfe0f6bbddb73d864f40602c118f8c472299d898efb6c7722d04c2088976bbcd6e17448432a3b73d9ece3189042b030125ee9b422591550757e67e71183130000eb1db1e5527f0731858ad2875dbe3ea00932e1e05f11e89c16db7f1285851e8b647d636525c3dba579a346646e1fe048798684261ecb647d636e2763e05d7d46d8fac5db8232614ee8f14fce37c87644523866bddd572a3d62897abb730ce26885acd28e83c52b5b63e08f07af1cfa5da1da2614e21c05e565e1ff4f6a8001e3de7778585b92231a1adba3ed8638077f0fcf686cd226442c11e51af39e710c0182c7f8e1196b22f5fbffeeef5eb97d992c915264ed539215fe05e3261d0d3b37ed3c3cfbefef6fb178f9f533c7ef1e5772f795765042e05342cbd1f5af79a31b86131bcfcee7b18fd6316cf9f7fffda78a14974467efab6bb0903c08de582253cfec71c3c7f6120c1cfb585b8f4f652530683b59b21f0f29ffcf15312df67b5578ff22b1e29b0d54ced8062e946087cffdc9c00e6f0582b087eb28da2e4cd6a53196031745f93b25f361d3f25f12dfb89a893a74719fa667343e8b909837edd5c025c0ebcf02ce9512b3582f8d66d63684304460e3c97444373a81581ee53f8be4d06c081b1074e0fc69926eff0a2b2d77b9314da9501e1a086398e3dd3142fc43184a5aa36567b1bdd64f0ba030600e573210305214cde383752182cd7426536e7ebae39bfe888c1f32f950f1ab2245af9bb8d0cbce7e5c19eaabbc650e866c6fdb2332130e630a58bcff60831e61a8742f97c70bdba5eadaa2f75b3f7daa11e3d7efc42fea4de18a4aad96808200577ad7a3e78de90d979bb1a9d3ba6f0fc3be9936e2d059b95647865a33bf22e41c5592b2f55d79557baea903a5524805c428435f9369a242f72f2bb754bb967b0a75c55dfea7270eecc9c1f33014e13196c36220437b7d4ac596a3d83ec3bdd4d91beeb580c2f2431f89051080d0305efd2f9fae07a88b5f2ee9a82e53a6290ad816987d9c769ad63d023ef79b5ecae0d56596a5d2f173ab786efa54f32658fe48e3891b9ea1dec092d69a879bbde87e95895e4344375abf63875f46503052fa41683354deeda753d027cdb6978fb27fd9cdb2627dc724bde905c78079742e5f3aae6b51b293b3be5201bf48454f7c8a58e21ae416a515b8790a0657623fdbc0e039c9c65c89a243752f505a777a97a5e0e699b9237a247182f9b94fee69a14a2136e6242ba8bdea50e42723478ae0bd837d6452a755236289a94269a2415fd4653183caf7921c1d3bd7a73d3ebdfb555404b62907cd23052a31a605d3bd61eac42e5909698f726bbc21d08424e324290ddd905f906551d839e6a68c97baeb3e5ee07050d5ebe6897841cdd4093701b558a0a5aa5f77a07cfdd657d83fec67bc2dfb54b42ba7e1839f17c3f35066df3c5bb04416d5053acf574bb6ae6e3dbb67c936c0cfe7162cb746a47abf438a82d0dd696ca9a3acefb39d6ca64db21a1a47a49921cd1b8a0b166f0464bb550b5ecfd7cc6ac21d1529de4c86009e0d4df4728b8d73563add6400a4b3a03ef6adddf14a59636f182bd7c94accbd3f8ffc10654098d90c1cd7e2e0618af5f348d13cfd919ac2962ce9a9a60dd0dd5a657cf60f03318338b975f3621f19c9dbe4a904252935eac7b1b3a5f44f0d917be617d3261a1d83306223f19cf03a95c0d320b7d4fe9730b81e2e53f9f7359b05d6e37a5c0fa54482c2ce783fac4f5b35a028bd75fea67101f6b3a93161fa5c0641278bdc29231ebbbcd897f0e0bc625a5240aaa21544187d6abfad4fb96a7fd4bafbf7da1a1f15c7d6f845060c242f57c09723e7d4c58bf038b58b7b030381426080535062c95071be755bd1a793fcbba855cb152399b999e9e9e99a96c16739c2bd4ece3b93a8b9ba01498e7bd54edd117cc3735d7cc8c7e7366eeed2307600803ff6375eeb78a91864c82090c113d05a899f50eb5fd8a39144d8d4c4d4d8d0cfba2ad2f5650acccadc2d81fe9004c1e1d9e15990bfd2a0966decd89b096b3f985d76b2813681b75b4853db853e93842c8e572c14f6b3839d2d69682dcd9e123e3f0151a8e477315e55adf644026a1c6b6a88bacbcd03b20ad1a117fea0fa7f02a9b2dd3f5352319e454bb9c36c1895ce1317f0b029ba74dc62fb3583d932f0f25128444e95b954200919aa11905dab518452396c22f1f9f3e7dfaf15dbe60a4e14b20e3fa1a010993cd44979b6b357e0ac72385c4144a121d2d29b69042c8d79c02316577124d58f24f157ccc6fd1cf9724322388bfbac68604cd6a39ad081eb54580905895d50946ac5dc8092fa49a522031cd1741314bfd4aa5f0f4eae9c7e5cbb5b5fcd3acf46c4cd6ca59ad766599931e1547bb04305ecd49ee29604771d6ca465b50185c228fd89571973e3ed5e10ab046ee62b6825a12045f0e95579d30c00e4ad2a628380d6639ea18225d61330a98012891105fa8bfd333c0b82437196ec600e460e54d0c752603028724087fd885628a8d4dba88669950185c725b7ce32ebbf5bf3fd6e7af0c04defd9d08346aae451488b3907ab373062088d54d99832b2e479e0927597cc15f848419a490601bffdb0750f95ff41ceaa924b94782b736482386b8410cb96b102082a0ca140a3bc571493fd34ed217e62e80f102831178c2b6f87fa5a230880f1a021fd72c611f35a7160cf46b7831e6daf6457a0ed39443c62908298902599dcaa3807b2e1344476cbf22148f4d8cfc8321305fb28cd2c533add4c8ca590c7e0d435038cc112bf04744bb6b982a92cd16623355d69b86e4ad6336171a4f8fa5a259c9a87fb92ce105f83eea105a3230ee2a58e58cad5db90c1d12a3f68f0bd45f4fb8ac4e9fae8d24338886e994a21d592703b203c81676b7682c18a68b67c4d642b0ba26b50cce8c42189a99699bc35bc2c1876c761c11a6109de6d14fd862067162a63634cecfefc22448721daa3e54eb3746bce5e847b17df3903804103cdd005e05400283aec6c10cac641c2eb30d3e3e92995812c6c402a5a2312d09dd3d8a1c4b582d62e51a6a2f671a5a250f151c895df0a7105daaadeb0ad7c0d9e3ac4d4013c6c1534c9209f7a871d5ae101e4dfa7d1a123a8ff49b719c43a73850384e2b87ed71784b6e043a24c6034eba204cd39b87dc348a70deec8a98a7fce3c41438c68c861390fe467dea1a46dbb836e7e60cd351015e8eb3e229d62728df5a723824774a23ab2b396eb547dc9a19126f4fd5e217046c0569f34cd987485c0b1b336c1448a0d1181a1d53042424341fcdf1fc51f1104a4ecb9063baf2a858dc3c5b85da938ed544b51ca7f856eeb0687526ecc425a9e1d9bb5eb58422227644c6ad3d2a46888a458dfb144594f4a7dcc819505d95ce9a8b9c11ad6e6e9ecdade65e39ce66ce2a90940e1d6e568871fc5639e5bb5bc70c799256bb1d286097a4c436ef5288a60c82ade95ec3241997d11f3993beb1487c2a1a48ab69874bab8e45de901caba76743c5d3b9dc5b90c7f4e6aa7b6e1a5fe7284e9f15795283b748be348cece171eab597d4908c35cc2a8e37af7c5d44461386f4484cc5a2890c4a265472d2eacbe6147032fd68b5b279e8281ebeda3c3d3b73388a6fb1a37af4ead42c25249d8149648bd3d973ea9248bf089ba8d082819f26e909bd29803b42a9b0cf2e326fe81592a748f2930583982b56dcab9553c76a4e7254ab39dc935198aa9cdf12530d63a58ff8a93d7bc90a8b14c293b906065b9a7a394528440dbb82d05828358a7c36e6759ba0cb53b9e6ac6075fad1691178cc6d420cc78e6a686ed3512956c0b0c1b287369908484dda8793341ca4aa648e105e09c505fa8a0e790d05a8f686497cd4c29e419161bf7f92d52f7d76014eb5198547674570ac4387956978f043b9b70eac56955795e9b7c5e28cce3dd1d41b2fd22396b92eb5ec922eeeaee1ec958602adf60c6bbf5d23a10914096b2c04191a31d34dc317eee6c9ce7435b7395d29beca15378b333367af72878767a4e3a75c5b9454891843ad2c3d5e7e95f54e4b61c2892918ac5974c57cfeb426b97019e37b07159be3f0b753c7506ee8d1f4dba1cdcad05065c651cc55a6571d4384068dd2f81c00556f4250e93a8d1be84befaeb4149222a660d8441043084dfa34cba9395bd99b1b83412690c56e4ecf1d565ecd6cbecaad82529de61c9bd3bf518a243a8036a8ea3a8978d57a01f72b34146222f819b72e36db9cbe681a4d4eb079134fa296df3aac781c73338720844a65c802ae1622f8506e7a26476ee220aa941095e2368a388690fd40aa660d85840063f347b40e499840315fd4c7be6ab3f37294266ed54c16f0dfdc29c43c477115ec1b9c94c342285055f22165571e3c40575afb755b72c9ac79352182e4f47b82902f3a81e2368d1af153f5e6066dce631544503ccbad8249cc49293b55a549249d1f017661b3b16df5d2e53bb96ff14e3386980839ba4feb9004278a05a21a1317b5099e82eb3630c047cdad4e17b13655e42a8fa852286247721dcca664d9fc53b5f1f2413386a4e84cead6df0bc94917b85a3626d838f185e2faf57f6513c2c62a644872e947f3ee51445ddfb85ddac840245067083cbd9ad70c21ed04c169db2f420244104eb181b9c94efc6b7761865657751f75908e7142c40128c00a61f7a3a6f575b5a519c1940b8a004dbd6317c3f644c0c7ba23316c5e6fb8af2b051ef00d69c77b0cd9c6654bd0f4b10d0e093c31e49fec5e14db78201002ffcc5a82493f988257405f13d4a2932ec10db27026a52f30741f7fd10e6014d9339aedae686402f902532d43828acd0e3bdb4d30843b1a01dcef463639267cd03390baf00a52c81e77b3ce078dc627464436ef135b1db8b439745d7b305020296b1a45808254a773bad8baa9291fbe9629ccace08c422329c61d997b2305e01abbc5013bd628946148aaafb20602571f74dfee463681a5805263ae38e8525bde48c54cfb5355cd29cce1bb255d119bb4fbff8381c2d3acfecb41e9a20c05f0a8fe49c45882d324a8e9909b6e39e3d91e072c065cfcd027576a2d047c7e00f2b159b580c27e265adb8556d3b50a0932efdc8ac6908a266280cc9956b90503858fc649dab4130592daae23fbbbe91c2197c5e6f4e1ea2379f1820487832e6780bce8ede1e11ce0f4f4147e1e1ebec54d26bdec8818c09bd026fa9ac198778d5f0b65dbb0b6b6714eaa292a32149b2d69e48a740909c16f50a35536378b805c2ee7365c0ad79e1e3e6279503184059184854b1d055d6e4101c5f3889682d5a93010339c4f748e50f3c32173c59939b5d947c4300c8e126748bb5a0a5775dee753c83566ec2249fed4d5c9221203a281e1c95826138f47e2f14c26919e1a0d98de2f5799933b976406cb6923e97db6ce1278bac6fdac1f39a7cc287cc29963a1543a2222e41205c14e20884e0839e278622c65e2207233b48b4c42f418a2f9bd1a9bafae3e98ad1a41ce09130a2d128b2648251172f28e93b3d98117ca981dd759c12448a604150f0ea95b74621ff0b16e88070a22cef42497429b11c100f78860b2904386003426525cfb98c1ae0bbf931471ddf04bdd52b89c9f5f2b682efafaf77ffae28b67cfbef8f927fa7bc2959ce21e4611b9de265020d0c6ac9dcd895092c72277e87885eb069cbc85b6f4f910c6effe00a3a778f63399e982529f2705b315172d10c8b44380c28984498e466dce11bf0a2348e57f31bcfbf50ff2f809fe80fdd7144af0a4d07452c20cee29ce62a666b270a1c4b05114b4d3ed12631f0d2ee8f71a025810166cfb61fdf67bcc20adff701b8886db98bbd6414471fe9233c8727efd9b6ac2ee1097c117cf8ab86e8b8f1928342b354d91b2b55ac4c1059e0ee7c58b8cf0ebdf1553f0253185df19187cf1ec6b1c9e2386ae30a7a7df1ac3c8e418bf96b0b9c409238929975d29b652c4327346065f3cfb1d99a3324c537594dc49186ddf8e79240403091f527ac4013ae7fc2723832f9efd1e531052fa49fe6bc4b4e1660cc4d6460e9298d22aaf3b2c486b3efc56722cc3d71c2148149c29ed248fb1235e6dec6def355d721f70996b911d2563ad38081027902e124dbaa4b3e792d43dfecc6140288c226720c37ebfddaa33e5c6469060db9c817f5c33469b20120f01f91172a1b83f6598cbd30a00728ef49861452f6e8705c8ff49b7bbc81302a130829c3ecd37e8cafdf241b08fa209077641991d216b2c39869c36219c89f8a201e48b710f35a310f1fa1cee4d43113b694e26a8107e32a50039a19f9d22d1f6b0fd1b3201ccc14c97a6187f600f8f05a2a399109a8ca068329546bec951d3b54e20809879169074da9cd8ac693fe60f3c06c4234db8ac21b685a1998f6a0419067d7d2662d0cc36a291401cb2ea687c7814f93381806f3896364c47ca049c13cdbcf70859a134498754e4322014c262dcad86674d4c0b6d6b08f4f51d70039e5b7304a118f321312ca626c468221a191d46289cf1718f8a74bad2cd4b2a70abceb445ea8772c21aa100a10d379d94d8a68969d5031d83be3eae2669a7276c4eff682090991a46319f2f32ee1b0e8cb8e21c0202bcaf97e664323d31968aca0f0a3f1b1445d42dfdd1440a39f87e31a64e30b031ada11fbf9931e822234a8d449033e187a23c6a1323e904e29cca6643194ef8f48f86f1ae83b09cc082828b31ba5487ef5201c4a7a695e7c8362cf60c2230a3a05b1dea1a1bc6838e265ce180d36ae38635114d992461a9181205486047e53b0b52cefc039fc1cf387e4008940e9775327f35406f064d28e8522c2181e7eec474c63662b2f4d586124dac389080644b44789b0579b4b482cffd854fe127dcb1814b426486d9262ad6e5dee031e8ebe3a6c5fa2cd196c40f44b447c622dca4c3e56a710e782a429e7edaedc6e3a2149a382464c3ab8c486c53ab9c90d1909b782443a22b45199b8bc7c08ed2721e71b270f4fe1870b470a2bbe514ce7a5df128ee2b520adc048958730091b96a1c18a46915f7a8c56dc2a06f83fbd0da5829cde850440a650bfb030c9e1c2f68eee91b073f2f581376f9c99a50f881c4669cd441f8b4d1150a81b03bc41f3f98c21e978249e0e2c129b5fa4f8ef1b059c0efc79a5a3f8d579963fda6330d7c0acf7e228d6d7cd394b4cc1542a1bfaa1f7843764e41fec63efe5f81e0ea508c58dbc9be6efc328b6356a146e4f49d8436130a457c7620b9c0076e0cff2f8ea23a0690a1f6f965f7c4cf91dc6607c71b7468b8090189042309b90c241acea7f033992d24497a687c8caa934f2f831aa4da1ba18de001b6662e03f9489716045cc214d1d423530284c49305f5be29ea0fc83974a6f54e42948ecd848b7c6114d1330896b7b761fcdbd58df2819929b4dc40439ea48b1696276f4c08ec28241841488e02eb3897c21f72a0c5cadc28a81eca44cb5a5704830f361ae560b0513d68926b87ccceef9721a2248d650b4f4c180c1cedcbef0ceca816314938608fc3a3808d195b0c75f5d1184231b796018cbcf16375efa01cdc6b98bb548ba5d5de07112524477a6caa4360c9cc2f8a32d19552367b944be12f39ec8fa44558a3e32ec8ca7532d886e7beb75d2d6ff46d34f147440c26277e1315423159d0fba666bc73fcfef8bdfaeec07bf9ced46183267dcdb704ec4ab18686d208af6f631904b10ccad819292f991933fd26be2ad9104a2a559999193c197873b2bff03f276f58a1c81f220525f8240e851fdcf86d320f1188b8c090350cf6f6828d8360b9f1634d49f79a08c1425a39c6f1bb907d4ac9aa4a3b7c06034fde2cbc59d879bf70ac552ce963a40eb08d878c39124e8fa40ec1148820edb654355a14dad8ab068321b79ab03613820567041a41d84484ec6c59efe63318d87f3fb0b073f266c110ad650e64d53b0a1833d5bf5ab04785d81d4a2027ded1a46110dc2b87fa1ae58386faa2a93b5230328e9053140401cf48d913da991c3306c7eff7f777168e17386f49f640828e6bcaadaffeb12d0fe3869f0fb950d2af63d0b751fd71bb1aac55371852ad18000223e944389c484f0d1bca01133b18388237f617de73f38d23f249121bc0adea4a1e5c3387e28290846060257b43b5bee820448c999181b9436d0bffe0cb00dbc10056223ebf05f25c8831d8435a0ad81be1a8618b2022024b55130e8040ad7cb0b7cdbed8ee32063eb84ff9c993f747a0490b473bdc3731488ca36e35a0a99d9ffdd12259bab48759c3e0a0760096bc57dd6ba707d61e8eb87a0212387e0f21c19400385b9c6b906e291afb2bcbe04f16bc2f91d46924e8f80f581934f6423f36ca3fb23db0e0a79d8453e2cae078e1cdf1f18281805c02d15fb05b22ab04c5f44f3a069618b6735a0f851806c1beea5e5f159e7aad7b0cf869c5c0c9f1d1fed11bdd8b60dbef8f7039fa86b2c0e640ecd9fe67758eead99f705244d64cb948a5a9a9f4f73636aa65e0d057ddee1a038e1006de1c810c8ef6f585dbf18292a592ba0e7894a41cc3f56fcf583ba06d5c3ab1cc32086e34fc07dbd53d88d307b23f0d9ad439ed4367cb0358fde139ef1ceb19ec6b9b002590c6fecebe748ab5f35f595f44134b69629961b051db8070d0b7bdc79ac6c6279fa2ac13c2fb81fda385fd9363bd7aa9e9a91ea421ebfc7729b67dad30906a65a6e3b551ddae6e076b1ac56a2ba235c782ee59efec1fed3f39d93164adfa3e8c0a92e989691c18a4e97e5a46d0f934954130580b6e54ab7db5aa2a84e04117ce83d28e1527133b274f8e9fe861ce80ae04b6fdf98fb212b9e9f66dda3d6564d0000daa06cb07aa330df675e55431edd33e82a46861df5838346120b5da10eecee35fa319329540671dd4e80535321436d586dacd0ef6ed75e534a81365b4034f767616debc3f3e3a36068305e5fa507478646c726a645469d14ba5390afc80d36bcba8535465b0c7e6a17b0dd020c50c82077b5d3a0c5d360530e2270b3b30fe2363ceca149a2331c8772922e9613a069f64bb39b0647f9a9e62405b6a9aee3b78a30339d70b8273edda795c52723170740c8387da8653ff4b29a98450d4373a9910904b70a208a99868ab8dcc418f8e1325a23b6fddfaee7b554aad831019ba357e86c23e7879a88f0de3d73390e04f4d4490d38eac636e29308849dab6c7ffb4e2c42864e8be1f907af960bbdcdd03d114455a381ee066d5a6f120349cc624323e9aabda3313d262331426e728197bd7e08ab6f7aa5d3fd04d31e781136e566d1ed10051d07cd139221d2021f50ce906f43d5dbf083ffd46f7874fa03cf8373c024dbda905f72405ed122162c8e079822afa36b6f76e6af404e6ed2f6c2166eb3615f8ed9af60e9e93b294f7b6f7f6f61a18e5eae7f8fbbde604b886ac87a6f52f5a6fe5afb99ff0fba80303fbe62b4f59309348c2f8a715c0d7468933a130f0e4b88515a850d690dbfff39316607f124e8e77d45617ae64de1cb527010279fac2f6eb2f5bd9f9fa5a071fed264a2747c7fb6f76006ff68f8fda160081bc42040d6f3d7df7f4eaea69bea513b83194303aff98b4a45c4858b6e822f4ab8fb724886b43da8d0d0141d991c1d90e73a7217924908242e1ea5deb8fdd21c86b5c8430b3a944bfc5f06e438e0b62cc9265f6c5dcf6b03a81bce717cfcdb6d8987457214fa7e269c1bc2a868fb73daef6a1fc3d379ca2b25b3e393bdcee28d44577b8d864b66f1bb767dc552873dab477c76c7fde6af5d1bb02e5981169e9a3cae1be8841fd3b9ff2528b35e530837b121bd4032e94fd51a5cb77d29912f7c3a2d57309d8e5f0d9cb0feff0aebdfc7dc8f7d4e55abaf3994abbf57a3d7f0fe4c01c5783eec089ffd7015338a3db1ecb35a19ece69135a5f7d17e15757ac4bfb7aee1d98557ffa8307ef0b92aa359b1dd174c7e167769f88c9d6d7df41b0abc19da687dade69b03bbd0ca74bdf0bf834471cb57336cd9dc3a486c275f690df36fcec7165f79302bb67f17a1b986f1b7e41b38fe613ce15b9354c68f7b65eef44885b857e7b0dbabde9916b221411e96132761b85f144dabb8d5229f6cd37ff22e19b6fbe191f1fbf17154f696babb0369f5f5e5c5cb9f8ea3fbefaaa97e22bc07f0056169797eb97bb5be67fd7e9f650da2aeccee761dcbdfd000f462f0ff80d7c41efc5caf2fcee5d61922d5ce6e9d04d86cd07a182995c166eb385b1b55b5ff9aab7c3b153f4334c7a2f16e7397f6aeba6512acc2ff67aae3378828b35850421028fe122ff19a7724bbbf50ba2d0d747ffa5a53eabbb0196477ef7334803863ffb49a39750b26457fa0daf7afa672fe66fb2dd9dbd5cfcb487afa21f4f5269b549796bb6f7663a7ca542971ebf040fb9699e6f4c9efedee52eab54a990bfc0aadb3d06540c164b816ad3c5c5c54db228ede62ff0e3f7f45fd4f55ff409f048b7bfa40fe6e2620568689e117c61be1b765190c7dfbb5cd85aeca2183c2bd23174d965c92220ce2d82a766bfc3d3bf72f969ae766b9e8c1fa2d7ca65a934dfeba1aeaf4b1cfae5e530850be99e9ede957c7e79c5c3380df2ecae4d6077d1836fed99edad833ce7b1fbf0cc2e17d6bac5a1b7ff429ea79a57060de9537e6df732cff80e50a8b5eb5845b6de4b0530bb8c3d9c44004fc9ec768d02dc7d515293ecfc62ffac2c0bcf05b6643602f5f73639bc918fc2623f15c005fe5b6a8a04c86d8841406e33ebb996716bcdc9e3595e93f3a3c23c8c990e1a529745fce477f3bd12b1fefee54e4cfb52b2600f750897988ea79f12d85ae9c739e64a7d379b5546d32fa10d6bbf58d4252770b7d95ec8bc4b120dd91270a0c6a68ced91b0f0cc2eb649a2344f2d4056541242814d892647f09c56d6c8adb614021797bb05c8fd4ba5c2e54a6b0e97d92d70d3da1c91f0807c957ce3d65a7e85647e9805fe2ad9ab786657dab0ec6c9e3ef25ec923671767f16ff592656d19640af795e459c8cfca0cf2943a5cd096b70295c08f1c78ac7c65e0b122d180b7e79721525cd0bfed69292cf7f6b745020878f0235f913d40095b14fe6d0d8c0dbee2825855617ed9a378108fe4554af5b6cddc8355877c05ae382e3cfd1ecd5b79ee28b3f317944433752204700c66ae29aced92df16498145fe595a9c5595b97f45bdf8b2cdc0e7a1aaee59a651abb4b5b6bcd2cb88a3bf97ef424b979444ffb2998bc56e07a221df0597d432b7b0bc4c8a64e27235776bcf435de4977ba9bb989d5532882ca855affc643c664b404b754274d62c91ad83a6b41d084b24739272b5ec4a1dcc792bcfd5197870b3dada74717e772d0f71b89ecfd7e7994518d9427df9a21f1bdc6cafd982b1ad45483725ebe360a5c3b504a52d99f0ee2cbeb15e8f3cd4cb9440531e299d800000007a49444154eaf08c1522a04360b530debaf18195c05dad150a5be62301c39ebd89c527057dde8f239fb6a82f65772feba0f4b3b33486acec5ab26bf3d7c9e1aeb3d6b70d6c5df4eb876f3680c2da7c9d58d3f5b3b71bc225680a6e74cdf62f5ede9bc55e7a14e6f3cb79d3a7ff80073ce0010f78c003feefe37f0164e27daa6d024fb90000000049454e44ae426082);
 
 -- --------------------------------------------------------
 
@@ -153,20 +164,20 @@ CREATE TABLE `customertbl` (
   `CusOpenBal` int(50) NOT NULL,
   `CusAreaName` varchar(250) NOT NULL,
   `CusAccType` int(50) NOT NULL DEFAULT '1',
-  `CusAssetType` int(50) NOT NULL DEFAULT '2'
+  `CusSort` int(50) NOT NULL DEFAULT '2',
+  `CusSortName` varchar(250) NOT NULL DEFAULT '1. Asset'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customertbl`
 --
 
-INSERT INTO `customertbl` (`CusId`, `CusName`, `CusAddress`, `CusContact`, `CusCreditLimit`, `CusOpenBal`, `CusAreaName`, `CusAccType`, `CusAssetType`) VALUES
-(31, 'KOt', 'sdflkj', 'kj', 8, 7, 'Vehari123', 1, 2),
-(36, 'Amjad Hanif', 'Grid Station', '03115575561', 900, 7800, '220 KV Grid Station', 1, 2),
-(37, 'Kamran', 'Kot Addu', '067452300', 0, 12000, 'Islamabad', 1, 2),
-(38, 'Ahmed', 'Raza', '03214354678', 700, 45000, 'Peshawar', 1, 2),
-(39, 'Kaleem', 'Machiwal', '06189007656', 3400, 23000, 'Karachi', 1, 2),
-(40, 'Parveen Shakar', 'Muslim Town', '03001234543', 0, 78000, 'Multan123', 1, 2);
+INSERT INTO `customertbl` (`CusId`, `CusName`, `CusAddress`, `CusContact`, `CusCreditLimit`, `CusOpenBal`, `CusAreaName`, `CusAccType`, `CusSort`, `CusSortName`) VALUES
+(41, 'Cash Sale', '', '', 0, 59294, 'Vehari123', 1, 2, '1. Asset'),
+(42, 'Ray Kaleem Ullah', 'Danewal', '', 0, 25395, 'Vehari123', 1, 2, '1. Asset'),
+(43, 'Nabeel Akbar Bandesha', 'Danewal', '', 0, 8410, 'Vehari123', 1, 2, '1. Asset'),
+(44, 'Tanveer Ahmad', 'Danewal', '', 0, -39525, 'Vehari123', 1, 2, '1. Asset'),
+(45, 'Rana Asif Traders', 'Laha Market Vehari', '', 0, 39359, 'Vehari123', 1, 2, '1. Asset');
 
 -- --------------------------------------------------------
 
@@ -178,17 +189,20 @@ CREATE TABLE `exptbl` (
   `ExpId` int(50) NOT NULL,
   `ExpTitle` varchar(250) NOT NULL,
   `ExpOpenBal` int(50) NOT NULL,
-  `ExpAccType` int(50) NOT NULL DEFAULT '1'
+  `ExpSort` int(50) NOT NULL DEFAULT '1',
+  `ExpSortName` varchar(250) NOT NULL DEFAULT '3. Expenses',
+  `ExpAddress` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `exptbl`
 --
 
-INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpAccType`) VALUES
-(3, 'Free Exp', 8900, 1),
-(4, 'Hot and Coal', 500, 1),
-(5, 'Laptop', 500, 1);
+INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpSort`, `ExpSortName`, `ExpAddress`) VALUES
+(6, 'Discount on Sale', 150, 1, '3. Expenses', ''),
+(7, 'Entertainment', 0, 1, '3. Expenses', ''),
+(8, 'Electricity Bill Shop', 0, 1, '3. Expenses', ''),
+(9, 'Mobile Expenses', 0, 1, '3. Expenses', '');
 
 -- --------------------------------------------------------
 
@@ -198,23 +212,24 @@ INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpAccType`) VALUES
 
 CREATE TABLE `gttbl` (
   `gtid` int(50) NOT NULL,
-  `gtdate` varchar(250) NOT NULL,
+  `gtdate` date NOT NULL,
   `drcode` int(50) NOT NULL,
   `drname` varchar(250) NOT NULL,
   `drremarks` varchar(250) NOT NULL,
   `crcode` int(50) NOT NULL,
   `crname` varchar(250) NOT NULL,
   `crremarks` varchar(250) NOT NULL,
-  `cramount` int(50) NOT NULL
+  `cramount` int(50) NOT NULL,
+  `dramount` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gttbl`
 --
 
-INSERT INTO `gttbl` (`gtid`, `gtdate`, `drcode`, `drname`, `drremarks`, `crcode`, `crname`, `crremarks`, `cramount`) VALUES
-(1, '22/10/2018', 1, 'computer', 'no remarks', 1, 'wao', 'wao', 6000),
-(2, '23/10/2018', 4, 'ghs', 'No Remarks', 1, 'safd', 'No Remarks', 4000);
+INSERT INTO `gttbl` (`gtid`, `gtdate`, `drcode`, `drname`, `drremarks`, `crcode`, `crname`, `crremarks`, `cramount`, `dramount`) VALUES
+(1, '2018-09-11', 1, 'computer', 'no remarks', 1, 'wao', 'wao', 600, 400),
+(2, '2018-09-11', 4, 'ghs', 'sdf', 1, 'safd', 'asdf', 400, 800);
 
 -- --------------------------------------------------------
 
@@ -228,18 +243,19 @@ CREATE TABLE `liabtbl` (
   `LiabAddress` varchar(250) NOT NULL,
   `LiabContact` varchar(250) NOT NULL,
   `LiabOpenBal` int(50) NOT NULL,
-  `LiabAccType` int(50) NOT NULL DEFAULT '2',
-  `LiabType` int(50) NOT NULL DEFAULT '1'
+  `LiabSort` int(50) NOT NULL DEFAULT '2',
+  `LiabType` int(50) NOT NULL DEFAULT '1',
+  `LiabSortName` varchar(250) NOT NULL DEFAULT '2. Liabilities'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `liabtbl`
 --
 
-INSERT INTO `liabtbl` (`LiabId`, `LiabTitle`, `LiabAddress`, `LiabContact`, `LiabOpenBal`, `LiabAccType`, `LiabType`) VALUES
-(1, 'Bag', 'No', '87', 8900, 2, 1),
-(2, 'Pencil', 'Vehari', '700', 344444, 2, 1),
-(3, 'Jug', 'Multan', '21345', 900, 2, 1);
+INSERT INTO `liabtbl` (`LiabId`, `LiabTitle`, `LiabAddress`, `LiabContact`, `LiabOpenBal`, `LiabSort`, `LiabType`, `LiabSortName`) VALUES
+(4, 'Dumy1', 'Vehari', '', -1000, 2, 1, '2. Liabilities'),
+(5, 'Dumy 2', 'Multan', '', 25000, 2, 1, '2. Liabilities'),
+(6, 'Dumy 3', 'Tibba', '', -21000, 2, 1, '2. Liabilities');
 
 -- --------------------------------------------------------
 
@@ -425,7 +441,9 @@ CREATE TABLE `salesitemgrouptbl` (
 
 INSERT INTO `salesitemgrouptbl` (`ProGroupId`, `ProGroupTitle`) VALUES
 (2, 'Group Book'),
-(3, 'Group Three');
+(3, 'Group Three'),
+(4, 'Building Material'),
+(5, 'Sanitary Material');
 
 -- --------------------------------------------------------
 
@@ -444,21 +462,19 @@ CREATE TABLE `salesitemtbl` (
   `ProItemGroupName` varchar(250) NOT NULL,
   `ProductTypeName` int(50) DEFAULT NULL,
   `ProAccType` int(50) NOT NULL DEFAULT '3',
-  `ProType` int(50) NOT NULL DEFAULT '1'
+  `ProSort` int(50) NOT NULL DEFAULT '1',
+  `ProSortName` varchar(250) NOT NULL DEFAULT '4. Revenue',
+  `ProAddress` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `salesitemtbl`
 --
 
-INSERT INTO `salesitemtbl` (`ProId`, `ProName`, `ProUomName`, `ProOpenQtyUnit`, `ProOpenRate`, `ProOpenBal`, `ProSalesRate`, `ProItemGroupName`, `ProductTypeName`, `ProAccType`, `ProType`) VALUES
-(14, 'samsung', 'Pound', 5, 5, 5, 2, '2', NULL, 3, 1),
-(16, 'Nadeem', 'Meters', 6, 12, 5, 200, 'Group B', NULL, 3, 1),
-(17, 'Chair', 'Kg', 5, 2, 1, 5, 'GroupA', NULL, 3, 1),
-(18, 'Khan', 'Meters', 6, 12, 12, 23, 'Group B', NULL, 3, 1),
-(20, 'sf', 'Kg', 56, 5, 5, 5, 'GroupA', NULL, 3, 1),
-(21, 'Botle', 'Liters', 5, 1200, 900, 2500, 'GroupA', NULL, 3, 1),
-(22, 'Keyboard', 'Kg', 5, 100, 100, 100, 'GroupA', NULL, 3, 1);
+INSERT INTO `salesitemtbl` (`ProId`, `ProName`, `ProUomName`, `ProOpenQtyUnit`, `ProOpenRate`, `ProOpenBal`, `ProSalesRate`, `ProItemGroupName`, `ProductTypeName`, `ProAccType`, `ProSort`, `ProSortName`, `ProAddress`) VALUES
+(23, 'DG Cement OP-C', 'Bag', 10, 500, 106000, 550, 'Building Material', NULL, 3, 1, '4. Revenue', ''),
+(24, 'Maple Leaf Cement', 'Bag', 150, 475, 132500, 525, 'Building Material', NULL, 3, 1, '4. Revenue', ''),
+(25, 'M Pipe 25mm', 'CM', 5000, 125, 17160, 175, 'Sanitary Material', NULL, 3, 1, '4. Revenue', '');
 
 -- --------------------------------------------------------
 
@@ -554,17 +570,19 @@ CREATE TABLE `suptbl` (
   `SupContact` varchar(250) NOT NULL,
   `SupOpenBal` int(50) NOT NULL,
   `SupAccType` int(50) NOT NULL DEFAULT '2',
-  `SupLibType` int(50) NOT NULL DEFAULT '2'
+  `SupSort` int(50) NOT NULL DEFAULT '1',
+  `SupSortName` varchar(250) NOT NULL DEFAULT '2. Liabilities'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `suptbl`
 --
 
-INSERT INTO `suptbl` (`SupId`, `SupName`, `SupAddress`, `SupContact`, `SupOpenBal`, `SupAccType`, `SupLibType`) VALUES
-(2, 'Dummy 2', 'Dummy Address 2', '847', 9800, 2, 2),
-(4, 'Amjad Hanif', 'Grid Station', '03115575561', 120008, 2, 2),
-(5, 'Naeem Ahmed', 'Karachi', '95000000000', 7800, 2, 2);
+INSERT INTO `suptbl` (`SupId`, `SupName`, `SupAddress`, `SupContact`, `SupOpenBal`, `SupAccType`, `SupSort`, `SupSortName`) VALUES
+(6, 'Pioneer Cement ', 'Multan', '', 1366215, 2, 1, '2. Liabilities'),
+(7, 'Maqsood Ahmad', 'Vehari', '', 280441, 2, 1, '2. Liabilities'),
+(8, 'Arshad Malik', 'Multan', '', -350425, 2, 1, '2. Liabilities'),
+(9, 'Sadiq Traders ', 'Multan', '', -182005, 2, 1, '2. Liabilities');
 
 -- --------------------------------------------------------
 
@@ -606,9 +624,7 @@ INSERT INTO `tbl_order` (`order_id`, `order_no`, `order_date`, `order_receiver_n
 (32, 20, '13/10/2018', 'Amjad Hanif', '', '10.00', '0.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
 (33, 21, '13/10/2018', 'Parveen Shakar', 'Lalazar Colony Vehari', '300.00', '0.00', '0.00', '0.00', '300.00', '2018-10-13 00:00:00'),
 (34, 22, '13/10/2018', 'Kamran Ahmed', '', '1045.00', '0.00', '0.00', '0.00', '1045.00', '2018-10-13 00:00:00'),
-(35, 23, '17/10/2018', 'KOt', 'Address', '12.00', '55.00', '6.60', '10.00', '15.40', '2018-10-17 00:00:00'),
-(36, 24, '22/10/2018', 'Ahmed', '', '1025.00', '5.00', '51.25', '500.00', '1473.75', '2018-10-22 00:00:00'),
-(37, 25, '22/10/2018', 'KOt', '', '1010.00', '5.00', '50.50', '50.00', '1009.50', '2018-10-22 00:00:00');
+(35, 23, '17/10/2018', 'KOt', 'Address', '12.00', '55.00', '6.60', '10.00', '15.40', '2018-10-17 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -660,11 +676,7 @@ INSERT INTO `tbl_order_item` (`order_item_id`, `order_id`, `item_name`, `order_i
 (665, 34, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00'),
 (666, 34, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00'),
 (667, 34, 'Keyboard', 'Warehouse 2', '10.00', '5.00', '5.00', '100.00', '1000.00'),
-(669, 35, 'samsung', 'Warehouse 2', '6.00', '5.00', '5.00', '2.00', '12.00'),
-(670, 36, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00'),
-(671, 36, 'Chair', 'Shop Two', '5.00', '5.00', '5.00', '5.00', '25.00'),
-(673, 37, 'Nadeem', 'Shop Two', '5.00', '6.00', '6.00', '200.00', '1000.00'),
-(674, 37, 'samsung', 'Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00');
+(669, 35, 'samsung', 'Warehouse 2', '6.00', '5.00', '5.00', '2.00', '12.00');
 
 -- --------------------------------------------------------
 
@@ -727,18 +739,9 @@ INSERT INTO `tbl_order_item_purchase` (`order_item_id`, `order_id`, `item_name`,
 (784, 42, 'sf', 'Warehouse 2', '5.00', '56.00', '56.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
 (805, 58, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00', '6.00', '12.00', '188.00', '940.00'),
 (806, 58, 'samsung', 'Warehouse 2', '4.00', '5.00', '5.00', '2.00', '8.00', '4.00', '0.08', '1.92', '7.68'),
-(939, 61, 'samsung', 'Shop 5', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '10.00'),
-(940, 61, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
-(941, 61, 'samsung', 'Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50'),
-(942, 61, 'Keyboard', 'Shop3', '5.00', '5.00', '5.00', '100.00', '500.00', '5.00', '5.00', '95.00', '475.00'),
-(943, 62, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
-(944, 62, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
-(945, 62, 'Botle', 'Shop4', '5.00', '5.00', '5.00', '2500.00', '12500.00', '5.00', '125.00', '2375.00', '11875.00'),
-(946, 62, 'Khan', 'Shop4', '5.00', '6.00', '6.00', '23.00', '115.00', '5.00', '1.15', '21.85', '109.25'),
-(947, 63, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00', '5.00', '10.00', '190.00', '950.00'),
-(948, 63, 'samsung', 'Shop3', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50'),
-(949, 64, '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'),
-(953, 65, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50');
+(925, 61, 'samsung', 'Shop 5', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '10.00'),
+(926, 61, 'samsung', 'Warehouse 2', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'),
+(927, 61, 'samsung', 'Warehouse 2', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -782,22 +785,7 @@ INSERT INTO `tbl_order_purchase` (`order_id`, `order_no`, `order_date`, `order_r
 (41, 23, '17/10/2018', 'KOt', '', '10.00', '20.00', '1.10', '14.50', '2018-10-17 00:00:00'),
 (42, 24, '20/10/2018', 'Amjad Hanif', '', '5.00', '25.00', '0.25', '23.75', '2018-10-20 00:00:00'),
 (58, 35, '20/10/2018', 'Amjad Hanif', '', '9.00', '1008.00', '12.08', '947.68', '2018-10-20 00:00:00'),
-(61, 38, '20/10/2018', 'KOt', '', '20.00', '545.00', '5.45', '518.25', '2018-10-20 00:00:00'),
-(62, 39, '22/10/2018', 'Amjad Hanif', 'Address', '20.00', '12665.00', '126.65', '12031.75', '2018-10-22 00:00:00'),
-(63, 40, '22/10/2018', 'KOt', '', '10.00', '1010.00', '10.10', '959.50', '2018-10-22 00:00:00'),
-(64, 41, '22/10/2018', 'Amjad Hanif', '', '0.00', '0.00', '0.00', '0.00', '2018-10-22 00:00:00'),
-(65, 42, '22/10/2018', 'KOt', '', '5.00', '10.00', '0.10', '9.50', '2018-10-22 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `uniontbl_cp_cr`
--- (See below for the actual view)
---
-CREATE TABLE `uniontbl_cp_cr` (
-`AssId` int(50)
-,`AssTitle` varchar(250)
-);
+(61, 38, '20/10/2018', 'KOt', '', '5.00', '10.00', '0.10', '10.00', '2018-10-20 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -819,7 +807,8 @@ INSERT INTO `uomtbl` (`UomId`, `UomName`) VALUES
 (2, 'Gb'),
 (3, 'Meters'),
 (4, 'Liters'),
-(5, 'CM');
+(5, 'CM'),
+(6, 'Bag');
 
 -- --------------------------------------------------------
 
@@ -881,15 +870,6 @@ INSERT INTO `wharehousetbl` (`WarehouseId`, `WarehouseName`) VALUES
 (6, 'Shop 5'),
 (7, 'Shop 6');
 
--- --------------------------------------------------------
-
---
--- Structure for view `uniontbl_cp_cr`
---
-DROP TABLE IF EXISTS `uniontbl_cp_cr`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `uniontbl_cp_cr`  AS  select `assettbl`.`AssId` AS `AssId`,`assettbl`.`AssTitle` AS `AssTitle` from `assettbl` union select `customertbl`.`CusId` AS `CusId`,`customertbl`.`CusName` AS `CusName` from `customertbl` union select `exptbl`.`ExpId` AS `ExpId`,`exptbl`.`ExpTitle` AS `ExpTitle` from `exptbl` union select `liabtbl`.`LiabId` AS `LiabId`,`liabtbl`.`LiabTitle` AS `LiabTitle` from `liabtbl` union select `suptbl`.`SupId` AS `SupId`,`suptbl`.`SupName` AS `SupName` from `suptbl` ;
-
 --
 -- Indexes for dumped tables
 --
@@ -938,7 +918,7 @@ ALTER TABLE `customertbl`
 --
 ALTER TABLE `exptbl`
   ADD PRIMARY KEY (`ExpId`),
-  ADD KEY `ExpAccType` (`ExpAccType`);
+  ADD KEY `ExpAccType` (`ExpSort`);
 
 --
 -- Indexes for table `gttbl`
@@ -951,7 +931,7 @@ ALTER TABLE `gttbl`
 --
 ALTER TABLE `liabtbl`
   ADD PRIMARY KEY (`LiabId`),
-  ADD KEY `LiabAccType` (`LiabAccType`);
+  ADD KEY `LiabAccType` (`LiabSort`);
 
 --
 -- Indexes for table `purchaseorderdetailtbl`
@@ -1082,31 +1062,31 @@ ALTER TABLE `acctypetbl`
 -- AUTO_INCREMENT for table `assettbl`
 --
 ALTER TABLE `assettbl`
-  MODIFY `AssId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `AssId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `companytbl`
 --
 ALTER TABLE `companytbl`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customertbl`
 --
 ALTER TABLE `customertbl`
-  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `exptbl`
 --
 ALTER TABLE `exptbl`
-  MODIFY `ExpId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ExpId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `liabtbl`
 --
 ALTER TABLE `liabtbl`
-  MODIFY `LiabId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `LiabId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `purchaseorderdetailtbl`
@@ -1136,13 +1116,13 @@ ALTER TABLE `salareatbl`
 -- AUTO_INCREMENT for table `salesitemgrouptbl`
 --
 ALTER TABLE `salesitemgrouptbl`
-  MODIFY `ProGroupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ProGroupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `salesitemtbl`
 --
 ALTER TABLE `salesitemtbl`
-  MODIFY `ProId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ProId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `salesorderdetailtbl`
@@ -1160,37 +1140,37 @@ ALTER TABLE `salesproducttypetbl`
 -- AUTO_INCREMENT for table `suptbl`
 --
 ALTER TABLE `suptbl`
-  MODIFY `SupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `SupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_item`
 --
 ALTER TABLE `tbl_order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=675;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=670;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_item_purchase`
 --
 ALTER TABLE `tbl_order_item_purchase`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=954;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=928;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_purchase`
 --
 ALTER TABLE `tbl_order_purchase`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `uomtbl`
 --
 ALTER TABLE `uomtbl`
-  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1218,13 +1198,13 @@ ALTER TABLE `customertbl`
 -- Constraints for table `exptbl`
 --
 ALTER TABLE `exptbl`
-  ADD CONSTRAINT `exptbl_ibfk_1` FOREIGN KEY (`ExpAccType`) REFERENCES `acctypetbl` (`AccId`);
+  ADD CONSTRAINT `exptbl_ibfk_1` FOREIGN KEY (`ExpSort`) REFERENCES `acctypetbl` (`AccId`);
 
 --
 -- Constraints for table `liabtbl`
 --
 ALTER TABLE `liabtbl`
-  ADD CONSTRAINT `liabtbl_ibfk_1` FOREIGN KEY (`LiabAccType`) REFERENCES `acctypetbl` (`AccId`);
+  ADD CONSTRAINT `liabtbl_ibfk_1` FOREIGN KEY (`LiabSort`) REFERENCES `acctypetbl` (`AccId`);
 
 --
 -- Constraints for table `suptbl`
