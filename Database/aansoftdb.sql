@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2018 at 04:35 PM
+-- Generation Time: Oct 29, 2018 at 05:12 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -65,13 +65,13 @@ CREATE TABLE `assettbl` (
 --
 
 INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpenBal`, `AssAccType`, `AssSort`, `AssSortName`) VALUES
-(5, 'Cash in Hand', '', '', 234423, 0, 1, '1. Asset'),
-(6, 'ABL Bankk', 'Vehari', '', 237680, 0, 1, '1. Asset'),
-(7, 'Commity Tufail', 'Vehari', '', 45700, 0, 1, '1. Asset'),
-(8, 'Sheikh Mazhar Commity', 'Vehari', '', 30000, 0, 1, '1. Asset'),
-(9, 'Commity Farhan Nazir', 'Vehari', '', -56000, 0, 1, '1. Asset'),
-(10, 'Cash Sale', '', '', 59294, 0, 1, '1. Asset'),
-(11, 'Ray Kaleem Ullah', 'Danewal', '', 25395, 0, 1, '1. Asset');
+(10001, 'Cash in Hand', '', '', 234423, 0, 1, '1. Asset'),
+(10002, 'ABL Bankk', 'Vehari', '', 237680, 0, 1, '1. Asset'),
+(10003, 'Commity Tufail', 'Vehari', '', 45700, 0, 1, '1. Asset'),
+(10004, 'Sheikh Mazhar Commity', 'Vehari', '', 30000, 0, 1, '1. Asset'),
+(10005, 'Commity Farhan Nazir', 'Vehari', '', -56000, 0, 1, '1. Asset'),
+(10006, 'Cash Sale', '', '', 59294, 0, 1, '1. Asset'),
+(10007, 'Ray Kaleem Ullah', 'Danewal', '', 25395, 0, 1, '1. Asset');
 
 -- --------------------------------------------------------
 
@@ -173,11 +173,11 @@ CREATE TABLE `customertbl` (
 --
 
 INSERT INTO `customertbl` (`CusId`, `CusName`, `CusAddress`, `CusContact`, `CusCreditLimit`, `CusOpenBal`, `CusAreaName`, `CusAccType`, `CusSort`, `CusSortName`) VALUES
-(41, 'Cash Sale', '', '', 0, 59294, 'Vehari123', 1, 2, '1. Asset'),
-(42, 'Ray Kaleem Ullah', 'Danewal', '', 0, 25395, 'Vehari123', 1, 2, '1. Asset'),
-(43, 'Nabeel Akbar Bandesha', 'Danewal', '', 0, 8410, 'Vehari123', 1, 2, '1. Asset'),
-(44, 'Tanveer Ahmad', 'Danewal', '', 0, -39525, 'Vehari123', 1, 2, '1. Asset'),
-(45, 'Rana Asif Traders', 'Laha Market Vehari', '', 0, 39359, 'Vehari123', 1, 2, '1. Asset');
+(40001, 'Cash Sale', '', '', 0, 59294, 'Vehari123', 1, 2, '1. Asset'),
+(40002, 'Ray Kaleem Ullah', 'Danewal', '', 0, 25395, 'Vehari123', 1, 2, '1. Asset'),
+(40003, 'Nabeel Akbar Bandesha', 'Danewal', '', 0, 8410, 'Vehari123', 1, 2, '1. Asset'),
+(40004, 'Tanveer Ahmad', 'Danewal', '', 0, -39525, 'Vehari123', 1, 2, '1. Asset'),
+(40005, 'Rana Asif Traders', 'Laha Market Vehari', '', 0, 39359, 'Vehari123', 1, 2, '1. Asset');
 
 -- --------------------------------------------------------
 
@@ -199,10 +199,10 @@ CREATE TABLE `exptbl` (
 --
 
 INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpSort`, `ExpSortName`, `ExpAddress`) VALUES
-(6, 'Discount on Sale', 150, 1, '3. Expenses', ''),
-(7, 'Entertainment', 0, 1, '3. Expenses', ''),
-(8, 'Electricity Bill Shop', 0, 1, '3. Expenses', ''),
-(9, 'Mobile Expenses', 0, 1, '3. Expenses', '');
+(50001, 'Discount on Sale', 150, 1, '3. Expenses', ''),
+(50002, 'Entertainment', 0, 1, '3. Expenses', ''),
+(50003, 'Electricity Bill Shop', 0, 1, '3. Expenses', ''),
+(50004, 'Mobile Expenses', 0, 1, '3. Expenses', '');
 
 -- --------------------------------------------------------
 
@@ -253,9 +253,9 @@ CREATE TABLE `liabtbl` (
 --
 
 INSERT INTO `liabtbl` (`LiabId`, `LiabTitle`, `LiabAddress`, `LiabContact`, `LiabOpenBal`, `LiabSort`, `LiabType`, `LiabSortName`) VALUES
-(4, 'Dumy1', 'Vehari', '', -1000, 2, 1, '2. Liabilities'),
-(5, 'Dumy 2', 'Multan', '', 25000, 2, 1, '2. Liabilities'),
-(6, 'Dumy 3', 'Tibba', '', -21000, 2, 1, '2. Liabilities');
+(30001, 'Dumy1', 'Vehari', '', -1000, 2, 1, '2. Liabilities'),
+(30002, 'Dumy 2', 'Multan', '', 25000, 2, 1, '2. Liabilities'),
+(30003, 'Dumy 3', 'Tibba', '', -21000, 2, 1, '2. Liabilities');
 
 -- --------------------------------------------------------
 
@@ -472,9 +472,9 @@ CREATE TABLE `salesitemtbl` (
 --
 
 INSERT INTO `salesitemtbl` (`ProId`, `ProName`, `ProUomName`, `ProOpenQtyUnit`, `ProOpenRate`, `ProOpenBal`, `ProSalesRate`, `ProItemGroupName`, `ProductTypeName`, `ProAccType`, `ProSort`, `ProSortName`, `ProAddress`) VALUES
-(23, 'DG Cement OP-C', 'Bag', 10, 500, 106000, 550, 'Building Material', NULL, 3, 1, '4. Revenue', ''),
-(24, 'Maple Leaf Cement', 'Bag', 150, 475, 132500, 525, 'Building Material', NULL, 3, 1, '4. Revenue', ''),
-(25, 'M Pipe 25mm', 'CM', 5000, 125, 17160, 175, 'Sanitary Material', NULL, 3, 1, '4. Revenue', '');
+(80001, 'DG Cement OP-C', 'Bag', 10, 500, 106000, 550, 'Building Material', NULL, 3, 1, '4. Revenue', ''),
+(80002, 'Maple Leaf Cement', 'Bag', 150, 475, 132500, 525, 'Building Material', NULL, 3, 1, '4. Revenue', ''),
+(80003, 'M Pipe 25mm', 'CM', 5000, 125, 17160, 175, 'Sanitary Material', NULL, 3, 1, '4. Revenue', '');
 
 -- --------------------------------------------------------
 
@@ -579,10 +579,10 @@ CREATE TABLE `suptbl` (
 --
 
 INSERT INTO `suptbl` (`SupId`, `SupName`, `SupAddress`, `SupContact`, `SupOpenBal`, `SupAccType`, `SupSort`, `SupSortName`) VALUES
-(6, 'Pioneer Cement ', 'Multan', '', 1366215, 2, 1, '2. Liabilities'),
-(7, 'Maqsood Ahmad', 'Vehari', '', 280441, 2, 1, '2. Liabilities'),
-(8, 'Arshad Malik', 'Multan', '', -350425, 2, 1, '2. Liabilities'),
-(9, 'Sadiq Traders ', 'Multan', '', -182005, 2, 1, '2. Liabilities');
+(20001, 'Pioneer Cement ', 'Multan', '', 1366215, 2, 1, '2. Liabilities'),
+(20002, 'Maqsood Ahmad', 'Vehari', '', 280441, 2, 1, '2. Liabilities'),
+(20003, 'Arshad Malik', 'Multan', '', -350425, 2, 1, '2. Liabilities'),
+(20004, 'Sadiq Traders ', 'Multan', '', -182005, 2, 1, '2. Liabilities');
 
 -- --------------------------------------------------------
 
