@@ -152,7 +152,7 @@ $rights = $_SESSION['user_role'];
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
         <!-- Dropdown Items -->
-        <a class="dropdown-item" href="#">Chart of Account</a>
+        <a class="dropdown-item" href="js/chartofac.php">Chart of Account</a>
         <class="dropdown-item">
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>

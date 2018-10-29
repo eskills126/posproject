@@ -49,6 +49,7 @@ require_once 'stimulsoft/helper.php';
 		report.loadFile("reports/csrpt.mrt");
 		viewer.report = report;
 		viewer.renderHtml("viewerContent");
+		
 	</script>
 	</head>
 <body>

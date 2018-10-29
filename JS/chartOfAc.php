@@ -6,7 +6,7 @@ require_once 'stimulsoft/helper.php';
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Stimulsoft Reports.PHP - JS Report Viewer</title>
+	
 
 	<!-- Report Office2013 style -->
 	<link href="css/stimulsoft.viewer.office2013.whiteteal.css" rel="stylesheet">
@@ -18,10 +18,9 @@ require_once 'stimulsoft/helper.php';
 	<?php StiHelper::initialize(); ?>
 	<script type="text/javascript">
 		var options = new Stimulsoft.Viewer.StiViewerOptions();
-		options.appearance.fullScreenMode = false;
+		options.appearance.fullScreenMode = true;
 		options.toolbar.showSendEmailButton = true;
-		op
-
+		
 		
 		var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 		
@@ -47,12 +46,13 @@ require_once 'stimulsoft/helper.php';
 		
 		// Load and show report
 		var report = new Stimulsoft.Report.StiReport();
-		report.loadFile("reports/rpt.mrt");
+		report.loadFile("reports/ChartOfAccount.mrt");
 		viewer.report = report;
 		viewer.renderHtml("viewerContent");
+		
 	</script>
 	</head>
 <body>
-	<input type="button" id="viewerContent" value="Print Report">
+	<div id="viewerContent"></div>
 </body>
 </html>
