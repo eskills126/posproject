@@ -280,19 +280,19 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
-		var name = row.closest("tr").find("td:eq(3)").text();
+		var name = row.closest("tr").find("td:eq(1)").text();
 			$("#pname").val(name);
-		var uom = row.closest("tr").find("td:eq(4)").text();
+		var uom = row.closest("tr").find("td:eq(2)").text();
 		$("#uom").val(uom);
-		var oqu = row.closest("tr").find("td:eq(5)").text();
+		var oqu = row.closest("tr").find("td:eq(3)").text();
 		$("#oqu").val(oqu);
-		var orat = row.closest("tr").find("td:eq(6)").text();
+		var orat = row.closest("tr").find("td:eq(4)").text();
 		$("#orat").val(orat);
-		var ob = row.closest("tr").find("td:eq(7)").text();
+		var ob = row.closest("tr").find("td:eq(5)").text();
 		$("#ob").val(ob);
-		var sr = row.closest("tr").find("td:eq(8)").text();
+		var sr = row.closest("tr").find("td:eq(6)").text();
 		$("#sr").val(sr);
-		var itn = row.closest("tr").find("td:eq(9)").text();
+		var itn = row.closest("tr").find("td:eq(7)").text();
 		$("#itn").val(itn);
 	});
 

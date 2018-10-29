@@ -59,8 +59,6 @@ include '..\db_connect.php';
 				
 					<thead>
 			<tr  id="DESC">
-				<th>Edit</th>
-				<th>Delete</th>
 				<th>ID</th>
 				<th>Customer Name</th>
 				<th>Address</th>
@@ -68,6 +66,8 @@ include '..\db_connect.php';
 				<th>Credit Limit</th>
 				<th>Opening Balance</th>
 				<th>Customer Area</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 
 		</thead>
@@ -80,8 +80,7 @@ include '..\db_connect.php';
 			while ($row=$res->fetch_assoc()) {
 		
 	echo "<tr>";
-	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
-	echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";			
+				
 	echo "<td>{$row["CusId"]}</td>";
 	echo "<td>{$row["CusName"]}</td>";
 	echo "<td>{$row["CusAddress"]}</td>";
@@ -90,6 +89,8 @@ include '..\db_connect.php';
 	echo "<td>{$row["CusOpenBal"]}</td>";
 	echo "<td>{$row["CusAreaName"]}</td>";
 
+	echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["CusId"]}'><i class='fa fa-edit'></i></td>";
+	echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["CusId"]}'><i class='fa fa-trash'></i></td>";
 	echo "</tr>";
 			
 			}
@@ -97,8 +98,6 @@ include '..\db_connect.php';
  	?>
 <tfoot>
 				<tr>
-				<th>Edit</th>
-				<th>Delete</th>
 				<th>ID</th>
 				<th>Customer Name</th>
 				<th>Address</th>
@@ -106,6 +105,8 @@ include '..\db_connect.php';
 				<th>Credit Limit</th>
 				<th>Opening Balance</th>
 				<th>Customer Area</th>
+				<th>Edit</th>
+				<th>Delete</th>
 				
 			</tr>
 </tfoot>
