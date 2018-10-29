@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2018 at 02:20 PM
+-- Generation Time: Oct 24, 2018 at 05:26 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -77,23 +77,23 @@ INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpe
 
 CREATE TABLE `cashpaidtbl` (
   `cashid` int(11) NOT NULL,
-  `cashdate` date NOT NULL,
+  `cashdate` varchar(250) NOT NULL,
   `payercode` int(50) NOT NULL,
   `payername` varchar(250) NOT NULL,
   `remarks` varchar(250) NOT NULL,
   `amountpaid` int(50) NOT NULL,
   `uname` varchar(250) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cashinhand` int(50) NOT NULL DEFAULT '5'
+  `cashinhand` int(50) NOT NULL DEFAULT '5',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashpaidtbl`
 --
 
-INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `timestamp`, `cashinhand`) VALUES
-(1, '2018-09-11', 5, 'Naeem', 'No Remarks', 1800, 'name', '2018-09-11 17:11:59', 5),
-(2, '2018-09-11', 2, 'Amjad hanif', 'yes i have', 600, 'amj', '2018-09-11 17:11:59', 5);
+INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `cashinhand`, `timestamp`) VALUES
+(1, '24/10/2018', 5, 'Naeem', 'No Remarks', 1800, 'name', 5, '2018-09-11 17:11:59'),
+(2, '25/10/2018', 2, 'Amjad hanif', 'yes i have', 700, 'amj', 5, '2018-09-11 17:11:59');
 
 -- --------------------------------------------------------
 
@@ -103,23 +103,23 @@ INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `rema
 
 CREATE TABLE `cashreceivetbl` (
   `cashrid` int(50) NOT NULL,
-  `cashrdate` date NOT NULL,
+  `cashrdate` varchar(250) NOT NULL,
   `receivercode` int(50) NOT NULL,
   `receivername` varchar(250) NOT NULL,
   `remarks` varchar(250) NOT NULL,
   `receiveamount` int(50) NOT NULL,
   `uname` varchar(250) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cashinhandr` int(50) NOT NULL DEFAULT '5'
+  `cashinhandr` int(50) NOT NULL DEFAULT '5',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashreceivetbl`
 --
 
-INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `timestamp`, `cashinhandr`) VALUES
-(1, '2018-09-11', 3, 'Asad', 'ok', 1200, 'abc', '2018-09-11 17:13:52', 5),
-(2, '2018-09-11', 1, 'Rehman', 'wao', 800, 'asd', '2018-09-11 17:13:52', 5);
+INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `cashinhandr`, `timestamp`) VALUES
+(1, '23/10/2018', 3, 'Asad', 'ok', 1200, 'abc', 5, '2018-09-11 17:13:52'),
+(2, '22/10/2018', 1, 'Rehman', 'wao', 800, 'asd', 5, '2018-09-11 17:13:52');
 
 -- --------------------------------------------------------
 
@@ -198,24 +198,23 @@ INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpAccType`) VALUES
 
 CREATE TABLE `gttbl` (
   `gtid` int(50) NOT NULL,
-  `gtdate` date NOT NULL,
+  `gtdate` varchar(250) NOT NULL,
   `drcode` int(50) NOT NULL,
   `drname` varchar(250) NOT NULL,
   `drremarks` varchar(250) NOT NULL,
   `crcode` int(50) NOT NULL,
   `crname` varchar(250) NOT NULL,
   `crremarks` varchar(250) NOT NULL,
-  `cramount` int(50) NOT NULL,
-  `dramount` int(50) NOT NULL
+  `cramount` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gttbl`
 --
 
-INSERT INTO `gttbl` (`gtid`, `gtdate`, `drcode`, `drname`, `drremarks`, `crcode`, `crname`, `crremarks`, `cramount`, `dramount`) VALUES
-(1, '2018-09-11', 1, 'computer', 'no remarks', 1, 'wao', 'wao', 600, 400),
-(2, '2018-09-11', 4, 'ghs', 'sdf', 1, 'safd', 'asdf', 400, 800);
+INSERT INTO `gttbl` (`gtid`, `gtdate`, `drcode`, `drname`, `drremarks`, `crcode`, `crname`, `crremarks`, `cramount`) VALUES
+(1, '22/10/2018', 1, 'computer', 'no remarks', 1, 'wao', 'wao', 6000),
+(2, '23/10/2018', 4, 'ghs', 'No Remarks', 1, 'safd', 'No Remarks', 4000);
 
 -- --------------------------------------------------------
 
@@ -607,7 +606,9 @@ INSERT INTO `tbl_order` (`order_id`, `order_no`, `order_date`, `order_receiver_n
 (32, 20, '13/10/2018', 'Amjad Hanif', '', '10.00', '0.00', '0.00', '0.00', '10.00', '2018-10-13 00:00:00'),
 (33, 21, '13/10/2018', 'Parveen Shakar', 'Lalazar Colony Vehari', '300.00', '0.00', '0.00', '0.00', '300.00', '2018-10-13 00:00:00'),
 (34, 22, '13/10/2018', 'Kamran Ahmed', '', '1045.00', '0.00', '0.00', '0.00', '1045.00', '2018-10-13 00:00:00'),
-(35, 23, '17/10/2018', 'KOt', 'Address', '12.00', '55.00', '6.60', '10.00', '15.40', '2018-10-17 00:00:00');
+(35, 23, '17/10/2018', 'KOt', 'Address', '12.00', '55.00', '6.60', '10.00', '15.40', '2018-10-17 00:00:00'),
+(36, 24, '22/10/2018', 'Ahmed', '', '1025.00', '5.00', '51.25', '500.00', '1473.75', '2018-10-22 00:00:00'),
+(37, 25, '22/10/2018', 'KOt', '', '1010.00', '5.00', '50.50', '50.00', '1009.50', '2018-10-22 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -659,7 +660,11 @@ INSERT INTO `tbl_order_item` (`order_item_id`, `order_id`, `item_name`, `order_i
 (665, 34, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00'),
 (666, 34, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00'),
 (667, 34, 'Keyboard', 'Warehouse 2', '10.00', '5.00', '5.00', '100.00', '1000.00'),
-(669, 35, 'samsung', 'Warehouse 2', '6.00', '5.00', '5.00', '2.00', '12.00');
+(669, 35, 'samsung', 'Warehouse 2', '6.00', '5.00', '5.00', '2.00', '12.00'),
+(670, 36, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00'),
+(671, 36, 'Chair', 'Shop Two', '5.00', '5.00', '5.00', '5.00', '25.00'),
+(673, 37, 'Nadeem', 'Shop Two', '5.00', '6.00', '6.00', '200.00', '1000.00'),
+(674, 37, 'samsung', 'Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00');
 
 -- --------------------------------------------------------
 
@@ -722,9 +727,18 @@ INSERT INTO `tbl_order_item_purchase` (`order_item_id`, `order_id`, `item_name`,
 (784, 42, 'sf', 'Warehouse 2', '5.00', '56.00', '56.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
 (805, 58, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00', '6.00', '12.00', '188.00', '940.00'),
 (806, 58, 'samsung', 'Warehouse 2', '4.00', '5.00', '5.00', '2.00', '8.00', '4.00', '0.08', '1.92', '7.68'),
-(925, 61, 'samsung', 'Shop 5', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '10.00'),
-(926, 61, 'samsung', 'Warehouse 2', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'),
-(927, 61, 'samsung', 'Warehouse 2', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00');
+(939, 61, 'samsung', 'Shop 5', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '10.00'),
+(940, 61, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
+(941, 61, 'samsung', 'Shop Two', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50'),
+(942, 61, 'Keyboard', 'Shop3', '5.00', '5.00', '5.00', '100.00', '500.00', '5.00', '5.00', '95.00', '475.00'),
+(943, 62, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
+(944, 62, 'Chair', 'Warehouse 2', '5.00', '5.00', '5.00', '5.00', '25.00', '5.00', '0.25', '4.75', '23.75'),
+(945, 62, 'Botle', 'Shop4', '5.00', '5.00', '5.00', '2500.00', '12500.00', '5.00', '125.00', '2375.00', '11875.00'),
+(946, 62, 'Khan', 'Shop4', '5.00', '6.00', '6.00', '23.00', '115.00', '5.00', '1.15', '21.85', '109.25'),
+(947, 63, 'Nadeem', 'Warehouse 2', '5.00', '6.00', '6.00', '200.00', '1000.00', '5.00', '10.00', '190.00', '950.00'),
+(948, 63, 'samsung', 'Shop3', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50'),
+(949, 64, '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'),
+(953, 65, 'samsung', 'Warehouse 2', '5.00', '5.00', '5.00', '2.00', '10.00', '5.00', '0.10', '1.90', '9.50');
 
 -- --------------------------------------------------------
 
@@ -768,7 +782,22 @@ INSERT INTO `tbl_order_purchase` (`order_id`, `order_no`, `order_date`, `order_r
 (41, 23, '17/10/2018', 'KOt', '', '10.00', '20.00', '1.10', '14.50', '2018-10-17 00:00:00'),
 (42, 24, '20/10/2018', 'Amjad Hanif', '', '5.00', '25.00', '0.25', '23.75', '2018-10-20 00:00:00'),
 (58, 35, '20/10/2018', 'Amjad Hanif', '', '9.00', '1008.00', '12.08', '947.68', '2018-10-20 00:00:00'),
-(61, 38, '20/10/2018', 'KOt', '', '5.00', '10.00', '0.10', '10.00', '2018-10-20 00:00:00');
+(61, 38, '20/10/2018', 'KOt', '', '20.00', '545.00', '5.45', '518.25', '2018-10-20 00:00:00'),
+(62, 39, '22/10/2018', 'Amjad Hanif', 'Address', '20.00', '12665.00', '126.65', '12031.75', '2018-10-22 00:00:00'),
+(63, 40, '22/10/2018', 'KOt', '', '10.00', '1010.00', '10.10', '959.50', '2018-10-22 00:00:00'),
+(64, 41, '22/10/2018', 'Amjad Hanif', '', '0.00', '0.00', '0.00', '0.00', '2018-10-22 00:00:00'),
+(65, 42, '22/10/2018', 'KOt', '', '5.00', '10.00', '0.10', '9.50', '2018-10-22 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `uniontbl_cp_cr`
+-- (See below for the actual view)
+--
+CREATE TABLE `uniontbl_cp_cr` (
+`AssId` int(50)
+,`AssTitle` varchar(250)
+);
 
 -- --------------------------------------------------------
 
@@ -851,6 +880,15 @@ INSERT INTO `wharehousetbl` (`WarehouseId`, `WarehouseName`) VALUES
 (5, 'Shop4'),
 (6, 'Shop 5'),
 (7, 'Shop 6');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `uniontbl_cp_cr`
+--
+DROP TABLE IF EXISTS `uniontbl_cp_cr`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `uniontbl_cp_cr`  AS  select `assettbl`.`AssId` AS `AssId`,`assettbl`.`AssTitle` AS `AssTitle` from `assettbl` union select `customertbl`.`CusId` AS `CusId`,`customertbl`.`CusName` AS `CusName` from `customertbl` union select `exptbl`.`ExpId` AS `ExpId`,`exptbl`.`ExpTitle` AS `ExpTitle` from `exptbl` union select `liabtbl`.`LiabId` AS `LiabId`,`liabtbl`.`LiabTitle` AS `LiabTitle` from `liabtbl` union select `suptbl`.`SupId` AS `SupId`,`suptbl`.`SupName` AS `SupName` from `suptbl` ;
 
 --
 -- Indexes for dumped tables
@@ -1128,25 +1166,25 @@ ALTER TABLE `suptbl`
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_item`
 --
 ALTER TABLE `tbl_order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=670;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=675;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_item_purchase`
 --
 ALTER TABLE `tbl_order_item_purchase`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=928;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=954;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_purchase`
 --
 ALTER TABLE `tbl_order_purchase`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `uomtbl`

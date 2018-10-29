@@ -1,5 +1,6 @@
 <?php 
 	include "..\db_connect.php";
-	$sql = "delete from purchaseorderdetailtbl where PurAutoId = ".$_POST["id"];
+	$sql = "delete from gttbl where gtid = ".$_POST["id"];
 	$conn->query($sql);
  ?>
+ 

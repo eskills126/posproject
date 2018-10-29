@@ -6,7 +6,7 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
  include('../db_connect.php');
  $output = '';
  $statement = $connect->prepare("
-  SELECT * FROM tbl_order 
+  SELECT * FROM tbl_order_purchase 
   WHERE order_id = :order_id
   LIMIT 1
  ");
@@ -21,7 +21,7 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
   $output .= '
    <table width="100%" border=".5" cellpadding="5" cellspacing="0" >
     <tr>
-     <td colspan="2" align="center" style="font-size:18px"><b>Invoice</b></td>
+     <td colspan="2" align="center" style="font-size:18px"><b>Purchase-Invoice</b></td>
     </tr>
     <tr>
      <td colspan="2">
@@ -52,9 +52,14 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
         <th>Gross Rate</th>
         <th>Gross Amount</th>
 
+        <th>Disc. %</th>
+        <th>Disc.Value</th>
+        <th>Disc.Rate</th>
+        <th>Amount</th>
+        
        </tr> ';
   $statement = $connect->prepare(
-   "SELECT * FROM tbl_order_item 
+   "SELECT * FROM tbl_order_item_purchase 
    WHERE order_id = :order_id"
   );
   $statement->execute(
@@ -77,28 +82,29 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
     <td>'.$sub_row["order_item_prate"].'</td>    
     <td>'.$sub_row["order_item_grate"].'</td>
     <td>'.$sub_row["order_item_gamount"].'</td>
+
+    <td>'.$sub_row["order_item_disc_percent"].'</td>
+    <td>'.$sub_row["order_item_disc_value"].'</td>
+    <td>'.$sub_row["order_item_disc_rate"].'</td>
+    <td>'.$sub_row["order_item_amount"].'</td>
     </tr>';
   }
   $output .= '
   <tr>
-   <td align="right" colspan="7"><b>Total :</b></td>
-   <td align="right"><b>'.$row["order_total_before_discount_freight"].'</b></td>
+   <td align="right" colspan="11"><b>Total Qty:</b></td>
+   <td align="right"><b>'.$row["order_total_qty"].'</b></td>
   </tr>
   <tr>
-   <td colspan="7">Discount %:</td>
-   <td align="right">'.$row["order_total_discount_percentage"].'</td>
+   <td colspan="11">Total G.Amount:</td>
+   <td align="right">'.$row["order_total_before_discount"].'</td>
   </tr>
   <tr>
-   <td colspan="7">Discount Value :</td>
+   <td colspan="11">Total Discount :</td>
    <td align="right">'.$row["order_total_discount_value"].'</td>
   </tr>
   <tr>
-   <td colspan="7">Freight :</td>
-   <td align="right">'.$row["order_total_freight"].'</td>
-  </tr>
-  <tr>
-   <td colspan="7"><b>Total Bill :</b></td>
-   <td align="right">'.$row["order_total_after_discount_freight"].'</td>
+   <td colspan="11">Bill Amount :</td>
+   <td align="right">'.$row["order_total_after_discount"].'</td>
   </tr> ';
 
   $output .= '
@@ -111,7 +117,7 @@ if(isset($_GET["pdf"]) && isset($_GET["id"]))
  }
 
  $dompdf = new Pdf();
-$file_name = 'Invoice-'.$row["order_no"].'.pdf';
+$file_name = 'Purchase_Invoice-'.$row["order_no"].'.pdf';
 $dompdf->loadHtml($output);
 
 $dompdf->setPaper('A4', 'landscape');
