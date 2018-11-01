@@ -46,7 +46,7 @@ require_once 'stimulsoft/helper.php';
 		
 		// Load and show report
 		var report = new Stimulsoft.Report.StiReport();
-		report.loadFile("reports/ChartOfAccount.mrt");
+		report.loadFile("reports/coa.mrt");
 		viewer.report = report;
 		viewer.renderHtml("viewerContent");
 		

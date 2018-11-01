@@ -55,7 +55,6 @@ $rights = $_SESSION['user_role'];
   <input type="hidden" id="rights" value="<?php echo $rights; ?>" name="">
   <!----------------------------------------------------------------->
 
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->
