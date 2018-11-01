@@ -14,8 +14,7 @@ padding: 0 5px 0 0;
 include('navbar.php');
 ?>
 
-<div class="container">
-					
+<div class="container">					
 <form id="frm" action="" method="post">
 		<div class="form-group">
     	<div class="row">
@@ -25,6 +24,18 @@ include('navbar.php');
       	</div>
       </div>
       </div>
+  <!-------------------------Form elements------------------------------------>    
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="customer_id">ID:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="text" id="cid" name="cid" class="form-control" value="" readonly="" required>
+      	</div>
+    	</div>
+		</div>
+
 
 		<div class="form-group">
     	<div class="row">
@@ -52,7 +63,7 @@ include('navbar.php');
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
-        <label for="ccontact">Cotact:</label>
+        <label for="ccontact">Contact:</label>
       	</div>
       	<div class="col-75">
         <input type="text" id="ccontact" name="ccontac" placeholder="Enter Customer's Contact">
@@ -163,7 +174,7 @@ $(document).ready(function(){
 	$("#output").load("Masters_Customers/view.php");
 	$("#cname").focus();
 	$("#save").click(function() {
-		var id=$("#id").val();
+	var id=$("#id").val();
 		//if ($("#cname").val()=="" || $("#copbal").val()=="" || $("#carea").val()=="" )
 		if ($("#cname").val()=="" ){
 			
@@ -190,17 +201,14 @@ $(document).ready(function(){
 			data: $("#frm").serialize(),
 			success:function(d) {
 				$("#output").load("Masters_Customers/view.php");
-		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		//$("#examples").html(d).appendTo("<tr></tr>");
-
+				
 		$("#frm")[0].reset();
 		$("#cname").focus();
-		//$("#cname").val('');
-		
 		$("#id").val("0");
+		
 			}
-
 		});
+
 	}else{
 			$.ajax({
 			url:  "Masters_Customers/update.php",
@@ -215,6 +223,8 @@ $(document).ready(function(){
 			}
 		});
 		}
+	
+
 	});
 	$(document).on("click",".del",function(){
 		var del=$(this);
@@ -235,6 +245,8 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
+		var cid = row.closest("tr").find("td:eq(0)").text();
+			$("#cid").val(cid);
 		var name = row.closest("tr").find("td:eq(1)").text();
 			$("#cname").val(name);
 		var address = row.closest("tr").find("td:eq(2)").text();
@@ -247,6 +259,7 @@ $(document).on("click",".edit",function(){
 		$("#copbal").val(opbal);
 		var area = row.closest("tr").find("td:eq(6)").text();
 		$("#carea").val(area);
+		$("#cname").focus();
 	});
 
 });	
@@ -262,5 +275,21 @@ $(document).on("click",".edit",function(){
     });                
 
 });
+</script>
+<!--------------------This line of code is for max id ----------------------->
+<script>
+	$(document).on('keypress',function(){
+		if($("#id").val() == 0 ){
+			$.ajax({
+			 url:  "Masters_Customers/maxid.php",
+			type:  "post",
+			data: $("#frm").serialize(),
+			success:function(d) {
+			$("#cid").val(d);
+	}
+		});
+
+	}
+	});
 </script>
 <?php include('footer.php'); ?>

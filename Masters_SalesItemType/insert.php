@@ -1,11 +1,12 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+	$stid=$_POST["stid"];
 	$name=$_POST["itname"];
 	
 
 	
-$sql = "INSERT INTO salesproducttypetbl(ProductTypeName) VALUES('{$name}')";
+$sql = "INSERT INTO salesproducttypetbl(ProductTypeId,ProductTypeName) VALUES({$stid},'{$name}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

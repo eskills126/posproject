@@ -1,6 +1,7 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+	$cid =$_POST["cid"]; 
 	$name=$_POST["cname"];
 	$address=$_POST["caddress"];
 	$contact=$_POST["ccontac"];
@@ -8,7 +9,7 @@ include "..\db_connect.php";
 	$copbal=$_POST["copbal"];
 	$carea=$_POST["carea"];
 	
-$sql = "INSERT INTO customertbl(CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES('{$name}','{$address}','{$contact}','{$climit}',{$copbal},'{$carea}')";
+$sql = "INSERT INTO customertbl(CusId,CusName,CusAddress,CusContact,CusCreditLimit,CusOpenBal,CusAreaName) VALUES({$cid},'{$name}','{$address}','{$contact}','{$climit}',{$copbal},'{$carea}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

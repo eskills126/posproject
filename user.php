@@ -11,7 +11,10 @@ padding: 0 5px 0 0;
 </style>
 
 <!--------Code for Session Compare-------->
-<?php session_start();
+<?php 
+//session_start();
+include('navbar.php');
+
 $var=$_SESSION['user_session'];
 $var2=$_SESSION['user_role'];
  ?>
@@ -24,20 +27,6 @@ $var2=$_SESSION['user_role'];
 	}
  ?>
 <!--Code for Login Detail-->
-<?php
-include('header.php'); 
-//session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
-include('navbar.php');
-?>
 
 <div class="container-fluid">
 	<p>
@@ -325,7 +314,3 @@ function validate_email(email){
 --------------------------------------------------->
 
 <?php include('footer.php'); ?>
-<p>
-	<br>
-	</p>
-</div>

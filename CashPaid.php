@@ -58,8 +58,7 @@ include_once("db_connect.php");
         <label for="ino">No:</label>
         </div>
           <div class="col-25"><span class="asterisk_input"></span>
-        <input type="number" class="form-control" id="ino" name="ino" placeholder="Invoice No." value="<?php echo
-         $row['cashid'] + 1;  ?>"  readonly>
+        <input type="number" class="form-control" id="ino" name="ino" placeholder="Invoice No." value="<?php echo $row['cashid'] + 1;  ?>"  readonly>
          <span id="error_id" class="text-danger"></span>
         </div>
         <?php 

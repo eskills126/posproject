@@ -28,7 +28,19 @@ padding: 0 5px 0 0;
       	</div>
       </div>
       </div>
-      
+
+      <!-------------------------------Form elements------------------------------------------->    
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="customer_id">ID:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="text" id="sid" name="sid" class="form-control" value="" readonly="" required>
+      	</div>
+    	</div>
+		</div>
+
 		<div class="form-group">
     	<div class="row">
       	<div class="col-25">
@@ -180,6 +192,8 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
+		var sid = row.closest("tr").find("td:eq(0)").text();
+			$("#sid").val(sid);
 		var name = row.closest("tr").find("td:eq(1)").text();
 			$("#sname").val(name);
 		var address = row.closest("tr").find("td:eq(2)").text();
@@ -188,6 +202,7 @@ $(document).on("click",".edit",function(){
 		$("#scontact").val(contact);
 		var opbal = row.closest("tr").find("td:eq(4)").text();
 		$("#sopbal").val(opbal);
+		$("#sname").focus();
 	});
 
 });	
@@ -203,6 +218,21 @@ $(document).on("click",".edit",function(){
 });
 </script>
 --------------------------------------------->
+<!--------------------This line of code is for max id ----------------------->
+<script>
+	$(document).on('keypress',function(){
+		if($("#id").val() == 0 ){
+			$.ajax({
+			 url:  "Masters_Suppliers/maxid.php",
+			type:  "post",
+			data: $("#frm").serialize(),
+			success:function(d) {
+			$("#sid").val(d);
+	}
+		});
 
+	}
+	});
+</script>
 
 <?php include('footer.php'); ?>

@@ -1,11 +1,12 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+	$wid=$_POST["wid"];
 	$name=$_POST["wname"];
 	
 
 	
-$sql = "INSERT INTO wharehousetbl(WarehouseName) VALUES('{$name}')";
+$sql = "INSERT INTO wharehousetbl(WarehouseId,WarehouseName) VALUES({$wid},'{$name}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

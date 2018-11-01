@@ -1,11 +1,12 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+	$said=$_POST["said"];
 	$name=$_POST["aname"];
 	
 
 	
-$sql = "INSERT INTO salareatbl(SalAreaTitle) VALUES('{$name}')";
+$sql = "INSERT INTO salareatbl(SalAreaId,SalAreaTitle) VALUES({$said},'{$name}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;
