@@ -174,7 +174,7 @@ $rights = $_SESSION['user_role'];
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="js/warehousesrpt.php">Warehouses</a>
 
-        <a class="dropdown-item" href="uom.php">Unit of Measurement</a>
+        <a class="dropdown-item" href="js/uomrpt.php">Unit of Measurement</a>
         <!--dropdown divider-->
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
