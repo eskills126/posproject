@@ -159,10 +159,10 @@ $rights = $_SESSION['user_role'];
         <class="dropdown-item">
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Assets</a>
-        <a class="dropdown-item" href="js/csrpt.php">Customers</a>
-        <a class="dropdown-item" href="#">Liabilities</a>
-        <a class="dropdown-item" href="#">Suppliers</a>
+        <a class="dropdown-item" href="js/AssetRpt.php">Assets</a>
+        <a class="dropdown-item" href="js/customerrpt.php">Customers</a>
+        <a class="dropdown-item" href="js/liabrpt.php">Liabilities</a>
+        <a class="dropdown-item" href="js/supplierrpt.php">Suppliers</a>
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">Sales Items</a>
