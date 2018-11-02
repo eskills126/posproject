@@ -95,7 +95,7 @@ padding: 0 5px 0 0;
         </div>
         <span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="number" id="ob" name="ob" placeholder="Enter Opening Balance"required>
+        <input type="number" id="ob" name="ob" placeholder="Enter Opening Balance"required readonly="" class="form-control">
         </div>
     	</div>
 		</div>
@@ -350,5 +350,14 @@ $(document).on("click",".edit",function(){
 	}
 	});
 </script>
+<script>
+	$("#orat").keyup(function(){
+		var oqu = $("#oqu").val();
+		var orat = $("#orat").val();
+		var result = 0;
+		result = parseFloat(oqu) * parseFloat(orat);
+		$("#ob").val(result);
 
+	});
+</script>
 <?php include('footer.php'); ?>

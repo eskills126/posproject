@@ -16,8 +16,7 @@ $resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($c
 $row = mysqli_fetch_assoc($resultset); 
 $_SESSION['user_role'];
 //----------------- Setting User-------------------
-$_SESSION['user'];
-//$UserName = $_SESSION['user'];
+$_SESSION['user_name']; // first set this session in login.php
 //-------------------------------------------------
 $rights = $_SESSION['user_role'];
 ?>
