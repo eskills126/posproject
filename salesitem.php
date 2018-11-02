@@ -297,6 +297,7 @@ $(document).on("click",".edit",function(){
 			$("#pname").val(name);
 		var uom = row.closest("tr").find("td:eq(2)").text();
 		$("#uom").val(uom);
+		$("#tempuom").val(uom); // match values validating during editing
 		var oqu = row.closest("tr").find("td:eq(3)").text();
 		$("#oqu").val(oqu);
 		var orat = row.closest("tr").find("td:eq(4)").text();
@@ -307,6 +308,8 @@ $(document).on("click",".edit",function(){
 		$("#sr").val(sr);
 		var itn = row.closest("tr").find("td:eq(7)").text();
 		$("#itn").val(itn);
+		$("#tempitem").val(itn); // match values validating during editing
+
 		$("#pname").focus();
 	});
 
