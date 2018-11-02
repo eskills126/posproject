@@ -114,7 +114,8 @@ include('navbar.php');
     	</div>
     	<div class="col-75">
 
-    	<button type="button" class="btn btn-success" id="save" value="Save Detail"><i class="fa fa-database fa-lg" aria-hidden="true"></i>&nbsp Save Detail</button>
+    	<button type="button" class="btn btn-success" id="save" placeholder='save' value="Save Detail"><i class="fa fa-database fa-lg" aria-hidden="true"></i>&nbsp Save Detail</button>
+    
     </div>
 
     	<input type="hidden" id="id" name="id" value="0">
@@ -208,7 +209,6 @@ $(document).ready(function(){
 		
 			}
 		});
-
 	}else{
 			$.ajax({
 			url:  "Masters_Customers/update.php",
@@ -277,6 +277,7 @@ $(document).on("click",".edit",function(){
 });
 </script>
 <!--------------------This line of code is for max id ----------------------->
+
 <script>
 	$(document).on('keypress',function(){
 		if($("#id").val() == 0 ){

@@ -15,6 +15,10 @@ $sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_se
 $resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
 $row = mysqli_fetch_assoc($resultset); 
 $_SESSION['user_role'];
+//----------------- Setting User-------------------
+$_SESSION['user'];
+//$UserName = $_SESSION['user'];
+//-------------------------------------------------
 $rights = $_SESSION['user_role'];
 ?>
     <script type="text/javascript">
