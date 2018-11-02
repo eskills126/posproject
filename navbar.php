@@ -94,9 +94,9 @@ $rights = $_SESSION['user_role'];
         <!--dropdown divider-->
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="warehouse.php">Warehouses</a>
+
+        <a class="dropdown-item" href="uom.php">Unit of Measurement</a>
         <!--dropdown divider-->
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="uom.php">Unit of Measurement</a><!--dropdown divider-->
         <div class="dropdown-divider"></div>
         <a id="admin" class="dropdown-item" href="user.php">Create User</a>
       </div>
@@ -168,9 +168,14 @@ $rights = $_SESSION['user_role'];
         <a class="dropdown-item" href="js/expenserpt.php">Expenses</a>
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Sales Products/Items Types</a>
-        <a class="dropdown-item" href="#">Sales Products/Items Groups</a>
-        <a class="dropdown-item" href="#">Sales Products/Items Groups Types</a>
+        <a class="dropdown-item" href="js/itemtyperpt.php">Sales Products/Items Types</a>
+        <a class="dropdown-item" href="js/itemgrouprpt.php">Sales Products/Items Groups</a>
+        <!--dropdown divider-->
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="js/warehousesrpt.php">Warehouses</a>
+
+        <a class="dropdown-item" href="uom.php">Unit of Measurement</a>
+        <!--dropdown divider-->
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">View Users </a>
