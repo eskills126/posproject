@@ -259,6 +259,8 @@ $(document).on("click",".edit",function(){
 		$("#copbal").val(opbal);
 		var area = row.closest("tr").find("td:eq(6)").text();
 		$("#carea").val(area);
+		$("#temp").val(area); // match values validating during editing
+
 		$("#cname").focus();
 	});
 
