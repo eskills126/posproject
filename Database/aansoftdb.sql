@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2018 at 07:03 AM
+-- Generation Time: Nov 04, 2018 at 07:55 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -638,6 +638,15 @@ INSERT INTO `tbl_order_purchase` (`order_id`, `order_no`, `order_date`, `order_r
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `uniontbl_cp_cr`
+-- (See below for the actual view)
+--
+CREATE TABLE `uniontbl_cp_cr` (
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `uomtbl`
 --
 
@@ -714,6 +723,15 @@ INSERT INTO `wharehousetbl` (`WarehouseId`, `WarehouseName`, `UserName`, `auto_d
 (3005, 'Shop 5', '', '2018-11-04 06:03:06'),
 (3006, 'Shop 6', '', '2018-11-04 06:03:06'),
 (3007, 'Warehouse1', '', '2018-11-04 06:03:06');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `uniontbl_cp_cr`
+--
+DROP TABLE IF EXISTS `uniontbl_cp_cr`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `uniontbl_cp_cr`  AS  select `tum`.`assettbl`.`AssId` AS `AssId`,`tum`.`assettbl`.`AssTitle` AS `AssTitle` from `tum`.`assettbl` union select `tum`.`customertbl`.`CusId` AS `CusId`,`tum`.`customertbl`.`CusName` AS `CusName` from `tum`.`customertbl` union select `tum`.`exptbl`.`ExpId` AS `ExpId`,`tum`.`exptbl`.`ExpTitle` AS `ExpTitle` from `tum`.`exptbl` union select `tum`.`liabtbl`.`LiabId` AS `LiabId`,`tum`.`liabtbl`.`LiabTitle` AS `LiabTitle` from `tum`.`liabtbl` union select `tum`.`suptbl`.`SupId` AS `SupId`,`tum`.`suptbl`.`SupName` AS `SupName` from `tum`.`suptbl` ;
 
 --
 -- Indexes for dumped tables
