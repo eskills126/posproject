@@ -10,16 +10,17 @@ include "..\db_connect.php";
 $db = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
 WHERE SupName LIKE  '%".$searchTerm."%' OR SalAreaTitle LIKE '%".$searchTerm."%'");
 syntax of creating view
-    Create View abc AS
-    SELECT AssTitle FROM assettbl
+  //------------------------------------------  
+    Create View uniontbl_cp_cr AS
+    SELECT AssId,AssTitle FROM assettbl
     UNION
-    SELECT CusName FROM  customertbl
+    SELECT CusId,CusName FROM  customertbl
     UNION
-    SELECT ExpTitle FROM exptbl 
+    SELECT ExpId,ExpTitle FROM exptbl 
     UNION
-    SELECT LiabTitle FROM liabtbl 
+    SELECT LiabId,LiabTitle FROM liabtbl 
     UNION
-    SELECT SupName FROM suptbl
+    SELECT SupId,SupName FROM suptbl
 */
    $searchTerm = $_GET['term'];
 

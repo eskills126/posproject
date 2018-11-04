@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2018 at 07:55 AM
+-- Generation Time: Nov 04, 2018 at 04:13 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -642,6 +642,8 @@ INSERT INTO `tbl_order_purchase` (`order_id`, `order_no`, `order_date`, `order_r
 -- (See below for the actual view)
 --
 CREATE TABLE `uniontbl_cp_cr` (
+`AssId` int(50)
+,`AssTitle` varchar(250)
 );
 
 -- --------------------------------------------------------
@@ -731,7 +733,7 @@ INSERT INTO `wharehousetbl` (`WarehouseId`, `WarehouseName`, `UserName`, `auto_d
 --
 DROP TABLE IF EXISTS `uniontbl_cp_cr`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `uniontbl_cp_cr`  AS  select `tum`.`assettbl`.`AssId` AS `AssId`,`tum`.`assettbl`.`AssTitle` AS `AssTitle` from `tum`.`assettbl` union select `tum`.`customertbl`.`CusId` AS `CusId`,`tum`.`customertbl`.`CusName` AS `CusName` from `tum`.`customertbl` union select `tum`.`exptbl`.`ExpId` AS `ExpId`,`tum`.`exptbl`.`ExpTitle` AS `ExpTitle` from `tum`.`exptbl` union select `tum`.`liabtbl`.`LiabId` AS `LiabId`,`tum`.`liabtbl`.`LiabTitle` AS `LiabTitle` from `tum`.`liabtbl` union select `tum`.`suptbl`.`SupId` AS `SupId`,`tum`.`suptbl`.`SupName` AS `SupName` from `tum`.`suptbl` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `uniontbl_cp_cr`  AS  select `assettbl`.`AssId` AS `AssId`,`assettbl`.`AssTitle` AS `AssTitle` from `assettbl` union select `customertbl`.`CusId` AS `CusId`,`customertbl`.`CusName` AS `CusName` from `customertbl` union select `exptbl`.`ExpId` AS `ExpId`,`exptbl`.`ExpTitle` AS `ExpTitle` from `exptbl` union select `liabtbl`.`LiabId` AS `LiabId`,`liabtbl`.`LiabTitle` AS `LiabTitle` from `liabtbl` union select `suptbl`.`SupId` AS `SupId`,`suptbl`.`SupName` AS `SupName` from `suptbl` ;
 
 --
 -- Indexes for dumped tables
