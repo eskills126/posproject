@@ -178,7 +178,7 @@ $rights = $_SESSION['user_role'];
         <!--dropdown divider-->
         <!--dropdown divider-->
          <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">View Users </a>
+        <a class="dropdown-item" href="js/usersrpt.php">View Users </a>
         </div>
       </li>
 
