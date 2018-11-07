@@ -1,12 +1,13 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
 	$wid=$_POST["wid"];
 	$name=$_POST["wname"];
 	
 
 	
-$sql = "INSERT INTO wharehousetbl(WarehouseId,WarehouseName) VALUES({$wid},'{$name}')";
+$sql = "INSERT INTO wharehousetbl(WarehouseId,WarehouseName,UserName) VALUES({$wid},'{$name}','{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

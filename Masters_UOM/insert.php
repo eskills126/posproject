@@ -1,12 +1,13 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
 	$uid=$_POST["uid"];
 	$name=$_POST["uom"];
 	
 
 	
-$sql = "INSERT INTO uomtbl(UomId,UomName) VALUES({$uid},'{$name}')";
+$sql = "INSERT INTO uomtbl(UomId,UomName,UserName) VALUES({$uid},'{$name}','{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

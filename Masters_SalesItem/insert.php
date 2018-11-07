@@ -1,6 +1,7 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
 	$sid =$_POST["sid"]; 
 	$name=$_POST["pname"];
 	$uom=$_POST["uom"];
@@ -10,7 +11,7 @@ include "..\db_connect.php";
 	$sr=$_POST["sr"];
 	$itn=$_POST["itn"];
 	
-$sql = "INSERT INTO salesitemtbl(ProId,ProName,ProUomName,ProOpenQtyUnit,ProOpenRate,ProOpenBal,ProSalesRate,ProItemGroupName) VALUES({$sid},'{$name}','{$uom}',{$oqu},{$orat},{$ob},{$sr},'{$itn}')";
+$sql = "INSERT INTO salesitemtbl(ProId,ProName,ProUomName,ProOpenQtyUnit,ProOpenRate,ProOpenBal,ProSalesRate,ProItemGroupName,UserName) VALUES({$sid},'{$name}','{$uom}',{$oqu},{$orat},{$ob},{$sr},'{$itn}','{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

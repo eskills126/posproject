@@ -1,12 +1,13 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
 	$eid=$_POST["eid"];
 	$name=$_POST["ename"];
 	$ob=$_POST["ob"];
 
 	
-$sql = "INSERT INTO exptbl(ExpId,ExpTitle,ExpOpenBal) VALUES({$eid},'{$name}',{$ob})";
+$sql = "INSERT INTO exptbl(ExpId,ExpTitle,ExpOpenBal,UserName) VALUES({$eid},'{$name}',{$ob},'{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

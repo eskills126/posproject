@@ -1,12 +1,13 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
 	$stid=$_POST["stid"];
 	$name=$_POST["itname"];
 	
 
 	
-$sql = "INSERT INTO salesproducttypetbl(ProductTypeId,ProductTypeName) VALUES({$stid},'{$name}')";
+$sql = "INSERT INTO salesproducttypetbl(ProductTypeId,ProductTypeName,UserName) VALUES({$stid},'{$name}','{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;
