@@ -307,7 +307,7 @@ $result =preg_replace('/.*-/', '', $edata);
               <td colspan="6" align="center"><h2 style="margin-top:10.5px"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp Create Invoice</h2></td>
             </tr>
             <tr>
-                <td colspan="6">
+                <td colspan="7">
                   <div class="row">
                     <div class="col-md-8">
                       To,<br />
@@ -398,8 +398,17 @@ $result =preg_replace('/.*-/', '', $edata);
   <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
         <td>
   <label><b>Discount Value:</label>
-  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="one" value="0" />  </td>
+  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
+        
+  <!-------------Code for Tax----------------->
+  <td>
+  <label><b>Tax%:</label>
+  <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
         <td>
+  <label><b>Tax Value:</label>
+  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
+        <td>
+  <!-------------------------------->              
   <label><b>Freight:</label>
   <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
   <!----------Hidden for total--------------------->
@@ -411,10 +420,10 @@ $result =preg_replace('/.*-/', '', $edata);
 
 
               <tr>
-                <td colspan="6"></td>
+                <td colspan="7"></td>
               </tr>
               <tr>
-          <td colspan="6" align="center">
+          <td colspan="7" align="center">
            <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
           <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
           <input type="hidden" name="total_item" id="total_item" value="1" />
@@ -890,7 +899,7 @@ if (allowSubmit) {
               <td colspan="6" align="center"><h2 style="margin-top:10.5px">Edit Invoice</h2></td>
             </tr>
             <tr>
-                <td colspan="6">
+                <td colspan="7">
                   <div class="row">
                     <div class="col-md-8">
                       To,<br />
@@ -984,7 +993,17 @@ if (allowSubmit) {
   <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
         <td>
   <label><b>Discount Value:</label>
-  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="one" value="0" />  </td>
+  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
+  <!-------------Code for Tax----------------->
+  <td>
+  <label><b>Tax%:</label>
+  <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
+        <td>
+  <label><b>Tax Value:</label>
+  <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
+        
+  <!-------------------------------->              
+  
         <td>
   <label><b>Freight:</label>
   <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
@@ -999,10 +1018,10 @@ if (allowSubmit) {
     </td>
   </tr>
   <tr>
-                <td colspan="6"></td>
+                <td colspan="7"></td>
               </tr>
               <tr>
-         <td colspan="6" align="center">
+         <td colspan="7" align="center">
          <input type="text" style="width: 100px;" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
           <input type="hidden" name="total_item" id="total_item" value="<?php echo $m; ?>" />
          <input type="hidden" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />

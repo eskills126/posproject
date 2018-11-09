@@ -147,8 +147,6 @@ $(document).ready(function(){
 			data: $("#frm").serialize(),
 			success:function(d) {
 				$("#output").load("Masters_Suppliers/view.php");
-		//$("<tr ></tr>").html(d).insertAfter($("#DESC"));
-		//$("#examples").html(d).appendTo("<tr></tr>");
 		$("#frm")[0].reset();
 		$("#sname").focus();
 		//$("#cname").val('');

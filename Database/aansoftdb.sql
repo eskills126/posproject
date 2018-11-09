@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2018 at 04:13 PM
+-- Generation Time: Nov 07, 2018 at 04:22 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -74,7 +74,7 @@ INSERT INTO `assettbl` (`AssId`, `AssTitle`, `AssAddress`, `AssContact`, `AssOpe
 (10003, 'Commity Tufail', 'Vehari', '', 45700, 0, 1, '1. Asset', '', '2018-11-04 05:51:24'),
 (10004, 'Sheikh Mazhar Commity', 'Vehari', '', 30000, 0, 1, '1. Asset', '', '2018-11-04 05:51:24'),
 (10005, 'Commity Farhan Nazir', 'Vehari', '', -56000, 0, 1, '1. Asset', '', '2018-11-04 05:51:24'),
-(10006, 'Cash Sale', '', '', 59294, 0, 1, '1. Asset', '', '2018-11-04 05:51:24'),
+(10006, 'Cash Sale', 'Muslim Town', '', 59294, 0, 1, '1. Asset', 'Admin', '2018-11-06 14:19:57'),
 (10007, 'Ray Kaleem Ullah', 'Danewal', '', 25395, 0, 1, '1. Asset', '', '2018-11-04 05:51:24'),
 (10008, 'HBL Bank Ltd', 'Ghalla Mandi', '0672343456', 35000, 0, 1, '1. Asset', '', '2018-11-04 05:51:24');
 
@@ -92,19 +92,18 @@ CREATE TABLE `cashpaidtbl` (
   `remarks` varchar(250) NOT NULL,
   `amountpaid` int(50) NOT NULL,
   `uname` varchar(250) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cashinhand` int(50) NOT NULL DEFAULT '5',
   `UserName` varchar(250) NOT NULL,
-  `auto_date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `auto_date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashpaidtbl`
 --
 
-INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `timestamp`, `cashinhand`, `UserName`, `auto_date_time`) VALUES
-(1, '2018-09-11', 5, 'Naeem', 'No Remarks', 1800, 'name', '2018-09-11 17:11:59', 5, '', '0000-00-00 00:00:00'),
-(2, '2018-09-11', 2, 'Amjad hanif', 'yes i have', 600, 'amj', '2018-09-11 17:11:59', 5, '', '0000-00-00 00:00:00');
+INSERT INTO `cashpaidtbl` (`cashid`, `cashdate`, `payercode`, `payername`, `remarks`, `amountpaid`, `uname`, `cashinhand`, `UserName`, `auto_date_time`) VALUES
+(1, '2018-09-11', 5, 'Naeem', 'No Remarks', 1800, 'name', 5, '', '2018-09-11 17:11:59'),
+(2, '2018-09-11', 2, 'Amjad hanif', 'yes i have', 600, 'amj', 5, '', '2018-09-11 17:11:59');
 
 -- --------------------------------------------------------
 
@@ -120,19 +119,18 @@ CREATE TABLE `cashreceivetbl` (
   `remarks` varchar(250) NOT NULL,
   `receiveamount` int(50) NOT NULL,
   `uname` varchar(250) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cashinhandr` int(50) NOT NULL DEFAULT '5',
   `UserName` varchar(250) NOT NULL,
-  `auto_date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `auto_date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashreceivetbl`
 --
 
-INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `timestamp`, `cashinhandr`, `UserName`, `auto_date_time`) VALUES
-(1, '2018-09-11', 3, 'Asad', 'ok', 1200, 'abc', '2018-09-11 17:13:52', 5, '', '0000-00-00 00:00:00'),
-(2, '2018-09-11', 1, 'Rehman', 'wao', 800, 'asd', '2018-09-11 17:13:52', 5, '', '0000-00-00 00:00:00');
+INSERT INTO `cashreceivetbl` (`cashrid`, `cashrdate`, `receivercode`, `receivername`, `remarks`, `receiveamount`, `uname`, `cashinhandr`, `UserName`, `auto_date_time`) VALUES
+(1, '2018-09-11', 3, 'Asad', 'ok', 1200, 'abc', 5, '', '2018-09-11 17:13:52'),
+(2, '2018-09-11', 1, 'Rehman', 'wao', 800, 'asd', 5, '', '2018-09-11 17:13:52');
 
 -- --------------------------------------------------------
 
@@ -189,11 +187,12 @@ INSERT INTO `customertbl` (`CusId`, `CusName`, `CusAddress`, `CusContact`, `CusC
 (40001, 'Cash Sale', '', '', 0, 59294, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
 (40002, 'Ray Kaleem Ullah', 'Danewal', '', 0, 25395, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
 (40003, 'Nabeel Akbar Bandesha', 'Danewal', '', 0, 8410, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
-(40004, 'Tanveer Ahmad', 'Danewal', '', 0, -39525, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
-(40005, 'Rana Asif Traders', 'Laha Market Vehari', '', 0, 39359, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
+(40004, 'Tanveer Ahmad', 'Danewal', '03457687890', 2500, -39525, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-06 14:02:14.837902'),
+(40005, 'Rana Asif Traders', 'Laha Market Vehari', '03136927555', 4500, 39359, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-06 14:00:57.722217'),
 (40006, 'Jamal Ahmed', 'Model Town', '03458978675', 55000, 4500, 'Vehari123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
 (40007, 'Abdul Kalam', 'Vehari', '03008978567', 34000, 800, 'Multan123', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715'),
-(40008, 'Shamshad', 'Islamabad', '08000800', 7800, 3400, 'Islamabad', 1, 2, '1. Asset', '', '2018-11-04 05:50:18.375715');
+(40008, 'Shamshad', 'Islamabad', '08000800', 7800, 3400, 'Islamabad', 1, 2, '1. Asset', 'Admin', '2018-11-06 14:05:10.023590'),
+(40009, 'Naeem Ahmed', 'Lalazar', '090078900', 45, 4, 'Karachi', 1, 2, '1. Asset', 'Admin', '2018-11-06 14:02:53.019015');
 
 -- --------------------------------------------------------
 
@@ -219,7 +218,7 @@ CREATE TABLE `exptbl` (
 INSERT INTO `exptbl` (`ExpId`, `ExpTitle`, `ExpOpenBal`, `ExpSort`, `ExpSortName`, `ExpAddress`, `UserName`, `auto_date_time`) VALUES
 (50001, 'Discount on Sale', 150, 1, '3. Expenses', '', '', '2018-11-04 05:53:57'),
 (50002, 'Entertainment', 0, 1, '3. Expenses', '', '', '2018-11-04 05:53:57'),
-(50003, 'Electricity Bill Shop', 0, 1, '3. Expenses', '', '', '2018-11-04 05:53:57'),
+(50003, 'Electricity Bill Shop', 2000, 1, '3. Expenses', '', 'Admin', '2018-11-07 15:04:37'),
 (50004, 'Mobile Expenses', 200, 1, '3. Expenses', '', '', '2018-11-04 05:53:57'),
 (50005, 'Vehicle Expenses', 65000, 1, '3. Expenses', '', '', '2018-11-04 05:53:57');
 
@@ -278,8 +277,9 @@ CREATE TABLE `liabtbl` (
 INSERT INTO `liabtbl` (`LiabId`, `LiabTitle`, `LiabAddress`, `LiabContact`, `LiabOpenBal`, `LiabSort`, `LiabType`, `LiabSortName`, `UserName`, `auto_date_time`) VALUES
 (30001, 'Dumy1', 'Vehari', '', -1000, 2, 1, '2. Liabilities', '', '2018-11-04 05:54:35'),
 (30002, 'Dumy 2', 'Multan', '', 25000, 2, 1, '2. Liabilities', '', '2018-11-04 05:54:35'),
-(30003, 'Dumy 3', 'Tibba', '', -21000, 2, 1, '2. Liabilities', '', '2018-11-04 05:54:35'),
-(30004, 'Dummy 4', 'Islamabad', '030012345678', 25000, 2, 1, '2. Liabilities', '', '2018-11-04 05:54:35');
+(30003, 'Dumy 3', 'Tibba', '03215265478', -21000, 2, 1, '2. Liabilities', 'Admin', '2018-11-07 15:02:13'),
+(30004, 'Dummy 4', 'Islamabad', '030012345678', 25000, 2, 1, '2. Liabilities', '', '2018-11-04 05:54:35'),
+(30005, 'Dummy 5', 'Bwp', '03116585254', 4500, 2, 1, '2. Liabilities', 'Admin', '2018-11-07 15:02:43');
 
 -- --------------------------------------------------------
 
@@ -307,11 +307,12 @@ INSERT INTO `salareatbl` (`SalAreaId`, `SalAreaTitle`, `UserName`, `auto_date_ti
 (6, 'Peshawar', '', '2018-11-04 05:58:24'),
 (15, 'Red', '', '2018-11-04 05:58:24'),
 (16, 'Blue', '', '2018-11-04 05:58:24'),
-(17, 'Green', '', '2018-11-04 05:58:24'),
+(17, 'Green color', 'Admin', '2018-11-07 15:06:46'),
 (18, 'Yellow and Green', '', '2018-11-04 05:58:24'),
 (19, 'Sky Blue', '', '2018-11-04 05:58:24'),
 (20, 'Lala Moosa', '', '2018-11-04 05:58:24'),
-(21, 'Chakwal City', '', '2018-11-04 05:58:24');
+(21, 'Chakwal City', '', '2018-11-04 05:58:24'),
+(22, 'Liaqatpur', 'Admin', '2018-11-07 15:07:28');
 
 -- --------------------------------------------------------
 
@@ -335,7 +336,8 @@ INSERT INTO `salesitemgrouptbl` (`ProGroupId`, `ProGroupTitle`, `UserName`, `aut
 (2002, 'Group Three', '', '2018-11-04 05:58:49'),
 (2003, 'Building Material', '', '2018-11-04 05:58:49'),
 (2004, 'Sanitary Material', '', '2018-11-04 05:58:49'),
-(2005, 'Safe Zone', '', '2018-11-04 05:58:49');
+(2005, 'Safe zone', 'Admin', '2018-11-07 15:12:27'),
+(2006, 'Dummy', 'Admin', '2018-11-07 15:14:15');
 
 -- --------------------------------------------------------
 
@@ -370,7 +372,8 @@ INSERT INTO `salesitemtbl` (`ProId`, `ProName`, `ProUomName`, `ProOpenQtyUnit`, 
 (80002, 'Maple Leaf Cement', 'Bag', 150, 475, 71250, 525, 'Building Material', NULL, 3, 1, '4. Revenue', '', '', '2018-11-04 05:59:15'),
 (80003, 'M Pipe 25mm', 'CM', 5000, 125, 625000, 175, 'Sanitary Material', NULL, 3, 1, '4. Revenue', '', '', '2018-11-04 05:59:15'),
 (80005, 'Laptop HP', 'Gb', 5, 20000, 100000, 22000, 'Group Three', NULL, 3, 1, '4. Revenue', '', '', '2018-11-04 05:59:15'),
-(80006, 'Laptop DELL', 'Gb', 2500, 2, 5000, 25, 'Group Three', NULL, 3, 1, '4. Revenue', '', '', '2018-11-04 05:59:15');
+(80006, 'Laptop DELL', 'Gb', 2500, 22, 55000, 25, 'Group Three', NULL, 3, 1, '4. Revenue', '', 'Admin', '2018-11-06 14:12:31'),
+(80007, 'Mouse', 'Gb', 4, 120, 480, 140, 'Group Three', NULL, 3, 1, '4. Revenue', '', 'Admin', '2018-11-06 14:13:28');
 
 -- --------------------------------------------------------
 
@@ -392,7 +395,8 @@ CREATE TABLE `salesproducttypetbl` (
 INSERT INTO `salesproducttypetbl` (`ProductTypeId`, `ProductTypeName`, `UserName`, `auto_date_time`) VALUES
 (1001, 'Old Item Name', '', '2018-11-04 05:59:37'),
 (1002, 'Desktop Version', '', '2018-11-04 05:59:37'),
-(1003, 'Online system', '', '2018-11-04 05:59:37');
+(1003, 'Online System', 'Admin', '2018-11-07 15:09:25'),
+(1004, 'Dummy 1', 'Admin', '2018-11-07 15:10:19');
 
 -- --------------------------------------------------------
 
@@ -421,8 +425,9 @@ INSERT INTO `suptbl` (`SupId`, `SupName`, `SupAddress`, `SupContact`, `SupOpenBa
 (20001, 'Pioneer Cement ', 'Multan', '', 1366215, 2, 1, '2. Liabilities', '', '2018-11-04 05:59:56'),
 (20002, 'Maqsood Ahmad', 'Vehari', '', 280441, 2, 1, '2. Liabilities', '', '2018-11-04 05:59:56'),
 (20003, 'Arshad Malik', 'Multan', '', -350425, 2, 1, '2. Liabilities', '', '2018-11-04 05:59:56'),
-(20004, 'Sadiq Traders ', 'Multan', '', -182005, 2, 1, '2. Liabilities', '', '2018-11-04 05:59:56'),
-(20005, 'Khalid & Co', 'Vehari', '03134565678', 45000, 2, 1, '2. Liabilities', '', '2018-11-04 05:59:56');
+(20004, 'Sadiq Traders ', 'Multan', '0313000000', -182005, 2, 1, '2. Liabilities', 'Admin', '2018-11-06 14:09:41'),
+(20005, 'Khalid & Co', 'Vehari', '03134565678', 45000, 2, 1, '2. Liabilities', '', '2018-11-04 05:59:56'),
+(20006, 'Jabbar and co', 'Burewala', '03338767567', 8900, 2, 1, '2. Liabilities', 'Admin', '2018-11-06 14:10:20');
 
 -- --------------------------------------------------------
 
@@ -670,7 +675,8 @@ INSERT INTO `uomtbl` (`UomId`, `UomName`, `UserName`, `auto_date_time`) VALUES
 (4004, 'Liters', '', '2018-11-04 06:02:25'),
 (4005, 'CM', '', '2018-11-04 06:02:25'),
 (4006, 'Bag', '', '2018-11-04 06:02:25'),
-(4007, 'Pieces', '', '2018-11-04 06:02:25');
+(4007, 'Pieces', 'Admin', '2018-11-07 15:18:05'),
+(4008, 'Items', 'Admin', '2018-11-07 15:18:26');
 
 -- --------------------------------------------------------
 
@@ -721,10 +727,11 @@ INSERT INTO `wharehousetbl` (`WarehouseId`, `WarehouseName`, `UserName`, `auto_d
 (3001, 'Warehouse 2', '', '2018-11-04 06:03:06'),
 (3002, 'Shop Two', '', '2018-11-04 06:03:06'),
 (3003, 'Shop3', '', '2018-11-04 06:03:06'),
-(3004, 'Shop4', '', '2018-11-04 06:03:06'),
+(3004, 'Shop 4', 'Admin', '2018-11-07 15:15:57'),
 (3005, 'Shop 5', '', '2018-11-04 06:03:06'),
 (3006, 'Shop 6', '', '2018-11-04 06:03:06'),
-(3007, 'Warehouse1', '', '2018-11-04 06:03:06');
+(3007, 'Warehouse1', '', '2018-11-04 06:03:06'),
+(3008, 'Warehouse 3', 'Admin', '2018-11-07 15:16:18');
 
 -- --------------------------------------------------------
 
@@ -903,7 +910,7 @@ ALTER TABLE `companytbl`
 -- AUTO_INCREMENT for table `customertbl`
 --
 ALTER TABLE `customertbl`
-  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40009;
+  MODIFY `CusId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40010;
 
 --
 -- AUTO_INCREMENT for table `exptbl`
@@ -915,37 +922,37 @@ ALTER TABLE `exptbl`
 -- AUTO_INCREMENT for table `liabtbl`
 --
 ALTER TABLE `liabtbl`
-  MODIFY `LiabId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30005;
+  MODIFY `LiabId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30006;
 
 --
 -- AUTO_INCREMENT for table `salareatbl`
 --
 ALTER TABLE `salareatbl`
-  MODIFY `SalAreaId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `SalAreaId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `salesitemgrouptbl`
 --
 ALTER TABLE `salesitemgrouptbl`
-  MODIFY `ProGroupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2006;
+  MODIFY `ProGroupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2007;
 
 --
 -- AUTO_INCREMENT for table `salesitemtbl`
 --
 ALTER TABLE `salesitemtbl`
-  MODIFY `ProId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80007;
+  MODIFY `ProId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80008;
 
 --
 -- AUTO_INCREMENT for table `salesproducttypetbl`
 --
 ALTER TABLE `salesproducttypetbl`
-  MODIFY `ProductTypeId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1004;
+  MODIFY `ProductTypeId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1005;
 
 --
 -- AUTO_INCREMENT for table `suptbl`
 --
 ALTER TABLE `suptbl`
-  MODIFY `SupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20006;
+  MODIFY `SupId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20007;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
@@ -975,7 +982,7 @@ ALTER TABLE `tbl_order_purchase`
 -- AUTO_INCREMENT for table `uomtbl`
 --
 ALTER TABLE `uomtbl`
-  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4008;
+  MODIFY `UomId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4009;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -987,7 +994,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wharehousetbl`
 --
 ALTER TABLE `wharehousetbl`
-  MODIFY `WarehouseId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3008;
+  MODIFY `WarehouseId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3009;
 
 --
 -- Constraints for dumped tables

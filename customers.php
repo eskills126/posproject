@@ -216,7 +216,7 @@ $(document).ready(function(){
 			data: $("#frm").serialize(),
 			success:function(d) {
 			
-		//$("#output").load("Masters_Customers/view.php");
+		$("#output").load("Masters_Customers/view.php");
 		$("#frm")[0].reset();
 		$("#cname").focus();
 		$("#id").val("0");
