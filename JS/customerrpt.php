@@ -1,5 +1,5 @@
 <?php
-require_once 'stimulsoft/helper.php';
+require_once 'stimulsoft/cshelper.php';
 
 ?>
 
@@ -45,12 +45,23 @@ require_once 'stimulsoft/helper.php';
 			<?php StiHelper::createHandler(); ?>
 		}
 		
+
 		// Load and show report
 		var report = new Stimulsoft.Report.StiReport();
 		report.loadFile("reports/customersrpt.mrt");
 		viewer.report = report;
 		viewer.renderHtml("viewerContent");
-		
+	
+// Create the report viewer with default options
+//var viewer = new Stimulsoft.Viewer.StiViewer();
+// Create a new report instance
+//var report = new Stimulsoft.Report.StiReport();
+// Load report from url
+//report.loadFile("reports/customersrpt.mrt");
+//report.dictionary.variables.getBycusid("var1").valueObject = 40001;
+// Assign report to the viewer, the report will be built automatically after rendering the viewer
+//viewer.report = report;
+//viewer.renderHtml("viewerContent");
 	</script>
 	</head>
 <body>
