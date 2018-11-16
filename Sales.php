@@ -35,22 +35,22 @@ $result =preg_replace('/.*-/', '', $edata);
     $order_total_after_discount_freight = 0;
     $statement = $connect->prepare("
       INSERT INTO tbl_order 
-  (order_no, order_date, order_receiver_name, order_receiver_remarks, order_total_before_discount_freight, order_total_discount_percentage, order_total_discount_value, order_total_freight, order_total_after_discount_freight,order_datetime)
-        VALUES (:order_no, :order_date, :order_receiver_name, :order_receiver_remarks, :order_total_before_discount_freight, :order_total_discount_percentage, :order_total_discount_value, :order_total_freight, :order_total_after_discount_freight, :order_datetime)
+  (order_no, order_date, order_receiver_name,order_receiver_id, order_receiver_remarks, order_total_before_discount_freight, order_total_discount_percentage, order_total_discount_value, order_total_freight, order_total_after_discount_freight)
+        VALUES (:order_no, :order_date, :order_receiver_name,:order_receiver_id, :order_receiver_remarks, :order_total_before_discount_freight, :order_total_discount_percentage, :order_total_discount_value, :order_total_freight, :order_total_after_discount_freight)
     ");
     $statement->execute(
       array(
       ':order_no'                             =>  trim($_POST["order_no"]),
       ':order_date'                           =>  trim($_POST["order_date"]),
       //':order_receiver_name'                   =>  trim($_POST["order_receiver_name"]),
-      ':order_receiver_name'                  =>  trim($result), 
+      ':order_receiver_name'                  =>  trim($result),
+      ':order_receiver_id'                  =>  trim($_POST["order_receiver_id"]),       
       ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
       ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
       ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
       ':order_total_discount_value'           =>  $order_total_discount_value,
       ':order_total_freight'                  =>  $order_total_freight,
-      ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight,
-      ':order_datetime'                       =>  date("Y-m-d")
+      ':order_total_after_discount_freight'   =>  $order_total_after_discount_freight
       )
     );
 
@@ -70,8 +70,8 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 
         $statement = $connect->prepare("
           INSERT INTO tbl_order_item 
-          (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity, order_item_prate, order_item_grate, order_item_gamount)
-          VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
+          (order_id, item_name,item_id, order_item_whname,order_item_whid, order_item_quantity, order_item_squantity, order_item_prate, order_item_grate, order_item_gamount)
+          VALUES (:order_id, :item_name, :item_id, :order_item_whname, :order_item_whid, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
         ");
 
         $statement->execute(
@@ -80,7 +80,13 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
        //   ':item_name'               =>  trim($_POST["item_name"][$count]),
        //   ':order_item_whname'              =>  trim($_POST["order_item_whname"][$count]),
             ':item_name'                =>  trim($item_name[$count]),
+            
+            ':item_id'                =>  trim($_POST["item_id"][$count]),
+            
             ':order_item_whname'        =>  trim($wh_name[$count]),
+
+            ':order_item_whid'        =>  trim($_POST["order_item_whid"][$count]),
+            
             ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
             ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
             ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
@@ -307,12 +313,13 @@ $result =preg_replace('/.*-/', '', $edata);
               <td colspan="6" align="center"><h2 style="margin-top:10.5px"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp Create Invoice</h2></td>
             </tr>
             <tr>
-                <td colspan="7">
+                <td colspan="6">
                   <div class="row">
                     <div class="col-md-8">
                       To,<br />
                         <b>RECEIVER (BILL TO)</b><br />
                         <input type="text" name="order_receiver_name" id="order_receiver_name" class="form-control input-sm" placeholder="Enter Receiver Name" />
+                        <input type="text"  name="order_receiver_id" id="order_receiver_id" class="form-control input-sm" readonly="" />
                         <b>Remarks</b><br />
                         <input type="text" name="order_receiver_remarks" id="order_receiver_remarks" class="form-control" placeholder="Enter Billing Address">
                     </div>
@@ -367,9 +374,13 @@ $result =preg_replace('/.*-/', '', $edata);
              <tr>
     <td><span id="sr_no">1</span></td>
     <!----------Item Name------------->
-    <td><input type="text" name="item_name[]" id="item_name1" class="form-control input-sm"  autocomplete="on" /></td>
+    <td><input type="text" name="item_name[]" id="item_name1" class="form-control input-sm"  autocomplete="on" />
+      <input  name="item_id[]" id="item_id1" class="form-control input-sm"  autocomplete="on" readonly="" />
+    </td>
     <!----------Warehouse Name------------->
-  <td><input type="text" name="order_item_whname[]" id="order_item_whname1" data-srno="1" class="form-control input-sm order_item_whname" /></td>
+  <td><input type="text" name="order_item_whname[]" id="order_item_whname1" data-srno="1" class="form-control input-sm" autocomplete="on" />
+      <input name="order_item_whid[]" id="order_item_whid1" data-srno="1" class="form-control input-sm" autocomplete="on" readonly="" />
+  </td>
   <!----------Quantity------------->
   <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
   <!---------Stock Quantity-------------->
@@ -413,17 +424,17 @@ $result =preg_replace('/.*-/', '', $edata);
   <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
   <!----------Hidden for total--------------------->
   
-    <td><b>Total</b></td>
-        <td><b><span id="final_total_amt"></span></b></td>
+    <td><b>Total</b>
+        <b><span id="final_total_amt"></span></b></td>
       
       </tr>
 
 
               <tr>
-                <td colspan="7"></td>
+                <td colspan="6"></td>
               </tr>
               <tr>
-          <td colspan="7" align="center">
+          <td colspan="6" align="center">
            <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
           <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
           <input type="hidden" name="total_item" id="total_item" value="1" />
@@ -455,9 +466,9 @@ a.push(count);
   html_code += '<tr id="row_id_'+count+'">';
   html_code += '<td><span id="sr_no">'+count+'</span></td>';
           
-  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
+  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text"  name="item_id[]" id="item_id'+count+'" class="form-control input-sm" readonly/>  </td>';
           //--------Warehouse Name added-------------------------
-  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /></td>';
+  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text"  name="order_item_whid[]" id="order_item_whid'+count+'" class="form-control input-sm" readonly/></td>';
           //-------- Quantity------------------------------------
   html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
           //-------- Stock Quantity-----------------------------
@@ -1708,6 +1719,74 @@ $(document).on('keypress',function(){
         });
       });
     });
+  }); 
+});
+</script>
+<!---------------Code for updating Item id dynamically------------->
+<script>
+$(document).on('keypress',function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#item_name' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_sales/itemid_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#item_id"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+</script>
+<!---------------Code for updating warehouse id dynamically------------->
+<script>
+$(document).on('keypress',function(){
+  $(function() {
+//----- push numbers in dummy array----------
+  var dummy = [];
+  for (var i = 0; i < 500; i++) {
+    dummy.push(i);
+    }
+ //----------------------------------------   
+  $.each(dummy, function(i, v) { // New scope for i and v
+     $('#order_item_whname' + i).keyup(function() {
+                  //alert(i);
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_sales/whid_dynamics.php',
+          data:{warehouse_name:itemcode},
+           success:function(data){
+              $("#order_item_whid"+ i).val(data);
+            }
+        });
+      });
+    });
+  }); 
+});
+</script>
+<!---------------Code for updating Receiver Name id dynamically------------->
+<script>
+     $('#order_receiver_name').keyup(function() {
+      var itemcode = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: 'Transaction_sales/receiverid_dynamics.php',
+          data:{item_name:itemcode},
+           success:function(data){
+              $("#order_receiver_id").val(data);
+            }
   }); 
 });
 </script>

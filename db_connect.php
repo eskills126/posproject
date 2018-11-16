@@ -2,7 +2,7 @@
 /* Database connection start */
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "addpakistan";
 $dbname = "aansoftdb";
 $conn = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed: " . mysqli_connect_error());
 if (mysqli_connect_errno()) {
@@ -13,5 +13,5 @@ if (mysqli_connect_errno()) {
 ?>
 <?php 
 // PDO Code for /Transaction_Purchases/insert.php
-$connect = new PDO("mysql:host=localhost;dbname=aansoftdb", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=aansoftdb", "root", "addpakistan");
  ?>
