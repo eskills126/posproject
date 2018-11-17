@@ -188,7 +188,7 @@ $(inputs).keypress(function(e){
 <script>
 $(document).ready(function(){
   $("#output").load("Transaction_CashPaid/view.php");
-  $("#acode").focus();
+  $("#pdate").focus();
   $("#save").click(function() {
     var id=$("#id").val();
     
@@ -199,10 +199,6 @@ $(document).ready(function(){
     }else if($("#adetail").val()=="" ){
       alert("Please Add Payer Name ");
       $("#adetail").focus();
-    
-    }else if($("#remarks").val()=="" ){
-      alert("Please Add Remarks ");
-      $("#remarks").focus();
     
     }else if($("#amount").val()== 0 ){
       alert("Please Add Amount ");
@@ -219,7 +215,7 @@ $(document).ready(function(){
     //$("#examples").html(d).appendTo("<tr></tr>");
 
     $("#frm")[0].reset();
-    $("#acode").focus();
+    $("#pdate").focus();
     //$("#cname").val('');
     
     $("#id").val("0");
@@ -235,7 +231,7 @@ $(document).ready(function(){
       
     $("#output").load("Transaction_CashPaid/view.php");
     $("#frm")[0].reset();
-    $("#acode").focus();
+    $("#pdate").focus();
     $("#id").val("0");
       }
     });
