@@ -375,11 +375,11 @@ $result =preg_replace('/.*-/', '', $edata);
     <td><span id="sr_no">1</span></td>
     <!----------Item Name------------->
     <td><input type="text" name="item_name[]" id="item_name1" class="form-control input-sm"  autocomplete="on" />
-      <input  name="item_id[]" style="height: 0.5px;" id="item_id1" class="form-control input-sm"  autocomplete="on" readonly="" />
+      <input  name="item_id[]" style="height: 0px; width: 0px; border: none;" id="item_id1" autocomplete="on" readonly="" />
     </td>
     <!----------Warehouse Name------------->
   <td><input type="text" name="order_item_whname[]" id="order_item_whname1" data-srno="1" class="form-control input-sm" autocomplete="on" />
-      <input name="order_item_whid[]" style="height: 0.5px;" id="order_item_whid1" data-srno="1" class="form-control input-sm" autocomplete="on" readonly="" />
+      <input name="order_item_whid[]" style="height: 0px; width: 0px; border: none;" id="order_item_whid1" data-srno="1"  autocomplete="on" readonly="" />
   </td>
   <!----------Quantity------------->
   <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
@@ -466,9 +466,9 @@ a.push(count);
   html_code += '<tr id="row_id_'+count+'">';
   html_code += '<td><span id="sr_no">'+count+'</span></td>';
           
-  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0.5px;" name="item_id[]" id="item_id'+count+'" class="form-control input-sm" readonly/>  </td>';
+  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0px; width: 0px; border: none;" name="item_id[]" id="item_id'+count+'"  readonly/>  </td>';
           //--------Warehouse Name added-------------------------
-  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0.5px;" name="order_item_whid[]" id="order_item_whid'+count+'" class="form-control input-sm" readonly/></td>';
+  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0px; width: 0px; border: none;" name="order_item_whid[]" id="order_item_whid'+count+'"  readonly/></td>';
           //-------- Quantity------------------------------------
   html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
           //-------- Stock Quantity-----------------------------
@@ -968,12 +968,12 @@ if (allowSubmit) {
   <!----------Item Name------------->
   <td><input type="text" name="item_name[]" id="item_name<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $sub_row["item_name"]; ?>" />
     
-    <input  name="item_id[]" style="height: 0.5px;" id="item_id<?php echo $m; ?>" class="form-control input-sm"  autocomplete="on" readonly="" value="<?php echo $sub_row["item_id"]; ?>"/>
+    <input  name="item_id[]" style="height: 0px; width: 0px; border: none;" id="item_id<?php echo $m; ?>"  autocomplete="on" readonly="" value="<?php echo $sub_row["item_id"]; ?>"/>
   </td>
   <!----------Warehouse Name------------->
   <td><input type="text" name="order_item_whname[]" id="order_item_whname<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $sub_row["order_item_whname"]; ?>" />
 
-    <input name="order_item_whid[]" style="height: 0.5px;" id="order_item_whid<?php echo $m; ?>" data-srno="1" class="form-control input-sm" autocomplete="on" readonly="" value="<?php echo $sub_row["order_item_whid"]; ?>"/>
+    <input name="order_item_whid[]" style="height: 0px; width: 0px; border: none;" id="order_item_whid<?php echo $m; ?>" data-srno="1"  autocomplete="on" readonly="" value="<?php echo $sub_row["order_item_whid"]; ?>"/>
   </td>
   <!----------Quantity------------------->
   <td><input type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $sub_row["order_item_quantity"]; ?>"/></td>
@@ -1070,9 +1070,9 @@ a.push(count);
           html_code += '<tr id="row_id_'+count+'">';
           html_code += '<td><span id="sr_no">'+count+'</span></td>';
   //----------Item Name-------------------        
-  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0.5px;" name="item_id[]" id="item_id'+count+'" class="form-control input-sm" readonly/></td>';
+  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0px; width: 0px; border: none;" name="item_id[]" id="item_id'+count+'"  readonly/></td>';
   //----------Warehouse Name-------------------
-  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0.5px;" name="order_item_whid[]" id="order_item_whid'+count+'" class="form-control input-sm" readonly/></td>';
+  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0px; width: 0px; border: none;" name="order_item_whid[]" id="order_item_whid'+count+'" readonly/></td>';
   //----------Quantity-------------------
   html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
   //----------Stock Quanity-------------------
