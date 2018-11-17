@@ -1,13 +1,12 @@
 <?php
-require_once 'stimulsoft/cshelper.php';
-
+require_once 'stimulsoft/helper.php';
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	
+	<title>Stimulsoft Reports.PHP - JS Report Viewer</title>
 
 	<!-- Report Office2013 style -->
 	<link href="css/stimulsoft.viewer.office2013.whiteteal.css" rel="stylesheet">
@@ -16,12 +15,16 @@ require_once 'stimulsoft/cshelper.php';
 	<script src="scripts/stimulsoft.reports.js" type="text/javascript"></script>
 	<script src="scripts/stimulsoft.viewer.js" type="text/javascript"></script>
 	
-	<?php StiHelper::initialize(); ?>
+	<?php 
+		$options = StiHelper::createOptions();
+		$options->handler = "handler.php";
+		$options->timeout = 30;
+		StiHelper::initialize($options);
+	?>
 	<script type="text/javascript">
 		var options = new Stimulsoft.Viewer.StiViewerOptions();
 		options.appearance.fullScreenMode = true;
 		options.toolbar.showSendEmailButton = true;
-		
 		
 		var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 		
@@ -30,11 +33,13 @@ require_once 'stimulsoft/cshelper.php';
 			<?php StiHelper::createHandler(); ?>
 		}
 		
+		// Manage export settings on the server side
 		viewer.onBeginExportReport = function (args) {
+			<?php //StiHelper::createHandler(); ?>
 			//args.fileName = "MyReportName";
 		}
 		
-		// Send exported report to server side
+		// Process exported report file on the server side
 		/*viewer.onEndExportReport = function (event) {
 			event.preventDefault = true; // Prevent client default event handler (save the exported report as a file)
 			<?php StiHelper::createHandler(); ?>
@@ -45,26 +50,17 @@ require_once 'stimulsoft/cshelper.php';
 			<?php StiHelper::createHandler(); ?>
 		}
 		
-
 		// Load and show report
 		var report = new Stimulsoft.Report.StiReport();
-		report.loadFile("reports/customersrpt.mrt");
+		report.loadFile("reports/customers.mrt");
 		viewer.report = report;
-		viewer.renderHtml("viewerContent");
-	
-// Create the report viewer with default options
-//var viewer = new Stimulsoft.Viewer.StiViewer();
-// Create a new report instance
-//var report = new Stimulsoft.Report.StiReport();
-// Load report from url
-//report.loadFile("reports/customersrpt.mrt");
-//report.dictionary.variables.getBycusid("var1").valueObject = 40001;
-// Assign report to the viewer, the report will be built automatically after rendering the viewer
-//viewer.report = report;
-//viewer.renderHtml("viewerContent");
+		
+		function onLoad() {
+			viewer.renderHtml("viewerContent");
+		}
 	</script>
 	</head>
-<body>
+<body onload="onLoad();">
 	<div id="viewerContent"></div>
 </body>
 </html>
