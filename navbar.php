@@ -192,7 +192,7 @@ $rights = $_SESSION['user_role'];
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
         <!-- Dropdown Items -->
-        <a class="dropdown-item" href="#">Cash Book</a>
+        <a class="dropdown-item" href="js/cashbookrpt.php">Cash Book</a>
         <a class="dropdown-item" href="#">Cash Received Transaction</a>
         <a class="dropdown-item" href="#">Cash Paid Transaction</a>
         <!--dropdown divider-->

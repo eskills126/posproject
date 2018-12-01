@@ -81,17 +81,14 @@ class StiMySqlAdapter {
 	
 	private function parseType($meta) {
 		switch ($meta->type) {
-			// integer
+			// number
 			case 1:
 			case 2:
 			case 3:
-			case 8:
-			case 9:
-				return 'int';
-			
-			// number (decimal)
 			case 4:
 			case 5:
+			case 8:
+			case 9:
 			case 16:
 			case 246:
 				return 'number';
@@ -102,7 +99,8 @@ class StiMySqlAdapter {
 			case 11:
 			case 12:
 			case 13:
-				return 'datetime';
+				return 'string';
+				//return 'datetime';
 			
 			// array, string
 			case 249:
@@ -115,7 +113,7 @@ class StiMySqlAdapter {
 				return 'string';
 		}
 		
-		// base64 array for unknown
+		// array for unknown
 		return 'array';
 	}
 	
@@ -136,16 +134,14 @@ class StiMySqlAdapter {
 			$result->rows = array();
 			
 			while ($meta = $query->fetch_field()) {
-				$result->columns[] = $meta->name;
 				$result->types[] = $this->parseType($meta);
 			}
 			
 			if ($query->num_rows > 0) {
-				$isColumnsEmpty = count($result->columns) == 0;
 				while ($rowItem = $query->fetch_assoc()) {
 					$row = array();
 					foreach ($rowItem as $key => $value) {
-						if ($isColumnsEmpty && count($result->columns) < count($rowItem)) $result->columns[] = $key;
+						if (count($result->columns) < count($rowItem)) $result->columns[] = $key;
 						$type = $result->types[count($row)];
 						$row[] = ($type == 'array') ? base64_encode($value) : $value;
 					}
