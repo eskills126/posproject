@@ -1,11 +1,13 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
+	$sgid=$_POST["sgid"];
 	$name=$_POST["igname"];
 	
 
 	
-$sql = "INSERT INTO salesitemgrouptbl(ProGroupTitle) VALUES('{$name}')";
+$sql = "INSERT INTO salesitemgrouptbl(ProGroupId,ProGroupTitle,UserName) VALUES({$sgid},'{$name}','{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

@@ -11,17 +11,6 @@ padding: 0 5px 0 0;
 </style>
 <!--Code for Login Detail-->
 <?php
-include('header.php'); 
-session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
 include('navbar.php');
 ?>
 
@@ -52,6 +41,17 @@ include('navbar.php');
 					
 <form id="frm" action="" method="post">
 
+<!-------------------------Form elements------------------------------------>    
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="customer_id">ID:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="text" id="eid" name="eid" class="form-control" value="" readonly="" required>
+      	</div>
+    	</div>
+		</div>
 
 		<div class="form-group">
     	<div class="row">
@@ -185,30 +185,32 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
+		var eid = row.closest("tr").find("td:eq(0)").text();
+			$("#eid").val(eid);
 		var name = row.closest("tr").find("td:eq(1)").text();
 			$("#ename").val(name);
 		var opbal = row.closest("tr").find("td:eq(2)").text();
 		$("#ob").val(opbal);
+		$("#ename").focus();
 	});
 
 });	
 </script>
-<!---------Code for AutoComplete Area----------
+<!--------------------This line of code is for max id ----------------------->
 <script>
-	 $(function() {
-    
-     $("#carea").autocomplete({
-        source: "Masters_Customers/autocomplete_area.php",
-        minLength: 0,
-        select: function (event, ui){}
-    });                
-});
-</script>
------------------------------------------------>
+	$(document).on('keypress',function(){
+		if($("#id").val() == 0 ){
+			$.ajax({
+			 url:  "Masters_Expense/maxid.php",
+			type:  "post",
+			data: $("#frm").serialize(),
+			success:function(d) {
+			$("#eid").val(d);
+	}
+		});
 
+	}
+	});
+</script>
 
 <?php include('footer.php'); ?>
-<p>
-	<br>
-	</p>
-</div>

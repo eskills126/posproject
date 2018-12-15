@@ -51,7 +51,7 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Supplier Deatils :<hr/></h4>
+<h4 class="page-header"><i class="fa fa-table fa-lg" aria-hidden="true"style="color: blue;"></i> Supplier Details:<hr/></h4>
 	<!--	<table class="table"> -->
 	<table id="examples" class="display" style="width:100%">
 			
@@ -66,6 +66,7 @@ include '..\db_connect.php';
 				<th>Opening Balance</th>
 				<th>Edit</th>
 				<th>Delete</th>
+				
 			</tr>
 
 		</thead>
@@ -83,8 +84,10 @@ echo "<td>{$row["SupName"]}</td>";
 echo "<td>{$row["SupAddress"]}</td>";
 echo "<td>{$row["SupContact"]}</td>";
 echo "<td>{$row["SupOpenBal"]}</td>";
+
 echo "<td><button type='button' class='btn btn-sm btn-info edit' data-id='{$row["SupId"]}'><i class='fa fa-edit'></i></td>";
 echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row["SupId"]}'><i class='fa fa-trash'></i></td>";
+
 	echo "</tr>";
 			
 			}
@@ -99,6 +102,7 @@ echo "<td><button type='button' class='btn btn-sm btn-danger del' data-id='{$row
 				<th>Opening Balance</th>
 				<th>Edit</th>
 				<th>Delete</th>
+				
 			</tr>
 </tfoot>
 		</table>

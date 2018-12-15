@@ -1,13 +1,15 @@
 <?php 
 //session_start();
 include "..\db_connect.php";
+include '..\navbar.php';
+	$sid =$_POST["sid"];
 	$name=$_POST["sname"];
 	$address=$_POST["saddress"];
 	$contact=$_POST["scontact"];
 	$sopbal=$_POST["sopbal"];
 	
 	
-$sql = "INSERT INTO suptbl(SupName,SupAddress,SupContact,SupOpenBal) VALUES('{$name}','{$address}','{$contact}',{$sopbal})";
+$sql = "INSERT INTO suptbl(SupId,SupName,SupAddress,SupContact,SupOpenBal,UserName) VALUES({$sid},'{$name}','{$address}','{$contact}',{$sopbal},'{$_SESSION['user_name']}')";
 	$conn->query($sql);
 
 	$id = $conn->insert_id;

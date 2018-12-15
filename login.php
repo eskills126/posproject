@@ -12,8 +12,9 @@ if(isset($_POST['login_button'])) {
 	if($row['pass']==$user_password){				
 		echo "ok";
 		$_SESSION['user_session'] = $row['uid'];
+		$_SESSION['user_name'] = $row['user'];
 		$_SESSION['user_role'] = $row['user_role'];
-		//$_SESSION['user_session'] = $row['uid'];
+		
 	} else {				
 		echo "email or password does not exist."; // wrong details 
 	}		

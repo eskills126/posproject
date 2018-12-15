@@ -1,7 +1,14 @@
+<style type="text/css" media="screen">
+.footer{
+	position: fixed;
+	bottom: 0;
+}	
+</style>
 <?php 
 include('header.php');
 include_once("db_connect.php");
 ?>
+<div class="container-fluid">
 <title>aanSoft</title>
 <script type="text/javascript" src="script/validation.min.js"></script>
 <script type="text/javascript" src="script/login.js"></script>
@@ -24,16 +31,15 @@ include_once("db_connect.php");
 		</div>
 		<hr />
 		<div class="form-group">
-			<button type="submit" class="btn btn-default" name="login_button" id="login_button">
-			<span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In
+			
+			<button type="submit" class="btn btn-default btn-lg" name="login_button" id="login_button">
+			<i class="fa fa-sign-in <span class="glyphicon glyphicon-log-in"></i>&nbspSign In
 			</button> 
 		</div> 
 	</form>		
-		
-</div>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#userid").focus();
-	});
-</script>
+	</center>
+</p>
+</div>	
+<div class="footer">
 <?php include('footer.php');?>
+</div>

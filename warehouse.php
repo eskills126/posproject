@@ -11,17 +11,6 @@ padding: 0 5px 0 0;
 </style>
 <!--Code for Login Detail-->
 <?php
-include('header.php'); 
-session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
 include('navbar.php');
 ?>
 
@@ -52,6 +41,17 @@ include('navbar.php');
 					
 <form id="frm" action="" method="post">
 
+  <!-------------------------Form elements------------------------------------>    
+		<div class="form-group">
+    	<div class="row">
+      	<div class="col-25">
+        <label for="customer_id">ID:</label>
+      	</div>
+      	<div class="col-75">
+        <input type="text" id="wid" name="wid" class="form-control" value="" readonly="" required>
+      	</div>
+    	</div>
+		</div>
 
 		<div class="form-group">
     	<div class="row">
@@ -170,8 +170,12 @@ $(document).on("click",".edit",function(){
 		var id = $(this).attr("data-id");
 		$("#id").val(id);
 
+		var wid = row.closest("tr").find("td:eq(0)").text();
+			$("#wid").val(wid);
 		var name = row.closest("tr").find("td:eq(1)").text();
 			$("#wname").val(name);
+
+			$("#wname").focus();
 	});
 
 });	
@@ -189,9 +193,21 @@ $(document).on("click",".edit",function(){
 </script>
 ---------------------------------------------->
 
+<!--------------------This line of code is for max id ----------------------->
+<script>
+	$(document).on('keypress',function(){
+		if($("#id").val() == 0 ){
+			$.ajax({
+			 url:  "Masters_Warehouse/maxid.php",
+			type:  "post",
+			data: $("#frm").serialize(),
+			success:function(d) {
+			$("#wid").val(d);
+	}
+		});
+
+	}
+	});
+</script>
 
 <?php include('footer.php'); ?>
-<p>
-	<br>
-	</p>
-</div>

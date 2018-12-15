@@ -10,27 +10,23 @@ padding: 0 5px 0 0;
 }
 </style>
 
-
 <!--------Code for Session Compare-------->
-<?php session_start();
+<?php 
+//session_start();
+include('navbar.php');
+
 $var=$_SESSION['user_session'];
 $var2=$_SESSION['user_role'];
  ?>
+<!--------code for admin rights-------->
+<!--if any user manually try to access the http://localhost/posproject/user.php to see the Passwords etc...---->
+<?php 
+	if ($var2 != 1) {
+	//return true;		
+	header("Location: welcome.php");
+	}
+ ?>
 <!--Code for Login Detail-->
-<?php
-include('header.php'); 
-//session_start();
-if(!isset($_SESSION['user_session'])){
-  header("Location: index.php");
-}
-
-include_once("db_connect.php");
-$sql = "SELECT uid, user, pass, email FROM users WHERE uid='".$_SESSION['user_session']."'";
-$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-$row = mysqli_fetch_assoc($resultset);
-
-include('navbar.php');
-?>
 
 <div class="container-fluid">
 	<p>
@@ -56,7 +52,7 @@ include('navbar.php');
 </div>
 
 <div class="container">
-					
+
 <form id="frm" action="" method="post">
 
 
@@ -103,7 +99,7 @@ include('navbar.php');
       	</div>
       	<span class="asterisk_input"></span>
       	<div class="col-75">
-        <input type="email" size="60" id="uemail" name="uemail" placeholder="Enter Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;">
+        <input type="email" size="30" id="uemail" name="uemail" placeholder="Enter Valid Email" required style="border:2px solid #ccc;border-radius: 4px;height: 35px;"><span id="email_feedback"style="color:red;"></span>
       	</div>
     	</div>
 		</div>
@@ -158,17 +154,8 @@ $(inputs).keypress(function(e){
 });
 </script>
 <!------------Function for Admin Rights----------------
-<script >
-	$(document).ready(function(){
-	$("#save").click(function(){
-		if ($("#user_role").val() != 1 ) {
-			alert("You are Not Admin");
-			return false;
-			}else{
-				return confirm("User / Admin added Successfully");
-			}
-	});
-	}); </script>
+
+
 ------------------------------------------------------>
 
 <script>
@@ -206,11 +193,7 @@ $(document).ready(function(){
 			alert("Password Don't Match ");
 			$("#rpassword").focus();
 		
-		}else if(IsEmail (email)==false){
-                alert("No");
-                //$('#uemail').show();
-                return false;
-            }else if (id==0){
+		}else if (id==0){
 		$.ajax({
 			 url:  "Masters_Users/insert.php",
 			type:  "post",
@@ -279,7 +262,41 @@ $(document).on("click",".edit",function(){
 
 });	
 </script>
+<!----------IF Admin then Access the User.php Page-----------
+<script>
+  $(document).ready(function(){
+    if($("#user_role").val() != 1){
+     // return true;
+   // }  else{
+      alert("You Are Not Admin");
+      //return false;
+    }
+    });
+  </script>
+---------------------------------------------------------->
+<!------------E-Mail Validation Code---------------->
+<script>
+function validate_email(email){
+      $.post('Masters_Users/email.php',{uemail: email}, function(data){
+      	
+       $('#email_feedback').text(data);
+        
+});
+}
+    $("#uemail").focusin(function(){
 
+      if ($('#uemail').val() === ""){
+        $('#email_feedback').text(''); 
+        }else{
+        validate_email($('#uemail').val() );
+	}
+    })
+    .blur(function() {
+      $('#email_feedback').text('');
+    }).keyup(function(){
+      validate_email($('#uemail').val() );
+  });
+</script>
 <!---------Code for AutoComplete Area--------------
 <script>
 	 $(function() {
@@ -291,12 +308,9 @@ $(document).on("click",".edit",function(){
     });                
 });
 </script>
--------------------------------------------------->
+-------------------------------------------------
 <input type="text" id="user_id" value="<?php echo $var; ?>" >
 <input type="text" id="user_role" value="<?php echo $var2; ?>" >
+--------------------------------------------------->
 
 <?php include('footer.php'); ?>
-<p>
-	<br>
-	</p>
-</div>

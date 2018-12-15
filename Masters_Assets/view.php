@@ -51,7 +51,7 @@ $var=$_SESSION['user_session'];
 include '..\db_connect.php';
  ?>
 
-<h4 class="page-header"><a class="btn btn-primary"><i class="fa fa-bars"></i></a>Customer Deatils :<hr/></h4>
+<h4 class="page-header"><i class="fa fa-table fa-lg" aria-hidden="true"style="color: blue;"></i> Asset/Bank Accounts Details :<hr/></h4>
 	<!--	<table class="table"> -->
 	<table id="examples" class="display" style="width:100%">
 			
