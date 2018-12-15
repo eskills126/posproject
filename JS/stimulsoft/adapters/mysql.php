@@ -81,6 +81,7 @@ class StiMySqlAdapter {
 	
 	private function parseType($meta) {
 		switch ($meta->type) {
+<<<<<<< HEAD
 			// integer
 			case 1:
 			case 2:
@@ -92,6 +93,16 @@ class StiMySqlAdapter {
 			// number (decimal)
 			case 4:
 			case 5:
+=======
+			// number
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 8:
+			case 9:
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 			case 16:
 			case 246:
 				return 'number';
@@ -102,7 +113,12 @@ class StiMySqlAdapter {
 			case 11:
 			case 12:
 			case 13:
+<<<<<<< HEAD
 				return 'datetime';
+=======
+				return 'string';
+				//return 'datetime';
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 			
 			// array, string
 			case 249:
@@ -115,7 +131,11 @@ class StiMySqlAdapter {
 				return 'string';
 		}
 		
+<<<<<<< HEAD
 		// base64 array for unknown
+=======
+		// array for unknown
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 		return 'array';
 	}
 	
@@ -136,16 +156,26 @@ class StiMySqlAdapter {
 			$result->rows = array();
 			
 			while ($meta = $query->fetch_field()) {
+<<<<<<< HEAD
 				$result->columns[] = $meta->name;
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 				$result->types[] = $this->parseType($meta);
 			}
 			
 			if ($query->num_rows > 0) {
+<<<<<<< HEAD
 				$isColumnsEmpty = count($result->columns) == 0;
 				while ($rowItem = $query->fetch_assoc()) {
 					$row = array();
 					foreach ($rowItem as $key => $value) {
 						if ($isColumnsEmpty && count($result->columns) < count($rowItem)) $result->columns[] = $key;
+=======
+				while ($rowItem = $query->fetch_assoc()) {
+					$row = array();
+					foreach ($rowItem as $key => $value) {
+						if (count($result->columns) < count($rowItem)) $result->columns[] = $key;
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 						$type = $result->types[count($row)];
 						$row[] = ($type == 'array') ? base64_encode($value) : $value;
 					}

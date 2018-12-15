@@ -25,7 +25,11 @@ function stiShutdownFunction() {
 }
 
 class StiHandler {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	private function checkEventResult($event, $args) {
 		if (isset($event)) $result = $event($args);
 		if (!isset($result)) $result = StiResult::success();
@@ -36,6 +40,7 @@ class StiHandler {
 		return $result;
 	}
 	
+<<<<<<< HEAD
 	private function getQueryParameters($query) {
 		$result = array();
 		while (strpos($query, "{") !== false) {
@@ -61,11 +66,14 @@ class StiHandler {
 		return $result.$query;
 	}
 	
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 //--- Events
 
 	public $onBeginProcessData = null;
 	private function invokeBeginProcessData($request) {
 		$args = new stdClass();
+<<<<<<< HEAD
 		$args->sender = $request->sender;
 		$args->database = $request->database;
 		$args->connectionString = isset($request->connectionString) ? $request->connectionString : null;
@@ -77,6 +85,13 @@ class StiHandler {
 		$result = $this->checkEventResult($this->onBeginProcessData, $args);
 		if (isset($result->object->queryString) && isset($args->parameters)) $result->object->queryString = $this->applyQueryParameters($result->object->queryString, $args->parameters);
 		return $result;
+=======
+   		$args->sender = $request->sender;
+   		$args->database = $request->database;
+   		$args->connectionString = $request->connectionString;
+   		$args->queryString = $request->queryString;
+		return $this->checkEventResult($this->onBeginProcessData, $args);
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	}
 	
 	public $onEndProcessData = null;
@@ -328,9 +343,12 @@ class StiHandler {
 				
 			case StiExportFormat::Word2007:
 				return "docx";
+<<<<<<< HEAD
 				
 			case StiExportFormat::Csv:
 				return "csv";
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 		}
 		return "";
 	}
@@ -341,6 +359,7 @@ class StiHandler {
 
 
 class StiHelper {
+<<<<<<< HEAD
 	public static function createOptions() {
 		$options = new stdClasS();
 		$options->handler = "handler.php";
@@ -369,6 +388,27 @@ class StiHelper {
 				
 				var json = JSON.stringify(command);
 				if (!callback) callback = function (message) {
+=======
+	public static function initialize($url = "handler.php", $timeout = 30) {
+?>
+	<script type="text/javascript">
+		StiHelper.prototype.process = function (obj, callback) {
+			if (obj != null) {
+				if (obj.event == "BeginProcessData") {
+					obj.preventDefault = true;
+					if (obj.database == "XML" || obj.database == "JSON") return callback(null);
+				}
+				var command = {};
+				for (var p in obj) {
+					if (p == "report" && obj.report != null) command.report = JSON.parse(obj.report.saveToJsonString());
+					else if (p == "settings" && obj.settings != null) command.settings = obj.settings;
+					else if (p == "data") command.data = Stimulsoft.System.Convert.toBase64String(obj.data);
+					else command[p] = obj[p];
+				}
+				
+				var json = JSON.stringify(command);
+				if (callback == null) callback = function (message) {
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 					if (Stimulsoft.System.StiError.errorMessageForm && !String.isNullOrEmpty(message)) {
 						var obj = JSON.parse(message);
 						if (!obj.success || !String.isNullOrEmpty(obj.notice)) {
@@ -385,9 +425,12 @@ class StiHelper {
 			try {
 				var request = new XMLHttpRequest();
 				request.open("post", this.url, true);
+<<<<<<< HEAD
 				request.setRequestHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
 				request.setRequestHeader('Cache-Control', 'max-age=0');
 				request.setRequestHeader('Pragma', 'no-cache');
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 				request.timeout = this.timeout * 1000;
 				request.onload = function () {
 					if (request.status == 200) {
@@ -411,6 +454,7 @@ class StiHelper {
 				request.abort();
 			}
 		};
+<<<<<<< HEAD
 		
 		StiHelper.prototype.getUrlVars = function (json, callback) {
 			var vars = {};
@@ -449,11 +493,25 @@ class StiHelper {
 		
 		jsHelper = new StiHelper("<?php echo $options->handler; ?>", <?php echo $options->timeout; ?>);
 </script>
+=======
+
+		function StiHelper(url, timeout) {
+			this.url = url;
+			this.timeout = timeout;
+		}
+
+		jsHelper = new StiHelper("<?php echo $url; ?>", <?php echo $timeout; ?>); 
+</script>	
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 <?php
 	}
 	
 	public static function createHandler() {
+<<<<<<< HEAD
 ?>jsHelper.process(arguments[0], arguments[1]);
+=======
+?>jsHelper.process(typeof args != "undefined" ? args : (typeof event != "undefined" ? event : null), typeof callback != "undefined" ? callback : null);
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 <?php
 	}
 }
