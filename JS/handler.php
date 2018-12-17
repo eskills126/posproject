@@ -2,19 +2,59 @@
 require_once 'stimulsoft/helper.php';
 
 error_reporting(0);
+<<<<<<< HEAD
+
+// Please configure the security level as you required.
+// By default is to allow any requests from any domains.
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Engaged-Auth-Token");
+=======
+header("Access-Control-Allow-Origin: *");
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 
 
 $handler = new StiHandler();
 $handler->registerErrorHandlers();
 
 
+<<<<<<< HEAD
+$handler->onBeginProcessData = function ($event) {
+	// Current database type: 'XML', 'JSON', 'MySQL', 'MS SQL', 'PostgreSQL', 'Firebird', 'Oracle'
+	$database = $event->database;
+	// Current connection name
+	$connection = $event->connection;
+	// Current data source name
+	$dataSource = $event->dataSource;
+	// Connection string for the current data source
+	$connectionString = $event->connectionString;
+	// SQL query string for the current data source
+	$queryString = $event->queryString;
+	
+	// You can change the connection string
+	if ($connection == "con")
+	//	$event->connectionString = "Server=localhost;Database=test;Port=3306;";
+	
+	// You can change the SQL query
+	//if ($dataSource == "MyDataSource")
+	//	$event->queryString = "SELECT * FROM MyTable";
+	
+	// You can replace the SQL query parameters with the required values
+	// For example: SELECT * FROM {Variable1} WHERE Id={Variable2}
+	// If the report contains a variable with this name, its value will be used instead of the specified value
+	//$event->parameters["Variable1"] = "TableName";
+	//$event->parameters["Variable2"] = 10;
+	
+	return StiResult::success();
+	//return StiResult::error("Message for some connection error.");
+};
+=======
 /*$handler->onBeginProcessData = function ($event) {
 	$database = $event->database;
 	$connectionString = $event->connectionString;
 	$queryString = $event->queryString;
 	return StiResult::success();
 };*/
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 
 $handler->onPrintReport = function ($event) {
 	return StiResult::success();
@@ -31,6 +71,11 @@ $handler->onEndExportReport = function ($event) {
 	$data = $event->data; // Base64 export data
 	$fileName = $event->fileName; // Report file name
 	
+<<<<<<< HEAD
+	file_put_contents('reports/'.$fileName.'.'.strtolower($format), base64_decode($data));
+	
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	//return StiResult::success();
 	return StiResult::success("Export OK. Message from server side.");
 	//return StiResult::error("Export ERROR. Message from server side.");

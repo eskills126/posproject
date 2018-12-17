@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" application="StiDictionary" type="Flex">
+  <Databases count="1" isList="true">
+    <con1 isKey="true" Ref="1" type="Stimulsoft.Report.Dictionary.StiMySqlDatabase">
+      <Alias>con1</Alias>
+      <ConnectionStringEncrypted>w1bNa+9ce9lsE6mEYwAhP4vI+8thV3vZa1r9xGM9IWfCVFMLyVmrlWlJyYTgJeAb31rR60ZX06Rs
+CJw=</ConnectionStringEncrypted>
+      <Name>con1</Name>
+    </con1>
+  </Databases>
+  <DataSources count="2" isList="true">
+    <DS1 isKey="true" Ref="2" type="Stimulsoft.Report.Dictionary.StiMySqlSource">
+      <Alias>DS1</Alias>
+      <Columns count="9" isList="true">
+        <value>cid,System.Int32</value>
+        <value>cmpname,System.String</value>
+        <value>cmpaddr,System.String</value>
+        <value>cmpcontact1,System.String</value>
+        <value>cmpcontact2,System.String</value>
+        <value>cmpemail,System.String</value>
+        <value>cmpweb,System.String</value>
+        <value>cmplogo,System.Drawing.Image</value>
+        <value>cmplogo,System.Byte[]</value>
+      </Columns>
+      <CommandTimeout>30</CommandTimeout>
+      <Dictionary isRef="0"/>
+      <Name>DS1</Name>
+      <NameInSource>con1</NameInSource>
+      <Parameters count="0" isList="true"/>
+      <SqlCommand>select * from companytbl</SqlCommand>
+    </DS1>
+    <DS2 isKey="true" Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource">
+      <Alias>DS2</Alias>
+      <Columns count="7" isList="true">
+        <value>assid,System.String</value>
+        <value>asstitle,System.String</value>
+        <value>assaddress,System.String</value>
+        <value>asscontact,System.String</value>
+        <value>assopenbal,System.String</value>
+        <value>asssort,System.String</value>
+        <value>asssortname,System.String</value>
+      </Columns>
+      <CommandTimeout>30</CommandTimeout>
+      <Dictionary isRef="0"/>
+      <Name>DS2</Name>
+      <NameInSource>con1</NameInSource>
+      <Parameters count="0" isList="true"/>
+      <SqlCommand>SELECT assid,asstitle,assaddress,asscontact,assopenbal, asssort,asssortname FROM assettbl UNION SELECT cusid,cusname, cusaddress,cuscontact,cusopenbal,cussort,cussortname from customertbl UNION SELECT supid, supname, supaddress, supcontact, supopenbal,supsort, supsortname FROM suptbl UNION SELECT liabid, liabtitle, liabaddress,liabcontact, liabopenbal, liabsort, liabsortname from liabtbl UNION SELECT expid, exptitle, expaddress, expaddress, expopenbal, expsort, expsortname from exptbl UNION SELECT proid, proname, proaddress, proaddress, proopenbal, prosort, prosortname FROM salesitemtbl</SqlCommand>
+    </DS2>
+  </DataSources>
+  <Relations count="0" isList="true"/>
+  <Variables count="0" isList="true"/>
+</StiSerializer>

@@ -21,6 +21,10 @@ class StiMsSqlAdapter {
 	
 	private function connect() {
 		if ($this->isMicrosoftDriver) {
+<<<<<<< HEAD
+			if (!function_exists("sqlsrv_connect")) return StiResult::error("MS SQL driver not found. Please configure your PHP server to work with MS SQL.");
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 			$this->link = sqlsrv_connect(
 					$this->connectionInfo->host, 
 					array(
@@ -58,16 +62,24 @@ class StiMsSqlAdapter {
 		$info->charset = "UTF-8";
 		
 		$parameters = explode(";", $connectionString);
+<<<<<<< HEAD
+		foreach($parameters as $parameter) {
+=======
 		foreach($parameters as $parameter)
 		{
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 			if (strpos($parameter, "=") < 1) continue;
 		
 			$spos = strpos($parameter, "=");
 			$name = strtolower(trim(substr($parameter, 0, $spos)));
 			$value = trim(substr($parameter, $spos + 1));
 			
+<<<<<<< HEAD
+			switch ($name) {
+=======
 			switch ($name)
 			{
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 				case "server":
 				case "data source":
 					$info->host = $value;
@@ -99,6 +111,48 @@ class StiMsSqlAdapter {
 		$this->connectionInfo = $info;
 	}
 	
+<<<<<<< HEAD
+	private function parseType($meta) {
+		switch ($meta["Type"]) {
+			// integer
+			case -6:
+			case -5:
+			case 4:
+			case 5:
+				return 'int';
+			
+			// number (decimal)
+			case 2:
+			case 3:
+			case 6:
+			case 7:
+				return 'number';
+			
+			// datetime
+			case -155:
+			case -154:
+			case -2:
+			case 91:
+			case 93:
+				return 'datetime';
+			
+			// string
+			case -152:
+			case -10:
+			case -9:
+			case -8:
+			case -1:
+			case 1:
+			case 12:
+				return 'string';
+		}
+		
+		// base64 array for unknown
+		return 'array';
+	}
+	
+=======
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	public function test() {
 		$result = $this->connect();
 		if ($result->success) $this->disconnect();
@@ -111,12 +165,31 @@ class StiMsSqlAdapter {
 			$query = $this->isMicrosoftDriver ? sqlsrv_query($this->link, $queryString) : mssql_query($queryString, $this->link);
 			if (!$query) return $this->getLastErrorResult();
 			
+<<<<<<< HEAD
+			$result->types = array();
+			$result->columns = array();
+			$result->rows = array();
+			
+			if ($this->isMicrosoftDriver) {
+				foreach (sqlsrv_field_metadata($query) as $meta) {
+					$result->columns[] = $meta["Name"];
+					$result->types[] = $this->parseType($meta);
+				}
+			}
+			
+			$isColumnsEmpty = count($result->columns) == 0;
+			while ($rowItem = $this->isMicrosoftDriver ? sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC) : mssql_fetch_assoc($query)) {
+				$row = array();
+				foreach ($rowItem as $key => $value) {
+					if ($isColumnsEmpty && count($result->columns) < count($rowItem)) $result->columns[] = $key;
+=======
 			$result->columns = array();
 			$result->rows = array();
 			while ($rowItem = $this->isMicrosoftDriver ? sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC) : mssql_fetch_assoc($query)) {
 				$row = array();
 				foreach ($rowItem as $key => $value) {
 					if (count($result->columns) < count($rowItem)) $result->columns[] = $key;
+>>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 					$row[] = $value;
 				}
 				$result->rows[] = $row;
