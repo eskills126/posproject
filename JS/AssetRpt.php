@@ -15,16 +15,7 @@ require_once 'stimulsoft/helper.php';
 	<script src="scripts/stimulsoft.reports.js" type="text/javascript"></script>
 	<script src="scripts/stimulsoft.viewer.js" type="text/javascript"></script>
 	
-<<<<<<< HEAD
-	<?php 
-		$options = StiHelper::createOptions();
-		$options->handler = "handler.php";
-		$options->timeout = 30;
-		StiHelper::initialize($options);
-	?>
-=======
 	<?php StiHelper::initialize(); ?>
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	<script type="text/javascript">
 		var options = new Stimulsoft.Viewer.StiViewerOptions();
 		options.appearance.fullScreenMode = true;
@@ -37,21 +28,11 @@ require_once 'stimulsoft/helper.php';
 			<?php StiHelper::createHandler(); ?>
 		}
 		
-<<<<<<< HEAD
-		// Manage export settings on the server side
-		viewer.onBeginExportReport = function (args) {
-			<?php //StiHelper::createHandler(); ?>
-			//args.fileName = "MyReportName";
-		}
-		
-		// Process exported report file on the server side
-=======
 		viewer.onBeginExportReport = function (args) {
 			//args.fileName = "MyReportName";
 		}
 		
 		// Send exported report to server side
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 		/*viewer.onEndExportReport = function (event) {
 			event.preventDefault = true; // Prevent client default event handler (save the exported report as a file)
 			<?php StiHelper::createHandler(); ?>
@@ -66,20 +47,10 @@ require_once 'stimulsoft/helper.php';
 		var report = new Stimulsoft.Report.StiReport();
 		report.loadFile("reports/asset.mrt");
 		viewer.report = report;
-<<<<<<< HEAD
-		
-		function onLoad() {
-			viewer.renderHtml("viewerContent");
-		}
-	</script>
-	</head>
-<body onload="onLoad();">
-=======
 		viewer.renderHtml("viewerContent");
 	</script>
 	</head>
 <body>
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	<div id="viewerContent"></div>
 </body>
 </html>

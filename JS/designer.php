@@ -17,16 +17,7 @@ require_once 'stimulsoft/helper.php';
 	<script src="scripts/stimulsoft.viewer.js" type="text/javascript"></script>
 	<script src="scripts/stimulsoft.designer.js" type="text/javascript"></script>
 	
-<<<<<<< HEAD
-	<?php 
-		$options = StiHelper::createOptions();
-		$options->handler = "handler.php";
-		$options->timeout = 30;
-		StiHelper::initialize($options);
-	?>
-=======
 	<?php StiHelper::initialize(); ?>
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	<script type="text/javascript">
 		var options = new Stimulsoft.Designer.StiDesignerOptions();
 		options.appearance.fullScreenMode = true;
@@ -48,20 +39,10 @@ require_once 'stimulsoft/helper.php';
 		var report = new Stimulsoft.Report.StiReport();
 		report.loadFile("reports/SimpleList.mrt");
 		designer.report = report;
-<<<<<<< HEAD
-		
-		function onLoad() {
-			designer.renderHtml("designerContent");
-		}
-	</script>
-	</head>
-<body onload="onLoad();">
-=======
 		designer.renderHtml("designerContent");
 	</script>
 	</head>
 <body>
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 	<div id="designerContent"></div>
 </body>
 </html>

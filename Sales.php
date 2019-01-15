@@ -163,13 +163,8 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 
         $statement = $connect->prepare("
    INSERT INTO tbl_order_item 
-
-   (order_id, item_name,item_id, order_item_whname,order_item_whid, order_item_quantity, order_item_squantity,order_item_prate, order_item_grate, order_item_gamount) 
-   VALUES (:order_id, :item_name, :item_id, :order_item_whname, :order_item_whid, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
-
    (order_id, item_name, order_item_whname, order_item_quantity, order_item_squantity,order_item_prate, order_item_grate, order_item_gamount) 
    VALUES (:order_id, :item_name, :order_item_whname, :order_item_quantity, :order_item_squantity, :order_item_prate, :order_item_grate, :order_item_gamount)
-
         ");
         $statement->execute(
           array(
@@ -177,13 +172,7 @@ $wh_name =preg_replace('/.*-/', '', $whname_value);
 //          ':item_name'                =>  trim($_POST["item_name"][$count]),
 //          ':order_item_whname'        =>  trim($_POST["order_item_whname"][$count]),
             ':item_name'                =>  trim($item_name[$count]),
-
-            ':item_id'                =>  trim($_POST["item_id"][$count]),
             ':order_item_whname'        =>  trim($wh_name[$count]),
-            ':order_item_whid'        =>  trim($_POST["order_item_whid"][$count]),
-
-            ':order_item_whname'        =>  trim($wh_name[$count]),
-
             ':order_item_quantity'      =>  trim($_POST["order_item_quantity"][$count]),
             ':order_item_squantity'     =>  trim($_POST["order_item_squantity"][$count]),
             ':order_item_prate'         =>  trim($_POST["order_item_prate"][$count]),
@@ -208,12 +197,7 @@ $result =preg_replace('/.*-/', '', $edata);
         UPDATE tbl_order 
         SET order_no = :order_no, 
         order_date = :order_date, 
-
-        order_receiver_name = :order_receiver_name,
-        order_receiver_id = :order_receiver_id, 
-
         order_receiver_name = :order_receiver_name, 
-
         order_receiver_remarks = :order_receiver_remarks, 
         order_total_before_discount_freight = :order_total_before_discount_freight, 
         order_total_discount_percentage = :order_total_discount_percentage, 
@@ -228,9 +212,6 @@ $result =preg_replace('/.*-/', '', $edata);
     ':order_no'                             =>  trim($_POST["order_no"]),
     ':order_date'                           =>  trim($_POST["order_date"]),
     ':order_receiver_name'                  =>  trim($result),
-
-    ':order_receiver_id'                    =>  trim($_POST["order_receiver_id"]),
-
     ':order_receiver_remarks'               =>  trim($_POST["order_receiver_remarks"]),
     ':order_total_before_discount_freight'  =>  $order_total_before_discount_freight,
     ':order_total_discount_percentage'      =>  $order_total_discount_percentage,
@@ -423,16 +404,6 @@ $result =preg_replace('/.*-/', '', $edata);
               </tr>
 
       <tr>
-
-  <!-------------Code for Tax----------------->
-  <td>
-  <label><b>Tax%:</label>
-  <input type="text" name="tax_percentage" id="tax_percentage" data-srno="1" />  </td>
-        <td>
-  <label><b>Tax Value:</label>
-  <input type="text" name="tax_value" id="tax_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
-  <!--------------Code for Discount ---------->
-
         <td>
   <label><b>Discount%:</label>
   <input type="text" name="order_total_discount_percentage" id="order_total_discount_percentage" data-srno="1" />  </td>
@@ -440,9 +411,6 @@ $result =preg_replace('/.*-/', '', $edata);
   <label><b>Discount Value:</label>
   <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
         
-
-  
-  <td>
   <!-------------Code for Tax----------------->
   <td>
   <label><b>Tax%:</label>
@@ -451,7 +419,6 @@ $result =preg_replace('/.*-/', '', $edata);
   <label><b>Tax Value:</label>
   <input type="text" name="order_total_discount_value" id="order_total_discount_value" data-srno="1" class="form-control" value="0" readonly="" />  </td>
         <td>
-
   <!-------------------------------->              
   <label><b>Freight:</label>
   <input type="text" name="order_total_freight" id="order_total_freight" data-srno="1" class="one" value="0" />  </td>
@@ -471,12 +438,7 @@ $result =preg_replace('/.*-/', '', $edata);
            <!-- <input 6ype="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create"  />onkeypress="$('#invoice_form').submit();"  "-->
           <input  type="text" style="width: 100px;"  name="create_invoice" id="create_invoice" class="btn btn-success" value="Save " readonly />
           <input type="hidden" name="total_item" id="total_item" value="1" />
-
-          <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" />
-          <input type="text" name="after_tax" id="after_tax" data-srno="1" />
-
           <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />
-
 
           
                 </td>
@@ -590,14 +552,8 @@ for(var i = row_count; i <=row_count; i++){
             }
             $('#order_gtotal').val(final_item_total);
           var dvalue = $('#order_total_discount_value').val();
-
-          var tvalue = $('#tax_value').val();          
-          var freight = $('#order_total_freight').val();
-          var final_gamount = parseFloat(final_item_total) - parseFloat(dvalue) + parseFloat(freight) + parseFloat(tvalue);
-
           var freight = $('#order_total_freight').val();
           var final_gamount = parseFloat(final_item_total) - parseFloat(dvalue) + parseFloat(freight);
-
           $('#final_total_amt').text(final_gamount);
          }
 /*
@@ -608,12 +564,7 @@ for(var i = row_count; i <=row_count; i++){
 $(document).on('keyup', '.order_item_quantity', function(){
           cal_final_total(count);
         });
-
-//--------------------------Temporary Total Function-----------------
-/*
-=======
 //--------------------------Temporary Total Function-------------------------------------------
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
  $("#order_total_discount_value").keyup(function(){
       var temp = $("#order_gtotal").val();
       var dvalue = $("#order_total_discount_value").val();
@@ -630,57 +581,9 @@ $(document).on('keyup', '.order_item_quantity', function(){
         $('#final_total_amt').text(summ);
       }
  });
-<<<<<<< HEAD
- */
- //--------------------------Temporary Total Function-----------------
-$(document).keypress(function(){
- $("#order_total_discount_percentage").keyup(function(){
-      var temp = $("#after_tax").val();
-      var dvalue = $("#order_total_discount_value").val();
-      var freight = $("#order_total_freight").val();
-      //alert(freight);
-      var summ = 0;
-      summ = parseFloat(temp) + parseFloat(freight);
-      //-------------------------------------------- 
-      var sum = 0;
-      sum = parseFloat(temp) -  parseFloat(dvalue) ;
-      sum = parseFloat(sum) + parseFloat(freight);
-      $('#final_total_amt').text(sum);
-      if(isNaN($('#final_total_amt').text())){
-        $('#final_total_amt').text(summ);
-      }
- });
- });
- 
-
-//-----------------Tax Calculation Function-----------------------
- $(document).keypress(function(){
- $("#tax_percentage").keyup(function(){
-      var temp = $("#order_gtotal").val();
-      var tvalue = $("#tax_value").val();
-      //var freight = $("#order_total_freight").val();
-      //alert(freight);
-      var summ = 0;
-      summ = parseFloat(temp);// + parseFloat(freight);
-      //-------------------------------------------- 
-      var sum = 0;
-      sum = parseFloat(temp) +  parseFloat(tvalue) ;
-      //sum = parseFloat(sum) + parseFloat(freight);
-      $('#final_total_amt').text(sum);
-      $('#after_tax').val(sum);
-      if(isNaN($('#final_total_amt').text())){
-        $('#final_total_amt').text(summ);
-      }
- });
- });
-
- $("#order_total_freight").keyup(function(){
-      var temp = $("#after_tax").val();
-
 
  $("#order_total_freight").keyup(function(){
       var temp = $("#order_gtotal").val();
-
       var dvalue = $("#order_total_discount_value").val();
       var freight = $("#order_total_freight").val();
       //alert(freight);
@@ -694,25 +597,7 @@ $(document).keypress(function(){
         $("#final_total_amt").text(summ);
       } 
  });
-
- //--------------------Tax Value--------------------------------
-
- $("#tax_percentage").keyup(function(){
-      var temp = $("#order_gtotal").val();
-      var percent = $("#tax_percentage").val();
-      var percent_value = 0;
-      percent_value = parseFloat(temp) *  parseFloat(percent) / 100;
-      $('#tax_value').val(percent_value);
-
-      if(isNaN($('#tax_value').val())){
-        $("#tax_value").val(0);
-      } 
-      
- });
- //--------------------Discount Percentage--------------------------------
-
  //--------------------Percentage--------------------------------
-
 
  $("#order_total_discount_percentage").keyup(function(){
       var temp = $("#order_gtotal").val();
@@ -1083,20 +968,12 @@ if (allowSubmit) {
   <!----------Item Name------------->
   <td><input type="text" name="item_name[]" id="item_name<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $sub_row["item_name"]; ?>" />
     
-
-    <input  name="item_id[]"  id="item_id<?php echo $m; ?>"  autocomplete="on" readonly="" value="<?php echo $sub_row["item_id"]; ?>"/>
-
     <input  name="item_id[]" style="height: 0px; width: 0px; border: none;" id="item_id<?php echo $m; ?>"  autocomplete="on" readonly="" value="<?php echo $sub_row["item_id"]; ?>"/>
-
   </td>
   <!----------Warehouse Name------------->
   <td><input type="text" name="order_item_whname[]" id="order_item_whname<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $sub_row["order_item_whname"]; ?>" />
 
-
-    <input name="order_item_whid[]"  id="order_item_whid<?php echo $m; ?>" data-srno="1"  autocomplete="on" readonly="" value="<?php echo $sub_row["order_item_whid"]; ?>"/>
-
     <input name="order_item_whid[]" style="height: 0px; width: 0px; border: none;" id="order_item_whid<?php echo $m; ?>" data-srno="1"  autocomplete="on" readonly="" value="<?php echo $sub_row["order_item_whid"]; ?>"/>
-
   </td>
   <!----------Quantity------------------->
   <td><input type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $sub_row["order_item_quantity"]; ?>"/></td>
@@ -1167,11 +1044,7 @@ if (allowSubmit) {
          <input type="text" style="width: 100px;" name="update_invoice" id="create_invoice" class="btn btn-success" value="Update" readonly="" />
           <input type="hidden" name="total_item" id="total_item" value="<?php echo $m; ?>" />
          <input type="hidden" name="order_id" id="order_id" value="<?php echo $row["order_id"]; ?>" />
-
-          <input type="text" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
-
           <input type="hidden" name="order_gtotal" id="order_gtotal" data-srno="1" class="" />        
-
                     </td>
               </tr>
           </table>
@@ -1197,15 +1070,9 @@ a.push(count);
           html_code += '<tr id="row_id_'+count+'">';
           html_code += '<td><span id="sr_no">'+count+'</span></td>';
   //----------Item Name-------------------        
-
-  html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text"  name="item_id[]" id="item_id'+count+'"  readonly/></td>';
-  //----------Warehouse Name-------------------
-  html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text"  name="order_item_whid[]" id="order_item_whid'+count+'" readonly/></td>';
-
   html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0px; width: 0px; border: none;" name="item_id[]" id="item_id'+count+'"  readonly/></td>';
   //----------Warehouse Name-------------------
   html_code += '<td><input type="text" name="order_item_whname[]" id="order_item_whname'+count+'" class="form-control input-sm" /><input type ="text" style="height: 0px; width: 0px; border: none;" name="order_item_whid[]" id="order_item_whid'+count+'" readonly/></td>';
-
   //----------Quantity-------------------
   html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
   //----------Stock Quanity-------------------
@@ -1865,11 +1732,7 @@ $(document).on('keypress',function(){
 </script>
 <!---------------Code for updating Item id dynamically------------->
 <script>
-
-$(document).on('click',function(){
-
 $(document).on('keypress',function(){
-
   $(function() {
 //----- push numbers in dummy array----------
   var dummy = [];
@@ -1896,11 +1759,7 @@ $(document).on('keypress',function(){
 </script>
 <!---------------Code for updating warehouse id dynamically------------->
 <script>
-
-$(document).on('click',function(){
-
 $(document).on('keypress',function(){
-
   $(function() {
 //----- push numbers in dummy array----------
   var dummy = [];

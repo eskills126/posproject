@@ -49,10 +49,6 @@ class StiExportFormat {
 	const Pdf = "Pdf";
 	const Excel2007 = "Excel2007";
 	const Word2007 = "Word2007";
-<<<<<<< HEAD
-	const Csv = "Csv";
-=======
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 }
 
 class StiRequest {
@@ -79,30 +75,14 @@ class StiRequest {
 		if (isset($obj->connectionString)) $this->connectionString = $obj->connectionString;
 		if (isset($obj->queryString)) $this->queryString = $obj->queryString;
 		if (isset($obj->database)) $this->database = $obj->database;
-<<<<<<< HEAD
-		if (isset($obj->dataSource)) $this->dataSource = $obj->dataSource;
-		if (isset($obj->connection)) $this->connection = $obj->connection;
-=======
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 		if (isset($obj->data)) $this->data = $obj->data;
 		if (isset($obj->fileName)) $this->fileName = $obj->fileName;
 		if (isset($obj->format)) $this->format = $obj->format;
 		if (isset($obj->settings)) $this->settings = $obj->settings;
 		if (isset($obj->report)) {
 			$this->report = $obj->report;
-<<<<<<< HEAD
-			if (defined('JSON_UNESCAPED_SLASHES')) $this->reportJson = json_encode($this->report, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-			else {
-				// for PHP 5.3
-				$this->reportJson = str_replace('\/', '/', json_encode($this->report));
-				$this->reportJson = preg_replace_callback('/\\\\u(\w{4})/', function ($matches) {
-					return html_entity_decode('&#x' . $matches[1] . ';', ENT_COMPAT, 'UTF-8');
-				}, $this->reportJson);
-			}
-=======
 			if (defined('JSON_UNESCAPED_SLASHES')) $this->reportJson = json_encode($this->report, JSON_UNESCAPED_SLASHES);
 			else $this->reportJson = str_replace('\/', '/', json_encode($this->report));
->>>>>>> 0c8f678af0bec5bc845040cdcf84e985015ee601
 		}
 		
 		return StiResult::success(null, $this);
