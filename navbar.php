@@ -270,8 +270,17 @@ $rights = $_SESSION['user_role'];
 </li>
 
 <a href="welcome.php" class="btn btn-work"style="background-color: red;color:white">DashBoard
+    </a> &nbsp;
+	
+<a href="calculator.php" class="btn btn-work"style="background-color: red;color:white" onclick="basicPopup(this.href);return false">Calculator
     </a>
       </ul> 
 
 </nav>
 </div>
+<script>
+// JavaScript popup window function
+	function basicPopup(url) {
+popupWindow = window.open(url,'popUpWindow','height=314,width=314,left=50,top=50,right=50,bottum=50,resizable=none,scrollbars=none,toolbar=none,menubar=none,location=none,directories=none, status=yes')
+	}
+</script>
