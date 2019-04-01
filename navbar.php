@@ -35,7 +35,7 @@ $rights = $_SESSION['user_role'];
 </script>
 <!------------------------------------------------------------------->
 </head>
-<div style="text-align: right; font-size: 12px;font-family:Arial, Helvetica, sans-serif; margin: 5px;overflow: none;width:107%;">
+<div style="text-align: right; font-size: 12px;font-family:Arial, Helvetica, sans-serif; margin: 5px;overflow: none;">
 
 
   <div class="dropdown" id="logininfo"> 
@@ -49,6 +49,7 @@ $rights = $_SESSION['user_role'];
     <a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp</i>Sign Out</a>
 
   </div>
+  <a href="calculator.php" style="text-decoration: none;" onclick="basicPopup(this.href);return false"><i class="fa fa-calculator"></i> Calculator </a>
 
 </div>
 </div>
@@ -58,7 +59,7 @@ $rights = $_SESSION['user_role'];
   <input type="hidden" id="rights" value="<?php echo $rights; ?>" name="">
   <!----------------------------------------------------------------->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary"style="width:108%;white-space: nowrap;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"style="width:auto;white-space: nowrap;">
 
   <!-- Brand -->
   <a class="navbar-brand" href="welcome.php"><img style="display: inline-block; height: 40px;width: 40px; margin-top: -5px;border-radius: 50px;"src="images/images.png"></a>
@@ -269,11 +270,9 @@ $rights = $_SESSION['user_role'];
     </div>
 </li>
 
-<a href="welcome.php" class="btn btn-work"style="background-color: red;color:white">DashBoard
-    </a> &nbsp;
+<a href="welcome.php" class="btn btn-work"style="background-color: red;color:white">DashBoard</a> &nbsp;
 	
-<a href="calculator.php" class="btn btn-work"style="background-color: red;color:white" onclick="basicPopup(this.href);return false">Calculator
-    </a>
+
       </ul> 
 
 </nav>
