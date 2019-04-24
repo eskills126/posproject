@@ -270,7 +270,7 @@ $rights = $_SESSION['user_role'];
     </div>
 </li>
 
-<a href="welcome.php" class="btn btn-work"style="background-color: red;color:white">DashBoard</a> &nbsp;
+<a href="welcome.php" style="background-color:#007bff"><button class="btn navbar-btn"style="background-color: red;color:white">Dashboard</button></a>
 	
 
       </ul> 
